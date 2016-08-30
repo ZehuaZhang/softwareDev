@@ -1,3 +1,16 @@
+215. Kth Largest Element in an Array
+Difficulty: Medium
+
+Find the kth largest element in an unsorted array. 
+
+Note that it is the kth largest element in the sorted order, not the kth distinct element.
+
+For example,
+Given [3,2,1,5,6,4] and k = 2, return 5.
+
+Note: 
+You may assume k is always valid, 1 ≤ k ≤ array length.
+
 // Time:  O(n) ~ O(n^2)
 // Space: O(1)
 
@@ -5,43 +18,30 @@ class Solution {
 public:
     int findKthLargest(vector<int>& nums, int k) {
         int left = 0, right = nums.size() - 1;
-        default_random_engine gen((random_device())());
         while (left <= right) {
-            // Generates a random int in [left, right].
-            uniform_int_distribution<int> dis(left, right);
-            int pivot_idx = dis(gen);
-            int new_pivot_idx = PartitionAroundPivot(left, right, pivot_idx, &nums);
-            if (new_pivot_idx == k - 1) {
-                return nums[new_pivot_idx];
-            } else if (new_pivot_idx > k - 1) {
-                right = new_pivot_idx - 1;
-            } else {  // new_pivot_idx < k - 1.
-                left = new_pivot_idx + 1;
+            int pivotIdx = left + rand() % (right - left + 1);
+            int newPivotIdx = PartitionAroundPivot(left, right, pivotIdx, nums);
+            if (newPivotIdx == k - 1) {
+                return nums[newPivotIdx];
+            } else if (newPivotIdx > k - 1) {
+                right = newPivotIdx - 1;
+            } else {
+                left = newPivotIdx + 1;
             }
         }
+        return left;
     }
     
-    int PartitionAroundPivot(int left, int right, int pivot_idx, vector<int>* nums) {
-        auto& nums_ref = *nums;
-        int pivot_value = nums_ref[pivot_idx];
-        int new_pivot_idx = left;
-        swap(nums_ref[pivot_idx], nums_ref[right]);
+    int PartitionAroundPivot(int left, int right, int pivotIdx, vector<int>& nums) {
+        int pivot = nums[pivotIdx];
+        int newPivotIdx = left;
+        swap(nums[pivotIdx], nums[right]);
         for (int i = left; i < right; ++i) {
-            if (nums_ref[i] > pivot_value) {
-                swap(nums_ref[i], nums_ref[new_pivot_idx++]);
+            if (nums[i] > pivot) {
+                swap(nums[i], nums[newPivotIdx++]);
             }
         }
-        swap(nums_ref[right], nums_ref[new_pivot_idx]);
-        return new_pivot_idx;
-    }
-};
-
-// Time:  O(n) ~ O(n^2)
-// Space: O(1)
-class Solution2 {
-public:
-    int findKthLargest(vector<int>& nums, int k) {
-        nth_element(nums.begin(), next(nums.begin(), k - 1), nums.end(), greater<int>());
-        return *next(nums.begin(), k - 1);
+        swap(nums[right], nums[newPivotIdx]);
+        return newPivotIdx;
     }
 };

@@ -1,58 +1,80 @@
+128. Longest Consecutive Sequence
+Difficulty: Hard
+
+Given an unsorted array of integers, find the length of the longest consecutive elements sequence.
+
+For example,
+Given [100, 4, 200, 1, 3, 2],
+The longest consecutive elements sequence is [1, 2, 3, 4]. Return its length: 4.
+
+Your algorithm should run in O(n) complexity
+
 // Time:  O(n)
 // Space: O(n)
 
 class Solution {
 public:
     int longestConsecutive(vector<int>& nums) {
-        // unprocessed_entries records the existence of each entry in num.
-        unordered_set<int> unprocessed_entries;
-        for (const auto& num : nums) {
-            unprocessed_entries.emplace(num);
+        unordered_map<int, bool> visited
+
+        for (auto num : nums) {
+            visited[num] = false;
         }
 
-        int max_interval_size = 0;
-        while (!unprocessed_entries.empty()) {
-            int num = *unprocessed_entries.begin();
-            unprocessed_entries.erase(num);
-
-            // Finds the lower bound of the largest range containing a.
-            int lower_bound = num - 1;
-            while (unprocessed_entries.count(lower_bound)) {
-                unprocessed_entries.erase(lower_bound);
-                --lower_bound;
+        int maxLength = 1;
+        for (auto num : nums) {
+            if (visited[nums[i]]) {
+                continue;
             }
 
-            // Finds the upper bound of the largest range containing a.
-            int upper_bound = num + 1;
-            while (unprocessed_entries.count(upper_bound)) {
-                unprocessed_entries.erase(upper_bound);
-                ++upper_bound;
+            visited[num[i]] = true;
+            int lenth = 1;
+            
+            for (int lessNum = num - 1; visited.find(lessNum) != visited.end(); lessNum--) {
+                visited[lessNum] = true;
+                ++length;
             }
-            max_interval_size =
-            max(max_interval_size, upper_bound - lower_bound - 1);
+
+            for (int greaterNum = num + 1; visited.find(greaterNum) != visited.end(); greaterNum++) {
+                visited[greaterNum] = true;
+                ++length;
+            }
+
+            maxLength = max(maxLength, length);
         }
-        return max_interval_size;
+        return maxLength;
     }
 };
 
 // Time:  O(n)
 // Space: O(n)
-class Solution2 {
+class Solution {
 public:
     int longestConsecutive(vector<int> &nums) {
-        if (nums.empty()) {
-            return 0;
-        }
-        unordered_map<int, int> hash;
-        int ans{1};
-        for (const auto& i : nums) {
-            if (!hash[i]) {
-                hash[i] = 1;
-                int leftbound{hash[i - 1]}, rightbound{hash[i + 1]}; // Get neighbor info.
-                hash[i - leftbound] = hash[i + rightbound] = 1 + leftbound + rightbound; // Update left and right bound info.
-                ans = max(ans, 1 + leftbound + rightbound);
+        unordered_map<int, int> mergedLength;
+        int size = nums.size();
+        int length = 1;
+        for (int i = 0; i < size; i++) {
+            if (mergedLength.find(nums[i]) != mergedLength.end()) {
+                continue;
+            }
+            mergedLength[nums[i]] = 1;
+            if (mergedLength.find(nums[i] - 1) != mergedLength.end()) {
+                length = max(length, merge(mergedLength, nums[i] - 1, nums[i]));
+            }
+            if (mergedLength.find(nums[i] + 1) != mergedLength.end()) {
+                length = max(length, merge(mergedLength, nums[i], nums[i] + 1));
             }
         }
-        return ans;
+        return size == 0 ? 0 : length;
+    }
+private:
+    int merge(unordered_map<int, int> &mergedLength, int left, int right) {
+        int upper = right + mergedLength[right] - 1;
+        int lower = left - mergedLength[left] + 1;
+        int length = upper - lower + 1;
+        mergedLength[upper] = length;
+        mergedLength[lower] = length;
+        return length;
     }
 };

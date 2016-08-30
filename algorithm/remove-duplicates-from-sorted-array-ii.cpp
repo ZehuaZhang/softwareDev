@@ -1,27 +1,32 @@
+80. Remove Duplicates from Sorted Array II
+Difficulty: Medium
+Follow up for "Remove Duplicates":
+What if duplicates are allowed at most twice?
+
+For example,
+Given sorted array nums = [1,1,1,2,2,3],
+
+Your function should return length = 5, with the first five elements of nums being 1, 1, 2, 2 and 3. 
+It doesnt matter what you leave beyond the new length.
+
 // Time:  O(n)
 // Space: O(1)
 
 class Solution {
 public:
     int removeDuplicates(vector<int>& nums) {
-        if (nums.empty()) {
-            return 0;
+        const int k = 2; // At most k duplicated allowed of any element
+
+        if (nums.size() <= k) {
+            return nums.size();
         }
 
-        const int k = 2; // At most k duplicated.
-
-        int left = 0;
-        int right = 1;
-
-        while (right < nums.size()) {
-            if (nums[left] != nums[right] ||
-                (left - k + 1 < 0 || nums[left] != nums[left - k + 1])) {
-                ++left;
-                nums[left] = nums[right];
+        int index = k;
+        for (int i = k; i < nums.size(); i++) {
+            if (nums[i] != nums[index - k]) {
+                nums[index++] = nums[i];
             }
-            ++right;
         }
-
-        return left + 1; 
+        return index;
     }
 };
