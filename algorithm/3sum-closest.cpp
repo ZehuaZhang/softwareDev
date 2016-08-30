@@ -12,11 +12,6 @@ Return the sum of the three integers. You may assume that each input would have 
 
 class Solution {
 public:
-    /**
-     * @param numbers: Give an array numbers of n integer
-     * @param target: An integer
-     * @return: return the sum of the three integers, the sum closest target.
-     */
     int threeSumClosest(vector<int> nums, int target) {
         int ans = INT_MAX;
         int minDiff = INT_MAX;
