@@ -1,3 +1,10 @@
+28. Implement strStr()
+Difficulty: Easy
+
+Implement strStr().
+
+Returns the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
+
 // Time:  O(n + k)
 // Space: O(k)
 
@@ -52,7 +59,7 @@ public:
 class Solution2 {
 public:
     int strStr(string haystack, string needle) {
-        for (int i = 0; i + needle.length() < haystack.length() + 1; ++i) {
+        for (int i = 0; i + needle.length() <= haystack.length(); ++i) {
             if (haystack.substr(i, needle.length()) == needle) {
                 return i;
             }

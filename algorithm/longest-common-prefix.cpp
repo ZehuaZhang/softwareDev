@@ -8,10 +8,10 @@ public:
             return "";
         }
 
-        for (int i = 0; i < strs[0].length(); ++i) {
-            for (const auto& str : strs) {
-                if (i >= str.length() || str[i] != strs[0][i]) {
-                    return strs[0].substr(0, i);
+        for (int idx = 0; idx < strs[0].length(); ++idx) {
+            for (int i = 0; i < strs.size(); i++) {
+                if (idx == strs[i].length() || strs[i][idx] != strs[0][idx]) {
+                    return strs[0].substr(0, idx);
                 }
             }
         }
