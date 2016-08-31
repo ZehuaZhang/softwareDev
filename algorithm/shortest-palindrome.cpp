@@ -1,3 +1,14 @@
+214. Shortest Palindrome
+Difficulty: Hard
+
+Given a string S, you are allowed to convert it to a palindrome by adding characters in front of it. Find and return the shortest palindrome you can find by performing this transformation.
+
+For example:
+
+Given "aacecaaa", return "aaacecaaa".
+
+Given "abcd", return "dcbabcd".
+
 // Time:  O(n)
 // Space: O(n)
 
@@ -8,12 +19,12 @@ public:
             if (s.empty()) {
                 return s;
             }
-            string rev_s(s.crbegin(), s.crend());
+            string reverseS(s.crbegin(), s.crend());
             // Assume s is (Palindrome)abc,
-            // A would be (Palindrome)abccba(Palindrome).
-            string A = s + rev_s;
-            auto prefix = getPrefix(A);
-            // The index prefix.back() of A would be:
+            // palindrome longest could be (Palindrome)abccba(Palindrome).
+            string palindrome = s + reverseS;
+            vector<int> prefix = getPrefix(palindrome);
+            // The index prefix.back() of palindrome would be:
             // (Palindrome)abccba(Palindrome)
             //            ^
             // The index prefix.back() + 1 of s would be:
@@ -22,11 +33,11 @@ public:
             // Get non palindrome part of s.
             int i = prefix.back();
             while (i >= s.length()) {
-                i = prefix[i];
+                i = prefix[i];  // out of bound, move backward
             }
-            string non_palindrome = s.substr(i + 1);
-            reverse(non_palindrome.begin(), non_palindrome.end());
-            return non_palindrome + s;  // cba(Palindrome)abc.
+            string nonPalindrome = s.substr(i + 1);
+            reverse(nonPalindrome.begin(), nonPalindrome.end());
+            return nonPalindrome + s;  // cba(Palindrome)abc.
         }
         
 private:

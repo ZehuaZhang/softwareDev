@@ -58,8 +58,8 @@ public:
         const int n = nums.size();
         unordered_map<int, int> hash;
 
-        for (const auto& i : nums) {
-            ++hash[i];
+        for (const auto& num : nums) {
+            ++hash[num];
 
             if (hash.size() == k) {
                 for (auto it = hash.begin(); it != hash.end(); ++it) {
@@ -71,20 +71,20 @@ public:
         }
 
         // reset count
-        for (auto& it : hash) { 
-            it.second = 0;
+        for (auto& h : hash) { 
+            h.second = 0;
         }
 
         // Counts the occurrence of each candidate integer.
         for (const auto& num : nums) {
             if (hash.find(i) != hash.end()) {
-                hash[i] -> second++;
+                ++hash[i];
             }
         }
 
         // Selects the integer which occurs > [n / k] times.
         vector<int> ret;
-        for (const pair<int, int>& h : hash) {
+        for (const auto h : hash) {
             if (h.second > n / k) {
                 ret.emplace_back(h.first);
             }
