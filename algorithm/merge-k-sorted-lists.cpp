@@ -1,3 +1,8 @@
+23. Merge k Sorted Lists
+Difficulty: Hard
+
+Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
+
 // Time:  O(n * logk)
 // Space: O(1)
 
@@ -13,20 +18,15 @@
 // Merge two by two solution.
 class Solution {
 public:
-    ListNode *mergeKLists(vector<ListNode *> &lists) {
-        if (lists.empty()) {
-            return nullptr;
-        }
-
-        int left = 0, right = lists.size() - 1;
-        while (right > 0) {
-            if (left >= right) {
-                left = 0;
-            } else {
-                lists[left] = mergeTwoLists(lists[left], lists[right]);
-                ++left;
-                --right;
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        if (lists.size() == 0) return NULL;
+        int n = lists.size();
+        while (n > 1) {
+            int k = (n + 1) / 2;    //skip middle if lists size is odd
+            for (int i = 0; i < n / 2; ++i) {
+                lists[i] = mergeTwoLists(lists[i], lists[i + k]);
             }
+            n = k;
         }
         return lists[0];
     }
@@ -110,22 +110,23 @@ public:
             }
         };
 
-        // Use min heap to keep the smallest node of each list
-        priority_queue<ListNode *, vector<ListNode *>, Compare> min_heap;
-        for (const auto& n : lists) {
-            if (n) {
-                min_heap.emplace(n);
+        // Use min heap to keep the smallest node of each list, build heap O(k)
+        priority_queue<ListNode *, vector<ListNode *>, Compare> minHeap;
+        for (const auto& list : lists) {
+            if (list) {
+                minHeap.emplace(list);
             }
         }
 
-        while (!min_heap.empty()) {
+        // extract min of k lists, n * logk + k
+        while (!minHeap.empty()) {
             // Get min of k lists.
-            auto *node = min_heap.top();
-            min_heap.pop();
-            cur->next = node;
-            cur = cur->next;
+            auto node = minHeap.top();
+            minHeap.pop();
+            curr->next = node;
+            curr = curr->next;
             if (node->next) {
-                min_heap.emplace(node->next);
+                minHeap.emplace(node->next);
             }
         }
 

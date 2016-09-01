@@ -1,3 +1,13 @@
+24. Swap Nodes in Pairs
+Difficulty: Easy
+
+Given a linked list, swap every two adjacent nodes and return its head.
+
+For example,
+Given 1->2->3->4, you should return the list as 2->1->4->3.
+
+Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.
+
 // Time:  O(n)
 // Space: O(1)
 
@@ -16,13 +26,11 @@ public:
         dummy.next = head;
         auto curr = &dummy;
         while (curr->next && curr->next->next) {
-            auto next_one = curr->next;
-            auto next_two = next_one->next;
-            auto next_three = next_two->next;
-            curr->next = next_two;
-            next_two->next = next_one;
-            next_one->next = next_three;
-            curr = next_one;
+            auto next = curr->next;
+            curr->next = next->next;
+            next->next = next->next->next;
+            curr->next->next = next;
+            curr = next;
         }
         return dummy.next; 
     }
