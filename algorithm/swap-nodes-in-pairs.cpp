@@ -26,12 +26,15 @@ public:
         dummy.next = head;
         auto curr = &dummy;
         while (curr->next && curr->next->next) {
-            auto next = curr->next;
-            curr->next = next->next;
-            next->next = next->next->next;
-            curr->next->next = next;
-            curr = next;
+            auto nextOne = curr->next;
+            auto nextTwo = curr->next->next;
+            
+            curr->next = nextTwo;
+            nextOne->next = nextTwo->next;
+            nextTwo->next = nextOne;
+            
+            curr = nextOne;
         }
-        return dummy.next; 
+        return dummy.next;
     }
 };

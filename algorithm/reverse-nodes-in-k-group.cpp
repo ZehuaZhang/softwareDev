@@ -43,3 +43,35 @@ public:
         }
     }
 };
+
+ if (k < 2 || head == nullptr || head->next == nullptr) {
+            return head;
+        }
+        ListNode dummy(0);
+        dummy.next = head;
+        ListNode *prevEnd = &dummy;
+        ListNode *curr = head;
+        while (ListNode *currEnd = curr) {
+            for (int i = 1; i < k && currEnd; i++) {
+                currEnd = currEnd->next;
+            }
+            if (currEnd == nullptr) {
+                break;
+            }
+            ListNode *next = currEnd->next;
+            ListNode *prev = nullptr;
+            while (curr != next) {
+                ListNode *nextCurr = curr->next;
+                if (prev == nullptr) {
+                    prevEnd->next = currEnd;
+                    prevEnd = curr;
+                    curr->next = next;
+                } else {
+                    curr->next = prev;
+                }
+                prev = curr;
+                curr = nextCurr;
+            }
+        }
+        return dummy.next;
+    }
