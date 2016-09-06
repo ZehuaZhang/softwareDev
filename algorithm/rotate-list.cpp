@@ -1,3 +1,12 @@
+61. Rotate List
+Difficulty: Medium
+
+Given a list, rotate the list to the right by k places, where k is non-negative.
+
+For example:
+Given 1->2->3->4->5->NULL and k = 2,
+return 4->5->1->2->3->NULL.
+
 // Time:  O(n)
 // Space: O(1)
 
@@ -20,25 +29,26 @@
 class Solution {
 public:
     ListNode* rotateRight(ListNode* head, int k) {
-        if (head == nullptr || head->next == nullptr) {
+        if (head == nullptr) {
             return head;
         }
 
-        int n = 1;
-        auto curr = head;
-        for (; curr->next; curr = curr->next) {
-            ++n;
+        int len = 1;
+        ListNode* curr = head;
+        while(curr->next) {
+            ++len;
+            curr = curr->next;
         }
         curr->next = head;
 
-        auto tail = curr;
-        k = n - k % n;
-        curr = head;
-        for (int i = 0; i < k; curr = curr->next, ++i) {
-            tail = curr;
+        k = len - k % len;
+        for (int i = 0; i < k; ++i) {
+            curr = curr->next;
         }
 
-        tail->next = nullptr;
-        return curr; 
+        head = curr->next;
+        curr->next = nullptr;
+
+        return head; 
     }
 };

@@ -15,22 +15,20 @@ public:
         ListNode dummy{0};
         dummy.next = head;
 
-        auto *prev = &dummy;
+        ListNode* prev = &dummy;
 
         for (int i = 0; i < m - 1; ++i) {
             prev = prev->next;
         }
 
-        auto *head2 = prev;
-
-        prev = prev->next;
-        auto *cur = prev->next;
+        ListNode* curr = prev->next;
 
         for (int i = m; i < n; ++i) {
-            prev->next = cur->next;  // Remove cur from the list.
-            cur->next = head2->next; // Add cur to the head.
-            head2->next = cur;       // Add cur to the head.
-            cur = prev->next;        // Get next cur.
+            ListNode* next = curr->next;
+            ListNode* prevHead = prev->next;
+            prev->next = next;
+            curr->next = next->next;
+            next->next = prevHead;
         }
 
         return dummy.next;
