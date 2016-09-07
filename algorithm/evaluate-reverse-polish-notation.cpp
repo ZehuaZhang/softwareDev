@@ -1,3 +1,14 @@
+150. Evaluate Reverse Polish Notation
+Difficulty: Medium
+
+Evaluate the value of an arithmetic expression in Reverse Polish Notation.
+
+Valid operators are +, -, *, /. Each operand may be an integer or another expression.
+
+Some examples:
+  ["2", "1", "+", "3", "*"] -> ((2 + 1) * 3) -> 9
+  ["4", "13", "5", "/", "+"] -> (4 + (13 / 5)) -> 6
+
 // Time:  O(n)
 // Space: O(n)
 
@@ -7,32 +18,27 @@ public:
         if (tokens.empty()) {
             return 0;
         }
-        stack<string> s;
-        for (const auto& tok : tokens) {
-            if (!is_operator(tok)) {
-                s.emplace(tok);
+        stack<int> s;
+        for (const auto& token : tokens) {
+            if (!isOperator(token)) {
+                s.emplace(stoi(token));
             } else {
-                auto&& y = stoi(s.top());
-                s.pop();
-                auto&& x = stoi(s.top());
-                s.pop();
-                if (tok[0] == '+') {
-                    x += y;
-                } else if (tok[0] == '-') {
-                    x -= y;
-                } else if (tok[0] == '*') {
-                    x *= y;
-                } else {
-                    x /= y;
+                int y = s.top(); s.pop();
+                int x = s.top(); s.pop();
+                switch(token[0]) {
+                case '+' : x += y; break;
+                case '-' : x -= y; break;
+                case '*' : x *= y; break;
+                case '/' : x /= y; break;
                 }
-                s.emplace(to_string(x));
+                s.emplace(x);
             }
         }
-        return stoi(s.top());
+        return s.top();
     }
 
 private:
-    bool is_operator(const string& op) {
+    bool isOperator(const string& op) {
         return op.length() == 1 && string("+-*/").find(op) != string::npos;
     }
 };

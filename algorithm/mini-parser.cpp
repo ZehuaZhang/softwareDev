@@ -1,3 +1,32 @@
+385. Mini Parser
+Difficulty: Medium
+
+Given a nested list of integers represented as a string, implement a parser to deserialize it.
+
+Each element is either an integer, or a list -- whose elements may also be integers or other lists.
+
+Note: You may assume that the string is well-formed:
+
+String is non-empty.
+String does not contain white spaces.
+String contains only digits 0-9 [ - , ]
+
+Example 1:
+Given s = "324",
+
+You should return a NestedInteger object which contains a single integer 324.
+
+Example 2:
+Given s = "[123,[456,[789]]]",
+
+Return a NestedInteger object containing a nested list with 2 elements:
+
+1. An integer containing value 123.
+2. A nested list containing two elements:
+    i.  An integer containing value 456.
+    ii. A nested list with one element:
+         a. An integer containing value 789.
+
 // Time:  O(n)
 // Space: O(h)
 
@@ -53,84 +82,12 @@ public:
                     stk.top().add(NestedInteger(stoi(s.substr(i, j - i))));
                 }
                 if (s[j] == ']' && stk.size() > 1) {
-                    NestedInteger cur = stk.top();
-                    stk.pop();
+                    NestedInteger cur = stk.top(); stk.pop();
                     stk.top().add(cur);
                 }
                 i = j + 1;
             }
         }
         return stk.top();
-    }
-};
-
-// Time:  O(n)
-// Space: O(h)
-// Recursive solution. 
-class Solution2 {
-public:
-    NestedInteger deserialize(string s) {
-        if (s.empty()) {
-            return NestedInteger();
-        }
-        int i = 0;
-        return deserializeHelper(s, &i);
-    }
-
-private:
-    NestedInteger deserializeHelper(const string& s, int *i) {
-        NestedInteger result;
-        if (s[*i] != '[') {
-            int j = *i;
-            while (j < s.length() && (s[j] == '-' || isdigit(s[j]))) {
-                ++j;
-            }
-            result.setInteger(stoi(s.substr(*i, j - *i + 1)));
-            *i = j;
-        } else {
-            ++(*i);
-            while (*i < s.length() && s[*i] != ']') {
-                result.add(deserializeHelper(s, i));
-                if (*i < s.length() && s[*i] == ',') {
-                    ++(*i);
-                }
-            }
-            ++(*i);
-        }
-        return result;
-    }
-};
-
-// Time:  O(n)
-// Space: O(n)
-// Recursive solution. 
-class Solution3 {
-public:
-    NestedInteger deserialize(string s) {
-        if (s.empty()) {
-            return NestedInteger();
-        }
-        istringstream in(s);  // copy string: extra O(n) space
-        return deserializeHelper(in);
-    }
-
-private:
-    NestedInteger deserializeHelper(istringstream &in) {
-        NestedInteger result;
-        int num = 0;
-        if (in >> num) {
-            result.setInteger(num);
-        } else {
-            in.clear();
-            in.get();
-            while (in.peek() != ']') {
-                result.add(deserializeHelper(in));
-                if (in.peek() == ',') {
-                    in.get();
-                }
-            }
-            in.get();
-        }
-        return result;
     }
 };

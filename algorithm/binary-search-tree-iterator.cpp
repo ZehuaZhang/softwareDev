@@ -1,3 +1,12 @@
+173. Binary Search Tree Iterator
+Difficulty: Medium
+
+Implement an iterator over a binary search tree (BST). Your iterator will be initialized with the root node of a BST.
+
+Calling next() will return the next smallest number in the BST.
+
+Note: next() and hasNext() should run in average O(1) time and uses O(h) memory, where h is the height of the tree.
+
 // Time:  O(1), amortized
 // Space: O(h)
 
@@ -12,33 +21,33 @@
  */
 class BSTIterator {
 public:
-    BSTIterator(TreeNode *root) : cur_(root) {
+    BSTIterator(TreeNode *root) : _curr(root) {
     }
 
     /** @return whether we have a next smallest number */
     bool hasNext() {
-        return !s_.empty() || cur_ != nullptr;
+        return !_s.empty() || _curr != nullptr;
     }
 
     /** @return the next smallest number */
     int next() {
         // Go to the left most descendant.
-        while (cur_ != nullptr) {
-            s_.emplace(cur_);
-            cur_ = cur_->left;
+        while (_curr != nullptr) {
+            _s.emplace(_curr);
+            _curr = _curr->left;
         }
-        cur_ = s_.top();  // Left most node.
-        s_.pop();
+        _curr = _s.top();  // Left most node.
+        _s.pop();
 
-        const auto *node = cur_;
-        cur_ = cur_->right;  // Visit right child.
+        const auto *node = _curr;
+        _curr = _curr->right;  // Visit right child.
 
         return node->val;
     }
 
 private:
-    stack<TreeNode *> s_;
-    TreeNode *cur_;
+    stack<TreeNode *> _s;
+    TreeNode *_curr;
 };
 
 /**

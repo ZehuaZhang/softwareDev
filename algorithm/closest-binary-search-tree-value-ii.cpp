@@ -1,5 +1,28 @@
-// Time:  O(h + k)
-// Space: O(h)
+272. Closest Binary Search Tree Value II
+Difficuly : hard
+
+Given a non-empty binary search tree and a target value, find k values in the BST that are closest to the target.
+
+Note:
+Given target value is a floating point.
+You may assume k is always valid, that is: k ≤ total nodes.
+You are guaranteed to have only one unique set of k values in the BST that are closest to the target.
+ 
+
+Follow up:
+Assume that the BST is balanced, could you solve it in less than O(n) runtime (where n = total nodes)?
+
+Hint:
+
+1. Consider implement these two helper functions:
+　　i. getPredecessor(N), which returns the next smaller node to N.
+　　ii. getSuccessor(N), which returns the next larger node to N.
+2. Try to assume that each node has a parent pointer, it makes the problem much easier.
+3. Without parent pointer we just need to keep track of the path from the root to the current node using a stack.
+4. You would need two stacks to track the path in finding predecessor and successor node separately.
+
+// Time:  O(n)
+// Space: O(n)
 
 /**
  * Definition for a binary tree node.
@@ -13,58 +36,28 @@
 class Solution {
 public:
     vector<int> closestKValues(TreeNode* root, double target, int k) {
-        // The forward or backward iterator.
-        const auto backward = [](const vector<TreeNode*>& s) { return s.back()->left; };
-        const auto forward = [](const vector<TreeNode*>& s) { return s.back()->right; };
-        const auto closest = [&target](const TreeNode* a, const TreeNode* b) { 
-                                return abs(a->val - target) < abs(b->val - target); 
-                            };
+        vector<int> closest;
+        int start = 0;
+        stack<TreeNode *> s;
+        TreeNode *curr = root;
 
-        // Build the stack to the closest node.
-        vector<TreeNode*> s;
-        while (root) {
-            s.emplace_back(root);
-            root = target < root->val ? root->left : root->right;
-        }
-
-        // Get the stack to the next smaller node.
-        vector<TreeNode*> forward_stack(s.cbegin(), next(min_element(s.cbegin(), s.cend(), closest)));
-        vector<TreeNode*> backward_stack(forward_stack);
-        nextNode(backward_stack, backward, forward);
-    
-        // Get the closest k values by advancing the iterators of the stacks.
-        vector<int> result;
-        for (int i = 0; i < k; ++i) {
-            if (!forward_stack.empty() && 
-                (backward_stack.empty() || closest(forward_stack.back(), backward_stack.back()))) {
-                result.emplace_back(forward_stack.back()->val);
-                nextNode(forward_stack, forward, backward);
-            } else if (!backward_stack.empty() &&
-                       (forward_stack.empty() || !closest(forward_stack.back(), backward_stack.back()))) {
-                result.emplace_back(backward_stack.back()->val);
-                nextNode(backward_stack, backward, forward);
-            }
-        }
-        return result;
-    }
-    
-    // Helper to make a stack to the next node.
-    template<typename T, typename U>
-    void nextNode(vector<TreeNode*>& s, const T& child1, const U& child2) {
-        if (!s.empty()) {
-            if (child2(s)) {
-                s.emplace_back(child2(s));
-                while (child1(s)) {
-                    s.emplace_back(child1(s));
-                }
+        while (curr || !s.empty()) {
+            if (curr) {
+                s.push(curr);
+                curr = curr->left;
             } else {
-                auto child = s.back();
-                s.pop_back();
-                while (!s.empty() && child == child2(s)) {
-                    child = s.back();
-                    s.pop_back();
+                curr = s.top(); s.pop();
+                if (closest.size() < k) {
+                    closest.push_back(curr->val);
+                } else if (abs(curr->val - target) < abs(closest[start] - target)) {
+                    closest.push_back(curr->val);
+                    start++;
+                } else {
+                    break;
                 }
+                curr = curr->right;
             }
         }
-    }
+        vector<int> result(closest.begin() + start, closest.end());
+        return result;
 };
