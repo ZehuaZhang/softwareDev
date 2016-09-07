@@ -1,3 +1,16 @@
+85. Maximal Rectangle
+Difficulty: Hard
+
+Given a 2D binary matrix filled with 0's and 1's, find the largest rectangle containing only 1 and return its area.
+
+For example, given the following matrix:
+
+1 0 1 0 0
+1 0 1 1 1
+1 1 1 1 1
+1 0 0 1 0
+Return 6.
+
 // Time:  O(m * n)
 // Space: O(n)
 
@@ -5,41 +18,43 @@
 class Solution {
 public:
     int maximalRectangle(vector<vector<char> > &matrix) {
-        if (matrix.empty() || matrix[0].empty()) {
+        if (matrix.empty()) {
             return 0;
         }
 
-        int res = 0;
-        vector<int> height(matrix[0].size(), 0);
-        for (int i = 0; i < matrix.size(); ++i) {
-            for (int j = 0; j < matrix[0].size(); ++j) {
-                height[j] = matrix[i][j] == '1' ? height[j] + 1 : 0;
+        const int m = matrix.size();
+        const int n = matrix[0].size();
+        int maxArea = 0;
+        vector<int> heights(n, 0);
+
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                heights[j] = matrix[i][j] == '1' ? heights[j] + 1 : 0;
             }
-            res = max(res, largestRectangleArea(height));
+            maxArea = max(maxArea, maximalRectangleTillCurrRow(heights));
         }
 
-        return res;
+        return maxArea;
     }
 
 private:
-    int largestRectangleArea(const vector<int> &height) {
-        stack<int> increasing_height;
-        int max_area = 0;
+    int maximalRectangleTillCurrRow(vector<int> heights) {
+        stack<int> incHeights;  // store index of heights
+        heights.push_back(0); // for final calculate
+        int maxArea = 0;
 
-        for (int i = 0; i <= height.size();) {
-            if (increasing_height.empty() ||
-                (i < height.size() && height[i] > height[increasing_height.top()])) {
-                increasing_height.emplace(i);
-                ++i;
+        for (int i = 0; i < heights.size();) {
+            if (incHeights.empty() || heights[i] > heights[incHeights.top()]) {
+                incHeights.emplace(i++);
             } else {
-                auto h = height[increasing_height.top()];
-                increasing_height.pop();
-                auto left = increasing_height.empty() ? -1 : increasing_height.top();
-                max_area = max(max_area, h * (i - left - 1));
+                int height = heights[incHeights.top()];
+                incHeights.pop();
+                int len = incHeights.empty() ? i : i - incHeights.top() - 1;
+                maxArea = max(maxArea, height * len);
             }
         }
 
-        return max_area;
+        return maxArea;
     }
 };
 
@@ -54,8 +69,8 @@ public:
         }
 
         const int m = matrix.size();
-        const int n = matrix.front().size();
-        int res = 0;
+        const int n = matrix[0].size();
+        int maxArea = 0;
         vector<int> H(n, 0);  // Height of all ones rectangle include matrix[i][j].
         vector<int> L(n, 0);  // Left closed bound of all ones rectangle include matrix[i][j].
         vector<int> R(n, n);  // Right open bound of all ones rectangle include matrix[i][j].
@@ -76,13 +91,13 @@ public:
             for (int j = n - 1; j >= 0; --j) {
                 if (matrix[i][j] == '1') {
                     R[j] = min(R[j], right);  // Update right bound.
-                    res = max(res, H[j] * (R[j] - L[j]));
+                    maxArea = max(maxArea, H[j] * (R[j] - L[j]));
                 } else {
                     right = j;
                 }
             }
         }
 
-        return res;
+        return maxArea;
     }
 };

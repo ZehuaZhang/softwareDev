@@ -53,11 +53,10 @@ public:
     vector<string> decode(string s) {
         vector<string> strs;
         
-        for (size_t pos = 0; pos < s.length();) {
+        for (size_t pos = 0; pos < s.length(); pos = slash + len) {
             auto slash = s.find("/", pos);
             size_t len = strtol(s.substr(pos, slash));
-            strs.push_back(s.substr(++slash, len))
-            pos = slash + len;
+            strs.push_back(s.substr(++slash, len));
         }
     
         return strs;

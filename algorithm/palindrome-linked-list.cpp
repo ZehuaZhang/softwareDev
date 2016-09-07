@@ -1,3 +1,11 @@
+234. Palindrome Linked List
+Difficulty: Easy
+
+Given a singly linked list, determine if it is a palindrome.
+
+Follow up:
+Could you do it in O(n) time and O(1) space?
+
 // Time:  O(n)
 // Space: O(1)
 
@@ -12,32 +20,56 @@
 class Solution {
 public:
     bool isPalindrome(ListNode* head) {
-        // Reverse the first half list.
-        ListNode *reverse = nullptr, *fast = head;
+        // reverse the first half list
+        ListNode *prev = nullptr, *fast = head;
         while (fast && fast->next) {
             fast = fast->next->next;
-            const auto head_next = head->next;
-            head->next = reverse;
-            reverse = head;
-            head = head_next;
+            ListNode* next = head->next;
+            head->next = prev;
+            prev = head;
+            head = next;
         }
 
-        // If the number of the nodes is odd,
-        // set the head of the tail list to the next of the median node.
-        ListNode *tail = fast ? head->next : head;
+        // skip median if number of list elements is odd
+        fast = fast? head->next : head;
 
-        // Compare the reversed first half list with the second half list.
-        // And restore the reversed first half list.
-        bool is_palindrome = true;
-        while (reverse) {
-            is_palindrome = is_palindrome && reverse->val == tail->val;
-            const auto reverse_next = reverse->next;
-            reverse->next = head;
-            head = reverse;
-            reverse = reverse_next;
-            tail = tail->next;
+        // compare two halves and restore first half
+        bool isPalindrome = true;
+        while (prev) {
+            isPalindrome = isPalindrome && fast->val == prev->val;
+            ListNode* next = prev->next;
+            prev->next = head;
+            head = prev;
+            prev = next;
+            fast = fast->next;
         }
             
-        return is_palindrome;   
+        return isPalindrome;   
+    }
+};
+
+// Time:  O(n)
+// Space: O(n)
+
+class Solution2 {
+public:
+    bool isPalindrome(ListNode* head) {
+        ListNode *slow = head, *fast = head;
+        stack<int> s;
+        while (fast && fast->next) {
+            s.push(slow->val);
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        if (fast) {
+            slow = slow->next;
+        }
+        while (slow) {
+            int tmp = s.top(); s.pop();
+            if (tmp != slow->val) return false;
+            slow = slow->next;
+            
+        }
+        return true;
     }
 };

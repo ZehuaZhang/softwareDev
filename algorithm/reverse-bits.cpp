@@ -1,5 +1,6 @@
 190. Reverse Bits
 Difficulty: Easy
+
 Reverse bits of a given 32 bits unsigned integer.
 
 For example, given input 43261596 (represented in binary as 00000010100101000001111010011100), 

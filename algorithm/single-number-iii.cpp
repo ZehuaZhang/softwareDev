@@ -32,7 +32,7 @@ public:
         int x = 0;
         for (const auto& num : nums) {
             if (num & bit) {
-                x ^= i;
+                x ^= num;
             }
         }
 

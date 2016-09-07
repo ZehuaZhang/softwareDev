@@ -1,3 +1,17 @@
+369. Plus One Linked List
+Difficulty : Medium
+
+Given a non-negative number represented as a singly linked list of digits, plus one to the number.
+
+The digits are stored such that the most significant digit is at the head of the list.
+
+Example:
+Input:
+1->2->3
+
+Output:
+1->2->4
+
 // Time:  O(n)
 // Space: O(1)
 
@@ -17,10 +31,10 @@ public:
             return nullptr;
         }
 
-        auto dummy = new ListNode{0};
+        ListNode* dummy = new ListNode{0};
         dummy->next = head;
 
-        auto left = dummy, right = head;
+        ListNode* left = dummy, *right = head;
         while (right->next) {
             if (right->val != 9) {
                 left = right;
@@ -40,49 +54,10 @@ public:
         }
 
         if (dummy->val == 0) {
-            head = dummy->next;
             delete dummy;
             return head;
         }
 
         return dummy;
-    }
-};
-
-// Time:  O(n)
-// Space: O(1)
-class Solution2 {
-public:
-    ListNode* plusOne(ListNode* head) {
-        auto rev_head = reverseList(head);
-
-        auto curr = rev_head;
-        int carry = 1;
-        while (curr && carry) {
-            curr->val += carry;
-            carry = curr->val / 10;
-            curr->val %= 10;
-            if (carry && !curr->next) {
-                curr->next = new ListNode(0);
-            }
-            curr = curr->next;
-        }
-
-        return reverseList(rev_head);
-    }
-
-private:
-    ListNode* reverseList(ListNode* head) {
-        ListNode dummy{0};
-        auto curr = head;
-
-        while (curr) {
-            auto tmp = curr->next;
-            curr->next = dummy.next;
-            dummy.next = curr;
-            curr = tmp;
-        }
-
-        return dummy.next;
     }
 };
