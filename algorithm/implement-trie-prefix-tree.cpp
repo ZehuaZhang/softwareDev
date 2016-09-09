@@ -1,39 +1,46 @@
+208. Implement Trie (Prefix Tree)
+Difficulty: Medium
+
+Implement a trie with insert, search, and startsWith methods.
+
+Note:
+You may assume that all inputs are consist of lowercase letters a-z.
+
 // Time:  O(n), per operation
 // Space: O(1)
 
 class TrieNode {
 public:
     // Initialize your data structure here.
-    TrieNode() : is_string(false) {
-        
+    TrieNode() : isString(false) {
     }
-    bool is_string;
+    bool isString;
     unordered_map<char, TrieNode *> leaves;
 };
 
 class Trie {
 public:
     Trie() {
-        root_ = new TrieNode();
+        _root = new TrieNode();
     }
 
     // Inserts a word into the trie.
     void insert(string word) {
-        auto *cur = root_;
-        for (const auto& c : word) {
-            if (!cur->leaves.count(c)) {
-                cur->leaves[c] = new TrieNode();
+        TrieNode *curr = _root;
+        for (auto c : word) {
+            if (!curr->leaves.count(c)) {
+                curr->leaves[c] = new TrieNode();
             }
-            cur = cur->leaves[c];
+            curr = cur->leaves[c];
         }
-        cur->is_string = true;
+        curr->isString = true;
     }
 
     // Returns if the word is in the trie.
     bool search(string word) {
-        auto *node = childSearch(word);
+        TrieNode *node = childSearch(word);
         if (node) {
-            return node->is_string;
+            return node->isString;
         }
         return false;   
     }
@@ -41,23 +48,24 @@ public:
     // Returns if there is any word in the trie
     // that starts with the given prefix.
     bool startsWith(string prefix) {
-        return childSearch(prefix);
+        return childSearch(prefix) != nullptr;
     }
 
+    // return last character of word in Trie
     TrieNode *childSearch(const string& word) {
-        auto *cur = root_;
+        TrieNode *curr = _root;
         for (const auto& c : word) {
-            if (cur->leaves.count(c)) {
-                cur = cur->leaves[c];
+            if (curr->leaves.count(c)) {
+                curr = curr->leaves[c];
             } else {
                 return nullptr;
             }
         }
-        return cur;
+        return curr;
     }
 
 private:
-    TrieNode *root_;
+    TrieNode *_root;
 };
 
 // Your Trie object will be instantiated and called as such:
