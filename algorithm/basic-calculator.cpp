@@ -1,33 +1,42 @@
+224. Basic Calculator
+Difficulty: Hard
+
+Implement a basic calculator to evaluate a simple expression string.
+
+The expression string may contain open ( and closing parentheses ), the plus + or minus sign -, non-negative integers and empty spaces .
+
+You may assume that the given expression is always valid.
+
+Some examples:
+"1 + 1" = 2
+" 2-1 + 2 " = 3
+"(1+(4+5+2)-3)+(6+8)" = 23
+
 // Time:  O(n)
 // Space: O(n)
 
-// Support +, -, *, /.
+// Support +, -, *, /, (, ).
 class Solution {
 public:
     int calculate(string s) {
         stack<int64_t> operands;
         stack<char> operators;
-        string operand;
-        for (int i = s.length() - 1; i >= 0; --i) {
+        int64_t operand = 0;
+        for (int i = 0; i < s.length(); ++i) {
             if (isdigit(s[i])) {
-                operand.push_back(s[i]);
-                if (i == 0 || !isdigit(s[i - 1])) {
-                    reverse(operand.begin(), operand.end());
-                    operands.emplace(stol(operand));
-                    operand.clear();
+                operand = operand * 10 + s[i] - '0';
+                if (i == s.length() - 1 || !isdigit(s[i + 1])) {
+                    operands.push(operand);
+                    operand = 0;
                 }
-            } else if (s[i] == ')' || s[i] == '*' ||
-                       s[i] == '/') {
-                operators.emplace(s[i]);
-            } else if (s[i] == '+' || s[i] == '-') {
-                while (!operators.empty() && (operators.top() == '*' ||
-                       operators.top() == '/')) {
-                     compute(operands, operators);
+            } else if (s[i] == '(' || isOperator(s[i])) {
+                while (!operators.empty() && precedence(s[i]) <= precedence(operators.top())) {
+                    compute(operands, operators);
                 }
                 operators.emplace(s[i]);
-            } else if (s[i] == '(') {
+            } else if (s[i] == ')') {
                 // operators at least one element, i.e. ')'.
-                while (operators.top() != ')') {
+                while (operators.top() != '(') {
                     compute(operands, operators);
                 }
                 operators.pop();
@@ -37,70 +46,33 @@ public:
             compute(operands, operators);
         }
         return operands.top();
+    }
+    
+    bool isOperator(const char op) {
+        return string("+-*/").find(op) != string::npos;
+    }
+    
+    int precedence(const char op) {
+        switch(op) {
+        case '+' : return 1;
+        case '-' : return 1;
+        case '*' : return 2;
+        case '/' : return 2;
+        case '(' : return 3;
+        }
+        return 0;
     }
 
     void compute(stack<int64_t>& operands, stack<char>& operators) {
-        const int64_t left = operands.top();
-        operands.pop();
-        const int64_t right = operands.top();
-        operands.pop();
-        const char op = operators.top();
-        operators.pop();
-        if (op == '+') {
-            operands.emplace(left + right);
-        } else if (op == '-') {
-            operands.emplace(left - right);
-        } else if (op == '*') {
-            operands.emplace(left * right);
-        } else if (op == '/') {
-            operands.emplace(left / right);
+        const int64_t y = operands.top(); operands.pop();
+        const int64_t x = operands.top(); operands.pop();
+        const char op = operators.top(); operators.pop();
+
+        switch (op) {
+        case '+' : operands.emplace(x + y); break;
+        case '-' : operands.emplace(x - y); break;
+        case '*' : operands.emplace(x * y); break;
+        case '/' : operands.emplace(x / y); break;
         }
     }
-};
-
-// Time:  O(n)
-// Space: O(n)
-// Only support +, -.
-class Solution2 {
-public:
-    int calculate(string s) {
-        stack<int> operands;
-        stack<char> operators;
-        string operand;
-        for (int i = s.length() - 1; i >= 0; --i) {
-            if (isdigit(s[i])) {
-                operand.push_back(s[i]);
-                if (i == 0 || !isdigit(s[i - 1])) {
-                    reverse(operand.begin(), operand.end());
-                    operands.emplace(stoi(operand));
-                    operand.clear();
-                }
-            } else if (s[i] == ')' || s[i] == '+' || s[i] == '-') {
-                operators.emplace(s[i]);
-            } else if (s[i] == '(') {
-                while (operators.top() != ')') {
-                    compute(operands, operators);
-                }
-                operators.pop();
-            }
-        }
-        while (!operators.empty()) {
-            compute(operands, operators);
-        }
-        return operands.top();
-    }
-
-    void compute(stack<int>& operands, stack<char>& operators) {
-        const int left = operands.top();
-        operands.pop();
-        const int right = operands.top();
-        operands.pop();
-        const char op = operators.top();
-        operators.pop();
-        if (op == '+') {
-            operands.emplace(left + right);
-        } else if (op == '-') {
-            operands.emplace(left - right);
-        }
-    } 
 };

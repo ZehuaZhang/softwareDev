@@ -1,3 +1,13 @@
+99. Recover Binary Search Tree
+Difficulty: Hard
+
+Two elements of a binary search tree (BST) are swapped by mistake.
+
+Recover the tree without changing its structure.
+
+Note:
+A solution using O(n) space is pretty straight forward. Could you devise a constant space solution?
+
 // Time:  O(n)
 // Space: O(1)
 
@@ -23,37 +33,37 @@ private:
         }
         pair<TreeNode *, TreeNode *> broken;
         TreeNode *prev = nullptr;
-        TreeNode *cur = root;
-        while (cur) {
-            if (!cur->left) {
-                detect(prev, cur, &broken);
-                prev = cur;
-                cur = cur->right;
+        TreeNode *curr = root;
+        while (curr) {
+            if (!curr->left) {
+                detect(prev, curr, broken);
+                prev = curr;
+                curr = curr->right;
             } else {
-                TreeNode *node = cur->left;
-                while (node->right && node->right != cur) {
+                TreeNode *node = curr->left;
+                while (node->right && node->right != curr) {
                     node = node->right;
                 }
                 if (!node->right) {
-                    node->right = cur;
-                    cur = cur->left;
+                    node->right = curr;
+                    curr = curr->left;
                 } else {
-                    detect(prev, cur, &broken);
-                    prev = cur;
+                    detect(prev, curr, broken);
                     node->right = nullptr;
-                    cur = cur->right;
+                    prev = curr;
+                    curr = curr->right;
                 }
             }
         }
         swap(broken.first->val, broken.second->val);
     }
 
-    void detect(TreeNode *prev, TreeNode *cur, pair<TreeNode *, TreeNode *> *broken) {
-        if (prev && prev->val > cur->val) {
+    void detect(TreeNode *prev, TreeNode *curr, pair<TreeNode *, TreeNode *> &broken) {
+        if (prev && prev->val > curr->val) {
             if (!broken->first) { // Find the first broken node.
                 broken->first = prev;
             }
-            broken->second = cur;  // Find the last broken node.
+            broken->second = curr;  // Find the last broken node.
         }
     }
 };

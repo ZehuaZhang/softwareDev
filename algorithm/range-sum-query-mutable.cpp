@@ -1,3 +1,20 @@
+Range Sum Query - Mutable
+Difficulty: Medium
+
+Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
+
+The update(i, val) function modifies nums by updating the element at index i to val.
+Example:
+Given nums = [1, 3, 5]
+
+sumRange(0, 2) -> 9
+update(1, 2)
+sumRange(0, 2) -> 8
+
+Note:
+The array is only modifiable by the update function.
+You may assume the number of calls to update and sumRange function is distributed evenly.
+
 // Time:  ctor:   O(n),
 //        update: O(logn),
 //        query:  O(logn)
@@ -6,152 +23,44 @@
 // Binary Indexed Tree (BIT) solution.
 class NumArray {
 public:
-    NumArray(vector<int> &nums) : nums_(nums) {
-        bit_ = vector<int>(nums_.size() + 1);
-        for (int i = 1; i < bit_.size(); ++i) {
-            bit_[i] = nums[i - 1] + bit_[i - 1];
-        }
-        for (int i = bit_.size() - 1; i >= 1; --i) {
-            int last_i = i - lower_bit(i);
-            bit_[i] -= bit_[last_i];
+    // C1 = A1
+    // C2 = A1 + A2
+    // C3 = A3
+    // C4 = A1 + A2 + A3 + A4
+    // C5 = A5
+    // C6 = A5 + A6
+    // C7 = A7
+    // C8 = A1 + A2 + A3 + A4 + A5 + A6 + A7 + A8
+    // in BIT, you can consider "+" is relation with two nodes
+
+    NumArray(vector<int> &nums) : {
+        _nums.resize(nums.size() + 1);
+        _bits.resize(nums.size() + 1);
+        for (int i = 0; i < nums.size(); ++i) {
+            update(i, nums[i]);
         }
     }
-
     void update(int i, int val) {
-        if (val - nums_[i]) {
-            add(i, val - nums_[i]);
-            nums_[i] = val;
+        int diff = val - _nums[i + 1];  // difference of new and previous value
+        for (int j = i + 1; j < _nums.size(); j += (j & -j)) {  // advance by lower bit set
+            _bits[j] += diff;
         }
+        _nums[i + 1] = val;
     }
-
     int sumRange(int i, int j) {
-        return sum(j) - sum(i - 1);
+        return getSum(j + 1) - getSum(i);
+    }    
+    int getSum(int i) { // accumulative sum before i
+        int result = 0;
+        for (int j = i; j > 0; j -= (j & -j)) { 
+            result += _bits[j];
+        }
+        return result;
     }
 
 private:
-    vector<int> &nums_;
-    vector<int> bit_;
-
-    int sum(int i) {
-        ++i;
-        int sum = 0;
-        for (; i > 0; i -= lower_bit(i)) {
-            sum += bit_[i];
-        }
-        return sum;
-    }
-
-    void add(int i, int val) {
-        ++i;
-        for (; i <= nums_.size(); i += lower_bit(i)) {
-            bit_[i] += val;
-        }
-    }
-
-    inline int lower_bit(int i) {
-        return i & -i;
-    }
-};
-
-// Time:  ctor:   O(n),
-//        update: O(logn),
-//        query:  O(logn)
-// Space: O(n)
-// Segment Tree solution.
-class NumArray2 {
-public:
-    NumArray(vector<int> &nums) : nums_(nums) {
-        root_ = buildHelper(nums, 0, nums.size() - 1);
-    }
-    
-    void update(int i, int val) {
-        if (nums_[i] != val) {
-            nums_[i] = val;
-            updateHelper(root_, i, val);
-        }
-    }
-
-    int sumRange(int i, int j) {
-        return sumRangeHelper(root_, i, j);
-    }
-
-private:
-    vector<int>& nums_;
-
-    class SegmentTreeNode {
-    public:
-        int start, end;
-        int sum;
-        SegmentTreeNode *left, *right;
-        SegmentTreeNode(int i, int j, int s) : 
-            start(i), end(j), sum(s),
-            left(nullptr), right(nullptr) {
-        }
-    };
-
-    SegmentTreeNode *root_;
-
-    // Build segment tree.
-    SegmentTreeNode *buildHelper(const vector<int>& nums, int start, int end) {
-        if (start > end) {
-            return nullptr;
-        }
-
-        // The root's start and end is given by build method.
-        SegmentTreeNode *root = new SegmentTreeNode(start, end, 0);
-
-        // If start equals to end, there will be no children for this node.
-        if (start == end) {
-            root->sum = nums[start];
-            return root;
-        }
-
-        // Left child: start=numsleft, end=(numsleft + numsright) / 2.
-        root->left = buildHelper(nums, start, (start + end) / 2);
-
-        // Right child: start=(numsleft + numsright) / 2 + 1, end=numsright.
-        root->right = buildHelper(nums, (start + end) / 2 + 1, end);
-
-        // Update sum.
-        root->sum = (root->left != nullptr ? root->left->sum : 0) +
-                    (root->right != nullptr ? root->right->sum : 0);
-        return root;
-    }
-
-    void updateHelper(SegmentTreeNode *root, int i, int val) {
-        // Out of range.
-        if (root == nullptr || root->start > i || root->end < i) {
-            return;
-        }
-
-        // Change the node's value with [i] to the new given value.
-        if (root->start == i && root->end == i) {
-            root->sum = val;
-            return;
-        }
-
-        updateHelper(root->left, i, val);
-        updateHelper(root->right, i, val);
-
-        // Update sum.
-        root->sum =  (root->left != nullptr ? root->left->sum : 0) +
-                     (root->right != nullptr ? root->right->sum : 0);
-    }
-    
-    int sumRangeHelper(SegmentTreeNode *root, int start, int end) {
-        // Out of range.
-        if (root == nullptr || root->start > end || root->end < start) {
-            return 0;
-        }
-
-        // Current segment is totally within range [start, end]
-        if (root->start >= start && root->end <= end) {
-            return root->sum;
-        }
-
-        return sumRangeHelper(root->left, start, end) +
-               sumRangeHelper(root->right, start, end);
-    }
+    vector<int> _nums;  // nums staring @ index 1
+    vector<int> _bits;  // diff
 };
 
 // Your NumArray object will be instantiated and called as such:

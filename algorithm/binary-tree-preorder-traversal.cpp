@@ -1,5 +1,19 @@
-// Time:  O(n)
-// Space: O(1)
+144. Binary Tree Preorder Traversal  QuestionEditorial Solution  My Submissions
+Total Accepted: 139719
+Total Submissions: 335647
+Difficulty: Medium
+Given a binary tree, return the preorder traversal of its nodes values.
+
+For example:
+Given binary tree {1,#,2,3},
+   1
+    \
+     2
+    /
+   3
+return [1,2,3].
+
+Note: Recursive solution is trivial, could you do it iteratively?
 
 /**
  * Definition for a binary tree node.
@@ -10,7 +24,38 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+
+// Time:  O(n)
+// Space: O(n)
+
 class Solution {
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        stack<const TreeNode *> s;
+        if (root) {
+            s.push(root);
+        }
+        vector<int> result;
+        while (!s.empty()) {
+            const TreeNode *curr = s.top(); s.pop();
+            result.push_back(curr->val);
+            
+            if (curr->right) {
+                s.push(curr->right);
+            }
+            if (curr->left) {
+                s.push(curr->left);
+            }
+        }
+        return result;
+    }
+};
+
+
+// Time:  O(n)
+// Space: O(1)
+
+class Solution2 {
 public:
     vector<int> preorderTraversal(TreeNode* root) {
         vector<int> res;
@@ -35,32 +80,5 @@ public:
             }
         }
         return res; 
-    }
-};
-
-// Time:  O(n)
-// Space: O(h)
-class Solution2 {
-public:
-    vector<int> preorderTraversal(TreeNode* root) {
-        vector<int> res;
-        stack<pair<TreeNode *, bool>> s;
-        s.emplace(root, false);
-        while (!s.empty()) {
-            bool visited;
-            tie(root, visited) = s.top();
-            s.pop();
-            if (root == nullptr) {
-                continue;
-            }
-            if (visited) {
-                res.emplace_back(root->val);
-            } else {
-                s.emplace(root->right, false);
-                s.emplace(root->left, false);
-                s.emplace(root, true);
-            }
-        }
-        return res;
     }
 };

@@ -1,5 +1,18 @@
-// Time:  O(n)
-// Space: O(1)
+94. Binary Tree Inorder Traversal 
+Difficulty: Medium
+
+Given a binary tree, return the inorder traversal of its nodes values.
+
+For example:
+Given binary tree [1,null,2,3],
+   1
+    \
+     2
+    /
+   3
+return [1,3,2].
+
+Note: Recursive solution is trivial, could you do it iteratively?
 
 /**
  * Definition for a binary tree node.
@@ -10,7 +23,35 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+
+// Time:  O(n)
+// Space: O(h)
+
 class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode *root) {
+        vector<int> result;
+        stack<const TreeNode *> s;
+        const TreeNode *curr = root;
+        while (!s.empty() || curr != nullptr) {
+            if (curr != nullptr) {
+                s.push(curr);
+                curr = curr->left;
+            } else {
+                curr = s.top();
+                s.pop();
+                result.push_back(curr->val);
+                curr = curr->right;
+            }
+        }
+        return result;
+    }
+};
+
+// Time:  O(n)
+// Space: O(1)
+
+class Solution2 {
 public:
     vector<int> inorderTraversal(TreeNode* root) {
         vector<int> res;
@@ -32,33 +73,6 @@ public:
                     node->right = nullptr;
                     curr = curr->right;
                 }
-            }
-        }
-        return res;
-    }
-};
-
-// Time:  O(n)
-// Space: O(h)
-class Solution2 {
-public:
-    vector<int> inorderTraversal(TreeNode* root) {
-        vector<int> res;
-        stack<pair<TreeNode *, bool>> s;
-        s.emplace(root, false);
-        while (!s.empty()) {
-            bool visited;
-            tie(root, visited) = s.top();
-            s.pop();
-            if (root == nullptr) {
-                continue;
-            }
-            if (visited) {
-                res.emplace_back(root->val);
-            } else {
-                s.emplace(root->right, false);
-                s.emplace(root, true);
-                s.emplace(root->left, false);
             }
         }
         return res;

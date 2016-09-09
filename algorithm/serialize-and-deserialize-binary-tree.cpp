@@ -1,3 +1,25 @@
+297. Serialize and Deserialize Binary Tree
+Difficulty: Hard
+
+Serialization is the process of converting a data structure or object into 
+a sequence of bits so that it can be stored in a file or memory buffer, 
+or transmitted across a network connection link to be reconstructed later in the same or another computer environment.
+
+Design an algorithm to serialize and deserialize a binary tree. 
+There is no restriction on how your serialization/deserialization algorithm should work. 
+You just need to ensure that a binary tree can be serialized to a string and this string can be deserialized to the original tree structure.
+
+For example, you may serialize the following tree
+
+    1
+   / \
+  2   3
+     / \
+    4   5
+as "[1,2,3,null,null,4,5]", just the same as how LeetCode OJ serializes a binary tree.
+You do not necessarily need to follow this format, so please be creative and come up with different approaches yourself.
+Note: Do not use class member/global/static variables to store states. Your serialize and deserialize algorithms should be stateless.
+
 // Time:  O(n)
 // Space: O(h)
 
@@ -10,105 +32,43 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
-class Codec {
-public:
-
-    // Encodes a tree to a single string.
-    string serialize(TreeNode* root) {
-        string output;
-        serializeHelper(root, &output);
-        return output;
-    }
-
-    // Decodes your encoded data to tree.
-    TreeNode* deserialize(string data) {
-        TreeNode *root = nullptr;
-        int start = 0;
-        return deserializeHelper(data, &start);
-    }
-
-private:
-    bool getNumber(const string &data, int *start, int *num) {
-        int sign = 1;
-        if (data[*start] == '#') {
-            *start += 2;  // Skip "# ".
-            return false;
-        } else if (data[*start] == '-') {
-            sign = -1;
-            ++(*start);
-        }
-
-        for (*num = 0; isdigit(data[*start]); ++(*start)) {
-            *num = *num * 10 + data[*start] - '0';
-        }
-        *num *= sign;
-        ++(*start);  // Skip " ".
-
-        return true;
-    }
-    
-    void serializeHelper(const TreeNode *root, string *prev) {
-        if (!root)  {
-            prev->append("# ");
-        } else {
-            prev->append(to_string(root->val).append(" "));
-            serializeHelper(root->left, prev);
-            serializeHelper(root->right, prev);
-        }
-    }
-
-    TreeNode *deserializeHelper(const string& data, int *start) {
-        int num;
-        if (!getNumber(data, start, &num)) {
-            return nullptr;
-        } else {
-            TreeNode *root = new TreeNode(num);
-            root->left = deserializeHelper(data, start);
-            root->right = deserializeHelper(data, start);
-            return root;
-        }
-    }
-};
-
 
 // Time:  O(n)
 // Space: O(n)
-class Codec2 {
+class Codec {
 public:
-
     // Encodes a tree to a single string.
     string serialize(TreeNode* root) {
         ostringstream out;
-        serializeHelper(root, out);
+        serialize(root, out);
         return out.str();
     }
 
     // Decodes your encoded data to tree.
     TreeNode* deserialize(string data) {
         istringstream in(data);  // Space: O(n)
-        return deserializeHelper(in);
+        return deserialize(in);
     }
-
 private:
-    void serializeHelper(const TreeNode *root, ostringstream& out) {
-        if (!root)  {
+    void serialize(const TreeNode *root, ostringstream& out) {  //preorder
+        if (!root)  {   // every nullptr child becomes "#"
             out << "# ";
         } else {
             out << root->val << " ";
-            serializeHelper(root->left, out);
-            serializeHelper(root->right, out);
+            serialize(root->left, out);
+            serialize(root->right, out);
         }
     }
 
-    TreeNode *deserializeHelper(istringstream& in) {
+    TreeNode *deserialize(istringstream& in) {
         string val;
         in >> val;
         if (val == "#") {
             return nullptr;
         } else {
             TreeNode* root = new TreeNode(stoi(val));
-            root->left = deserializeHelper(in);
-            root->right = deserializeHelper(in);
+            root->left = deserialize(in);
+            root->right = deserialize(in);
             return root;
         }
     }

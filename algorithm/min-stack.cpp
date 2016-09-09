@@ -1,77 +1,58 @@
+155. Min Stack
+Difficulty: Easy
+
+Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
+
+push(x) -- Push element x onto stack.
+pop() -- Removes the element on top of the stack.
+top() -- Get the top element.
+getMin() -- Retrieve the minimum element in the stack.
+
+Example:
+MinStack minStack = new MinStack();
+minStack.push(-2);
+minStack.push(0);
+minStack.push(-3);
+minStack.getMin();   --> Returns -3.
+minStack.pop();
+minStack.top();      --> Returns 0.
+minStack.getMin();   --> Returns -2.
+
 // Time:  O(n)
 // Space: O(1)
 
 class MinStack {
 public:
-    void push(int number) {
-        if (elements_.empty()) {
-            elements_.emplace(0);
-            stack_min_ = number;
+    void push(int x) {
+        if (_diff.empty()) {
+            _diff.emplace(0);
+            _stackMin = x;
         } else {
-            elements_.emplace(static_cast<int64_t>(number) - stack_min_);
-            if (number < stack_min_) {
-                stack_min_ = number; // Update min.
-            }
+            _diff.emplace(static_cast<int64_t>(x) - _stackMin); // compare with previous min
+            _stackMin = min(_stackMin, x); // Update min.
         }
     }
 
     void pop() {
-        auto diff = elements_.top();
-        elements_.pop();
-        if (diff < 0) {
-            stack_min_ -= diff; // Restore previous min.
+        if (_diff.top() < 0) {
+            _stackMin -= diff; // Restore previous min.
         }
+        _diff.pop();
     }
 
     int top() {
-        if (elements_.top() > 0) {
-            return stack_min_ + elements_.top();
+        if (_diff.top() > 0) {
+            return _stackMin + _diff.top();
         } else {
-            return stack_min_;
+            return _stackMin;
         }
     }
 
     int getMin() {
-        return stack_min_;
+        return _stackMin;
     }
 
 private:
-    stack<int64_t> elements_;
-    int stack_min_;
-};
-
-
-// Time:  O(n)
-// Space: O(n)
-class MinStack2 {
-public:
-    void push(int number) {
-        if (cached_min_with_count_.empty() || cached_min_with_count_.top().first > number) {
-            cached_min_with_count_.emplace(number, 1);
-        } else if (cached_min_with_count_.top().first == number) {
-            ++cached_min_with_count_.top().second;
-        }
-        elements_.emplace(number);
-    }
-
-    void pop() {
-        if (cached_min_with_count_.top().first == elements_.top()) {
-            if (--cached_min_with_count_.top().second == 0) {
-                cached_min_with_count_.pop();
-            }
-        }
-        elements_.pop();
-    }
-
-    int top() {
-        return elements_.top();
-    }
-
-    int getMin() {
-        return cached_min_with_count_.top().first;
-    }
-
-private:
-    stack<int> elements_;
-    stack<pair<int, int>> cached_min_with_count_;
+    stack<int64_t> _diff;
+    int _stackMin;
 };

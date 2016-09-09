@@ -1,45 +1,32 @@
-// Time:  O(n)
-// Space: O(n)
+358. Rearrange String k Distance Apart
+Difficulty : Hard
 
-class Solution {
-public:
-    string rearrangeString(string str, int k) {
-        int cnts [26] = {0};
-        for (int i = 0;  i < str.length(); ++i) {
-            ++cnts[str[i] - 'a'];
-        }
+Given a non-empty string str and an integer k, rearrange the string such that the same characters are at least distance k from each other.
 
-        vector<pair<int, char>> sorted_cnts;
-        for (int i = 0; i < 26; ++i) {
-            sorted_cnts.emplace_back(cnts[i], i + 'a');
-        }
-        sort(sorted_cnts.begin(), sorted_cnts.end(), greater<pair<int, int>>());
+All input strings are given in lowercase letters. If it is not possible to rearrange the string, return an empty string "".
 
-        const auto max_cnt = sorted_cnts[0].first;
-        string blocks[max_cnt];
-        int i = 0;
-        for (const auto& cnt : sorted_cnts) {
-            for (int j = 0; j < cnt.first; ++j) {
-                blocks[i].push_back(cnt.second);
-                i = (i + 1) % max(cnt.first, max_cnt - 1);
-            }
-        }
+Example 1:
+str = "aabbcc", k = 3
+Result: "abcabc"
 
-        string result;
-        for (int i = 0; i < max_cnt - 1; ++i) {
-            if (blocks[i].length() < k) {
-                return "";
-            } else {
-                result += blocks[i];
-            }
-        }
-        result += blocks[max_cnt - 1];
-        return result;
-    }
-};
+The same letters are at least distance 3 from each other.
+
+Example 2:
+str = "aaabc", k = 3 
+Answer: ""
+
+It is not possible to rearrange the string.
+
+Example 3:
+str = "aaadbbcc", k = 2
+Answer: "abacabcd"
+Another possible answer is: "abcabcda"
+
+The same letters are at least distance 2 from each other.
 
 // Time:  O(nlogc), c is the count of unique characters.
 // Space: O(c)
+
 class Solution2 {
 public:
     string rearrangeString(string str, int k) {
@@ -52,28 +39,30 @@ public:
             ++cnts[c];
         }
 
-        priority_queue<pair<int, char>> heap;
-        for (const auto& kvp : cnts) {
-            heap.emplace(kvp.second, kvp.first);
+        priority_queue<pair<int, char>> heap;   // reverse unordered_map from (char, cnt) to (cnt, char)
+        for (const auto& cnt : cnts) {
+            heap.emplace(cnt.second, cnt.first);
         }
 
         string result;
         while (!heap.empty()) {
-            vector<pair<int, char>> used_cnt_chars;
+            vector<pair<int, char>> usedCntChars;
             int cnt = min(k, static_cast<int>(str.length() - result.length()));
             for (int i = 0; i < cnt; ++i) {
                 if (heap.empty()) {
                     return "";
                 }
-                auto cnt_char = heap.top();
-                heap.pop();
-                result.push_back(cnt_char.second);
-                if (--cnt_char.first > 0) {
-                    used_cnt_chars.emplace_back(move(cnt_char));
+                // extract element which has most counts, append to string
+                auto cntChar = heap.top(); heap.pop();
+                result.push_back(cntChar.second);
+                // if there's some left, store the pair into buffer
+                if (--cntChar.first > 0) {
+                    usedCntChars.emplace_back(cntChar);
                 }
             }
-            for (auto& cnt_char: used_cnt_chars) {
-                heap.emplace(move(cnt_char));
+            // put used pairs back for next iteration
+            for (auto pair: usedCntChars) {
+                heap.emplace(pair);
             }
         }
         return result;

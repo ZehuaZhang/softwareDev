@@ -1,3 +1,37 @@
+331. Verify Preorder Serialization of a Binary Tree
+Difficulty: Medium
+
+One way to serialize a binary tree is to use pre-order traversal. When we encounter a non-null node, we record the node value.
+If it is a null node, we record using a sentinel value such as #.
+
+     _9_
+    /   \
+   3     2
+  / \   / \
+ 4   1  #  6
+/ \ / \   / \
+# # # #   # #
+For example, the above binary tree can be serialized to the string "9,3,4,#,#,1,#,#,2,#,6,#,#", where # represents a null node.
+
+Given a string of comma separated values, verify whether it is a correct preorder traversal serialization of a binary tree.
+Find an algorithm without reconstructing the tree.
+
+Each comma separated value in the string must be either an integer or a character '#' representing null pointer.
+
+You may assume that the input format is always valid, for example it could never contain two consecutive commas such as "1,,3".
+
+Example 1:
+"9,3,4,#,#,1,#,#,2,#,6,#,#"
+Return true
+
+Example 2:
+"1,#"
+Return false
+
+Example 3:
+"9,#,#,1"
+Return false
+
 // Time:  O(n)
 // Space: O(1)
 
@@ -7,45 +41,26 @@ public:
         if (preorder.empty()) {
             return false;
         }
-        Tokenizer tokens(preorder);
-        int depth = 0; 
-        int i = 0;
-        for (; i < tokens.size() && depth >= 0; ++i) {
-            if (tokens.get_next() == "#") {
-                --depth;
+        istringstream in(preorder);
+        vector<string> tokens;
+        string token;
+        
+        while (getline(in, token, ',')) {
+            tokens.push_back(token);
+        }
+
+        int parents = 0;
+        for (int i = 0; i < tokens.size() - 1; ++i) {
+            // for full tree, leaves are always one more than parent nodes
+            if (tokens[i] == "#") {
+                if (parents-- == 0) {   // preorder, root is before leaf
+                    return false;
+                }
             } else {
-                ++depth;
+                ++parents;
             }
         }
-        return i == tokens.size() && depth < 0;  
+        // by this point - one leaf left, parents should match to leaves
+        return parents != 0 ? false : tokens.back() == "#";   // last one must be "#", leaf
     }
-
-    class Tokenizer {
-    public:
-        Tokenizer(const string& str) : str_(str), i_(0), cnt_(0) {
-            size_ = count(str_.cbegin(), str_.cend(), ',') + 1;
-        }
-
-        string get_next() {
-            string next;
-            if (cnt_ < size_) {
-                size_t j =  str_.find(",", i_);
-                next = str_.substr(i_, j - i_);
-                i_ = j + 1;
-                ++cnt_;
-            }
-            return next;
-        }
-
-        size_t size() {
-            return size_;
-        }
-
-    private:
-        const string& str_;
-        size_t size_;
-        size_t cnt_;
-        size_t i_;
-    };
-
 };

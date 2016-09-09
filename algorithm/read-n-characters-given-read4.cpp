@@ -16,15 +16,15 @@ int read4(char *buf);
 class Solution {
 public:
     int read(char *buf, int n) {
-        int read_bytes = 0;
+        int readBytes = 0;
         for (int i = 0; i <= n / 4; ++i) {
-            if (int size = read4(buf + read_bytes)) {
-                read_bytes += size;
+            if (int size = read4(buf + readBytes)) {
+                readBytes += size;
             } else {
                 break;
             }
         }
-        return min(read_bytes, n);
+        return min(readBytes, n);
     }
 };
 
