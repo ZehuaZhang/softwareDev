@@ -1,51 +1,52 @@
+76. Minimum Window Substring
+Difficulty: Hard
+
+Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).
+
+For example,
+S = "ADOBECODEBANC"
+T = "ABC"
+Minimum window is "BANC".
+
+Note:
+If there is no such window in S that covers all characters in T, return the empty string "".
+
+If there are multiple such windows, you are guaranteed that there will always be only one unique minimum window in S.
+
 // Time:  O(n)
 // Space: O(k)
 
 class Solution {
 public:
     string minWindow(string s, string t) {
-        if (s.empty() || s.length() < t.length()) {
+        if (t.size() > s.size()) {
             return "";
         }
-
-        const int ASCII_MAX = 256;
-        vector<int> exp_cnt(ASCII_MAX, 0);
-        vector<int> cur_cnt(ASCII_MAX, 0);
-
-        int cnt = 0;
-        int start = 0;
-        int min_start = 0;
-        int min_width = numeric_limits<int>::max();
-
-        for (const auto& c : t) {
-            ++exp_cnt[c];
+        unordered_map<char, int> cntT;
+        for (int i = 0; i < t.size(); ++i) {
+            ++cntT[t[i]];
         }
-
-        for (int i = 0; i < s.length(); ++i) {
-            if (exp_cnt[s[i]] > 0) {
-                ++cur_cnt[s[i]];
-                if (cur_cnt[s[i]] <= exp_cnt[s[i]]) {  // Counting expected elements.
-                    ++cnt;
+        string result = "";
+        int left = 0, count = 0, minLen = s.size() + 1;
+        for (int right = 0; right < s.size(); ++right) {
+            if (cntT.count(s[right])) {
+                if (--cntT[s[right]] >= 0) {
+                    ++count;
                 }
-            }
-            if (cnt == t.size()) {  // If window meets the requirement.
-                while (exp_cnt[s[start]] == 0 ||  // Adjust left bound of window.
-                       cur_cnt[s[start]] > exp_cnt[s[start]]) {
-                    --cur_cnt[s[start]];
-                    ++start;
-                }
-
-                if (min_width > i - start + 1) {  // Update minimum window.
-                    min_width = i - start + 1;
-                    min_start = start;
+                while (count == t.size()) {
+                    if (right - left + 1 < minLen) {
+                        minLen = right - left + 1;
+                        result = s.substr(left, minLen);
+                    }
+                    if (cntT.count(s[left])) {
+                        if (++cntT[s[left]] > 0) {
+                            --count;
+                        }
+                    }
+                    ++left;
                 }
             }
         }
-
-        if (min_width == numeric_limits<int>::max()) {
-            return "";
-        }
-
-        return s.substr(min_start, min_width);
+        return result;
     }
 };

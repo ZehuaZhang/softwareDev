@@ -1,3 +1,8 @@
+149. Max Points on a Line
+Difficulty: Hard
+
+Given n points on a 2D plane, find the maximum number of points that lie on the same straight line.
+
 // Time:  O(n^2)
 // Space: O(n)
 
@@ -13,32 +18,32 @@
 class Solution {
 public:
     int maxPoints(vector<Point>& points) {
-        int max_points = 0;
+        int maxPoints = 0;
         for (int i = 0; i < points.size(); ++i) {
-            unordered_map<double, int> slope_count;
-            const auto& start = points[i];
-            int same = 1;
+            unordered_map<double, int> slopeCount;
+            auto start = points[i];
+            int samePoints = 1;
 
             for (int j = i + 1; j < points.size(); ++j) {
-                const auto& end = points[j];
+                auto end = points[j];
                 if (start.x == end.x && start.y == end.y) {
-                    ++same;
+                    ++samePoints;
                 } else {
-                    auto slope = numeric_limits<double>::max();
+                    double slope;
                     if (start.x - end.x != 0) {
                         slope = (start.y - end.y) * 1.0 / (start.x - end.x);
+                    } else {
+                        slope = numeric_limits<double>::infinity(); // or ::max();
                     }
-                    ++slope_count[slope];
+                    ++slopeCount[slope];
                 }
             }
-
-            int current_max = same;
-            for (const auto& kvp : slope_count) {
-                current_max = max(current_max, kvp.second + same);
+            
+            maxPoints = max(maxPoints, samePoints);
+            for (auto slope : slopeCount) {
+                maxPoints = max(maxPoints, slope.second + samePoints);
             }
-            max_points = max(max_points, current_max);
         }
-
-        return max_points;
+        return maxPoints;
     }
 };
