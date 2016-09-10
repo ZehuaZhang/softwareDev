@@ -1,38 +1,56 @@
+336. Palindrome Pairs
+Difficulty: Hard
+
+Given a list of unique words. Find all pairs of distinct indices (i, j) in the given list, 
+so that the concatenation of the two words, i.e. words[i] + words[j] is a palindrome.
+
+Example 1:
+Given words = ["bat", "tab", "cat"]
+Return [[0, 1], [1, 0]]
+The palindromes are ["battab", "tabbat"]
+
+Example 2:
+Given words = ["abcd", "dcba", "lls", "s", "sssll"]
+Return [[0, 1], [1, 0], [3, 2], [2, 4]]
+The palindromes are ["dcbaabcd", "abcddcba", "slls", "llssssll"]
+
 // Time:  O(n * k^2), n is the number of the words, k is the max length of the words.
 // Space: O(n * k)
 
 class Solution {
 public:
     vector<vector<int>> palindromePairs(vector<string>& words) {
-        vector<vector<int>> res;
-        unordered_map<string, int> lookup;
+        unordered_map<string, int> idx;
         for (int i = 0; i < words.size(); ++i) {
-            lookup[words[i]] = i;
+            idx[words[i]] = i;
         }
 
+        vector<vector<int>> result;
         for (int i = 0; i < words.size(); ++i) {
             for (int j = 0; j <= words[i].length(); ++j) {
-                if (is_palindrome(words[i], j, words[i].length() - 1)) {
+                // take care of empty string of suffix, and whole string
+                if (isPalindrome(words[i], j, words[i].length() - 1)) {
                     string suffix = words[i].substr(0, j); 
                     reverse(suffix.begin(), suffix.end());
-                    if (lookup.find(suffix) != lookup.end() && i != lookup[suffix]) {
-                        res.push_back({i, lookup[suffix]});
+                    if (idx.count(suffix) && i != idx[suffix]) {
+                        result.push_back({i, idx[suffix]});
                     }
                 }
-                if (j > 0 && is_palindrome(words[i], 0, j - 1)) {
+                // take care of empty string of prefix
+                if (j > 0 && isPalindrome(words[i], 0, j - 1)) {
                     string prefix = words[i].substr(j);
                     reverse(prefix.begin(), prefix.end());
-                    if (lookup.find(prefix) != lookup.end() && lookup[prefix] != i) {
-                        res.push_back({lookup[prefix], i});
+                    if (idx.count(prefix) && idx[prefix] != i) {
+                        result.push_back({idx[prefix], i});
                     }
                 }
             }
         }
-        return res;
+        return result;
     }
 
 private:
-    bool is_palindrome(string& s, int start, int end) {
+    bool isPalindrome(string s, int start, int end) {
         while (start < end) {
             if (s[start++] != s[end--]) {
                 return false;

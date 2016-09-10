@@ -16,7 +16,7 @@ It doesnt matter what you leave beyond the new length.
 class Solution {
 public:
     int removeDuplicates(vector<int>& nums) {
-        const int k = 2; // At most k duplicated allowed of any element
+        const int k = 2; // element appears at most k times
 
         if (nums.size() <= k) {
             return nums.size();

@@ -21,7 +21,7 @@ class Solution {
 public:
     string simplifyPath(string path) {
         vector<string> dirs;
-        vector<string> tokens(move(split(path, '/')));
+        vector<string> tokens(split(path, '/'));
         for (const auto& token : tokens) {
             if (token == ".." && !dirs.empty()) {
                 dirs.pop_back();
