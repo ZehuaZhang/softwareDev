@@ -1,3 +1,10 @@
+12. Integer to Roman
+Difficulty: Medium
+
+Given an integer, convert it to a roman numeral.
+
+Input is guaranteed to be within the range from 1 to 3999.
+
 // Time:  O(n)
 // Space: O(1)
 
@@ -10,14 +17,11 @@ public:
                                     "XL", "X", "IX", "V", "IV", "I"};
 
         string result;
-        int i = 0;
-        while (num > 0) {
-            int times = num / nums[i];
-            while (times--) {
-                num -= nums[i];
+        for (int i = 0; num > 0; ++i) {
+            for (int count = num / nums[i]; count; --count) {
                 result.append(romans[i]);
             }
-            ++i;
+            num %= nums[i];
         }        
         return result;
     }
