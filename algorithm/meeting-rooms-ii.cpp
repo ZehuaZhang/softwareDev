@@ -1,3 +1,13 @@
+253. Meeting Rooms II
+Difficulty : Medium
+
+Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei), 
+find the minimum number of conference rooms required.
+
+For example,
+Given [[0, 30],[5, 10],[15, 20]],
+return 2.
+
 // Time:  O(nlogn)
 // Space: O(n)
 
@@ -14,27 +24,26 @@ class Solution {
 public:
     int minMeetingRooms(vector<Interval>& intervals) {
         vector<int> starts, ends;
-        for (const auto& i : intervals) {
-            starts.emplace_back(i.start);
-            ends.emplace_back(i.end);
+        for (auto interval : intervals) {
+            starts.emplace_back(interval.start);
+            ends.emplace_back(interval.end);
         }
         
         sort(starts.begin(), starts.end());
         sort(ends.begin(), ends.end());
         
-        int min_rooms = 0, cnt_rooms = 0;
-        int s = 0, e = 0;
+        int minRooms = 0, cntRooms = 0;
+        int sp = 0, ep = 0;
         while (s < starts.size()) {
             if (starts[s] < ends[e]) {
-                ++cnt_rooms;  // Acquire a room.
-                // Update the min number of rooms.
-                min_rooms = max(min_rooms, cnt_rooms);
+                // acquire a room, update the min number of rooms.
+                minRooms = max(minRooms, ++cntRooms);
                 ++s;
             } else {
-                --cnt_rooms;  // Release a room.
+                --cntRooms;  // Release a room.
                 ++e;
             }
         }
-        return min_rooms;
+        return minRooms;
     }
 };

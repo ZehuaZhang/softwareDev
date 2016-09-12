@@ -84,7 +84,7 @@ public:
 class Solution3 {
 public:
     TreeNode* invertTree(TreeNode* root) {  // preorder
-        if (root != nullptr) {
+        if (root) {
             swap(root->left, root->right);
             invertTree(root->left);
             invertTree(root->right);

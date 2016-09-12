@@ -35,7 +35,8 @@ public:
     }
 };
 
-
+// Time:  O(n^2)
+// Space: O(n)
 class Solution {
 public:
     vector<vector<int>> generate(int numRows) {

@@ -1,3 +1,8 @@
+147. Insertion Sort List
+Difficulty: Medium
+
+Sort a linked list using insertion sort.
+
 // Time:  O(n^2)
 // Space: O(1)
 
@@ -9,29 +14,23 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+
 class Solution {
-    public:
-        ListNode *insertionSortList(ListNode *head) {
-        ListNode dummy{numeric_limits<int>::min()};
+public:
+    ListNode *insertionSortList(ListNode *head) {
+        ListNode dummy(INT_MIN);
 
-        auto curr = head;
-        ListNode *position = nullptr;
-
-        while (curr) {
-            position = findInsertPosition(&dummy, curr->val);
-            ListNode *tmp = curr->next;
+        for (ListNode *curr = head; curr;) {
+            ListNode *position = nullptr;
+            for (ListNode *prev = &dummy; prev && prev->val <= curr->val; prev = prev->next) {
+                position = prev;
+            }
+            ListNode *next = curr->next;
             curr->next = position->next;
             position->next = curr;
-            curr = tmp;
+            curr = next;
         }
 
         return dummy.next;
-    }
-
-    ListNode* findInsertPosition(ListNode *head, int x) {
-        ListNode *prev = nullptr;
-        for (auto curr = head; curr && curr->val <= x;
-             prev = curr, curr = curr->next);
-        return prev;
     }
 };

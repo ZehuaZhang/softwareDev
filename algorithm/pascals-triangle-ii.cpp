@@ -1,5 +1,6 @@
 119. Pascal Triangle II
 Difficulty: Easy
+
 Given an index k, return the kth row of the Pascal triangle.
 
 For example, given k = 3,

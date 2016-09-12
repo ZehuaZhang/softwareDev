@@ -1,27 +1,14 @@
-// Time:  O(n) ~ O(n^2), O(n) on average.
-// Space: O(n)
+347. Top K Frequent Elements
+Difficulty: Medium
 
-class Solution {
-public:
-    vector<int> topKFrequent(vector<int>& nums, int k) {
-        unordered_map<int, int> counts;
-        for (const auto& i : nums) {
-            ++counts[i];
-        }
+Given a non-empty array of integers, return the k most frequent elements.
 
-        vector<pair<int, int>> p;
-        for (auto it = counts.begin(); it != counts.end(); ++it) {
-            p.emplace_back(-(it->second), it->first);
-        }
-        nth_element(p.begin(), p.begin() + k - 1, p.end());
+For example,
+Given [1,1,1,2,2,3] and k = 2, return [1,2].
 
-        vector<int> result;
-        for (int i = 0; i < k; ++i) {
-            result.emplace_back(p[i].second);
-        }
-        return result;
-    }
-};
+Note: 
+You may assume k is always valid, 1 ≤ k ≤ number of unique elements.
+Your algorithm time complexity must be better than O(n log n), where n is the array size.
 
 // Time:  O(nlogk)
 // Space: O(n)

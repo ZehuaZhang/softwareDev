@@ -1,11 +1,22 @@
+164. Maximum Gap
+Difficulty: Hard
+
+Given an unsorted array, find the maximum difference between the successive elements in its sorted form.
+
+Try to solve it in linear time/space.
+
+Return 0 if the array contains less than 2 elements.
+
+You may assume all elements in the array are non-negative integers and fit in the 32-bit signed integer range.
+
 // Time:  O(n)
 // Space: O(n)
 
 class Solution {
 public:
     struct Bucket {
-        int max = numeric_limits<int>::min();
-        int min = numeric_limits<int>::max();
+        int max = INT_MIN;
+        int min = INT_MAX;
     };
 
     int maximumGap(vector<int>& nums) {
@@ -14,79 +25,31 @@ public:
         }
 
         // Init bucket.
-        int max_val = *max_element(nums.cbegin(), nums.cend());
-        int min_val = *min_element(nums.cbegin(), nums.cend());
-        int gap = max(1, static_cast<int>((max_val - min_val) /
-                                          (nums.size() - 1)));
-        vector<Bucket> buckets((max_val - min_val) / gap + 1);
+        int maxVal = *max_element(nums.cbegin(), nums.cend());
+        int minVal = *min_element(nums.cbegin(), nums.cend());
+        int gap = max(1, (maxVal - minVal) / (nums.size() - 1));
+        vector<Bucket> buckets((maxVal - minVal) / gap + 1);
 
         // Find the bucket where the n should be put.
-        for (const auto& n : nums) {
-            // min_val / max_val is in the first / last bucket.
-            if (n == max_val || n == min_val) {
-                continue;
-            }
-            int i = (n - min_val) / gap;
-            buckets[i].min = min(buckets[i].min, n);
-            buckets[i].max = max(buckets[i].max, n);
+        for (auto num : nums) {
+            int i = (num - minVal) / gap;
+            buckets[i].min = min(buckets[i].min, num);
+            buckets[i].max = max(buckets[i].max, num);
         }
 
         // Maximum gap should not be smaller than any gap inside the bucket.
-        // i.e. max_gap >= (max_val - min_val) / (count - 1)
+        // i.e. maxGap >= (maxVal - minVal) / (count - 1)
         // Thus, only count each bucket gap between the first and the last bucket.
-        int max_gap = 0, pre_bucket_max = min_val;
-        for (const auto& bucket : buckets) {
-            if (bucket.min != numeric_limits<int>::max()) {
-                max_gap = max(max_gap, bucket.min - pre_bucket_max);
-                pre_bucket_max = bucket.max;
+        int maxGap = 0, preBucketMax = minVal;
+        for (auto bucket : buckets) {
+            if (bucket.min != INT_MAX) {
+                maxGap = max(maxGap, bucket.min - preBucketMax);
+                preBucketMax = bucket.max;
             }
         }
         // Count the last bucket.
-        max_gap = max(max_gap, max_val - pre_bucket_max);
+        maxGap = max(maxGap, maxVal - preBucketMax);
 
-        return max_gap;
-    }
-};
-
-// Time:  O(nlogn)
-// Space: O(n)
-class Solution2 {
-public:
-    int maximumGap(vector<int>& nums) {
-        if (nums.size() < 2) {
-            return 0;
-        }
-
-        // Init bucket.
-        int max_val = *max_element(nums.cbegin(), nums.cend());
-        int min_val = *min_element(nums.cbegin(), nums.cend());
-        int gap = max(1, static_cast<int>((max_val - min_val) /
-                                          (nums.size() - 1)));
-        map<int, array<int, 2>> bucket;
-        using ValueType = enum {MIN, MAX};
-
-        // Find the bucket where the n should be put.
-        for (const auto& n : nums) {
-            // min_val / max_val is in the first / last bucket.
-            if (n == max_val || n == min_val) {
-                continue ;    
-            }
-            int i = (n - min_val) / gap;
-            bucket[i][MIN] = min(!bucket[i][MIN] ? numeric_limits<int>::max() : 
-                                                   bucket[i][MIN], n);
-            bucket[i][MAX] = max(!bucket[i][MAX] ? numeric_limits<int>::min() :
-                                                   bucket[i][MAX], n);
-        }
-
-        // Count each bucket gap between the first and the last bucket.
-        int max_gap = 0, pre_bucket_max = min_val;
-        for (auto& kvp : bucket) {
-            max_gap = max(max_gap, kvp.second[MIN] - pre_bucket_max);
-            pre_bucket_max = (kvp.second)[MAX];
-        }
-        // Count the last bucket.
-        max_gap = max(max_gap, max_val - pre_bucket_max);
-
-        return max_gap;
+        return maxGap;
     }
 };

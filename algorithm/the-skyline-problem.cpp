@@ -1,147 +1,66 @@
+218. The Skyline Problem
+Difficulty: Hard
+
+A city skyline is the outer contour of the silhouette formed by all the buildings in that city when viewed from a distance. 
+Now suppose you are given the locations and height of all the buildings as shown on a cityscape photo (Figure A), 
+write a program to output the skyline formed by these buildings collectively (Figure B).
+
+ Buildings Skyline Contour
+The geometric information of each building is represented by a triplet of integers [Li, Ri, Hi], 
+where Li and Ri are the x coordinates of the left and right edge of the ith building, respectively, and Hi is its height. 
+It is guaranteed that 0 ≤ Li, Ri ≤ INT_MAX, 0 < Hi ≤ INT_MAX, and Ri - Li > 0. 
+You may assume all buildings are perfect rectangles grounded on an absolutely flat surface at height 0.
+
+For instance, the dimensions of all buildings in Figure A are recorded as: 
+[ [2 9 10], [3 7 15], [5 12 12], [15 20 10], [19 24 8] ] .
+
+The output is a list of "key points" (red dots in Figure B) in the format of 
+[ [x1,y1], [x2, y2], [x3, y3], ... ] that uniquely defines a skyline. 
+A key point is the left endpoint of a horizontal line segment. Note that the last key point, 
+where the rightmost building ends, is merely used to mark the termination of the skyline, and always has zero height. 
+Also, the ground in between any two adjacent buildings should be considered part of the skyline contour.
+
+For instance, the skyline in Figure B should be represented as:
+[ [2 10], [3 15], [7 12], [12 0], [15 10], [20 8], [24, 0] ].
+
+Notes:
+The number of buildings in any input list is guaranteed to be in the range [0, 10000].
+The input list is already sorted in ascending order by the left x position Li.
+The output list must be sorted by the x position.
+There must be no consecutive horizontal lines of equal height in the output skyline.
+For instance, [...[2 3], [4 5], [7 5], [11 5], [12 7]...] is not acceptable; 
+the three lines of height 5 should be merged into one in the final output as such: [...[2 3], [4 5], [12 7], ...]
+
 // Time:  O(nlogn)
 // Space: O(n)
 
 // BST solution.
 class Solution {
-public:
-    enum {start, end, height};
-    
-    struct Endpoint {
-        int height;
-        bool isStart;
-    };
-    
+public:    
     vector<pair<int, int> > getSkyline(vector<vector<int> >& buildings) {
-        map<int, vector<Endpoint>> point_to_height;  // Ordered, no duplicates.
-        for (const auto& building : buildings) {
-            point_to_height[building[start]].emplace_back(Endpoint{building[height], true});
-            point_to_height[building[end]].emplace_back(Endpoint{building[height], false});
+        vector<pair<int, int>> heights;
+        for (auto bldg : buildings) {
+            heights.push_back({bldg[0], -bldg[2]}); // left
+            heights.push_back({bldg[1], bldg[2]});  // right
         }
+        sort(heights.begin(), heights.end());
 
-        vector<pair<int, int>> res;
-        map<int, int> height_to_count;  // BST.
-        int curr_max = 0;
-        // Enumerate each point in increasing order.
-        for (const auto& kvp : point_to_height) {
-            const auto& point = kvp.first;
-            const auto& heights = kvp.second;
-
-            for (const auto& h : heights) {
-                if (h.isStart) {
-                    ++height_to_count[h.height];
-                } else {
-                    --height_to_count[h.height];
-                    if (height_to_count[h.height] == 0) {
-                        height_to_count.erase(h.height);
-                    }
-                }
+        vector<pair<int, int>> result;
+        multiset<int> set;
+        set.insert(0);
+        int prev = 0, curr = 0;
+        for (auto height : heights) {
+            if (height.second < 0) {    // left
+                set.insert(-height.second);
+            } else {                    // right
+                set.erase(set.find(height.second));
             }
-
-            if (height_to_count.empty() ||
-                curr_max != height_to_count.crbegin()->first) {
-                curr_max = height_to_count.empty() ?
-                           0 : height_to_count.crbegin()->first;
-                res.emplace_back(point, curr_max);
+            curr = *set.rbegin();       // heighest in set
+            if (curr != prev) {
+                result.push_back({height.first, curr});
+                prev = curr;
             }
         }
-        return res;
-    }
-};
-
-// Time:  O(nlogn)
-// Space: O(n)
-// Divide and conquer solution.
-class Solution2 {
-public:
-    enum {start, end, height};
-    
-    vector<pair<int, int>> getSkyline(vector<vector<int>>& buildings) {
-        const auto intervals = ComputeSkylineInInterval(buildings, 0, buildings.size());
-        
-        vector<pair<int, int>> res;
-        int last_end = -1;
-        for (const auto& interval : intervals) {
-            if (last_end != -1 && last_end < interval[start]) {
-                res.emplace_back(last_end, 0);
-            }
-            res.emplace_back(interval[start], interval[height]);
-            last_end = interval[end];
-        }
-        if (last_end != -1) {
-            res.emplace_back(last_end, 0);
-        }
-        return res;
-    }
-    
-    // Divide and Conquer.
-    vector<vector<int>> ComputeSkylineInInterval(const vector<vector<int>>& buildings,
-                                                 int left_endpoint, int right_endpoint) {
-        if (right_endpoint - left_endpoint <= 1) {  // 0 or 1 skyline, just copy it.
-            return {buildings.cbegin() + left_endpoint, 
-                    buildings.cbegin() + right_endpoint};
-        }
-        int mid = left_endpoint + ((right_endpoint - left_endpoint) / 2);
-        auto left_skyline = ComputeSkylineInInterval(buildings, left_endpoint, mid);
-        auto right_skyline = ComputeSkylineInInterval(buildings, mid, right_endpoint);
-        return MergeSkylines(left_skyline, right_skyline);
-    }
-    
-    // Merge Sort
-    vector<vector<int>> MergeSkylines(vector<vector<int>>& left_skyline, vector<vector<int>>& right_skyline) {
-        int i = 0, j = 0;
-        vector<vector<int>> merged;
-        
-        while (i < left_skyline.size() && j < right_skyline.size()) {
-            if (left_skyline[i][end] < right_skyline[j][start]) {
-                merged.emplace_back(move(left_skyline[i++]));
-            } else if (right_skyline[j][end] < left_skyline[i][start]) {
-                merged.emplace_back(move(right_skyline[j++]));
-            } else if (left_skyline[i][start] <= right_skyline[j][start]) {
-                MergeIntersectSkylines(merged, left_skyline[i], i,
-                                       right_skyline[j], j);
-            } else {  // left_skyline[i][start] > right_skyline[j][start].
-                MergeIntersectSkylines(merged, right_skyline[j], j,
-                                       left_skyline[i], i);
-            }
-        }
-        
-        // Insert the remaining skylines.
-        merged.insert(merged.end(), left_skyline.begin() + i, left_skyline.end());
-        merged.insert(merged.end(), right_skyline.begin() + j, right_skyline.end());
-        return merged;
-    }
-    
-    // a[start] <= b[start]
-    void MergeIntersectSkylines(vector<vector<int>>& merged, vector<int>& a, int& a_idx,
-                                vector<int>& b, int& b_idx) {
-        if (a[end] <= b[end]) {
-            if (a[height] > b[height]) {  // |aaa|
-                if (b[end] != a[end]) {   // |abb|b
-                    b[start] = a[end];
-                    merged.emplace_back(move(a)), ++a_idx;
-                } else {        // aaa
-                    ++b_idx;    // abb
-                }
-            } else if (a[height] == b[height]) {  // abb
-                b[start] = a[start], ++a_idx;     // abb
-            } else {  // a[height] < b[height].
-                if (a[start] != b[start]) {                                                 //    bb
-                    merged.emplace_back(move(vector<int>{a[start], b[start], a[height]}));  // |a|bb
-                }
-                ++a_idx;
-            }
-        } else {  // a[end] > b[end].
-            if (a[height] >= b[height]) {  // aaaa
-                ++b_idx;                   // abba
-            } else {
-                //    |bb|
-                // |a||bb|a
-                if (a[start] != b[start]) {
-                    merged.emplace_back(move(vector<int>{a[start], b[start], a[height]}));
-                }
-                a[start] = b[end];
-                merged.emplace_back(move(b)), ++b_idx;
-            }
-        }
+        return result;
     }
 };
