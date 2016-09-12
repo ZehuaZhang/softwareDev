@@ -22,10 +22,9 @@ public:
         uglies[0] = 1;
 
         for (int i = 1; i < n; ++i) {
-            int minVal = *min_element(factors.begin(), factors.end());
-            uglies[i] = minVal;
+            uglies[i] = *min_element(factors.begin(), factors.end());
             for (int k = 0; k < primes.size(); ++k) {
-                if (minVal == factors[k]) {
+                if (uglies[i] == factors[k]) {
                     factors[k] = primes[k] * uglies[++idx[k]];
                 }
             }
