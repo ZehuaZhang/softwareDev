@@ -1,52 +1,28 @@
+349. Intersection of Two Arrays
+Difficulty: Easy
+
+Given two arrays, write a function to compute their intersection.
+
+Example:
+Given nums1 = [1, 2, 2, 1], nums2 = [2, 2], return [2].
+
 // Time:  O(m + n)
-// Space: O(min(m, n))
+// Space: O(m)
 
 // Hash solution.
 class Solution {
 public:
     vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
-        if (nums1.size() > nums2.size()) {
-            return intersection(nums2, nums1);
-        }
-
-        unordered_set<int> lookup{nums1.cbegin(), nums1.cend()};
+        unordered_set<int> nums1set{nums1.cbegin(), nums1.cend()};
 
         vector<int> result;
-        for (const auto& i : nums2) {
-            if (lookup.count(i)) {
-                result.emplace_back(i);
-                lookup.erase(i);
+        for (auto num2 : nums2) {
+            if (nums1set.count(num2)) {
+                result.emplace_back(num2);
+                nums1set.erase(num2);
             }
         }
 
-        return result;
-    }
-};
-
-
-// Time:  O(max(m, n) * log(max(m, n)))
-// Space: O(1)
-// Binary search solution.
-class Solution2 {
-public:
-    vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
-        if (nums1.size() > nums2.size()) {
-            return intersection(nums2, nums1);
-        }
-
-        sort(nums1.begin(), nums1.end());
-        sort(nums2.begin(), nums2.end());
-
-        vector<int> result;
-        auto it = nums2.cbegin();
-        for (const auto& i : nums1) {
-            it = lower_bound(it, nums2.cend(), i);
-            if (it != nums2.end() && *it == i) {
-                result.emplace_back(*it);
-                it = upper_bound(it, nums2.cend(), i);
-            }
-        }
-        
         return result;
     }
 };
@@ -68,6 +44,7 @@ public:
             } else if (*it1 > *it2) {
                 ++it2;
             } else {
+                // avoid duplicate
                 if (result.empty() || result.back() != *it1) {
                     result.emplace_back(*it1);
                 }

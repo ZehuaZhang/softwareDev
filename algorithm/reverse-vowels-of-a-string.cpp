@@ -1,3 +1,17 @@
+345. Reverse Vowels of a String
+Difficulty: Easy
+
+Write a function that takes a string as input and reverse only the vowels of a string.
+
+Example 1:
+Given s = "hello", return "holle".
+
+Example 2:
+Given s = "leetcode", return "leotcede".
+
+Note:
+The vowels does not include the letter "y".
+
 // Time:  O(n)
 // Space: O(1)
 
@@ -5,9 +19,9 @@ class Solution {
 public:
     string reverseVowels(string s) {
         for (int i = 0, j = s.length() - 1; i < j;) {
-            if (!is_vowel(tolower(s[i]))) {
+            if (!isVowel(tolower(s[i]))) {
                 ++i;
-            } else if (!is_vowel(tolower(s[j]))) {
+            } else if (!isVowel(tolower(s[j]))) {
                 --j;
             } else {
                 swap(s[i++], s[j--]);
@@ -17,8 +31,7 @@ public:
     }
 
 private:
-    const string vowels_ = "aeiou";
-    bool is_vowel(char a){
-        return vowels_.find(a) != string::npos;
+    bool isVowel(char a){
+        return string("aeiou").find(a) != string::npos;
     }
 };
