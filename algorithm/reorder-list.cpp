@@ -1,3 +1,14 @@
+143. Reorder List
+Difficulty: Medium
+
+Given a singly linked list L: L0→L1→…→Ln-1→Ln,
+reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…
+
+You must do this in-place without altering the nodes values.
+
+For example,
+Given {1,2,3,4}, reorder it to {1,4,2,3}.
+
 // Time:  O(n)
 // Space: O(1)
 
@@ -10,59 +21,57 @@
  * };
  */
 class Solution {
-    public:
-        void reorderList(ListNode *head) {
+public:
+    void reorderList(ListNode *head) {
         if (!head) {
             return;
         }
 
-        auto slow = head, fast = head;
-
-        while (fast->next && fast->next->next) {
+        ListNode *slow = head, *fast = head;
+        while (fast && fast->next) {
             slow = slow->next;
             fast = fast->next->next;
         }
 
         // Split into two lists.
-        auto tmp = slow->next;
+        ListNode *head2 = slow->next;
         slow->next = nullptr;
-        slow = tmp;
 
-        merge(head, reverse(slow));
+        merge(head, reverse(head2));
     }
 
 private:
     ListNode *reverse(ListNode *head) {
-        ListNode dummy{0};
+        ListNode *prev = nullptr;
 
         while (head) {
-            auto tmp = head->next;
-            head->next = dummy.next;
-            dummy.next = head;
-            head = tmp;
+            ListNode *next = head->next;
+            head->next = prev;
+            prev = head;
+            head = next;
         }
 
-        return dummy.next;
+        return prev;
     }
 
     ListNode *merge(ListNode *list1, ListNode *list2) {
         ListNode dummy{0};
-        auto ptr = &dummy;
+        ListNode *curr = &dummy;
 
         while (list1 && list2) {
-            auto tmp = list1->next;
+            ListNode *next = list1->next;
 
-            ptr->next = list1;
-            ptr = ptr->next;
-            ptr->next = list2;
-            ptr = ptr->next;
+            curr->next = list1;
+            curr = curr->next;
+            curr->next = list2;
+            curr = curr->next;
 
-            list1 = tmp;
+            list1 = next;
             list2 = list2->next;
         }
 
         if (list1) {
-            ptr->next = list1;
+            curr->next = list1;
         }
 
         return dummy.next;
