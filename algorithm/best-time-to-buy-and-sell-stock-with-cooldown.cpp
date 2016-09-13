@@ -1,44 +1,31 @@
+309. Best Time to Buy and Sell Stock with Cooldown
+Difficulty: Medium
+
+Say you have an array for which the ith element is the price of a given stock on day i.
+
+Design an algorithm to find the maximum profit. You may complete as many transactions as you like (ie, buy one and sell one share of the stock multiple times) with the following restrictions:
+
+You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+After you sell your stock, you cannot buy stock on next day. (ie, cooldown 1 day)
+Example:
+
+prices = [1, 2, 3, 0, 2]
+maxProfit = 3
+transactions = [buy, sell, cooldown, buy, sell]
+
 // Time:  O(n)
 // Space: O(1)
 
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
-        if (prices.empty()) {
-            return 0;
+        int buy = INT_MIN, prevBuy = 0, sell = 0, prevSell = 0;
+        for (int price : prices) {
+            prevBuy = buy;
+            buy = max(prevSell - price, buy);
+            prevSell = sell;
+            sell = max(prevBuy + price, sell);
         }
-        vector<int> buy(2), sell(2), coolDown(2);
-        buy[0] = -prices[0];
-        for (int i = 1; i < prices.size(); ++i) {
-            // Bought before or buy today.
-            buy[i % 2] = max(buy[(i - 1) % 2], coolDown[(i - 1) % 2] - prices[i]);
-            // Sell today.
-            sell[i % 2] = buy[(i - 1) % 2] + prices[i];
-            // Sold before yesterday or sold yesterday.
-            coolDown[i % 2] = max(coolDown[(i - 1) % 2], sell[(i - 1) % 2]);
-        }
-        return max(coolDown[(prices.size() - 1) % 2], sell[(prices.size() - 1) % 2]);
-    }
-};
-
-// Time:  O(n)
-// Space: O(n)
-class Solution2 {
-public:
-    int maxProfit(vector<int>& prices) {
-        if (prices.empty()) {
-            return 0;
-        }
-        vector<int> buy(prices.size()), sell(prices.size()), coolDown(prices.size());
-        buy[0] = -prices[0];
-        for (int i = 1; i < prices.size(); ++i) {
-            // Bought before or buy today.
-            buy[i] = max(buy[i - 1], coolDown[i - 1] - prices[i]);
-            // Sell today.
-            sell[i] = buy[i - 1] + prices[i];
-            // Sold before yesterday or sold yesterday.
-            coolDown[i] = max(coolDown[i - 1], sell[i - 1]);
-        }
-        return max(coolDown[prices.size() - 1], sell[prices.size() - 1]);
+        return sell;
     }
 };

@@ -36,11 +36,9 @@ public:
             _s.emplace(_curr);
             _curr = _curr->left;
         }
-        _curr = _s.top();  // Left most node.
-        _s.pop();
+        TreeNode* node = _s.top(); _s.pop(); // Left most node.
 
-        const auto *node = _curr;
-        _curr = _curr->right;  // Visit right child.
+        _curr = _node->right;  // Visit right child.
 
         return node->val;
     }

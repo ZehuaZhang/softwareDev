@@ -30,10 +30,9 @@ public:
             if (incHeights.empty() || heights[i] > heights[incHeights.top()]) {
                 incHeights.emplace(i++);
             } else {
-                int height = heights[incHeights.top()];
-                incHeights.pop();
+                int idx = heights[incHeights.top()]; incHeights.pop();
                 int len = incHeights.empty() ? i : i - incHeights.top() - 1;
-                maxArea = max(maxArea, height * len);
+                maxArea = max(maxArea, heights[idx] * len);
             }
         }
 

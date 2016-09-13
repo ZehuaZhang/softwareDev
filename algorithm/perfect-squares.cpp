@@ -1,33 +1,25 @@
+279. Perfect Squares
+Difficulty: Medium
+
+Given a positive integer n, find the least number of perfect square numbers 
+(for example, 1, 4, 9, 16, ...) which sum to n.
+
+For example, given n = 12, return 3 because 12 = 4 + 4 + 4; given n = 13, return 2 because 13 = 4 + 9.
+
 // Time:  O(n * sqrt(n))
 // Space: O(n)
 
 class Solution {
 public:
     int numSquares(int n) {
-        static vector<int> num{0};
-        while (num.size() <= n) {
-            int squares = numeric_limits<int>::max();
-            for (int i = 1; i * i <= num.size(); ++i) {
-                squares = min(squares, num[num.size() - i * i] + 1);
+        vector<int> minSquares{0};
+        while (minSquares.size() <= n) {
+            int squares = INT_MAX;
+            for (int i = 1; i * i <= minSquares.size(); ++i) {
+                squares = min(squares, minSquares[minSquares.size() - i * i] + 1);
             }
-            num.emplace_back(squares);
+            minSquares.emplace_back(squares);
         }
-        return num[n];
-    }
-};
-
-// Time:  O(n * sqrt(n))
-// Space: O(n)
-class Solution2 {
-public:
-    int numSquares(int n) {
-        vector<int> num(n + 1, numeric_limits<int>::max());
-        num[0] = 0;
-        for (int i = 0; i <= n; ++i) {
-            for (int j = i - 1, k = 1; j >= 0; ++k, j = i - k * k) {
-                num[i] = min(num[i], num[j] + 1);
-            }
-        }
-        return num[n];
+        return minSquares[n];
     }
 };

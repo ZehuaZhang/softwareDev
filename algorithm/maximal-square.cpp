@@ -1,3 +1,16 @@
+221. Maximal Square
+Difficulty: Medium
+
+Given a 2D binary matrix filled with 0 and 1, find the largest square containing only 1 and return its area.
+
+For example, given the following matrix:
+
+1 0 1 0 0
+1 0 1 1 1
+1 1 1 1 1
+1 0 0 1 0
+Return 4.
+
 // Time:  O(n^2)
 // Space: O(n)
 
@@ -5,111 +18,39 @@
 class Solution {
 public:
     int maximalSquare(vector<vector<char>>& A) {
-        if (A.empty()) {
-            return 0;
-        }
-        const int m = A.size(), n = A[0].size();
-        vector<vector<int>> size(2, vector<int>(n, 0));
-        int max_size = 0;
-
-        for (int j = 0; j < n; ++j) {
-            size[0][j] = A[0][j] - '0';
-            max_size = max(max_size, size[0][j]);
-        }
-        for (int i = 1; i < m; ++i) {
-            size[i % 2][0] = A[i][0] - '0';
-            for (int j = 1; j < n; ++j) {
-                if (A[i][j] == '1') {
-                    size[i % 2][j] = min(size[i % 2][j - 1], 
-                                         min(size[(i - 1) % 2][j], 
-                                             size[(i - 1) % 2][j - 1])) + 1;
-                    max_size = max(max_size, size[i % 2][j]);
+        if (matrix.empty()) return 0;
+        const int m = matrix.size();
+        const int n = matrix[0].size();
+        vector<int> H(n, 0);
+        vector<int> L(n, 0);
+        vector<int> R(n, n);
+        int ret = 0;
+        for (int i = 0; i < m; ++i) {
+            int left = 0, right = n;
+            // calculate L(i, j) from left to right
+            for (int j = 0; j < n; ++j) {
+                if (matrix[i][j] == '1') {
+                    ++H[j];
+                    L[j] = max(L[j], left);
                 } else {
-                    size[i % 2][j] = 0;
+                    left = j+1;
+                    H[j] = 0; L[j] = 0; 
                 }
             }
-        }
-        return max_size * max_size;
-    }
-};
-
-// Time:  O(n^2)
-// Space: O(n^2)
-// DP.
-class Solution2 {
-public:
-    int maximalSquare(vector<vector<char>>& A) {
-        if (A.empty()) {
-            return 0;
-        }
-        const int m = A.size(), n = A[0].size();
-        vector<vector<int>> size(m, vector<int>(n, 0));
-        int max_size = 0;
-
-        for (int j = 0; j < n; ++j) {
-            size[0][j] = A[0][j] - '0';
-            max_size = max(max_size, size[0][j]);
-        }
-        for (int i = 1; i < m; ++i) {
-            size[i][0] = A[i][0] - '0';
-            for (int j = 1; j < n; ++j) {
-                if (A[i][j] == '1') {
-                    size[i][j] = min(size[i][j - 1], 
-                                    min(size[i - 1][j], 
-                                        size[i - 1][j - 1])) + 1;
-                    max_size = max(max_size, size[i][j]);
+            
+            // calculate R(i, j) from right to left
+            for (int j = n-1; j >= 0; --j) {
+                if (matrix[i][j] == '1') {
+                    R[j] = min(R[j], right);
                 } else {
-                    size[i][j] = 0;
+                    right = j;
+                    R[j] = n;
                 }
+                
+                int side = min(H[j], R[j] - L[j]);
+                ret = max(ret, side * side);
             }
         }
-        return max_size * max_size;
-    }
-};
-
-// Time:  O(n^2)
-// Space: O(n^2)
-// DP.
-class Solution3 {
-public:
-    struct MaxHW {
-        int h, w;
-    };
-
-    int maximalSquare(vector<vector<char>>& A) {
-        if (A.empty()) {
-            return 0;
-        }
-
-        // DP table stores (h, w) for each (i, j).
-        vector<vector<MaxHW>> table(A.size(), vector<MaxHW>(A.front().size()));
-        for (int i = A.size() - 1; i >= 0; --i) {
-            for (int j = A[i].size() - 1; j >= 0; --j) {
-                // Find the largest h such that (i, j) to (i + h - 1, j) are feasible.
-                // Find the largest w such that (i, j) to (i, j + w - 1) are feasible.
-                table[i][j] = A[i][j] == '1'
-                                  ? MaxHW{i + 1 < A.size() ? table[i + 1][j].h + 1 : 1,
-                                          j + 1 < A[i].size() ? table[i][j + 1].w + 1 : 1}
-                                  : MaxHW{0, 0};
-            }
-        }
-
-        // A table stores the length of largest square for each (i, j).
-        vector<vector<int>> s(A.size(), vector<int>(A.front().size(), 0));
-        int max_square_area = 0;
-        for (int i = A.size() - 1; i >= 0; --i) {
-            for (int j = A[i].size() - 1; j >= 0; --j) {
-                int side = min(table[i][j].h, table[i][j].w);
-                if (A[i][j]) {
-                    // Get the length of largest square with bottom-left corner (i, j).
-                    if (i + 1 < A.size() && j + 1 < A[i + 1].size()) {
-                        side = min(s[i + 1][j + 1] + 1, side);
-                    }
-                    s[i][j] = side;
-                    max_square_area = max(max_square_area, side * side);
-                }
-            }
-        }
-        return max_square_area;
+        return ret;
     }
 };

@@ -1,50 +1,53 @@
+361. Bomb Enemy
+Difficulty : Medium 
+
+Given a 2D grid, each cell is either a wall 'W', an enemy 'E' or empty '0' (the number zero), 
+return the maximum enemies you can kill using one bomb.
+The bomb kills all the enemies in the same row and column from the planted point u
+ntil it hits the wall since the wall is too strong to be destroyed.
+Note that you can only put the bomb at an empty cell.
+
+Example:
+For the given grid
+
+0 E 0 0
+E 0 W E
+0 E 0 0
+
+return 3. (Placing a bomb at (1,1) kills 3 enemies)
+
 // Time:  O(m * n)
 // Space: O(m * n)
 
 class Solution {
 public:
     int maxKilledEnemies(vector<vector<char>>& grid) {
-        int result = 0;
         if (grid.empty() || grid[0].empty()) {
-            return result;
+            return 0;
         }
+        int m = grid.size(), n = grid[0].size()
+        int rowCnt, colCnt[n];
+        int result = 0; 
 
-        vector<vector<int>> down{grid.size(), vector<int>(grid[0].size())};
-        vector<vector<int>> right{grid.size(), vector<int>(grid[0].size())};
-        for (int i = grid.size() - 1; i >= 0; --i) {
-            for (int j = grid[0].size() - 1; j >= 0; --j) {
-                if (grid[i][j] != 'W') {
-                    if (i + 1 < grid.size()) {
-                        down[i][j] = down[i + 1][j];
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (j == 0 || grid[i][j - 1] == 'W') {
+                    rowCnt = 0;
+                    for (int k = j; k < n && grid[i][k] != 'W'; ++k) {
+                        rowCnt += grid[i][k] == 'E';
                     }
-                    if (j + 1 < grid[0].size()) {
-                        right[i][j] = right[i][j + 1];
+                }
+                if (i == 0 || grid[i - 1][j] == 'W') {
+                    colCnt[j] = 0;
+                    for (int k = i; k < m && grid[k][j] != 'W'; ++k) {
+                        colCnt[j] += grid[k][j] == 'E';
                     }
-                    if (grid[i][j] == 'E') {
-                        ++down[i][j];
-                        ++right[i][j];
-                    }
+                }
+                if (grid[i][j] == '0') {
+                    result = max(result, rowCnt + colCnt[j]);
                 }
             }
         }
-
-        int left = 0;
-        vector<int> up(grid[0].size());
-        for (int i = 0; i < grid.size(); ++i) {
-            left = 0;
-            for (int j = 0; j < grid[0].size(); ++j) {
-                if (grid[i][j] == 'W') {
-                    up[j] = 0;
-                    left = 0;
-                } else if (grid[i][j] == 'E') {
-                    ++up[j];
-                    ++left;
-                } else {
-                    result = max(result, left + up[j] + right[i][j] + down[i][j]);
-                }
-            }
-        }
-
         return result;
     }
 };

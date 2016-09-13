@@ -12,6 +12,9 @@ Given n = 3, your program should return all 5 unique BST shown below.
     /     /       \                 \
    2     1         2                 3
 
+// Time:  O(n!)
+// Space: O(h)
+
 class Solution {
 public:
 	vector<TreeNode *> generateTrees(int n) {

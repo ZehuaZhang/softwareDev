@@ -38,7 +38,7 @@ public:
         // Merge intervals that overlap with newInterval.
         while (i < intervals.size() && newInterval.end >= intervals[i].start) {
             newInterval = {min(newInterval.start, intervals[i].start),
-                max(newInterval.end, intervals[i].end)};
+                            max(newInterval.end, intervals[i].end)};
             ++i;
         }
         result.emplace_back(newInterval);

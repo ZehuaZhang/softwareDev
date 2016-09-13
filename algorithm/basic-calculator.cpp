@@ -29,7 +29,7 @@ public:
                     operands.push(operand);
                     operand = 0;
                 }
-            } else if (s[i] == '(' || isOperator(s[i])) {
+            } else if (isOperator(s[i])) {
                 while (!operators.empty() && precedence(s[i]) <= precedence(operators.top())) {
                     compute(operands, operators);
                 }
@@ -49,7 +49,7 @@ public:
     }
     
     bool isOperator(const char op) {
-        return string("+-*/").find(op) != string::npos;
+        return string("+-*/(").find(op) != string::npos;
     }
     
     int precedence(const char op) {

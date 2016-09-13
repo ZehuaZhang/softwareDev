@@ -12,7 +12,6 @@ For example, if there are 4 stones in the heap, then you will never win the game
 no matter 1, 2, or 3 stones you remove, the last stone will always be removed by your friend.
 
 Hint:
-
 If there are 5 stones in the heap, could you figure out a way to remove the stones such that you will always be the winner?
 
 // Time:  O(1)
