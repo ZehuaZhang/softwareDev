@@ -29,13 +29,13 @@ public:
                 left = newPivotIdx + 1;
             }
         }
-        return left;
+        return nums[left];
     }
     
     int PartitionAroundPivot(int left, int right, int pivotIdx, vector<int>& nums) {
-        int pivot = nums[pivotIdx];
-        int newPivotIdx = left;
         swap(nums[pivotIdx], nums[right]);
+        int pivot = nums[right];
+        int newPivotIdx = left;
         for (int i = left; i < right; ++i) {
             if (nums[i] > pivot) {
                 swap(nums[i], nums[newPivotIdx++]);
