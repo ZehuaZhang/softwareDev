@@ -1,17 +1,18 @@
+34. Search for a Range
+Difficulty: Medium
+
+Given a sorted array of integers, find the starting and ending position of a given target value.
+
+Your algorithm runtime complexity must be in the order of O(log n).
+
+If the target is not found in the array, return [-1, -1].
+
+For example,
+Given [5, 7, 7, 8, 8, 10] and target value 8,
+return [3, 4].
+
 // Time:  O(logn)
 // Space: O(1)
-
-class Solution {
-public:
-    vector<int> searchRange(vector<int>& nums, int target) {
-        const auto start = lower_bound(nums.cbegin(), nums.cend(), target);
-        const auto end = upper_bound(nums.cbegin(), nums.cend(), target);
-        if (start != nums.cend() && *start == target) {
-            return {start - nums.cbegin(), end - nums.cbegin() - 1};
-        }
-        return {-1, -1};
-    }
-};
 
 class Solution2 {
 public:
@@ -31,10 +32,10 @@ private:
         int left = 0;
         int right = nums.size();
         // Find min left s.t. A[left] >= target.
-        while (left < right) {
+        while (left <= right) {
             const auto mid = left + (right - left) / 2;
             if (nums[mid] >= target) {
-                right = mid;
+                right = mid - 1;
             } else {
                 left = mid + 1;
             }
@@ -44,12 +45,12 @@ private:
 
     int upper_bound(vector<int> &nums, int target) {
         int left = 0;
-        int right = nums.size();
+        int right = nums.size() - 1;
         // Find min left s.t. A[left] > target.
-        while (left < right) {
+        while (left <= right) {
             const auto mid = left + (right - left) / 2;
             if (nums[mid] > target) {
-                right = mid;
+                right = mid - 1;
             } else {
                 left = mid + 1;
             }

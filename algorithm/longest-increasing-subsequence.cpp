@@ -1,3 +1,17 @@
+300. Longest Increasing Subsequence
+Difficulty: Medium
+
+Given an unsorted array of integers, find the length of longest increasing subsequence.
+
+For example,
+Given [10, 9, 2, 5, 3, 7, 101, 18],
+The longest increasing subsequence is [2, 3, 7, 101], therefore the length is 4. 
+Note that there may be more than one LIS combination, it is only necessary for you to return the length.
+
+Your algorithm should run in O(n2) complexity.
+
+Follow up: Could you improve it to O(n log n) time complexity?
+
 // Time:  O(nlogn)
 // Space: O(n)
 
@@ -5,83 +19,25 @@
 class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
-        vector<int> LIS;
+        vector<int> lis;
 
-        for (const auto& num : nums) {
-            insert(&LIS, num);
+        for (auto num : nums) {
+            insert(lis, num);
         }
 
-        return LIS.size();
+        return lis.size();
     }
 
 private:
-    void insert(vector<int> *LIS, const int target) {
-        // Find the first index "left" which satisfies LIS[left] >= target
-        auto it = lower_bound(LIS->begin(), LIS->end(), target);
+    void insert(vector<int> &lis, const int target) {
+        // Find the first index "left" which satisfies lis[left] >= target
+        auto it = lower_bound(lis.begin(), lis.end(), target);
 
         // If not found, append the target.
-        if (it == LIS->end()) {
-            LIS->emplace_back(target);
+        if (it == lis.end()) {
+            lis.emplace_back(target);
         } else {
             *it = target;
         }
-    }
-};
-
-// Binary search solution.
-class Solution2 {
-public:
-    int lengthOfLIS(vector<int>& nums) {
-        vector<int> LIS;
-
-        for (const auto& num : nums) {
-            insert(&LIS, num);
-        }
-
-        return LIS.size();
-    }
-
-private:
-    void insert(vector<int> *LIS, const int target) {
-        int left = 0, right = LIS->size() - 1;
-        auto comp = [](int x, int target) { return x >= target; };
-
-        // Find the first index "left" which satisfies LIS[left] >= target
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-            if (comp((*LIS)[mid], target)) {
-                right = mid - 1;
-            } else {
-                left = mid + 1;
-            }
-        }
-
-        // If not found, append the target.
-        if (left == LIS->size()) {
-            LIS->emplace_back(target);
-        } else {
-            (*LIS)[left] = target;
-        }
-    }
-};
-
-// Time:  O(n^2)
-// Space: O(n)
-// Traditional DP solution.
-class Solution3 {
-public:
-    int lengthOfLIS(vector<int>& nums) {
-        const int n = nums.size();
-        vector<int> dp(n, 1);  // dp[i]: the length of LIS ends with nums[i]
-        int res = 0;
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < i; ++j) {
-                if (nums[j] < nums[i]) {
-                    dp[i] = max(dp[i], dp[j] + 1);
-                }
-            }
-            res = max(res, dp[i]);
-        }
-        return res;
     }
 };

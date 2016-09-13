@@ -1,100 +1,58 @@
+4. Median of Two Sorted Arrays
+Difficulty: Hard
+
+There are two sorted arrays nums1 and nums2 of size m and n respectively.
+
+Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
+
+Example 1:
+nums1 = [1, 3]
+nums2 = [2]
+
+The median is 2.0
+Example 2:
+nums1 = [1, 2]
+nums2 = [3, 4]
+
+The median is (2 + 3)/2 = 2.5
+
 // Time:  O(log(min(m, n)))
 // Space: O(1)
 
 class Solution {
 public:
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
-        if ((nums1.size() + nums2.size()) % 2 == 1) {
-            return findKthInTwoSortedArrays(nums1, nums2, (nums1.size() + nums2.size()) / 2 + 1);
-        } else {
-            return (findKthInTwoSortedArrays(nums1, nums2, (nums1.size() + nums2.size()) / 2) +
-                    findKthInTwoSortedArrays(nums1, nums2, (nums1.size() + nums2.size()) / 2 + 1)) / 2.0;
-        }
-    }
-
-    int findKthInTwoSortedArrays(const vector<int>& A, const vector<int>& B,
-                                 int k) {
         const int m = A.size();
         const int n = B.size();
-
-        // Make sure m is the smaller one.
-        if (m > n) {
-            return findKthInTwoSortedArrays(B, A, k);
-        }
-
-        int left = 0;
-        int right = m;
-        // Find a partition of A and B
-        // where min left s.t. A[left] >= B[k - 1 - left]. Thus left is the (k + 1)-th element.
-        while (left < right) {
-            int mid = left + (right - left) / 2;
-            if (0 <= k - 1 - mid && k - 1 - mid < n && A[mid] >= B[k - 1 - mid]) {
-                right = mid;
-            } else {
-                left = mid + 1;
-            }
-        }
-
-        int Ai_minus_1 = left - 1 >= 0 ? A[left - 1] : numeric_limits<int>::min();
-        int Bj = k - 1 - left >= 0 ? B[k - 1 - left] : numeric_limits<int>::min();
-
-        // kth element would be A[left - 1] or B[k - 1 - left].
-        return max(Ai_minus_1, Bj);
-    }
-};
-
-// Time:  O(log(max(m, n)) * log(max_val - min_val))
-// Space: O(1)
-// Generic solution.
-class Solution_Generic {
-public:
-    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
-        vector<vector<int> *> arrays{&nums1, &nums2};
-        if ((nums1.size() + nums2.size()) % 2 == 1) {
-            return findKthInSortedArrays(arrays, (nums1.size() + nums2.size()) / 2 + 1);
+        int total = m + n;
+        if (total & 0x1) {
+            return find_kth(A.begin(), m, B.begin(), n, total / 2 + 1);
         } else {
-            return (findKthInSortedArrays(arrays, (nums1.size() + nums2.size()) / 2) +
-                    findKthInSortedArrays(arrays, (nums1.size() + nums2.size()) / 2 + 1)) / 2.0;
+            return (find_kth(A.begin(), m, B.begin(), n, total / 2)
+                    + find_kth(A.begin(), m, B.begin(), n, total / 2 + 1)) / 2.0;
         }
     }
-
 private:
-    int findKthInSortedArrays(const vector<vector<int> *>& arrays, int k) {
-        int left = numeric_limits<int>::max();
-        int right = numeric_limits<int>::min();
-        for (const auto array : arrays) {
-            if (!array->empty()) {
-                left = min(left, array->front());
-                right = max(right, array->back());
-            }
+    template<typename It>
+    static int find_kth(It A, int m, It B, int n, int k) {
+        //always assume that m is equal or smaller than n
+        if (m > n) {
+            return find_kth(B, n, A, m, k);
         }
-        // left xxxxxxxooooooo right, find first xo or oo
-        while (left + 1 < right) {
-            const auto mid = left + (right - left) / 2;
-            if (match(arrays, mid, k)) {
-                right = mid;
-            } else {
-                left = mid;
-            }
+        if (m == 0) {
+            return *(B + k - 1);
         }
-        // case: xoo
-        //        ^^
-        if (match(arrays, left, k)) {
-            return left;
+        if (k == 1) {
+            return min(*A, *B);
         }
-        // case: xo
-        //       ^^
-        return right;
-    }
-
-    bool match(const vector<vector<int> *>& arrays, int num, int target) {
-        int res = 0;
-        for (const auto array : arrays) {
-            if (!array->empty()) {
-                res += distance(upper_bound(array->cbegin(), array->cend(), num),
-                                array->cend());
-            }
+        //divide k into two parts
+        int ia = min(k / 2, m), ib = k - ia;
+        if (*(A + ia - 1) < *(B + ib - 1)) {
+            return find_kth(A + ia, m - ia, B, n, k - ia);
+        } else if (*(A + ia - 1) > *(B + ib - 1)) {
+            return find_kth(A, m, B + ib, n - ib, k - ib);
+        } else {
+            return A[ia - 1];
         }
-        return res < target;
     }
 };
