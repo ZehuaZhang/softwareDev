@@ -1,3 +1,23 @@
+103. Binary Tree Zigzag Level Order Traversal
+Difficulty: Medium
+
+Given a binary tree, return the zigzag level order traversal of its nodes values. 
+(ie, from left to right, then right to left for the next level and alternate between).
+
+For example:
+Given binary tree [3,9,20,null,null,15,7],
+    3
+   / \
+  9  20
+    /  \
+   15   7
+return its zigzag level order traversal as:
+[
+  [3],
+  [20,9],
+  [15,7]
+]
+
 // Time Complexity: O(n)
 // Space Complexity: O(n)
 
@@ -11,48 +31,35 @@
  * };
  */
 class Solution {
-    public:
-        vector<vector<int> > zigzagLevelOrder(TreeNode *root) {
-            bool isLeftToRight = true;
-            vector<vector<int> > ans;
-            queue<TreeNode *> q;
-            TreeNode * n;
-            vector<int> v;
-            int size = 0;
-            int cnt = 0;
-
-            if(!root)
-                return ans;
-
-            q.push(root);
-            size = 1;
-            while(size) {
-                n = q.front();
-                v.push_back(n->val);
-
-                if(n->left) {
-                    q.push(n->left);
-                    cnt++;
-                }
-                if(n->right) {
-                    q.push(n->right);
-                    cnt++;
-                }
-
-                q.pop();
-                size--;
-                if(size == 0) {
-                    if(!isLeftToRight)
-                        reverse(v.begin(), v.end());
-                    isLeftToRight = !isLeftToRight;
-                    size = cnt;
-                    cnt = 0;
-                    ans.push_back(v);
-                    v.clear();
-                }
+public:
+    vector<vector<int> > zigzagLevelOrder(TreeNode *root) {
+        vector<vector<int>> result;
+        zigzagLevelOrder(root, 1, result);
+        
+        reverse(result.begin(), result.end());
+        bool isLeftToRight = true;
+        for (element : result) {
+            if (!isLeftToRight) {
+                reverse(element.begin(), element.end());
             }
-            return ans;
+            isLeftToRight = !isLeftToRight;
+        } 
+
+        return result;
+    }
+    void levelOrderBottom(TreeNode *root, size_t level, vector<vector<int>> &result) {
+        if (!root) {
+            return;
         }
+
+        if (level > result.size()) {
+            result.push_back(vector<int>());
+        }
+        result[level - 1].push_back(root->val);
+
+        levelOrderBottom(root->left, level + 1, result);
+        levelOrderBottom(root->right, level + 1, result);
+    }
 };
 
 

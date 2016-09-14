@@ -1,3 +1,22 @@
+130. Surrounded Regions
+Difficulty: Medium
+
+Given a 2D board containing 'X' and 'O' (the letter O), capture all regions surrounded by 'X'.
+
+A region is captured by flipping all 'O's into 'X's in that surrounded region.
+
+For example,
+X X X X
+X O O X
+X X O X
+X O X X
+After running your function, the board should be:
+
+X X X X
+X X X X
+X X X X
+X O X X
+
 // Time:  O(m * n)
 // Space: O(m + n)
 
@@ -20,14 +39,13 @@ public:
 
         while (!q.empty()) {
             int i, j;
-            tie(i, j) = q.front();
-            q.pop();
+            tie(i, j) = q.front(); q.pop();
             if (board[i][j] == 'O' || board[i][j] == 'V') {
                 board[i][j] = 'V';
                 const vector<pair<int, int>> directions{{0, -1}, {0, 1},
                                                         {-1, 0}, {1, 0}};
-                for (const auto& d : directions) {
-                    const int x = i + d.first, y = j + d.second;
+                for (auto dir : directions) {
+                    const int x = i + dir.first, y = j + dir.second;
                     if (0 <= x  && x < board.size() &&
                         0 <= y && y < board[0].size() &&
                         board[x][y] == 'O') {

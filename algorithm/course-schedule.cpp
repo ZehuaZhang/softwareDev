@@ -1,50 +1,62 @@
+207. Course Schedule
+Difficulty : Medium
+
+There are a total of n courses you have to take, labeled from 0 to n - 1.
+
+Some courses may have prerequisites, for example to take course 0 you have to first take course 1, 
+which is expressed as a pair: [0,1]
+
+Given the total number of courses and a list of prerequisite pairs, is it possible for you to finish all courses?
+
+For example:
+2, [[1,0]]
+There are a total of 2 courses to take. To take course 1 you should have finished course 0. So it is possible.
+
+2, [[1,0],[0,1]]
+There are a total of 2 courses to take. To take course 1 you should have finished course 0, 
+and to take course 0 you should also have finished course 1. So it is impossible.
+
+click to show more hints.
+
+Hints:
+This problem is equivalent to finding if a cycle exists in a directed graph. 
+If a cycle exists, no topological ordering exists and therefore it will be impossible to take all courses.
+There are several ways to represent a graph. For example, the input prerequisites is a graph represented 
+by a list of edges. Is this graph representation appropriate?
+Topological sort could also be done via BFS.
+
 // Time:  O(|V| + |E|)
 // Space: O(|E|)
 
-// Topological sort solution.
 class Solution {
 public:
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
-        // Store courses with in-degree zero.
-        queue<int> zeroInDegree;
-        
-        // in-degree, out-degree
-        unordered_map<int, unordered_set<int>> inDegree;
-        unordered_map<int, unordered_set<int>> outDegree;
-        for (int i = 0; i < prerequisites.size(); ++i) {
-            inDegree[prerequisites[i][0]].insert(prerequisites[i][1]);
-            outDegree[prerequisites[i][1]].insert(prerequisites[i][0]);
+        vector<vector<int>> graph(numCourses, vector<int>(0));
+        vector<int> inDegree(numCourses, 0);
+        for (auto prerequisite : prerequisites) {
+            graph[prerequisite[1]].push_back(prerequisite[0]);
+            ++inDegree[prerequisite[0]];
         }
-        
-        // Put all the courses with in-degree zero into queue.
-        for(int i = 0; i < numCourses; ++i) {
-            if(inDegree.find(i) == inDegree.end()) {
-                zeroInDegree.push(i);
+
+        queue<int> q;
+        for (int i = 0; i < numCourses; ++i) {
+            if (inDegree[i] == 0) {
+                q.push(i);
             }
         }
-        
-        // V+E
-        while(!zeroInDegree.empty()) {
-            // Take the course which prerequisites are all taken.
-            int prerequisite = zeroInDegree.front();
-            zeroInDegree.pop();
-            for (const auto & course: outDegree[prerequisite]) {
-                // Update info of all the courses with the taken prerequisite.
-                inDegree[course].erase(prerequisite);
-                // If all the prerequisites are taken, add the course to the queue.
-                if (inDegree[course].empty()) {
-                    zeroInDegree.push(course);
+        while (!q.empty()) {
+            int course = q.front(); q.pop();
+            for (auto advancedCourse : graph[course]) {
+                if (--inDegree[advancedCourse] == 0) {
+                    q.push(advancedCourse);
                 }
             }
-            // Mark the course as taken.
-            outDegree.erase(prerequisite);
         }
-        
-        // All of the courses have been taken.
-        if (!outDegree.empty()) {
-            return false;
+        for (int i = 0; i < numCourses; ++i) {
+            if (inDegree[i] != 0) {
+                return false;
+            }
         }
-        
         return true;
     }
 };
