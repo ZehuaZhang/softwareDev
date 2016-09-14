@@ -1,3 +1,17 @@
+316. Remove Duplicate Letters
+Difficulty: Hard
+
+Given a string which contains only lowercase letters, 
+remove duplicate letters so that every letter appear once and only once. 
+You must make sure your result is the smallest in lexicographical order among all possible results.
+
+Example:
+Given "bcabc"
+Return "abc"
+
+Given "cbacdcbc"
+Return "acdb"
+
 // Time:  O(n)
 // Space: O(k), k is size of the alphabet
 
@@ -14,7 +28,7 @@ public:
         vector<bool> in_stack(k);
         string stk;
         for (const auto& c : s) {
-            if (!in_stack[c - 'a']) {
+            if (!inStack[c - 'a']) {
                 while (!stk.empty() && stk.back() > c && remaining[stk.back() - 'a']) {
                     in_stack[stk.back() - 'a'] = false;
                     stk.pop_back();
@@ -23,34 +37,6 @@ public:
                 in_stack[c - 'a'] = true;
             }
             --remaining[c - 'a'];
-        }
-        return stk; 
-    }
-};
-
-// Time:  O(n)
-// Space: O(k), k is size of the alphabet
-// hash solution, no need to know size of the alphabet in advance (16ms)
-class Solution2 {
-public:
-    string removeDuplicateLetters(string s) {
-        unordered_map<char, int> remaining;
-        for (const auto& c : s) {
-            ++remaining[c];
-        }
-
-        unordered_set<char> in_stack;
-        string stk;
-        for (const auto& c : s) {
-            if (!in_stack.count(c)) {
-                while (!stk.empty() && stk.back() > c && remaining[stk.back()]) {
-                    in_stack.erase(stk.back());
-                    stk.pop_back();
-                }
-                stk.push_back(c);
-                in_stack.emplace(c);
-            }
-            --remaining[c];
         }
         return stk; 
     }

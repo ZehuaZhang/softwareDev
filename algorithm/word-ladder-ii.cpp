@@ -22,41 +22,52 @@ All words contain only lowercase alphabetic characters.
 
 class Solution {
 public:
-    vector<vector<string> > findLadders(string start, string end, unordered_set<string> &dict) {
+    vector<vector<string>> findLadders(string beginWord, string endWord, unordered_set<string>& wordDict) {
+        unordered_map<string, int> pathLength;
+        unordered_map<string, vector<string> > father;
+        queue<string> q;
+        pathLength[beginWord] = 1;
+        q.push(beginWord);
+
         vector<vector<string>> result;
-        dict.insert(end);
-        vector<string> p;
-        p.push_back(start);
-        queue<vector<string> > paths;
-        paths.push(p);
-        int level = 1, minLevel = INT_MAX;
-        unordered_set<string> words;
-        while (!paths.empty()) {
-            vector<string> path = paths.front();
-            paths.pop();
-            if (path.size() > level) {
-                for (string w : words) dict.erase(w);
-                words.clear();
-                level = path.size();
-                if (level > minLevel) break;
-            }
-            string last = path.back();
-            for (int i = 0; i < last.size(); ++i) {
-                string newLast = last;
+        int minLevel = INT_MAX;
+        while (!q.empty()) {
+            string word = q.front(); q.pop();
+            for (int i = 0; i < word.size(); ++i) {
+                string newWord = word;
                 for (char ch = 'a'; ch <= 'z'; ++ch) {
-                    newLast[i] = ch;
-                    if (dict.find(newLast) != dict.end()) {
-                        words.insert(newLast);
-                        vector<string> nextPath = path;
-                        nextPath.push_back(newLast);
-                        if (newLast == end) {
-                            res.push_back(nextPath);
-                            minLevel = level;
-                        } else paths.push(nextPath);
+                    newWord[i] = ch;
+                    if (newWord == endWord) {
+                    	if (pathLength[word] + 1 > minLevel) {
+                    		return result;
+                    	}
+                    	minLevel = pathLength[word] + 1;
+
+                    	vector<string> path;
+						gen_path(father, beginWord, newWord, path, result);
                     }
+                    if (wordDict.count(newWord) && !pathLength.count(newWord)) {
+                        father[newWord].push_back(word);
+                        q.push(newWord);
+                        pathLength[newWord] = pathLength[word] + 1;
+                    }   
                 }
-            }            
+            }
         }
-        return res;
+        return 0;
     }
+
+	void genPath(unordered_map<string, vector<string> > &father, const string &start, const string &curr, 
+					vector<string> &path, vector<vector<string> > &result) {
+		path.push_back(curr);
+		if (curr == start) {
+			result.push_back(path);
+			reverse(result.back().begin(), result.back().end());
+			return;
+		}
+		for (auto f : father[curr]) {
+			gen_path(father, start, f, path, result);
+		}
+		path.pop_back();
+	}
 };

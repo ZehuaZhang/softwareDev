@@ -1,3 +1,12 @@
+37. Sudoku Solver
+Difficulty: Hard
+
+Write a program to solve a Sudoku puzzle by filling the empty cells.
+
+Empty cells are indicated by the character '.'.
+
+You may assume that there will be only one unique solution.
+
 // Time Complexity: O((n!)^n)
 // Space Complexiy: O(n^2)
 
@@ -42,8 +51,9 @@ class Solution {
             // block
             for(int i = 3 * (x / 3); i < 3 * (x / 3 + 1); ++i) {
                 for(int j = 3 * (y / 3); j < 3 * (y / 3 + 1); ++j) {
-                    if(!(i == x && j == y) && board[i][j] == board[x][y])
+                    if(!(i == x && j == y) && board[i][j] == board[x][y]) {
                         return false;
+                    }
                 }
             }
 
