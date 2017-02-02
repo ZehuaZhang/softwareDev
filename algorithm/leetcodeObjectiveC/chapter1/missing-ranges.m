@@ -1,16 +1,10 @@
-//
-//  main.m
-//  MissingRange
-//
-//  Created by Tianli Zhang on 2016-12-17.
-//  Copyright (c) 2016 Tianli Zhang. All rights reserved.
-//
-
 /**
- Question:
- Given a sorted integer array where the range of elements are [0, 99] inclusive, return its missing ranges.
- For example, given [0, 1, 3, 50, 75], return [“2”, “4->49”, “51->74”, “76->99”]
- */
+Missing Ranges
+Medium
+
+Given a sorted integer array where the range of elements are [0, 99] inclusive, return its missing ranges.
+For example, given [0, 1, 3, 50, 75], return [“2”, “4->49”, “51->74”, “76->99”]
+*/
 
 #import <Foundation/Foundation.h>
 
