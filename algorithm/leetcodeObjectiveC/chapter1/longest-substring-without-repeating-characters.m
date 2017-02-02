@@ -1,25 +1,25 @@
-//
-//  main.m
-//  longestSubStr
-//
-//  Created by Tianji Li on 2015-01-24.
-//  Copyright (c) 2015 Tianji Li. All rights reserved.
-//
-
 /**
- Question:
- Given a string, find the length of the longest substring without repeating characters. For
- example, the longest substring without repeating letters for “abcabcbb” is “abc”, which
- the length is 3. For “bbbbb” the longest substring is “b”, with the length of 1.
- */
+Longest Substring Without Repeating Characters
+Medium
+
+Given a string, find the length of the longest substring without repeating characters.
+
+Examples:
+
+Given "abcabcbb", the answer is "abc", which the length is 3.
+
+Given "bbbbb", the answer is "b", with the length of 1.
+
+Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
+*/
 
 #import <Foundation/Foundation.h>
 
 BOOL isUnique(NSString *s)
 {
-    NSMutableDictionary *uniqueMap = @{}.mutableCopy;
+  NSMutableDictionary *uniqueMap = @{}.mutableCopy;
     
-    for (NSUInteger i=0; i<[s length]; i++) {
+  for (NSUInteger i = 0; i<[s length]; i++) {
         NSString *c = [s substringWithRange:NSMakeRange(i, 1)];
         if ( [uniqueMap objectForKey:c] )
             return NO;
