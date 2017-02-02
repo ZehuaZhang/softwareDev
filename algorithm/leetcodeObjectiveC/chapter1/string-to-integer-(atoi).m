@@ -11,15 +11,15 @@ Notes: It is intended for this problem to be specified vaguely (ie, no given inp
 
 #import <Foundation/Foundation.h>
 
-int strToInt(NSString *s) {
-  int length = (int)[s length];
+NSInteger strToInt(NSString *s) {
+  NSInteger length = (NSInteger)[s length];
 
-  int i = 0;
+  NSInteger i = 0;
   while (i < n && isspace([s characterAtIndex:i])) {
     i++;
   }
 
-  int sign = 1;
+  NSInteger sign = 1;
 
   if (i < n && [s characterAtIndex:i] == '-') {
     sign = -1;
@@ -29,9 +29,9 @@ int strToInt(NSString *s) {
     i++;
   }
 
-  int result = 0;
+  NSInteger result = 0;
   while (i < n && isdigit([s characterAtIndex:i])) {
-    int digit = (int)([s characterAtIndex:i] - '0');
+    NSInteger digit = (NSInteger)([s characterAtIndex:i] - '0');
     if ((sign == 1) && (result > INT_MAX / 10 || (result == INT_MAX / 10 && digit >= INT_MAX % 10))) {
       return INT_MAX;
     } else if ((sign == -1) && (result > INT_MAX / 10 || (result == INT_MAX / 10 && digit > INT_MAX % 10))){
