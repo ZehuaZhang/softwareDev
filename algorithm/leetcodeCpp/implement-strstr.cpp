@@ -1,15 +1,12 @@
-28. Implement strStr()
-Difficulty: Easy
+// 28. Implement strStr()
+// Difficulty: Easy
 
-Implement strStr().
+// Implement strStr().
 
-Returns the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
+// Returns the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
 
 // Time:  O(n + k)
 // Space: O(k)
-
-// Wiki of KMP algorithm:
-// http://en.wikipedia.org/wiki/Knuth-Morris-Pratt_algorithm
 class Solution {
 public:
     int strStr(string haystack, string needle) {
