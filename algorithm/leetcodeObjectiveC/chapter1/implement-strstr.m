@@ -51,13 +51,3 @@ NSInteger strStr(NSString* haystack, NSString* needle) {
   }
   return KMP(haystack, needle);
 }
-
-
-int main(int argc, const char * argv[]) {
-  @autoreleasepool {
-    NSString *needle = @"bat";
-    NSString *haystack = @"abatl";
-    NSLog(@"needle=%@, haystack=%@, strstr=%d", needle, haystack, strStr(needle, haystack));
-  }
-  return 0;
-}

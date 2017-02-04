@@ -32,21 +32,3 @@ NSArray *findMissingRange(NSArray *nums, NSInteger lower, NSInteger upper) {
   }
   return [ranges copy];
 }
-
-int main(int argc, const char * argv[]) {
-  @autoreleasepool {
-    
-    NSArray *intArray = @[@2,@4,@6,@78];
-    NSLog(@"%@",[findMissingRange(intArray, 0, 99) description]);
-    
-    intArray = @[@0,@4,@6,@99];
-    NSLog(@"%@",[findMissingRange(intArray, 0, 99) description]);
-    
-    intArray = @[@8,@9,@88,@98];
-    NSLog(@"%@",[findMissingRange(intArray, 0, 99) description]);
-    
-    intArray = @[];
-    NSLog(@"%@",[findMissingRange(intArray, 0, 99) description]);
-  }
-  return 0;
-}

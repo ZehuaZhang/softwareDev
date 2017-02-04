@@ -49,14 +49,3 @@ NSString *reversedString2(NSString *s)
   
   return reversedString;
 }
-
-int main(int argc, const char * argv[]) {
-  @autoreleasepool {
-    NSString *s = @" ! the sky is blue ? ";
-    NSDate *start = [NSDate date];
-    NSLog(@"reversedString2: s=%@, reversed s=%@", s, reversedString2(s));
-    NSDate *end = [NSDate date];
-    NSLog(@"reversedString2: %f ms",[end timeIntervalSinceDate:start]*1000);
-  }
-  return 0;
-}

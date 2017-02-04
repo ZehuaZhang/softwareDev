@@ -32,17 +32,3 @@ NSArray* twoSum(NSArray* intArray,  NSNumber* target)
   };
   return nil;
 }
-
-int main(int argc, const char * argv[]) {
-  @autoreleasepool {
-    NSArray *intArray = @[@55,@66,@77];
-    NSNumber *target = @121;
-    NSArray *indices = twoSum(intArray, target);
-    if (indices.count == 2)
-      NSLog(@"\nFound index1 = %@, index2 = %@, for target = %lu in array = %@\n",
-            [indices objectAtIndex:0], [indices objectAtIndex:1], [target integerValue], intArray);
-    else
-      NSLog(@"\nDid not find the two sum!\n");
-  }
-  return 0;
-}

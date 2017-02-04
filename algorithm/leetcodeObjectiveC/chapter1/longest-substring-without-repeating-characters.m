@@ -36,14 +36,3 @@ NSUInteger lenOfLongestStr(NSString *s) {
   
   return maxLen;
 }
-
-int main(int argc, const char * argv[]) {
-  @autoreleasepool {
-    NSString *s = @"a";
-    NSDate *start = [NSDate date];
-    NSLog(@"%lu", lenOfLongestStr(s));
-    NSDate *end = [NSDate date];
-    NSLog(@"time for lenOfLongestStr is %fs",[end timeIntervalSinceDate:start]);
-  }
-  return 0;
-}

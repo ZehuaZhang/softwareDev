@@ -44,19 +44,3 @@ BOOL validPalindrome(NSString *s) {
   }
   return true;
 }
-
-int main(int argc, const char * argv[]) {
-  @autoreleasepool {
-    NSLog(@"isPalin = %d", validPalindrome(@""));
-    NSLog(@"isPalin = %d", validPalindrome(@"!!!"));
-    NSLog(@"isPalin = %d", validPalindrome(@"a"));
-    NSLog(@"isPalin = %d", validPalindrome(@"ab"));
-    NSLog(@"isPalin = %d", validPalindrome(@"a!"));
-    NSLog(@"isPalin = %d", validPalindrome(@"a!ba"));
-    NSLog(@"isPalin = %d", validPalindrome(@"A man, a plan, a canal: Panama"));
-    NSLog(@"isPalin = %d", validPalindrome(@"race a car"));
-    NSLog(@"isPalin = %d", validPalindrome(@"racecar"));
-    NSLog(@"isPalin = %d", validPalindrome(@"race  car"));
-  }
-  return 0;
-}
