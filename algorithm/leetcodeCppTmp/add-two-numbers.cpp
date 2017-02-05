@@ -11,27 +11,24 @@
 // Time:  O(n)
 // Space: O(1)
 
-#import <Foundation/Foundation.h>
-#import "ListNode.h"
-
-ListNode *addTwoNumber(ListNode *L1, ListNode *L2) {
-  ListNode *dummy = [[ListNode alloc] init];
-  ListNode *curr = dummy;
-  
-  NSInteger carry = 0;
-  
-  while ( L1 || L2 || carry) {
-    NSInteger a = L1 ? L1.value : 0;
-    NSInteger b = L2 ? L2.value : 0;
-    NSInteger sum = a + b + carry;
-    NSInteger digit = sum % 10;
-    carry = sum / 10;
+class Solution {
+public:
+  ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+    ListNode dummy{0};
+    auto curr = &dummy;
     
-    curr.next = [[ListNode alloc] initWithValue:digit];
-    curr = curr.next;
-    L1 = L1 ? L1.next : nil;
-    L2 = L2 ? L2.next : nil;
+    auto carry = 0;
+    while (l1 || l2 || carry) {
+      auto a = l1 ? l1 -> val : 0;
+      auto b = l2 ? l2 -> val : 0;
+      auto val = carry + a + b;
+      carry = val / 10;
+      curr -> next = new ListNode(val % 10);
+      curr = curr -> next;
+      l1 = l1 ? l1 -> next : nullptr;
+      l2 = l2 ? l2 -> next : nullptr;
+    }
+    
+    return dummy.next;
   }
-
-  return dummy.next;
-}
+};

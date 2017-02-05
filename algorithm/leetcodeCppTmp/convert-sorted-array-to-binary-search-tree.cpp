@@ -1,7 +1,7 @@
-108. Convert Sorted Array to Binary Search Tree
-Difficulty: Medium
+// 108. Convert Sorted Array to Binary Search Tree
+// Difficulty: Medium
 
-Given an array where elements are sorted in ascending order, convert it to a height balanced BST.
+// Given an array where elements are sorted in ascending order, convert it to a height balanced BST.
 
 // Time:  O(n)
 // Space: O(h)
