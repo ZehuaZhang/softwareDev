@@ -1,3 +1,8 @@
+// 14. Longest Common Prefix
+// Difficulty: Easy
+
+// Write a function to find the longest common prefix string amongst an array of strings.
+
 // Time:  O(n * k), k is the length of the common prefix
 // Space: O(1)
 
