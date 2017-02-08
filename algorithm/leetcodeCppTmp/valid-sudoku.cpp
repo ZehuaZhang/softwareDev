@@ -1,12 +1,12 @@
-36. Valid Sudoku
-Difficulty: Easy
+// 36. Valid Sudoku
+// Difficulty: Easy
 
-Determine if a Sudoku is valid, according to: Sudoku Puzzles - The Rules.
+// Determine if a Sudoku is valid, according to: Sudoku Puzzles - The Rules.
 
-The Sudoku board could be partially filled, where empty cells are filled with the character '.'.
+// The Sudoku board could be partially filled, where empty cells are filled with the character '.'.
 
-Note:
-A valid Sudoku board (partially filled) is not necessarily solvable. Only the filled cells need to be validated.
+// Note:
+// A valid Sudoku board (partially filled) is not necessarily solvable. Only the filled cells need to be validated.
 
 // Time:  O(9^2)
 // Space: O(9)
@@ -34,7 +34,7 @@ public:
         }
 
         // check each 3x3
-        for (int i = 0; i < 3; j++) {
+        for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 fill(used, used + 9, false);
 

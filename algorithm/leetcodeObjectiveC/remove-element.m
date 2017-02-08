@@ -21,34 +21,15 @@
 // Time:  O(n)
 // Space: O(1)
 
-class Solution {
-public:
-    int removeElement(vector<int>& nums, int val) {
-        int index = 0;
+#import <Foundation/Foundation.h>
 
-        for (auto num : nums) {
-            if (num != val) {
-                nums[index++] = num;
-            }
-        }
-        return index;
+NSInteger removeElement(NSMutableArray** nums, NSInteger val) {
+  int index = 0;
+  
+  for (int i = 0; i < [*nums count]; i++) {
+    if ([(*nums)[i] integerValue] != val) {
+      (*nums)[index++] = (*nums)[i];
     }
-};
-
-// Time:  O(n)
-// Space: O(1)
-
-class Solution {
-public:
-    int removeElement(vector<int>& nums, int val) {
-        int left = 0, right = nums.size();
-        while (left < right) {
-            if (nums[left] != val) {
-                ++left;
-            } else {
-                swap(nums[left],  nums[--right]);
-            }
-        }
-        return right;
-    }
-};
+  }
+  return index;
+}

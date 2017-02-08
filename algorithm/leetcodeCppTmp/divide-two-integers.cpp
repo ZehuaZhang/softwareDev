@@ -1,9 +1,9 @@
-29. Divide Two Integers
-Difficulty: Medium
+// 29. Divide Two Integers
+// Difficulty: Medium
 
-Divide two integers without using multiplication, division and mod operator.
+// Divide two integers without using multiplication, division and mod operator.
 
-If it is overflow, return MAX_INT.
+// If it is overflow, return MAX_INT.
 
 // Time:  O(logn) = O(1)
 // Space: O(1)

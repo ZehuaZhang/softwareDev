@@ -14,32 +14,22 @@
 
 #import <Foundation/Foundation.h>
 
-NSMutableArray* result;
 NSArray* keyboard;
 
-void letterCombinationsHelper(NSString* digits, int curr, NSString* path) {
+void letterCombinationsHelper(NSString* digits, int curr, NSString* path, NSMutableArray** result) {
   if (curr == [digits length]) {
-    [result addObject:path];
+    [*result addObject:path];
     return;
   }
   NSString* currStr = keyboard[[digits characterAtIndex:curr] - '0'];
   for (int i = 0; i < [currStr length]; i++) {
-    letterCombinationsHelper(digits, curr + 1, [NSString stringWithFormat:@"%@%c", path, [currStr characterAtIndex:i]]);
+    letterCombinationsHelper(digits, curr + 1, [NSString stringWithFormat:@"%@%c", path, [currStr characterAtIndex:i]], result);
   }
 }
 
 NSArray* letterCombinations(NSString* digits) {
   keyboard = @[@" ", @"", @"abc", @"def", @"ghi", @"jkl", @"mno", @"pqrs", @"tuv", @"wxyz"];
-  result = @[].mutableCopy;
-  letterCombinationsHelper(digits, 0, @"");
+  NSMutableArray* result = @[].mutableCopy;
+  letterCombinationsHelper(digits, 0, @"", &result);
   return [result copy];
 }
-  
-int main() {
-  @autoreleasepool {
-    NSLog(@"%@", [letterCombinations(@"2") description]);
-    NSLog(@"%@", [letterCombinations(@"3") description]);
-    NSLog(@"%@", [letterCombinations(@"23") description]);
-  }
-}
-

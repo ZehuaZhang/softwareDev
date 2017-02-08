@@ -22,7 +22,7 @@ NSInteger searchInsert(NSArray* nums, NSInteger target) {
   NSInteger right = [nums count] - 1;
   
   while (left <= right) {
-    NSInteger mid = left + (right -left) / 2;
+    NSInteger mid = left + (right - left) / 2;
     if ([nums[mid] integerValue] >= target) {
       right = mid - 1;
     } else {

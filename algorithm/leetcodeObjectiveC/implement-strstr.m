@@ -28,7 +28,7 @@ NSArray* getPrefix(NSString* pattern) {
   return [prefix copy];
 }
 
-NSInteger KMP(NSString* pattern, NSString* text) {
+NSInteger KMP(NSString* text, NSString* pattern) {
   NSArray* prefix = getPrefix(pattern);
   NSInteger j = -1;
   for (NSInteger i = 0; i < [text length]; ++i) {
@@ -50,4 +50,24 @@ NSInteger strStr(NSString* haystack, NSString* needle) {
     return 0;
   }
   return KMP(haystack, needle);
+}
+
+// Time:  O(n^2)
+// Space: O(k)
+
+#import <Foundation/Foundation.h>
+
+NSInteger strStr(NSString *haystack, NSString *needle) {
+  for (NSInteger i = 0; i <= [haystack length] - [needle length]; i++) {
+    for (NSInteger j = 0; j < [needle length]; j++){
+      
+      if ([haystack characterAtIndex:i + j] != [needle characterAtIndex:j]) {
+        break;
+      }
+      if (j == [needle length] - 1) {
+        return i;
+      }
+    }
+  }
+  return -1;
 }

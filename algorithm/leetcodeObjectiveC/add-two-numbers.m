@@ -13,6 +13,8 @@
 
 #import <Foundation/Foundation.h>
 
+#pragma mark ListNode
+
 @interface ListNode : NSObject
 
 @property (atomic, assign) NSInteger value;
@@ -44,6 +46,8 @@
 }
 
 @end
+
+#pragma mark Solution
 
 ListNode *addTwoNumber(ListNode *L1, ListNode *L2) {
   ListNode *dummy = [[ListNode alloc] init];
