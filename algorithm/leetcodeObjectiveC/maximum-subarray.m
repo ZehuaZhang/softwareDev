@@ -12,15 +12,14 @@
 // Time:  O(n)
 // Space: O(n)
 
-class Solution {
-public:
-    int maxSubArray(vector<int>& nums) {
-        int curSum = 0;
-        int maxSum = INT_MIN;
-        for (auto num : nums) {
-            curSum = max(curSum + num, num);
-            maxSum = max(maxSum, curSum);
-        }
-        return maxSum;
-    }
-};
+#import <Foundation/Foundation.h>
+
+int maxSubArray(NSArray* nums) {
+  int currSum = 0;
+  int maxSum = INT_MIN;
+  for (NSInteger i = 0; i < [nums count]; i++) {
+    currSum = MAX(currSum + [nums[i] intValue], [nums[i] intValue]);
+    maxSum = MAX(maxSum, currSum);
+  }
+  return maxSum;
+}

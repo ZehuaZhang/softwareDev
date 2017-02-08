@@ -1,11 +1,11 @@
-48. Rotate Image
-Difficulty: Medium
-You are given an n x n 2D matrix representing an image.
+// 48. Rotate Image
+// Difficulty: Medium
+// You are given an n x n 2D matrix representing an image.
 
-Rotate the image by 90 degrees (clockwise).
+// Rotate the image by 90 degrees (clockwise).
 
-Follow up:
-Could you do this in-place?
+// Follow up:
+// Could you do this in-place?
 
 // Time:  O(n^2)
 // Space: O(1)
