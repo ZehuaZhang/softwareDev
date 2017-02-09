@@ -1,7 +1,7 @@
 // 75. Sort Colors
 // Difficulty: Medium
 
-// Given an array with n objects colored red, white or blue, sort them so that objects of the same color are adjacent, 
+// Given an array with n objects colored red, white or blue, sort them so that objects of the same color are adjacent,
 // with the colors in the order red, white and blue.
 
 // Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.
@@ -20,18 +20,18 @@
 // Space: O(1)
 
 // Tri-Partition solution.
-class Solution {
-public:
-    void sortColors(vector<int>& nums) {
-        const int target = 1;
-        for (int red = 0, white = 0, blue = nums.size() - 1; white <= blue;) {
-            if (nums[white] < target) {
-                swap(nums[red++], nums[white++]);
-            } else if (nums[white] > target) {
-                swap(nums[white], nums[blue--]);
-            } else {
-                ++white;
-            }
-        }
+
+#import <Foundation/Foundation.h>
+
+void sortColors(NSMutableArray** nums) {
+  const int target = 1;
+  for (NSInteger red = 0, white = 0, blue = [*nums count] - 1; white <= blue;) {
+    if ([(*nums)[white] intValue] < target) {
+      [*nums exchangeObjectAtIndex:red++ withObjectAtIndex:white++];
+    } else if ([(*nums)[white] intValue]> target) {
+      [*nums exchangeObjectAtIndex:white withObjectAtIndex:blue--];
+    } else {
+      ++white;
     }
-};
+  }
+}

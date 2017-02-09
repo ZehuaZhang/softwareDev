@@ -1,23 +1,23 @@
-78. Subsets
-Difficulty: Medium
+// 78. Subsets
+// Difficulty: Medium
 
-Given a set of distinct integers, nums, return all possible subsets.
+// Given a set of distinct integers, nums, return all possible subsets.
 
-Note: The solution set must not contain duplicate subsets.
+// Note: The solution set must not contain duplicate subsets.
 
-For example,
-If nums = [1,2,3], a solution is:
+// For example,
+// If nums = [1,2,3], a solution is:
 
-[
-  [3],
-  [1],
-  [2],
-  [1,2,3],
-  [1,3],
-  [2,3],
-  [1,2],
-  []
-]
+// [
+//   [3],
+//   [1],
+//   [2],
+//   [1,2,3],
+//   [1,3],
+//   [2,3],
+//   [1,2],
+//   []
+// ]
 
 // Time: O(n * 2^n)
 // Space: O(1)
