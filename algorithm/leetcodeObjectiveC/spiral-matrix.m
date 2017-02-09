@@ -17,7 +17,7 @@
 
 #import <Foundation/Foundation.h>
 
-NSArray *spiralOrder(NSArray *matrix) {
+NSArray* spiralOrder(NSArray *matrix) {
   NSMutableArray *arr = @[].mutableCopy;
   
   NSInteger top = 0;

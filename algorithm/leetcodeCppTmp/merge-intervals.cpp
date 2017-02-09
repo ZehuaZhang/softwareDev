@@ -1,11 +1,11 @@
-56. Merge Intervals
-Difficulty: Hard
+// 56. Merge Intervals
+// Difficulty: Hard
 
-Given a collection of intervals, merge all overlapping intervals.
+// Given a collection of intervals, merge all overlapping intervals.
 
-For example,
-Given [1,3],[2,6],[8,10],[15,18],
-return [1,6],[8,10],[15,18].
+// For example,
+// Given [1,3],[2,6],[8,10],[15,18],
+// return [1,6],[8,10],[15,18].
 
 // Time:  O(nlogn)
 // Space: O(1)

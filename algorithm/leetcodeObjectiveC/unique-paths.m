@@ -8,18 +8,20 @@
 
 // Note: m and n will be at most 100.
 
-// Time Complexity: O(mn)
-// Space Complexity: O(n)
+// Time : O(m * n)
+// Space: O(n)
 
-class Solution2 {
-public:
-    int uniquePaths(int m, int n) {
-        vector<int> f(n, 1);
-        for(int i = 1; i < m; ++i) {
-            for(int j = 1; j < n; ++j) {
-                f[j] += f[j - 1];
-            }
-        }
-        return f[n - 1];
+#import <Foundation/Foundation.h>
+
+int uniquePaths(int m, int n) {
+  int f[n]; // number of unique paths from (0, 0) to (i, j)
+  for (int i = 0; i < n; i++) {
+    f[i] = 1;
+  }
+  for (int i = 1; i < m; ++i) {
+    for (int j = 1; j < n; ++j) {
+      f[j] += f[j - 1];
     }
-};
+  }
+  return f[n - 1];
+}
