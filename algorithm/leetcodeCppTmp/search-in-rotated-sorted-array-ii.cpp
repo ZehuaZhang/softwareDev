@@ -1,12 +1,12 @@
-81. Search in Rotated Sorted Array II
-Difficulty: Medium
+// 81. Search in Rotated Sorted Array II
+// Difficulty: Medium
 
-Follow up for "Search in Rotated Sorted Array":
-What if duplicates are allowed?
+// Follow up for "Search in Rotated Sorted Array":
+// What if duplicates are allowed?
 
-Would this affect the run-time complexity? How and why?
+// Would this affect the run-time complexity? How and why?
 
-Write a function to determine if a given target is in the array.
+// Write a function to determine if a given target is in the array.
 
 // Time:  O(logn)
 // Space: O(1)

@@ -3,7 +3,7 @@
 
 // The gray code is a binary numeral system where two successive values differ in only one bit.
 
-// Given a non-negative integer n representing the total number of bits in the code, 
+// Given a non-negative integer n representing the total number of bits in the code,
 // print the sequence of gray code. A gray code sequence must begin with 0.
 
 // For example, given n = 2, return [0,1,3,2]. Its gray code sequence is:
@@ -21,15 +21,14 @@
 // Time:  (2^n)
 // Space: O(1)
 
-class Solution {
-public:
-    vector<int> grayCode(int n) {
-        vector<int> result = {0};
-        for (int i = 0; i < n; ++i) {
-            for (int j = result.size() - 1; j >= 0; --j) {
-                result.emplace_back((1 << i) | result[j]);
-            }
-        }
-        return result;
+#import <Foundation/Foundation.h>
+
+NSArray* grayCode(int n) {
+  NSMutableArray* result = @[@0].mutableCopy;
+  for (int i = 0; i < n; ++i) {
+    for (NSInteger j = [result count] - 1; j >= 0; --j) {
+      [result addObject:@((1 << i) | [result[j] integerValue])];
     }
-};
+  }
+  return result;
+}
