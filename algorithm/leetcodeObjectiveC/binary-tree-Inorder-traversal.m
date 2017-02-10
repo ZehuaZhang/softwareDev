@@ -1,13 +1,18 @@
-// 110. Balanced Binary Tree
-// Difficulty: Easy
+// 94. Binary Tree Inorder Traversal
+// Difficulty: Medium
 
-// Given a binary tree, determine if it is height-balanced.
+// Given a binary tree, return the inorder traversal of its nodes values.
 
-// For this problem, a height-balanced binary tree is defined as a binary tree
-// in which the depth of the two subtrees of every node never differ by more than 1.
+// For example:
+// Given binary tree [1,null,2,3],
+//    1
+//     \
+//      2
+//     /
+//    3
+// return [1,3,2].
 
-// Time:  O(n)
-// Space: O(h)
+// Note: Recursive solution is trivial, could you do it iteratively?
 
 #import <Foundation/Foundation.h>
 
@@ -59,21 +64,20 @@
 
 #pragma mark Solution
 
-// return the height of `root` if `root` is a balanced tree,
-// else, return -1.
-
-int balancedHeight (TreeNode* root) {
-  if (!root) {
-    return 0;
+NSArray* inorderTraversal(TreeNode* root) {
+  NSMutableArray* result = @[].mutableCopy;
+  NSMutableArray* stack = @[].mutableCopy;
+  const TreeNode* curr = root;
+  while (![stack count] || curr) {
+    if (curr) {
+      [stack addObject:curr];
+      curr = curr.left;
+    } else {
+      curr = [stack lastObject];
+      [stack removeLastObject];
+      [result addObject:@(curr.value)];
+      curr = curr.right;
+    }
   }
-  int left = balancedHeight(root.left);
-  int right = balancedHeight(root.right);
-  if (left < 0 || right < 0 || abs(left - right) > 1) {
-    return -1;
-  }
-  return MAX(left, right) + 1;
-}
-
-BOOL isBalanced (TreeNode* root) {
-  return balancedHeight(root) >= 0;
+  return result;
 }

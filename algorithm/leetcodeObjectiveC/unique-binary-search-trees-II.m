@@ -1,12 +1,18 @@
-// 110. Balanced Binary Tree
-// Difficulty: Easy
+// 95. Unique Binary Search Trees II
+// Difficulty: Medium
 
-// Given a binary tree, determine if it is height-balanced.
+// Given an integer n, generate all structurally unique BST (binary search trees) that store values 1...n.
 
-// For this problem, a height-balanced binary tree is defined as a binary tree
-// in which the depth of the two subtrees of every node never differ by more than 1.
+// For example,
+// Given n = 3, your program should return all 5 unique BST shown below.
 
-// Time:  O(n)
+//    1         3     3      2      1
+//     \       /     /      / \      \
+//      3     2     1      1   3      2
+//     /     /       \                 \
+//    2     1         2                 3
+
+// Time:  O(n!)
 // Space: O(h)
 
 #import <Foundation/Foundation.h>
@@ -59,21 +65,28 @@
 
 #pragma mark Solution
 
-// return the height of `root` if `root` is a balanced tree,
-// else, return -1.
-
-int balancedHeight (TreeNode* root) {
-  if (!root) {
-    return 0;
+NSArray* generateHelper(int start, int end) {
+  if (start > end) {
+    return @[[NSNull null]];
   }
-  int left = balancedHeight(root.left);
-  int right = balancedHeight(root.right);
-  if (left < 0 || right < 0 || abs(left - right) > 1) {
-    return -1;
+  NSMutableArray* subTree;
+  for (int k = start; k <= end; k++) {
+    for (id left in generateHelper(start, k - 1)) {
+      for (id right in generateHelper(k + 1, end)) {
+        TreeNode *node = [[TreeNode alloc] initWithValue:k];
+        node.left = left == [NSNull null] ? nil : left;
+        node.right = right == [NSNull null] ? nil : right;
+        [subTree addObject:node];
+      }
+    }
   }
-  return MAX(left, right) + 1;
+  return subTree;
 }
 
-BOOL isBalanced (TreeNode* root) {
-  return balancedHeight(root) >= 0;
+NSArray* generateTrees(int n) {
+  if (n == 0) {
+    return generateHelper(1, 0);
+  }
+  return generateHelper(1, n);
 }
+
