@@ -1,12 +1,26 @@
-// 108. Convert Sorted Array to Binary Search Tree
+// 129. Sum Root to Leaf Numbers
 // Difficulty: Medium
 
-// Given an array where elements are sorted in ascending order, convert it to a height balanced BST.
+// Given a binary tree containing digits from 0-9 only, each root-to-leaf path could represent a number.
+
+// An example is the root-to-leaf path 1->2->3 which represents the number 123.
+
+// Find the total sum of all root-to-leaf numbers.
+
+// For example,
+
+//     1
+//    / \
+//   2   3
+// The root-to-leaf path 1->2 represents the number 12.
+// The root-to-leaf path 1->3 represents the number 13.
 
 // Time:  O(n)
 // Space: O(h)
 
 #import <Foundation/Foundation.h>
+
+#pragma mark TreeNode
 
 @interface TreeNode : NSObject
 
@@ -52,17 +66,19 @@
 
 @end
 
-TreeNode* sortedArrayToBSTHelper(NSArray* nums, NSInteger first, NSInteger last) {
-  if (first >= last) {
-    return nil;
+#pragma mark Solution
+
+NSInteger sumNumbersHelper(TreeNode* root, NSInteger sum) {
+  if (!root) {
+    return 0;
   }
-  NSInteger mid = first + (last - first) / 2;
-  TreeNode* root = [[TreeNode alloc] initWithValue:[nums[mid] integerValue]];
-  root.left = sortedArrayToBSTHelper(nums, first, mid);
-  root.right = sortedArrayToBSTHelper(nums, mid + 1, last);
-  return root;
+  sum = sum * 10 + root.value;
+  if (!root.left && !root.right) {
+    return sum;
+  }
+  return sumNumbersHelper(root.left, sum) + sumNumbersHelper(root.right, sum);
 }
 
-TreeNode* sortedArrayToBST (NSArray* nums) {
-  return sortedArrayToBSTHelper(nums, 0, nums.count);
+NSInteger sumNumbers(TreeNode* root) {
+  return sumNumbersHelper(root, 0);
 }

@@ -1,12 +1,38 @@
-// 108. Convert Sorted Array to Binary Search Tree
+// 114. Flatten Binary Tree to Linked List
 // Difficulty: Medium
 
-// Given an array where elements are sorted in ascending order, convert it to a height balanced BST.
+// Given a binary tree, flatten it to a linked list in-place.
+
+// For example,
+// Given
+
+//          1
+//         / \
+//        2   5
+//       / \   \
+//      3   4   6
+// The flattened tree should look like:
+//    1
+//     \
+//      2
+//       \
+//        3
+//         \
+//          4
+//           \
+//            5
+//             \
+//              6
+
+// Hints:
+// If you notice carefully in the flattened tree, each node right child points to the next node of a pre-order traversal.
 
 // Time:  O(n)
 // Space: O(h)
 
 #import <Foundation/Foundation.h>
+
+#pragma mark TreeNode
 
 @interface TreeNode : NSObject
 
@@ -52,17 +78,28 @@
 
 @end
 
-TreeNode* sortedArrayToBSTHelper(NSArray* nums, NSInteger first, NSInteger last) {
-  if (first >= last) {
-    return nil;
-  }
-  NSInteger mid = first + (last - first) / 2;
-  TreeNode* root = [[TreeNode alloc] initWithValue:[nums[mid] integerValue]];
-  root.left = sortedArrayToBSTHelper(nums, first, mid);
-  root.right = sortedArrayToBSTHelper(nums, mid + 1, last);
-  return root;
-}
+#pragma mark Solution
 
-TreeNode* sortedArrayToBST (NSArray* nums) {
-  return sortedArrayToBSTHelper(nums, 0, nums.count);
+void flatten(TreeNode* root) {
+  if (!root) {
+    return;
+  }
+  NSMutableArray* stack;
+  [stack addObject:root];
+  while ([stack count]) {
+    TreeNode* curr = [stack lastObject];
+    [stack removeLastObject];
+    if (curr.left) {
+      TreeNode* left = curr.left;
+      while (left.right) {
+        left = left.right;
+      }
+      left.right = curr.right;
+      curr.right = curr.left;
+      curr.left = nil;
+    }
+    if (curr.right) {
+      [stack addObject:curr.right];
+    }
+  }
 }

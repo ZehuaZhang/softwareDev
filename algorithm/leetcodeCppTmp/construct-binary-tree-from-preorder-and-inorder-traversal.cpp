@@ -1,10 +1,10 @@
-105. Construct Binary Tree from Preorder and Inorder Traversal
-Difficulty: Medium
+// 105. Construct Binary Tree from Preorder and Inorder Traversal
+// Difficulty: Medium
 
-Given preorder and inorder traversal of a tree, construct the binary tree.
+// Given preorder and inorder traversal of a tree, construct the binary tree.
 
-Note:
-You may assume that duplicates do not exist in the tree.
+// Note:
+// You may assume that duplicates do not exist in the tree.
 
 // Time:  O(n)
 // Space: O(h)

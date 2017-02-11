@@ -1,12 +1,25 @@
-// 108. Convert Sorted Array to Binary Search Tree
-// Difficulty: Medium
+// 107. Binary Tree Level Order Traversal II
+// Difficulty: Easy
 
-// Given an array where elements are sorted in ascending order, convert it to a height balanced BST.
+// Given a binary tree, return the bottom-up level order traversal of its nodes values. (ie, from left to right, level by level from leaf to root).
 
-// Time:  O(n)
-// Space: O(h)
+// For example:
+// Given binary tree [3,9,20,null,null,15,7],
+//     3
+//    / \
+//   9  20
+//     /  \
+//    15   7
+// return its bottom-up level order traversal as:
+// [
+//   [15,7],
+//   [9,20],
+//   [3]
+// ]
 
 #import <Foundation/Foundation.h>
+
+#pragma mark TreeNode
 
 @interface TreeNode : NSObject
 
@@ -52,17 +65,25 @@
 
 @end
 
-TreeNode* sortedArrayToBSTHelper(NSArray* nums, NSInteger first, NSInteger last) {
-  if (first >= last) {
-    return nil;
+#pragma mark Solution
+
+void levelOrderBottomHelper(TreeNode *root, NSInteger level, NSMutableArray** result) {
+  if (!root) {
+    return;
   }
-  NSInteger mid = first + (last - first) / 2;
-  TreeNode* root = [[TreeNode alloc] initWithValue:[nums[mid] integerValue]];
-  root.left = sortedArrayToBSTHelper(nums, first, mid);
-  root.right = sortedArrayToBSTHelper(nums, mid + 1, last);
-  return root;
+  
+  if (level > [*result count]) {
+    [*result addObject: @[].mutableCopy];
+  }
+  [(*result)[level - 1] addObject:@(root.value)];
+  
+  levelOrderBottomHelper(root.left, level + 1, result);
+  levelOrderBottomHelper(root.right, level + 1, result);
 }
 
-TreeNode* sortedArrayToBST (NSArray* nums) {
-  return sortedArrayToBSTHelper(nums, 0, nums.count);
+NSArray* levelOrderBottom(TreeNode *root) {
+  NSMutableArray* result = @[].mutableCopy;
+  levelOrderBottomHelper(root, 1, &result);
+  return [[result reverseObjectEnumerator] allObjects];
 }
+

@@ -1,12 +1,26 @@
-// 108. Convert Sorted Array to Binary Search Tree
-// Difficulty: Medium
+// 112. Path Sum
+// Difficulty: Easy
 
-// Given an array where elements are sorted in ascending order, convert it to a height balanced BST.
+// Given a binary tree and a sum, determine if the tree has a root-to-leaf path
+// such that adding up all the values along the path equals the given sum.
 
-// Time:  O(n)
-// Space: O(h)
+// For example:
+// Given the below binary tree and sum = 22,
+//               5
+//              / \
+//             4   8
+//            /   / \
+//           11  13  4
+//          /  \      \
+//         7    2      1
+// return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
+
+// Time : O(n)
+// Space: O(n)
 
 #import <Foundation/Foundation.h>
+
+#pragma mark TreeNode
 
 @interface TreeNode : NSObject
 
@@ -52,17 +66,14 @@
 
 @end
 
-TreeNode* sortedArrayToBSTHelper(NSArray* nums, NSInteger first, NSInteger last) {
-  if (first >= last) {
-    return nil;
-  }
-  NSInteger mid = first + (last - first) / 2;
-  TreeNode* root = [[TreeNode alloc] initWithValue:[nums[mid] integerValue]];
-  root.left = sortedArrayToBSTHelper(nums, first, mid);
-  root.right = sortedArrayToBSTHelper(nums, mid + 1, last);
-  return root;
-}
+#pragma mark Solution
 
-TreeNode* sortedArrayToBST (NSArray* nums) {
-  return sortedArrayToBSTHelper(nums, 0, nums.count);
+BOOL hasPathSum(TreeNode *root, NSInteger sum) {
+  if (!root)
+    return false;
+  
+  if (!root.left && !root.right)
+    return sum == root.value;
+  
+  return hasPathSum(root.left, sum - root.value) || hasPathSum(root.right, sum - root.value);
 }

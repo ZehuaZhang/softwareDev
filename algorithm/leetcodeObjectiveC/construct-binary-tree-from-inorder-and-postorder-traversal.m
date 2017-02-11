@@ -1,12 +1,14 @@
-// 108. Convert Sorted Array to Binary Search Tree
+// 106. Construct Binary Tree from Inorder and Postorder Traversal
 // Difficulty: Medium
 
-// Given an array where elements are sorted in ascending order, convert it to a height balanced BST.
+// Given inorder and postorder traversal of a tree, construct the binary tree.
 
 // Time:  O(n)
 // Space: O(h)
 
 #import <Foundation/Foundation.h>
+
+#pragma mark TreeNode
 
 @interface TreeNode : NSObject
 
@@ -52,17 +54,20 @@
 
 @end
 
-TreeNode* sortedArrayToBSTHelper(NSArray* nums, NSInteger first, NSInteger last) {
-  if (first >= last) {
+#pragma mark Solution
+
+TreeNode* buildTreeHelper(NSArray* inorder, NSInteger inFirst, NSInteger inLast, NSArray* postorder, NSInteger postFirst, NSInteger postLast) {
+  if (inFirst == inLast || postFirst == postLast) {
     return nil;
   }
-  NSInteger mid = first + (last - first) / 2;
-  TreeNode* root = [[TreeNode alloc] initWithValue:[nums[mid] integerValue]];
-  root.left = sortedArrayToBSTHelper(nums, first, mid);
-  root.right = sortedArrayToBSTHelper(nums, mid + 1, last);
+  TreeNode* root = [[TreeNode alloc] initWithValue:[postorder[postLast - 1] integerValue]];
+  NSInteger inorderRootPos = [inorder indexOfObject:postorder[postLast - 1]];
+  NSInteger leftSize = inorderRootPos - inFirst;
+  root.left = buildTreeHelper(inorder, inFirst, inorderRootPos, postorder, postFirst, postFirst + leftSize);
+  root.right = buildTreeHelper(inorder, inorderRootPos + 1, inLast, postorder, postFirst + leftSize, postLast - 1);
   return root;
 }
 
-TreeNode* sortedArrayToBST (NSArray* nums) {
-  return sortedArrayToBSTHelper(nums, 0, nums.count);
+TreeNode* buildTree(NSArray* preorder, NSArray* inorder) {
+  return buildTreeHelper(preorder, 0, [preorder count], inorder, 0, [inorder count]);
 }

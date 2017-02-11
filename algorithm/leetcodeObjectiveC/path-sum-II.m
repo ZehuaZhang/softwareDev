@@ -1,12 +1,28 @@
-// 108. Convert Sorted Array to Binary Search Tree
+// 113. Path Sum II
 // Difficulty: Medium
+// Given a binary tree and a sum, find all root-to-leaf paths where each path sum equals the given sum.
 
-// Given an array where elements are sorted in ascending order, convert it to a height balanced BST.
+// For example:
+// Given the below binary tree and sum = 22,
+//               5
+//              / \
+//             4   8
+//            /   / \
+//           11  13  4
+//          /  \    / \
+//         7    2  5   1
+// return
+// [
+//    [5,4,11,2],
+//    [5,8,4,5]
+// ]
 
-// Time:  O(n)
-// Space: O(h)
+// Time : O(n)
+// Space: O(logn)
 
 #import <Foundation/Foundation.h>
+
+#pragma mark TreeNode
 
 @interface TreeNode : NSObject
 
@@ -52,17 +68,28 @@
 
 @end
 
-TreeNode* sortedArrayToBSTHelper(NSArray* nums, NSInteger first, NSInteger last) {
-  if (first >= last) {
-    return nil;
+#pragma mark Solution
+
+void pathSumHelper(TreeNode *root, NSInteger sum, NSMutableArray** path, NSMutableArray** ans) {
+  if(!root) {
+    return;
   }
-  NSInteger mid = first + (last - first) / 2;
-  TreeNode* root = [[TreeNode alloc] initWithValue:[nums[mid] integerValue]];
-  root.left = sortedArrayToBSTHelper(nums, first, mid);
-  root.right = sortedArrayToBSTHelper(nums, mid + 1, last);
-  return root;
+  
+  [*path addObject:@(root.value)];
+  
+  if(!root.left && !root.right && root.value == sum) {
+    [*ans addObject:*path];
+  }
+  
+  pathSumHelper(root.left, sum - root.value, path, ans);
+  pathSumHelper(root.right, sum - root.value, path, ans);
+  
+  [*path removeLastObject];
 }
 
-TreeNode* sortedArrayToBST (NSArray* nums) {
-  return sortedArrayToBSTHelper(nums, 0, nums.count);
+NSArray* pathSum(TreeNode *root, int sum) {
+  NSMutableArray* ans = @[].mutableCopy;
+  NSMutableArray* path = @[].mutableCopy;
+  pathSumHelper(root, sum, &path, &ans);
+  return ans;
 }

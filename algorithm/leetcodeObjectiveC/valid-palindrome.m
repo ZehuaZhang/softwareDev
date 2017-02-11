@@ -17,25 +17,16 @@
 
 #import <Foundation/Foundation.h>
 
-NSString *alnum(NSString *s) {
-  NSMutableString *alnumS = @"".mutableCopy;
-  
-  for (int i = 0; i < [s length]; i++) {
-    if (isalnum([s characterAtIndex:i])) {
-      [alnumS appendFormat:@"%c", [s characterAtIndex:i]];
-    }
-  }
-  return [alnumS copy];
-}
-
 BOOL validPalindrome(NSString *s) {
-  NSString *alnumLowerCaseS = alnum([s lowercaseString]);
-  
   NSInteger left = 0;
-  NSInteger right = [alnumLowerCaseS length] - 1;
+  NSInteger right = [s length] - 1;
   
   while (left < right) {
-    if ([alnumLowerCaseS characterAtIndex:left] != [alnumLowerCaseS characterAtIndex:right]) {
+    if (!isalnum([s characterAtIndex:left])) {
+      left++;
+    } else if (!isalnum([s characterAtIndex:right])) {
+      right++;
+    } else if (tolower([s characterAtIndex:left]) != tolower([s characterAtIndex:right])) {
       return false;
     } else {
       left++;

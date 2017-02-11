@@ -18,14 +18,13 @@
 // Time Complexity: O(n^2)
 // Space Complexity: O(n)
 
-class Solution {
-public:
-    int minimumTotal(vector<vector<int> > &triangle) {
-        for (int i = triangle.size() - 2; i >= 0; --i) {
-            for (int j = 0; j <= i; ++j) {
-                triangle[i][j] += min(triangle[i + 1][j], triangle[i + 1][j + 1]);
-            }
-        }
-        return triangle [0][0];
+#import <Foundation/Foundation.h>
+
+NSInteger minimumTotal(NSArray* triangle) {
+  for (NSInteger i = [triangle count] - 2; i >= 0; --i) {
+    for (NSInteger j = 0; j <= i; ++j) {
+      triangle[i][j] = @([triangle[i][j] integerValue] + MIN([triangle[i + 1][j] integerValue], [triangle[i + 1][j + 1] integerValue]));
     }
-};
+  }
+  return [triangle[0][0] integerValue];
+}
