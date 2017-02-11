@@ -1,13 +1,13 @@
-135. Candy
-Difficulty: Hard
+// 135. Candy
+// Difficulty: Hard
 
-There are N children standing in a line. Each child is assigned a rating value.
+// There are N children standing in a line. Each child is assigned a rating value.
 
-You are giving candies to these children subjected to the following requirements:
+// You are giving candies to these children subjected to the following requirements:
 
-Each child must have at least one candy.
-Children with a higher rating get more candies than their neighbors.
-What is the minimum candies you must give?
+// Each child must have at least one candy.
+// Children with a higher rating get more candies than their neighbors.
+// What is the minimum candies you must give?
 
 // Time:  O(n)
 // Space: O(n)

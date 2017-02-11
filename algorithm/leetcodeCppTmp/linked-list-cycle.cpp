@@ -1,22 +1,14 @@
-141. Linked List Cycle
-Difficulty: Easy
+// 141. Linked List Cycle
+// Difficulty: Easy
 
-Given a linked list, determine if it has a cycle in it.
+// Given a linked list, determine if it has a cycle in it.
 
-Follow up:
-Can you solve it without using extra space?
+// Follow up:
+// Can you solve it without using extra space?
 
 // Time:  O(n)
 // Space: O(1)
 
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
- */
 class Solution {
 public:
     bool hasCycle(ListNode *head) {

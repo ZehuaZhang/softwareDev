@@ -8,19 +8,18 @@
 // Time:  O(n)
 // Space: O(1)
 
-class Solution {
-public:
-	int singleNumber(vector<int>& nums) {
-		int one = 0, two = 0, three = 0;
+#import <Foundation/Foundation.h>
 
-		for (auto num : nums) {
-			two |= (one & num);
-			one ^= num;
-			three = ~(one & two);
-			one &= three;
-			two &= three;
-		}
-
-		return one;
-	}
-};
+int singleNumber(NSArray* nums) {
+  int one = 0, two = 0, three = 0;
+  
+  for (id num in nums) {
+    two |= (one & [num intValue]);
+    one ^= [num intValue];
+    three = ~(one & two);
+    one &= three;
+    two &= three;
+  }
+  
+  return one;
+}

@@ -1,4 +1,4 @@
-// 136. Single Number 
+// 136. Single Number
 // Difficulty: Easy
 // Given an array of integers, every element appears twice except for one. Find that single one.
 
@@ -8,9 +8,13 @@
 // Time:  O(n)
 // Space: O(1)
 
-class Solution {
-public:
-    int singleNumber(vector<int>& nums) {
-        return accumulate(nums.cbegin(), nums.cend(), 0, std::bit_xor<int>());
-    }
-};
+#import <Foundation/Foundation.h>
+
+int singleNumber(NSArray* nums) {
+  int unique = 0;
+  for (id num in nums) {
+    unique ^= [num intValue];
+  }
+  return unique;
+}
+

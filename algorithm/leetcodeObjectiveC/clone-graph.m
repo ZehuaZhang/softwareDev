@@ -132,7 +132,7 @@ GraphNode* cloneGraph(GraphNode* node) {
   [q push:node];
   
   while (![q isEmpty]) {
-    GraphNode* node = [q front]; [q pop];
+    GraphNode* node = [q pop];
     for (GraphNode* nbr in node.neighbors) {
       GraphNode *copiedNbr = [copied objectForKey:nbr];
       if (!copiedNbr) {
