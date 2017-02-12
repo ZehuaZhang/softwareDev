@@ -7,13 +7,12 @@
 // Time:  O(logn) = O(32)
 // Space: O(1)
 
-class Solution {
-public:
-    int hammingWeight(uint32_t n) {
-        int count = 0;
-        for (; n; n &= n - 1) {	// <=> n -= n & (-n)
-            ++count;
-        }
-        return count;
-    }
-};
+#import <Foundation/Foundation.h>
+
+int hammingWeight(uint32_t n) {
+  int count = 0;
+  for (; n; n &= n - 1) { // <=> n -= n & (-n)
+    ++count;
+  }
+  return count;
+}
