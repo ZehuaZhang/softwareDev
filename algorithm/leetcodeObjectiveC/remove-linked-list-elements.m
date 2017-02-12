@@ -1,16 +1,11 @@
-// 92. Reverse Linked List II
-// Difficulty: Medium
+// 203. Remove Linked List Elements
+// Difficulty: Easy
 
-// Reverse a linked list from position m to n. Do it in-place and in one-pass.
+// Remove all elements from a linked list of integers that have value val.
 
-// For example:
-// Given 1->2->3->4->5->NULL, m = 2 and n = 4,
-
-// return 1->4->3->2->5->NULL.
-
-// Note:
-// Given m, n satisfy the following condition:
-// 1 ≤ m ≤ n ≤ length of list.
+// Example
+// Given: 1 --> 2 --> 6 --> 3 --> 4 --> 5 --> 6, val = 6
+// Return: 1 --> 2 --> 3 --> 4 --> 5
 
 // Time:  O(n)
 // Space: O(1)
@@ -53,24 +48,17 @@
 
 #pragma mark Solution
 
-ListNode* reverseBetween(ListNode* head, int m, int n) {
+ListNode* removeElements(ListNode* head, int val) {
   ListNode* dummy = [[ListNode alloc] init];
   dummy.next = head;
-  ListNode* prev = dummy;
   
-  for (int i = 0; i < m - 1; ++i) {
-    prev = prev.next;
+  for (ListNode* prev = dummy, *curr = head; curr; curr = curr.next) {
+    if (curr.value == val) {
+      prev.next = curr.next;
+      free((__bridge void*)curr);
+    } else {
+      prev = curr;
+    }
   }
-  
-  ListNode* curr = prev.next;
-  
-  for (int i = m; i < n; ++i) {
-    ListNode* next = curr.next;
-    ListNode* prevHead = prev.next;
-    prev.next = next;
-    curr.next = next.next;
-    next.next = prevHead;
-  }
-  
   return dummy.next;
 }
