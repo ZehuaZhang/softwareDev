@@ -19,23 +19,22 @@
 // Time:  O(logn)
 // Space: O(1)
 
-class Solution {
-public:
-    int findPeakElement(vector<int>& nums) {
-        int left = 0, right = nums.size() - 1;
-        
-        while (left <= right) {
-            const auto mid = left + (right - left) / 2;
-            if ((mid == 0 || nums[mid - 1] < nums[mid]) &&
-               (mid == nums.size() - 1 || nums[mid] > nums[mid + 1])) {
-                return mid;
-            } else if (!(mid == 0 || nums[mid - 1] < nums[mid])) {
-                right = mid - 1;
-            } else {
-                left = mid + 1;
-            }
-        }
-       
-        return left;
+#import <Foundation/Foundation.h>
+
+NSInteger findPeakElement(NSArray* nums) {
+  NSInteger left = 0, right = [nums count] - 1;
+  
+  while (left <= right) {
+    NSInteger mid = left + (right - left) / 2;
+    if ((mid == 0 || [nums[mid - 1] intValue] < [nums[mid] intValue]) &&
+        (mid == [nums count] - 1 || [nums[mid] intValue] > [nums[mid + 1] intValue])) {
+      return mid;
+    } else if (!(mid == 0 || [nums[mid - 1] intValue] < [nums[mid] intValue])) {
+      right = mid - 1;
+    } else {
+      left = mid + 1;
     }
-};
+  }
+  
+  return left;
+}

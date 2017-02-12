@@ -13,18 +13,17 @@
 //     ...
 //     Z -> 26
 //     AA -> 27
-//     AB -> 28 
+//     AB -> 28
 
 // Time:  O(n)
 // Space: O(1)
 
-class Solution {
-public:
-    int titleToNumber(string s) {
-        int number = 0;
-        for (auto c : s) {
-            number = number * 26 + c  - 'A' + 1;
-        }
-        return number;
-    }
-};
+#import <Foundation/Foundation.h>
+
+int titleToNumber(NSString* s) {
+  int number = 0;
+  for (int i = 0; i < [s length]; i++) {
+    number = number * 26 + [s characterAtIndex:i]  - 'A' + 1;
+  }
+  return number;
+}

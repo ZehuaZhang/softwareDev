@@ -1,29 +1,17 @@
-144. Binary Tree Preorder Traversal  QuestionEditorial Solution  My Submissions
-Total Accepted: 139719
-Total Submissions: 335647
-Difficulty: Medium
-Given a binary tree, return the preorder traversal of its nodes values.
+// 144. Binary Tree Preorder Traversal
+// Difficulty: Medium
+// Given a binary tree, return the preorder traversal of its nodes values.
 
-For example:
-Given binary tree {1,#,2,3},
-   1
-    \
-     2
-    /
-   3
-return [1,2,3].
+// For example:
+// Given binary tree {1,#,2,3},
+//    1
+//     \
+//      2
+//     /
+//    3
+// return [1,2,3].
 
-Note: Recursive solution is trivial, could you do it iteratively?
-
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
+// Note: Recursive solution is trivial, could you do it iteratively?
 
 // Time:  O(n)
 // Space: O(n)

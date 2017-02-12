@@ -24,8 +24,7 @@ NSString* convertToTitle(NSInteger n) {
   NSMutableString* title = @"".mutableCopy;
   
   while (n--) {
-    char c = n % 26 + 'A';
-    [title appendFormat:@"%c", c];
+    [title appendFormat:@"%c", n % 26 + 'A'];
     n /= 26;
   }
   

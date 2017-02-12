@@ -19,33 +19,32 @@
 // Time:  O(logn), where logn is the length of result strings
 // Space: O(1)
 
-class Solution {
-public:
-    string fractionToDecimal(int numerator, int denominator) {
-        string result;
-        if ((numerator ^ denominator) >> 31 && numerator != 0) {
-            result = "-";
-        }
+#import <Foundation/Foundation.h>
 
-        auto a = llabs(numerator);
-        auto b = llabs(denominator);
-        result += to_string(a / b);
-
-        if (a % b > 0) {
-            result += ".";
-        }
-        
-        unordered_map<long long, int> idx;
-        for (a %= b; a && !idx.count(a); a %= b) {
-            idx[a] = result.length();
-            a *= 10;
-            result += to_string(a / b);
-        }
-
-        if (idx.count(a)) {
-            result.insert(idx[a], "(");
-            result.push_back(')');
-        }
-        return result;
-    }
-};
+NSString* fractionToDecimal(int numerator, int denominator) {
+  NSMutableString* result = @"".mutableCopy;
+  if ((numerator ^ denominator) >> 31 && numerator != 0) {
+    [result appendString:@"-"];
+  }
+  
+  long long a = llabs(numerator);
+  long long b = llabs(denominator);
+  [result appendFormat:@"%lld", a / b];
+  
+  if (a % b > 0) {
+    [result appendString:@"."];
+  }
+  
+  NSMutableDictionary* idx = @{}.mutableCopy;
+  for (a %= b; a && ![idx objectForKey:@(a)]; a %= b) {
+    [idx setObject:@([result length]) forKey:@(a)];
+    a *= 10;
+    [result appendFormat:@"%lld", a / b];
+  }
+  
+  if ([idx objectForKey:@(a)]) {
+    [result insertString:@"(" atIndex:[[idx objectForKey:@(a)] intValue]];
+    [result appendString:@")"];
+  }
+  return result;
+}

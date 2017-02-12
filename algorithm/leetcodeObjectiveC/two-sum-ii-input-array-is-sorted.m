@@ -17,8 +17,7 @@ NSArray *twoSumII(NSArray *nums,  NSNumber *target)
 {
   NSInteger left = 0;
   NSInteger right = nums.count - 1;
-  while ( left != right ) {
-    
+  while ( left <= right ) {
     NSInteger sum = [nums[left] integerValue] + [nums[right] integerValue];
     NSInteger targetVal = [target integerValue];
     

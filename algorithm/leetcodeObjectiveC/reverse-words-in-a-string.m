@@ -20,32 +20,11 @@
 
 #import <Foundation/Foundation.h>
 
-NSArray* convertToWordsFromString(NSString* s){
-  NSMutableArray *words= [[NSMutableArray alloc] init];
-  NSMutableString *word = [[NSMutableString alloc] init];
-  
-  for (int i = 0; i < [s length]; i++){
-    if (!isspace([s characterAtIndex:i])) {
-      [word appendFormat:@"%c",[s characterAtIndex:i]];
-    }else{
-      if (i != 0) {
-        [words addObject:word];
-        word = @"".mutableCopy;
-      }
-    }
-  }
-  return [words copy];
-}
-
-NSString *reversedString2(NSString *s)
+NSString *reversedString(NSString *s)
 {
-  NSMutableArray *words = convertToWordsFromString(s).mutableCopy;
-  NSMutableString *reversedString = [[NSMutableString alloc] init];
-  for (int i = 0; i < [words count]; i++) {
-    [reversedString appendString:[words lastObject]];
-    [reversedString appendString:@" "];
-    [words removeLastObject];
+  NSString* trimmedS = [s stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+  while ([trimmedS rangeOfString:@"  "].location != NSNotFound) {
+    trimmedS = [trimmedS  stringByReplacingOccurrencesOfString:@"  " withString:@" "];
   }
-  
-  return reversedString;
+  return [[[[trimmedS componentsSeparatedByString:@" "] reverseObjectEnumerator] allObjects] componentsJoinedByString:@" "];
 }
