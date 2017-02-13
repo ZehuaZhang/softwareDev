@@ -1,6 +1,6 @@
-231. Power of Two 
-Difficulty: Easy
-Given an integer, write a function to determine if it is a power of two.
+// 231. Power of Two 
+// Difficulty: Easy
+// Given an integer, write a function to determine if it is a power of two.
 
 // Time:  O(1)
 // Space: O(1)

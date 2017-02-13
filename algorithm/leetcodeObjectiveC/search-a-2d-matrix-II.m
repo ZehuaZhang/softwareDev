@@ -23,27 +23,21 @@
 // Time:  O(m + n)
 // Space: O(1)
 
-class Solution {
-public:
-    bool searchMatrix(vector<vector<int>>& matrix, int target) {
-        if (matrix.empty() || matrix[0].empty()) {
-            return false;
-        }
-        const int m = matrix.size();
-        const int n = matrix[0].size();
-        int count = 0;
+#import <Foundation/Foundation.h>
 
-        int i = 0, j = n - 1;
-        while (i < m && j >= 0) {
-            if (matrix[i][j] == target) {
-                return true;
-            } else if (matrix[i][j] > target) {
-                --j;
-            } else {
-                ++i;
-            }
-        }
-
-        return false;
+BOOL searchMatrix(NSArray* matrix, int target) {
+  if ([matrix count] || [matrix[0] count]) {
+    return false;
+  }
+  NSInteger i = 0, j = [matrix[0] count] - 1;
+  while (i < [matrix count] && j >= 0) {
+    if ([matrix[i][j] intValue] == target) {
+      return true;
+    } else if ([matrix[i][j] intValue] > target) {
+      --j;
+    } else {
+      ++i;
     }
-};
+  }
+  return false;
+}
