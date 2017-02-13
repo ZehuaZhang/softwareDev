@@ -22,9 +22,9 @@
 
 NSString *reversedString(NSString *s)
 {
-  NSString* trimmedS = [s stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-  while ([trimmedS rangeOfString:@"  "].location != NSNotFound) {
-    trimmedS = [trimmedS  stringByReplacingOccurrencesOfString:@"  " withString:@" "];
-  }
+  NSMutableString* trimmedS = [s stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    while ([trimmedS rangeOfString:@"  "].location != NSNotFound) {
+      trimmedS = [trimmedS  stringByReplacingOccurrencesOfString:@"  " withString:@" "];
+    }
   return [[[[trimmedS componentsSeparatedByString:@" "] reverseObjectEnumerator] allObjects] componentsJoinedByString:@" "];
 }
