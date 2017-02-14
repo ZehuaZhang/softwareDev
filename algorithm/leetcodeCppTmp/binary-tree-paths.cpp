@@ -1,31 +1,22 @@
-257. Binary Tree Paths
-Difficulty: Easy
+// 257. Binary Tree Paths
+// Difficulty: Easy
 
-Given a binary tree, return all root-to-leaf paths.
+// Given a binary tree, return all root-to-leaf paths.
 
-For example, given the following binary tree:
+// For example, given the following binary tree:
 
-   1
- /   \
-2     3
- \
-  5
-All root-to-leaf paths are:
+//    1
+//  /   \
+// 2     3
+//  \
+//   5
+// All root-to-leaf paths are:
 
-["1->2->5", "1->3"]
+// ["1->2->5", "1->3"]
 
 // Time:  O(n * h)
 // Space: O(h)
 
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
 class Solution {
 public:
     vector<string> binaryTreePaths(TreeNode* root) {

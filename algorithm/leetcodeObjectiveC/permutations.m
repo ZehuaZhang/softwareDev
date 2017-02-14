@@ -20,7 +20,7 @@
 #import <Foundation/Foundation.h>
 
 void permuteHelper(NSArray* nums, BOOL *visited, NSArray* path, NSMutableArray** ans) {
-  if ([nums count]== [path count]) {
+  if ([nums count] == [path count]) {
     [*ans addObject:path];
     return;
   }
@@ -28,9 +28,7 @@ void permuteHelper(NSArray* nums, BOOL *visited, NSArray* path, NSMutableArray**
   for (NSInteger i = 0; i < [nums count]; i++) {
     if (!visited[i]) {
       visited[i] = YES;
-      NSMutableArray* nextPath = path.mutableCopy;
-      [nextPath addObject:nums[i]];
-      permuteHelper(nums, visited, [nextPath copy], ans);
+      permuteHelper(nums, visited, [path arrayByAddingObject:nums[i]], ans);
       visited[i] = NO;
     }
   }
@@ -42,7 +40,7 @@ NSArray* permute(NSArray* nums) {
   }];
   BOOL visited[nums.count];
   memset(visited, NO, sizeof(BOOL) * (nums.count));
-  NSMutableArray* ans = [[NSMutableArray alloc] init];
-  permuteHelper(sorted, visited, @[].copy, &ans);
+  NSMutableArray* ans = @[].mutableCopy;
+  permuteHelper(sorted, visited, @[], &ans);
   return ans;
 }

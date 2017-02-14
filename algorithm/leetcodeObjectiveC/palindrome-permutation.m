@@ -14,13 +14,15 @@
 // Time:  O(n)
 // Space: O(1)
 
-class Solution {
-public:
-    bool canPermutePalindrome(string s) {
-        bitset<256> bits;
-        for (auto c : s) {
-            bits.flip(c);
-        }
-        return bits.count() < 2;
-    }
-};
+#import <Foundation/Foundation.h>
+
+BOOL canPermutePalindrome(NSString* s) {
+  CFMutableBitVectorRef v = CFBitVectorCreateMutable(kCFAllocatorDefault, 256);
+  CFBitVectorSetCount(v, 256);
+  CFBitVectorSetAllBits(v, 0);
+
+  for (int i = 0; i < s.length; i++) {
+    CFBitVectorFlipBits(v, CFRangeMake([s characterAtIndex:i], 1));
+  }
+  return CFBitVectorGetCount(v) < 2;
+}

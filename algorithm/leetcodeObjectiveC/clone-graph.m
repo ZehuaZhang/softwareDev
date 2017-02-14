@@ -38,6 +38,7 @@
 - (instancetype)init;
 - (id)pop;
 - (void)push:(id)element;
+-(NSInteger)count;
 
 @end
 
@@ -84,6 +85,10 @@ NSMutableArray* _array;
     return nil;
   }
   return [_array lastObject];
+}
+
+-(NSInteger)count {
+  return _array.count;
 }
 
 @end
