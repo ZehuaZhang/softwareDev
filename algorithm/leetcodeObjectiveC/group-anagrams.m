@@ -22,24 +22,18 @@
 NSArray* groupAnagrams(NSArray* strs) {
   NSMutableDictionary* groups = @{}.mutableCopy;
   for (int i = 0; i < [strs count]; i++) {
-    NSMutableArray* charArr = [NSMutableArray arrayWithCapacity:[strs[i] length]];
-    for (int j = 0; j < [strs[i] length]; j++) {
-      [charArr addObject:[strs[i] substringWithRange:NSMakeRange(j, 1)]];
-    }
+    NSArray* charArr = [strs[i] componentsSeparatedByString:@""];
     NSString* sortedStr = [[charArr sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] componentsJoinedByString:@""];
     
-    NSMutableArray* valueArr = [groups objectForKey:sortedStr];
-    if (valueArr) {
-      [valueArr addObject:strs[i]];
-    } else {
-      valueArr = [NSMutableArray arrayWithObject:strs[i]];
+    if (!groups[sortedStr]) {
+      groups[sortedStr] = @[].mutableCopy;
     }
-    [groups setObject:valueArr forKey:sortedStr];
+    [groups[sortedStr] addObject:strs[i]];
   }
   
-  __block NSMutableArray* result;
-  [groups enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+  NSMutableArray* result;
+  for (id key in groups) {
     [result addObject:obj];
-  }];
+  }
   return result;
 }

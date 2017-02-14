@@ -7,19 +7,19 @@
 //   = 2 x 4.
 // Write a function that takes an integer n and return all possible combinations of its factors.
 
-// Note: 
+// Note:
 // Each combination factors must be sorted ascending, for example: The factors of 2 and 6 is [2, 6], not [6, 2].
 // You may assume that n is always positive.
 // Factors should be greater than 1 and less than n.
- 
 
-// Examples: 
+
+// Examples:
 // input: 1
-// output: 
+// output:
 
 // []
 // input: 37
-// output: 
+// output:
 
 // []
 // input: 12
@@ -45,27 +45,26 @@
 // Time:  O(nlogn) = logn * n^(1/2) * n^(1/4) * ... * 1
 // Space: O(logn)
 
+#import <Foundation/Foundation.h>
+
 // DFS solution.
-class Solution {
-public:
-    vector<vector<int>> getFactors(int n) {
-        vector<vector<int>> res;
-        helper(n, 2, {}, res);
-        return res;
+
+void getFactorsHelper(int n, int start, NSArray* out, NSMutableArray** res) {
+  if (n == 1) {
+    if ([out count] > 1) {
+      [*res addObject:out];
     }
-    void helper(int n, int start, vector<int> out, vector<vector<int>> &res) {
-        if (n == 1) {
-            if (out.size() > 1) {
-                res.push_back(out);
-            }
-        } else {
-            for (int i = start; i <= n; ++i) {
-                if (n % i == 0) {
-                    out.push_back(i);
-                    helper(n / i, i, out, res);
-                    out.pop_back();
-                }
-            }
-        }
+  } else {
+    for (int i = start; i <= n; ++i) {
+      if (n % i == 0) {
+        getFactorsHelper(n / i, i, [out arrayByAddingObject:@(i)], res);
+      }
     }
-};
+  }
+}
+
+NSArray* getFactors(int n) {
+  NSMutableArray* res = @[].mutableCopy;
+  getFactorsHelper(n, 2, @[], &res);
+  return res;
+}

@@ -1,12 +1,12 @@
-253. Meeting Rooms II
-Difficulty : Medium
+// 253. Meeting Rooms II
+// Difficulty : Medium
 
-Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei), 
-find the minimum number of conference rooms required.
+// Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei), 
+// find the minimum number of conference rooms required.
 
-For example,
-Given [[0, 30],[5, 10],[15, 20]],
-return 2.
+// For example,
+// Given [[0, 30],[5, 10],[15, 20]],
+// return 2.
 
 // Time:  O(nlogn)
 // Space: O(n)
@@ -33,8 +33,7 @@ public:
         sort(ends.begin(), ends.end());
         
         int minRooms = 0, cntRooms = 0;
-        int sp = 0, ep = 0;
-        while (s < starts.size()) {
+        for (int s = 0, e = 0; s < starts.size();) {
             if (starts[s] < ends[e]) {
                 // acquire a room, update the min number of rooms.
                 minRooms = max(minRooms, ++cntRooms);

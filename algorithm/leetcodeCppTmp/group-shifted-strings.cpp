@@ -1,24 +1,23 @@
-249. Group Shifted Strings
-Difficulty : Easy
+// 249. Group Shifted Strings
+// Difficulty : Easy
 
-Given a string, we can "shift" each of its letter to its successive letter, for example: "abc" -> "bcd".
-We can keep "shifting" which forms the sequence:
+// Given a string, we can "shift" each of its letter to its successive letter, for example: "abc" -> "bcd".
+// We can keep "shifting" which forms the sequence:
 
-"abc" -> "bcd" -> ... -> "xyz"
-Given a list of strings which contains only lowercase alphabets, group all strings that belong to the same shifting sequence.
+// "abc" -> "bcd" -> ... -> "xyz"
+// Given a list of strings which contains only lowercase alphabets, group all strings that belong to the same shifting sequence.
 
-For example, given: ["abc", "bcd", "acef", "xyz", "az", "ba", "a", "z"], 
-Return:
+// For example, given: ["abc", "bcd", "acef", "xyz", "az", "ba", "a", "z"], 
+// Return:
 
-[
-  ["abc","bcd","xyz"],
-  ["az","ba"],
-  ["acef"],
-  ["a","z"]
-]
- 
+// [
+//   ["abc","bcd","xyz"],
+//   ["az","ba"],
+//   ["acef"],
+//   ["a","z"]
+// ]
 
-Note: For the return value, each inner list elements must follow the lexicographic order.
+// Note: For the return value, each inner list elements must follow the lexicographic order.
 
 // Time:  O(nlogn)
 // Space: O(n)
@@ -33,7 +32,7 @@ public:
             for (auto c : str) {
                 hashStr += (c - str[0] + 26) % 26 + 'a';
             }
-            groups[hashStr(str)].insert(str);
+            groups[hashStr].insert(str);
         }
         
         vector<vector<string>> result;

@@ -11,7 +11,7 @@
 //   [3],
 //   [4,5,6]
 // ]
- 
+
 
 // By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,2,3,4,5,6].
 
@@ -32,35 +32,45 @@
 // Time:  O(1)
 // Space: O(1)
 
-class Vector2D {
-public:
-    Vector2D(vector<vector<int>>& vec2d) : vec(vec2d) {
-        x = vec.begin();
-        y = x->begin();
-        adjustNextIter();
-    }
+#import <Foundation/Foundation.h>
 
-    int next() {
-        const auto ret = *y;
-        ++y;
-        adjustNextIter();
-        return ret;
-    }
+@interface Vector2D : NSObject
+@end
 
-    bool hasNext() {
-        return x != vec.end() || y != x->end();
-    }
-    
-    void adjustNextIter() {
-        while (x != vec.end() && y == x->end()) { 
-            if (++x != vec.end()) {
-                y = x->begin();
-            }
-        }
-    }
+@implementation Vector2D
 
-private:
-    vector<vector<int>>& vec;
-    vector<vector<int>>::iterator x;
-    vector<int>::iterator y;
-};
+NSMutableArray* vec;
+NSInteger x;
+NSInteger y;
+
+-(instancetype)initWithVec:(NSArray*)vec2d {
+  self = [super init];
+  if (self) {
+    vec = [vec2d mutableCopy];
+    x = 0;
+    y = 0;
+    [self adjustNextIter];
+  }
+  return self;
+}
+
+-(int)next {
+  const int  ret = [vec[x][y] intValue];
+  ++y;
+  [self adjustNextIter];
+  return ret;
+}
+
+-(BOOL)hasNext {
+  return x < [vec count] || y < [vec[x] count];
+}
+
+-(void)adjustNextIter {
+  while (x < [vec count] && y >= [vec[x] count]) {
+    if (++x < [vec count]) {
+      y = 0;
+    }
+  }
+}
+
+@end

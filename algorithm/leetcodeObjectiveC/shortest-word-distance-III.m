@@ -19,23 +19,22 @@
 // Time:  O(n)
 // Space: O(1)
 
-class Solution {
-public:
-    int shortestWordDistance(vector<string>& words, string word1, string word2) {
-        int dist = INT_MAX;
-        for (int i = 0, index1 = -1, index2 = -1; i < words.size(); ++i) {
-            if (words[i] == word1) {
-                if (index1 != -1) {
-                    dist = min(dist, abs(index1 - i));
-                }
-                index1 = i;
-            } else if (words[i] == word2) {
-                index2 = i;
-            }
-            if (index1 != -1 && index2 != -1) {
-                dist = min(dist, abs(index1 - index2));
-            }
-        }
-        return dist;
+#import<Foundation/Foundation.h>
+
+int shortestWordDistance(NSArray* words, NSString* word1, NSString* word2) {
+  int dist = INT_MAX;
+  for (int i = 0, index1 = -1, index2 = -1; i < [words count]; ++i) {
+    if ([words[i] isEqual:word1]) {
+      if (index1 != -1 && [word1 isEqual:word2]) {
+        dist = MIN(dist, abs(index1 - i));
+      }
+      index1 = i;
+    } else if ([words[i] isEqual:word2]) {
+      index2 = i;
     }
-};
+    if (index1 != -1 && index2 != -1) {
+      dist = MIN(dist, abs(index1 - index2));
+    }
+  }
+  return dist;
+}
