@@ -32,7 +32,7 @@ NSInteger PartitionAroundPivot(NSInteger left, NSInteger right, NSInteger pivotI
 int findKthLargest(NSMutableArray* nums, int k) {
   NSInteger left = 0, right = [nums count] - 1;
   while (left <= right) {
-    NSInteger pivotIdx = left + arc4random() % (right - left + 1);
+    NSInteger pivotIdx = left + arc4random_uniform((int)(right - left + 1));
     NSInteger newPivotIdx = PartitionAroundPivot(left, right, pivotIdx, nums);
     if (newPivotIdx == k - 1) {
       return [nums[newPivotIdx] intValue];
