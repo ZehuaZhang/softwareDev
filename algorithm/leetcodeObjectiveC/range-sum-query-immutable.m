@@ -22,19 +22,28 @@
 //        lookup: O(1)
 // Space: O(n)
 
-class NumArray {
-public:
-    NumArray(vector<int> &nums) {
-        accu.emplace_back(0);
-        for (auto num : nums) {
-            accu.emplace_back(accu.back() + num);
-        }
-    }
+#import <Foundation/Foundation.h>
 
-    int sumRange(int i, int j) {
-        return accu[j + 1] - accu[i];
-    }
+@interface NumArray : NSObject
+@end
 
-private:
-    vector<int> accu;
-};
+@implementation NumArray
+
+NSMutableArray* _hist;
+
+-(instancetype)initWithArray:(NSArray*)nums {
+  self = [super init];
+  if (self) {
+    _hist = @[@0].mutableCopy;
+    for (id num in nums) {
+      [_hist addObject:@([[_hist lastObject] intValue] + [num intValue])];
+    }
+  }
+  return self;
+}
+
+-(int)sumRangBetweenI:(int)i andJ:(int)j {
+  return [_hist[j + 1] intValue] - [_hist[i] intValue];
+}
+
+@end
