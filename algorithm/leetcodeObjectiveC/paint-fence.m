@@ -1,5 +1,5 @@
 // 276. Paint Fence
-// Difficulty : Easy  
+// Difficulty : Easy
 
 // There is a fence with n posts, each post can be painted with one of the k colors.
 
@@ -13,19 +13,19 @@
 // Time:  O(n)
 // Space: O(1)
 
+#import <Foundation/Foundation.h>
+
 // DP with rolling window.
-class Solution {
-public:
-    int numWays(int n, int k) {
-        if (n == 0) {
-            return 0;
-        }
-        int same = 0, diff = k, res = same + diff;
-        for (int i = 2; i <= n; ++i) {
-            same = diff;
-            diff = res * (k - 1);
-            res = same + diff;
-        }
-        return res;
-    }
-};
+
+int numWays(int n, int k) {
+  if (n == 0) {
+    return 0;
+  }
+  int same = 0, diff = k, res = same + diff;
+  for (int i = 2; i <= n; ++i) {
+    same = diff;
+    diff = res * (k - 1);
+    res = same + diff;
+  }
+  return res;
+}

@@ -12,14 +12,13 @@
 // Time:  O(n)
 // Space: O(1)
 
-class Solution {
-public:
-    void moveZeroes(vector<int>& nums) {
-        int idx = 0;
-        for (auto num : nums) {
-            if (num) {
-                swap(nums[idx++], num);
-            }
-        }
+#import <Foundation/Foundation.h>
+
+void moveZeroes(NSMutableArray* nums) {
+  int idx = 0;
+  for (NSInteger i = 0; i < nums.count; i++) {
+    if ([nums[i] intValue]) {
+      [nums exchangeObjectAtIndex:idx++ withObjectAtIndex:i];
     }
-};
+  }
+}

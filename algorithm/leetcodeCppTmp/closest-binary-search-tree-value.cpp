@@ -1,25 +1,16 @@
-Closest Binary Search Tree Value
-Difficulty : Easy 
+// Closest Binary Search Tree Value
+// Difficulty : Easy 
 
-Given a non-empty binary search tree and a target value, find the value in the BST that is closest to the target.
+// Given a non-empty binary search tree and a target value, find the value in the BST that is closest to the target.
 
-Note:
+// Note:
 
-Given target value is a floating point.
-You are guaranteed to have only one unique value in the BST that is closest to the target.
+// Given target value is a floating point.
+// You are guaranteed to have only one unique value in the BST that is closest to the target.
 
 // Time:  O(h)
 // Space: O(1)
 
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
 class Solution {
 public:
     int closestValue(TreeNode* root, double target) {

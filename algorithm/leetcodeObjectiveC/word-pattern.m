@@ -17,19 +17,20 @@
 // Time:  O(n)
 // Space: O(c), c is unique count of pattern
 
-class Solution {
-public:
-    bool wordPattern(string pattern, string str) {
-        unordered_map<char, int> mapP;
-        unordered_map<string, int> mapW;
-        istringstream in(str);
-        int i = 0;
-        for (string word; in >> word; ++i) {
-            if (mapP[pattern[i]] != mapW[word]) {
-                return false;
-            }
-            mapP[pattern[i]] = mapW[word] = i + 1;
-        }
-        return i == pattern.size();
+#import <Foundation/Foundation.h>
+
+BOOL wordPattern(NSString* pattern, NSString* str) {
+  NSMutableDictionary* word2pattern = @{}.mutableCopy;
+  NSArray* words = [str componentsSeparatedByString:@" "];
+  if (pattern.length != words.count) {
+    return NO;
+  }
+  for (int i = 0; i < words.count; i++) {
+    if (!word2pattern[words[i]]) {
+      word2pattern[words[i]] = [pattern substringWithRange:NSMakeRange(i, 1)];
+    } else if (word2pattern[words[i]] != [pattern substringWithRange:NSMakeRange(i, 1)]) {
+      return NO;
     }
-};
+  }
+  return YES;
+}

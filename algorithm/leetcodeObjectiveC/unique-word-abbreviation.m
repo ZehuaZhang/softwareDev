@@ -1,5 +1,5 @@
 // 288. Unique Word Abbreviation
-// Difficulty : Easy 
+// Difficulty : Easy
 
 // An abbreviation of a word follows the form <first letter><number><last letter>. Below are some examples of word abbreviations:
 
@@ -19,7 +19,7 @@
 // Assume you have a dictionary and given a word, find whether its abbreviation is unique in the dictionary.
 // A word abbreviation is unique if no other word from the dictionary has the same abbreviation.
 
-// Example: 
+// Example:
 
 // Given dictionary = [ "deer", "door", "cake", "card" ]
 
@@ -28,7 +28,7 @@
 // isUnique("cane") -> false
 // isUnique("make") -> true
 
-// Time:  ctor:   O(n), n is number of words in the dictionary. 
+// Time:  ctor:   O(n), n is number of words in the dictionary.
 //        lookup: O(1)
 // Space: O(k), k is number of unique words.
 
@@ -37,20 +37,32 @@
 // vwa.isUnique("hello");
 // vwa.isUnique("anotherWord");
 
-class ValidWordAbbr {
-public:
-    ValidWordAbbr(vector<string> &dictionary) {
-        for (auto word : dictionary) {
-            string abbr = word.front() + to_string(word.length()) + word.back();
-            _lookup[abbr].emplace(word);
-        }
-    } 
+#import <Foundation/Foundation.h>
 
-    bool isUnique(string word) {
-        string abbr = word.front() + to_string(word.length()) + word.back();
-        return _lookup[abbr].count(word) == _lookup[abbr].size(); // word not in dictionary, count = 0; while in, count = 1
+@interface ValidWordAbbr : NSObject
+@end
+
+@implementation ValidWordAbbr
+
+NSMutableDictionary* _lookup;
+
+-(instancetype)initWithDictionary:(NSArray*)dictionary {
+  self = [super init];
+  for (NSString* word in dictionary) {
+    NSString* abbr = [NSString stringWithFormat:@"%c%ld%c", [word characterAtIndex:0], word.length, [word characterAtIndex:word.length - 1]];
+    if (_lookup[abbr]) {
+      _lookup[abbr] = @[].mutableCopy;
     }
+    _lookup[abbr] = word;
+  }
+  return self;
+}
 
-private:
-    unordered_map<string, unordered_set<string>> _lookup;
-};
+BOOL isUnique(NSString* word) {
+  NSString* abbr = [NSString stringWithFormat:@"%c%ld%c", [word characterAtIndex:0], word.length, [word characterAtIndex:word.length - 1]];
+  return _lookup[abbr] == nil || [[_lookup[abbr] indexesOfObjectsPassingTest:^BOOL(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    return [obj compare:word];
+  }] count] == 1;
+}
+
+@end

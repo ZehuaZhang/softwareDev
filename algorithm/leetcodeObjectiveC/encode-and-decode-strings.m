@@ -1,7 +1,7 @@
 // 271. Encode and Decode Strings
 // Difficulty: Medium
 
-// Design an algorithm to encode a list of strings to a string. 
+// Design an algorithm to encode a list of strings to a string.
 // The encoded string is then sent over the network and is decoded back to the original list of strings.
 
 // Machine 1 (sender) has the function:
@@ -16,13 +16,13 @@
 //   //... your code
 //   return strs;
 // }
- 
+
 // So Machine 1 does:
 // string encoded_string = encode(strs);
 
 // and Machine 2 does:
 // vector<string> strs2 = decode(encoded_string);
- 
+
 // strs2 in Machine 2 should be the same as strs in Machine 1.
 
 // Implement the encode and decode methods.
@@ -36,30 +36,25 @@
 // Time:  O(n)
 // Space: O(1)
 
-class Codec {
-public:
+#import <Foundation/Foundation.h>
 
-    // Encodes a list of strings to a single string.
-    string encode(vector<string>& strs) {
-        string s;
-        for (auto str : strs) {
-            s += to_string(str.size()) + "/" + str;
-        }
-    
-        return s;
-    }
-    
-    // Decodes a single string to a list of strings.
-    vector<string> decode(string s) {
-        vector<string> strs;
-        
-        for (size_t pos = 0; pos < s.length();) {
-            auto slash = s.find("/", pos);
-            size_t len = strtol(s.substr(pos, slash));
-            strs.push_back(s.substr(++slash, len));
-            pos = slash + len;
-        }
-    
-        return strs;
-    }
-};
+// Encodes a list of strings to a single string.
+NSString* encode(NSArray* strs) {
+  NSMutableString* s = @"".mutableCopy;
+  for (NSString*  str in strs) {
+    [s appendFormat:@"%ld/%@", str.length, str];
+  }
+  return s;
+}
+
+// Decodes a single string to a list of strings.
+NSArray* decode(NSString* s) {
+  NSMutableArray* strs = @[].mutableCopy;
+  for (NSInteger searchPos = 0; searchPos < s.length;) {
+    NSInteger slashPos = [s rangeOfString:@"/" options:0 range:NSMakeRange(searchPos, s.length - searchPos)].location;
+    NSInteger len = [[s substringWithRange:NSMakeRange(searchPos, slashPos - searchPos)] integerValue];
+    [strs addObject:[s substringWithRange:NSMakeRange(++slashPos, len)]];
+    searchPos = slashPos + len;
+  }
+  return strs;
+}
