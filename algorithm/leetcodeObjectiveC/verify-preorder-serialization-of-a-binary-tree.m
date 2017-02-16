@@ -35,32 +35,25 @@
 // Time:  O(n)
 // Space: O(1)
 
-class Solution {
-public:
-    bool isValidSerialization(string preorder) {
-        if (preorder.empty()) {
-            return false;
-        }
-        istringstream in(preorder);
-        vector<string> tokens;
-        string token;
-        
-        while (getline(in, token, ',')) {
-            tokens.push_back(token);
-        }
+#import <Foundation/Foundation.h>
 
-        int parents = 0;
-        for (int i = 0; i < tokens.size() - 1; ++i) {
-            // for full tree, leaves are always one more than parent nodes
-            if (tokens[i] == "#") {
-                if (parents-- == 0) {   // preorder, root is before leaf
-                    return false;
-                }
-            } else {
-                ++parents;
-            }
-        }
-        // by this point - one leaf left, parents should match to leaves
-        return parents == 0 && tokens.back() == "#";   // last one must be "#", leaf
+BOOL isValidSerialization(NSString* preorder) {
+  if (!preorder.length) {
+    return NO;
+  }
+  NSArray* tokens = [preorder componentsSeparatedByString:@","];
+  
+  int parents = 0;
+  for (int i = 0; i < tokens.count - 1; ++i) {
+    // for full tree, leaves are always one more than its parent nodes
+    if ([tokens[i] isEqual:@"#"]) {
+      if (parents-- == 0) {   // preorder, root is before leaf
+        return false;
+      }
+    } else {
+      ++parents;
     }
-};
+  }
+  // by this point - one leaf left, parents count should match to leaves
+  return parents == 0 && [[tokens lastObject] isEqual:@"#"];   // last one must be "#", leaf
+}
