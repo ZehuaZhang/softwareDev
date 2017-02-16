@@ -16,16 +16,15 @@
 // Time:  O(n)
 // Space: O(1)
 
-class Solution {
-public:
-    int maxProfit(vector<int>& prices) {
-        int buy = INT_MIN, prevBuy = 0, sell = 0, prevSell = 0;
-        for (int price : prices) {
-            prevBuy = buy;
-            buy = max(prevSell - price, buy);
-            prevSell = sell;
-            sell = max(prevBuy + price, sell);
-        }
-        return sell;
-    }
-};
+#import <Foundation/Foundation.h>
+
+int maxProfit(NSArray* prices) {
+  int buy = INT_MIN, prevBuy = 0, sell = 0, prevSell = 0;
+  for (id price in prices) {
+    prevBuy = buy;
+    buy = MAX(prevSell - [price intValue], buy);
+    prevSell = sell;
+    sell = MAX(prevBuy + [price intValue], sell);
+  }
+  return sell;
+}
