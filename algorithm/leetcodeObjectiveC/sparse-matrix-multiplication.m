@@ -26,20 +26,20 @@
 // Time:  O(m * n * l), A is m x n matrix, B is n x l matrix
 // Space: O(m * l)
 
-class Solution {
-public:
-    vector<vector<int>> multiply(vector<vector<int>>& A, vector<vector<int>>& B) {
-        const int m = A.size(), l = A[0].size(), n = B[0].size();
-        vector<vector<int>> res(m, vector<int>(n));
-        for (int i = 0; i < m; ++i) {
-            for (int k = 0; k < l; ++k) {
-                if (A[i][k]) {
-                    for (int j = 0; j < n; ++j) {
-                        res[i][j] += A[i][k] * B[k][j];
-                    }
-                }
-            }
+#import<Foundation/Foundation.h>
+
+NSArray* multiply(NSArray* A, NSArray* B) {
+  const NSInteger m = A.count, l = [A[0] count], n = [B[0] count];
+  NSMutableArray* res = @[].mutableCopy;
+  for (int i = 0; i < m; ++i) {
+    res[i] = @[].mutableCopy;
+    for (int k = 0; k < l; ++k) {
+      if ([A[i][k] intValue]) {
+        for (int j = 0; j < n; ++j) {
+          res[i][j] = @([res[i][j] intValue] + [A[i][k] intValue] * [B[k][j] intValue]);
         }
-        return res;
+      }
     }
-};
+  }
+  return res;
+}

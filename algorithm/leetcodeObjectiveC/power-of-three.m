@@ -9,12 +9,11 @@
 // Time:  O(1)
 // Space: O(1)
 
-class Solution {
-public:
-    bool isPowerOfThree(int n) {
-		int maxLog3 = log(INT_MAX) / log(3);	// log3(INT_MAX);
-		int maxPow3 = pow(3, maxLog3);
+#import <Foundation/Foundation.h>
 
-        return n > 0 && maxPow3 % n == 0;
-    }
-};
+BOOL isPowerOfThree(int n) {
+  int maxLog3 = log(INT_MAX) / log(3);	// log3(INT_MAX);
+  int maxPow3 = pow(3, maxLog3);
+  
+  return n > 0 && maxPow3 % n == 0;
+}

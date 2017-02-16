@@ -32,36 +32,6 @@
 
 @end
 
-@implementation TreeNode
-
--(id)initWithValue:(NSInteger)value leftNode:(TreeNode*)left rightNode:(TreeNode*)right {
-  self = [super init];
-  if (self) {
-    self.value = value;
-    self.left = left;
-    self.right = right;
-  }
-  return self;
-}
-
--(id)initWithValue:(NSInteger)value leftNode:(TreeNode *)left {
-  return [self initWithValue:value leftNode:left rightNode:nil];
-}
-
--(id)initWithValue:(NSInteger)value rightNode:(TreeNode *)right {
-  return [self initWithValue:value leftNode:nil rightNode:right];
-}
-
--(id)initWithValue:(NSInteger)value {
-  return [self initWithValue:value leftNode:nil rightNode:nil];
-}
-
--(id)init {
-  return [self initWithValue:0 leftNode:nil rightNode:nil];
-}
-
-@end
-
 #pragma mark BSTIterator
 
 @interface BSTIterator : NSObject

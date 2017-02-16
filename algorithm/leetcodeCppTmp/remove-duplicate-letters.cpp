@@ -1,16 +1,16 @@
-316. Remove Duplicate Letters
-Difficulty: Hard
+// 316. Remove Duplicate Letters
+// Difficulty: Hard
 
-Given a string which contains only lowercase letters, 
-remove duplicate letters so that every letter appear once and only once. 
-You must make sure your result is the smallest in lexicographical order among all possible results.
+// Given a string which contains only lowercase letters, 
+// remove duplicate letters so that every letter appear once and only once. 
+// You must make sure your result is the smallest in lexicographical order among all possible results.
 
-Example:
-Given "bcabc"
-Return "abc"
+// Example:
+// Given "bcabc"
+// Return "abc"
 
-Given "cbacdcbc"
-Return "acdb"
+// Given "cbacdcbc"
+// Return "acdb"
 
 // Time:  O(n)
 // Space: O(k), k is size of the alphabet

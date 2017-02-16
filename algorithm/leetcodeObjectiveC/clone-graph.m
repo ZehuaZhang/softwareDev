@@ -39,6 +39,7 @@
 - (id)pop;
 - (void)push:(id)element;
 - (id)front;
+-(BOOL)isEmpty;
 -(NSInteger)count;
 
 @end
