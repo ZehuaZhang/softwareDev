@@ -77,7 +77,7 @@ public:
         @return The game's score after the move. Return -1 if game over. 
         Game over when snake crosses the screen boundary or bites its body. */
     int move(string direction) {
-        const auto x = _snake.front().first + _direction_[direction].first;
+        const auto x = _snake.front().first + _direction[direction].first;
         const auto y = _snake.front().second + _direction[direction].second;
         const auto tail = _snake.back();
         
@@ -89,7 +89,7 @@ public:
             _food.pop_front();
             _snake.push_back(tail);
         }
-        snake_.push_front({x, y});
+        _snake.push_front({x, y});
         return _score;
     }
 
