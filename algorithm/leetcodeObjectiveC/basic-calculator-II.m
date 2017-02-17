@@ -25,6 +25,7 @@
 - (instancetype)init;
 - (id)pop;
 - (void)push:(id)element;
+- (BOOL)isEmpty;
 -(NSInteger)count;
 
 @end

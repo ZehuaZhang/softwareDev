@@ -1,5 +1,5 @@
 // 348. Design Tic-Tac-Toe
-// Difficulty : Medium 
+// Difficulty : Medium
 
 // Design a Tic-tac-toe game that is played between two players on a n x n grid.
 
@@ -64,40 +64,58 @@
 // Time:  O(1), per move.
 // Space: O(n^2)
 
-class TicTacToe {
-public:
-    /** Initialize your data structure here. */
-    TicTacToe(int n) : _rows(n, {0, 0}), _cols(n, {0, 0}),
-                       _diag(2, 0), _antiDiag(2, 0) {
-    }
-    
-    /** Player {player} makes a move at ({row}, {col}).
-        @param row The row of the board.
-        @param col The column of the board.
-        @param player The player, can be either 1 or 2.
-        @return The current winning condition, can be either:
-                0: No one wins.
-                1: Player 1 wins.
-                2: Player 2 wins. */
-    int move(int row, int col, int player) {
-        const auto i = player - 1;
-        ++_rows[row][i], ++_cols[col][i];
-        if (row == col) {
-            ++_diag[i];
-        }
-        if (col + row == _rows.size() - 1) {
-            ++_antiDiag[i];
-        }
-        if (_rows[row][i] == _rows.size() ||
-            _cols[col][i] == _cols.size() ||
-            _diag[i] == _rows.size() ||
-            _antiDiag[i] == _cols.size()) {
-            return player;
-        }
-        return 0;
-    }
+#import <Foundation/Foundation.h>
 
-private:
-    vector<vector<int>> _rows, _cols;
-    vector<int> _diag, _antiDiag;
-};
+@interface TicTacToe : NSObject
+@end
+
+@implementation TicTacToe
+
+NSMutableArray* _rows;
+NSMutableArray* _cols;
+NSMutableArray* _diag;
+NSMutableArray* _antiDiag;
+
+-(instancetype)initWithSize:(int)n {
+  self = [super init];
+  if (self) {
+    _rows = @[].mutableCopy;
+    _cols = @[].mutableCopy;
+    _diag = @[@0, @0].mutableCopy;
+    _antiDiag = @[@0, @0].mutableCopy;
+    for (int i = 0; i < n; i++) {
+      _rows[i] = @[@0, @0].mutableCopy;
+      _cols[i] = @[@0, @0].mutableCopy;
+    }
+  }
+  return self;
+}
+
+/** Player {player} makes a move at ({row}, {col}).
+ @param row The row of the board.
+ @param col The column of the board.
+ @param player The player, can be either 1 or 2.
+ @return The current winning condition, can be either:
+ 0: No one wins.
+ 1: Player 1 wins.
+ 2: Player 2 wins. */
+-(int)moveRow:(int)row col:(int)col player:(int)player {
+  int i = player - 1;
+  _rows[row][i] = @([_rows[row][i] intValue] + 1);
+  _cols[col][i] = @([_cols[col][i] intValue] + 1);
+  if (row == col) {
+    _diag[i] = @([_diag[i] intValue] + 1);
+  }
+  if (col + row == _rows.count - 1) {
+    _antiDiag[i] = @([_antiDiag[i] intValue] + 1);
+  }
+  if ([_rows[row][i] intValue] == _rows.count ||
+      [_cols[col][i] intValue] == _cols.count ||
+      [_diag[i] intValue] == _rows.count ||
+      [_antiDiag[i] intValue] == _cols.count) {
+    return player;
+  }
+  return 0;
+}
+
+@end

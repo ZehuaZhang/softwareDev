@@ -1,16 +1,16 @@
 // 364. Nested List Weight Sum
-// Difficuty : Easy 
+// Difficuty : Easy
 
 // Given a nested list of integers, return the sum of all integers in the list weighted by their depth.
 
 // Each element is either an integer, or a list -- whose elements may also be integers or other lists.
 
 // Example 1:
-// Given the list [[1,1],2,[1,1]], return 10. 
+// Given the list [[1,1],2,[1,1]], return 10.
 // (four 1 at depth 2, one 2 at depth 1)
 
 // Example 2:
-// Given the list [1,[4,[6]]], return 27. 
+// Given the list [1,[4,[6]]], return 27.
 // (one 1 at depth 1, one 4 at depth 2, and one 6 at depth 3; 1 + 4*2 + 6*3 = 27)
 
 // Time:  O(n)
@@ -33,22 +33,29 @@
  *     const vector<NestedInteger> &getList() const;
  * };
  */
-class Solution {
-public:
-    int depthSum(vector<NestedInteger>& nestedList) {
-        return depthSum(nestedList, 1);
-    }
 
-private:
-    int depthSum(const vector<NestedInteger>& nestedList, int depth) {
-        int sum = 0;
-        for (auto list : nestedList) {
-            if (list.isInteger()) {
-                sum += list.getInteger() * depth;
-            } else {
-                sum += depthSum(list.getList(), depth + 1);
-            }
-        }
-        return sum;
+#import <Foundation/Foundation.h>
+
+@interface NestedInteger : NSObject
+
+-(int)getInteger;
+-(BOOL)isInteger;
+-(NSArray*)getList;
+
+@end
+
+int depthSumHelper(NSArray* nestedList, int depth) {
+  int sum = 0;
+  for (NestedInteger* list in nestedList) {
+    if ([list isInteger]) {
+      sum += [list getInteger] * depth;
+    } else {
+      sum += depthSumHelper([list getList], depth + 1);
     }
-};
+  }
+  return sum;
+}
+
+int depthSum(NSArray* nestedList) {
+  return depthSumHelper(nestedList, 1);
+}

@@ -22,17 +22,17 @@
 
 #import <Foundation/Foundation.h>
 
-#pragma mark Queue
+#pragma mark PriorityQueue
 
 @interface PriorityQueue : NSObject
 
-@property (readonly, strong) id front;
-@property (readonly, strong) id back;
-
+- (instancetype)initIsMinHeap:(BOOL)isMinHeap;
 - (instancetype)init;
+- (id)top;
 - (id)pop;
 - (void)push:(id)element;
 -(NSInteger)count;
+- (BOOL)isEmpty;
 
 @end
 
@@ -89,18 +89,11 @@ BOOL _isMinHeap;
   return element;
 }
 
-- (id)front {
+- (id)top {
   if (self.isEmpty) {
     return nil;
   }
   return [_array objectAtIndex:0];
-}
-
-- (id)back {
-  if (self.isEmpty) {
-    return nil;
-  }
-  return [_array lastObject];
 }
 
 -(NSInteger)count {

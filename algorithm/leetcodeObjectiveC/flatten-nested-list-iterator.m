@@ -35,41 +35,75 @@
  *     const vector<NestedInteger> &getList() const;
  * };
  */
- 
-// Using stack and iterator.
-class NestedIterator {
-public:
-    using it = vector<NestedInteger>::const_iterator;
-    NestedIterator(vector<NestedInteger> &nestedList) {
-        _depth.emplace(nestedList.cbegin(), nestedList.cend());
-    }
-
-    int next() {
-        return (_depth.top().first++)->getInteger();
-    }
-    
-    bool hasNext() {
-        while (!_depth.empty()) {
-            auto cur = _depth.top();
-            if (cur.first == cur.second) {
-                _depth.pop();
-            } else if (cur.first->isInteger()) {
-                return true;
-            } else {
-                auto nestedList = (cur.first++)->getList();
-                _depth.emplace(nestedList.cbegin(), nestedList.cend());
-            }
-        }
-        return false;
-    }
-
-private:
-    stack<pair<it, it>> _depth;
-};
 
 /**
  * Your NestedIterator object will be instantiated and called as such:
  * NestedIterator i(nestedList);
  * while (i.hasNext()) cout << i.next();
  */
- 
+
+
+#import <Foundation/Foundation.h>
+
+#pragma mark Stack
+
+@interface Stack : NSObject
+
+- (instancetype)init;
+- (id)pop;
+- (id)top;
+- (void)push:(id)element;
+- (BOOL)isEmpty;
+-(NSInteger)count;
+
+@end
+
+#pragma mark NestedInteger
+
+@interface NestedInteger : NSObject
+
+-(int)getInteger;
+-(BOOL)isInteger;
+-(NSArray*)getList;
+
+@end
+
+#pragma mark Solution
+
+@interface NestedIterator : NSObject
+@end
+
+@implementation NestedIterator
+
+Stack* _depth;
+
+-(instancetype)initWithNestedInteger:(NSArray*)nestedList {
+  self = [super init];
+  if (self) {
+    for (int i = 0; i < nestedList.count; i++) {
+      [_depth push:[nestedList objectEnumerator]];
+    }
+  }
+  return self;
+}
+
+-(int)next {
+  return [[[_depth top] nextObject] getInteger];
+}
+
+-(BOOL)hasNext {
+  while (![_depth isEmpty]) {
+    NSEnumerator* it = [[_depth top] copy];
+    if (![it nextObject]) {
+      [_depth pop];
+    } else if ([[it nextObject] isInteger]) {
+      return YES;
+    } else {
+      NSArray* nestedList = [[[_depth top] nextObject] getList];
+      [_depth push:[nestedList objectEnumerator]];
+    }
+  }
+  return NO;
+}
+
+@end

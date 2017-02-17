@@ -10,12 +10,11 @@
 // Time:  O(1)
 // Space: O(1)
 
-class Solution {
-public:
-    bool isPowerOfFour(int num) {
-        while (num && !(num & 0b11)) {
-            num >>= 2;
-        }
-        return (num == 1);
-    }
-};
+#import <Foundation/Foundation.h>
+
+BOOL isPowerOfFour(int num) {
+  while (num && !(num & 0b11)) {
+    num >>= 2;
+  }
+  return (num == 1);
+}

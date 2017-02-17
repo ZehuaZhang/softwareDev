@@ -1,7 +1,7 @@
 // 338. Counting Bits
 // Difficulty: Medium
 
-// Given a non negative integer number num. For every numbers i in the range 0 ≤ i ≤ num calculate 
+// Given a non negative integer number num. For every numbers i in the range 0 ≤ i ≤ num calculate
 // the number of 1 in their binary representation and return them as an array.
 
 // Example:
@@ -9,7 +9,7 @@
 
 // Follow up:
 
-// It is very easy to come up with a solution with run time O(n*sizeof(integer)). 
+// It is very easy to come up with a solution with run time O(n*sizeof(integer)).
 // But can you do it in linear time O(n) /possibly in a single pass?
 // Space complexity should be O(n).
 // Can you do it like a boss? Do it without using any builtin function like __builtin_popcount in c++ or in any other language.
@@ -22,13 +22,12 @@
 // Time:  O(n)
 // Space: O(n)
 
-class Solution {
-public:
-    vector<int> countBits(int num) {
-        vector<int> result{0};
-        for (int i = 1; i <= num; ++i) {
-            result.emplace_back(result[i >> 1] + (i & 1));  // msb, lsb
-        }
-        return result;
-    }
-};
+#import <Foundation/Foundation.h>
+
+NSArray* countBits(int num) {
+  NSMutableArray* result = @[@0].mutableCopy;
+  for (int i = 1; i <= num; ++i) {
+    [result addObject:@([result[i >> 1] intValue]+ (i & 1))];
+  }
+  return result;
+}

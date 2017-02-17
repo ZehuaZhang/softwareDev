@@ -32,9 +32,6 @@
 
 @interface Queue : NSObject
 
-@property (readonly, strong) id front;
-@property (readonly, strong) id back;
-
 - (instancetype)init;
 - (id)pop;
 - (void)push:(id)element;
