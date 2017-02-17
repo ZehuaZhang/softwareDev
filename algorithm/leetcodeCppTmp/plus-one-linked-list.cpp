@@ -1,29 +1,21 @@
-369. Plus One Linked List
-Difficulty : Medium
+// 369. Plus One Linked List
+// Difficulty : Medium
 
-Given a non-negative number represented as a singly linked list of digits, plus one to the number.
+// Given a non-negative number represented as a singly linked list of digits, plus one to the number.
 
-The digits are stored such that the most significant digit is at the head of the list.
+// The digits are stored such that the most significant digit is at the head of the list.
 
-Example:
-Input:
-1->2->3
+// Example:
+// Input:
+// 1->2->3
 
-Output:
-1->2->4
+// Output:
+// 1->2->4
 
 // Time:  O(n)
 // Space: O(1)
 
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
- */
- // Two pointers solution.
+// Two pointers solution.
 class Solution {
 public:
     ListNode* plusOne(ListNode* head) {

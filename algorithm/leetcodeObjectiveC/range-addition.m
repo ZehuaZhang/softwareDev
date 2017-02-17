@@ -1,9 +1,9 @@
 // 370. Range Addition
-// Difficulty: Medium 
+// Difficulty: Medium
 
 // Assume you have an array of length n initialized with all 0 and are given k update operations.
 
-// Each operation is represented as a triplet: [startIndex, endIndex, inc] which increments each element of subarray 
+// Each operation is represented as a triplet: [startIndex, endIndex, inc] which increments each element of subarray
 // A[startIndex ... endIndex] (startIndex and endIndex inclusive) with inc.
 
 // Return the modified array after all k operations were executed.
@@ -44,22 +44,23 @@
 // Time:  O(k + n)
 // Space: O(1)
 
-class Solution {
-public:
-    vector<int> getModifiedArray(int length, vector<vector<int>>& updates) {
-        vector<int> result(length, 0);
+#import <Foundation/Foundation.h>
 
-        for (const auto& update: updates) {
-            result[update[0]] += update[2]; // add action to start
-            if (update[1] + 1 < length) {   // add action to end, if end is not last position
-                result[update[1] + 1] -= update[2];
-            }
-        }
-
-        for (int i = 1; i < length; ++i) {
-            result[i] += result[i - 1]; // successor is the result of predecessor's action
-        }
-
-        return result;
+NSArray* getModifiedArray(int length, NSArray* updates) {
+  int result[length];
+  
+  for (id update in updates) {
+    result[[update[0] intValue]] += [update[2] intValue]; // add action to start
+    if ([update[1] intValue] + 1 < length) {   // add action to end, if end is not last position
+      result[[update[1] intValue] + 1] -= [update[2] intValue];
     }
-};
+  }
+  for (int i = 1; i < length; ++i) {
+    result[i] += result[i - 1]; // successor is the result of predecessor's action
+  }
+  NSMutableArray* ans = @[].mutableCopy;
+  for (int i = 0; i < length; i++) {
+    ans[i] = @(result[i]);
+  }
+  return ans;
+}
