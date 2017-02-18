@@ -1,13 +1,13 @@
-17. Letter Combinations of a Phone Number
-Difficulty: Medium
+// 17. Letter Combinations of a Phone Number
+// Difficulty: Medium
 
-Given a digit string, return all possible letter combinations that the number could represent.
+// Given a digit string, return all possible letter combinations that the number could represent.
 
-Input:Digit string "23"
-Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+// Input:Digit string "23"
+// Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
 
-Note:
-Although the above answer is in lexicographical order, your answer could be in any order you want.
+// Note:
+// Although the above answer is in lexicographical order, your answer could be in any order you want.
 
 // Time Complexity: O(3^n)
 // Space Complexity: O(n)

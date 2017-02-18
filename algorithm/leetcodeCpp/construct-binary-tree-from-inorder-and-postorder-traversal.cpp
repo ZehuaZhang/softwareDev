@@ -1,7 +1,7 @@
-106. Construct Binary Tree from Inorder and Postorder Traversal
-Difficulty: Medium
+// 106. Construct Binary Tree from Inorder and Postorder Traversal
+// Difficulty: Medium
 
-Given inorder and postorder traversal of a tree, construct the binary tree.
+// Given inorder and postorder traversal of a tree, construct the binary tree.
 
 // Time:  O(n)
 // Space: O(h)

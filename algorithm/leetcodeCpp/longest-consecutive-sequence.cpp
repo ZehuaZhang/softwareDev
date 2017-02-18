@@ -1,13 +1,13 @@
-128. Longest Consecutive Sequence
-Difficulty: Hard
+// 128. Longest Consecutive Sequence
+// Difficulty: Hard
 
-Given an unsorted array of integers, find the length of the longest consecutive elements sequence.
+// Given an unsorted array of integers, find the length of the longest consecutive elements sequence.
 
-For example,
-Given [100, 4, 200, 1, 3, 2],
-The longest consecutive elements sequence is [1, 2, 3, 4]. Return its length: 4.
+// For example,
+// Given [100, 4, 200, 1, 3, 2],
+// The longest consecutive elements sequence is [1, 2, 3, 4]. Return its length: 4.
 
-Your algorithm should run in O(n) complexity
+// Your algorithm should run in O(n) complexity
 
 // Time:  O(n)
 // Space: O(n)
@@ -15,7 +15,7 @@ Your algorithm should run in O(n) complexity
 class Solution {
 public:
     int longestConsecutive(vector<int>& nums) {
-        unordered_map<int, bool> visited
+        unordered_map<int, bool> visited;
 
         for (auto num : nums) {
             visited[num] = false;
@@ -23,11 +23,11 @@ public:
 
         int maxLength = 1;
         for (auto num : nums) {
-            if (visited[nums[i]]) {
+            if (visited[num]) {
                 continue;
             }
 
-            visited[num[i]] = true;
+            visited[num] = true;
             int lenth = 1;
             
             for (int lessNum = num - 1; visited.find(lessNum) != visited.end(); lessNum--) {

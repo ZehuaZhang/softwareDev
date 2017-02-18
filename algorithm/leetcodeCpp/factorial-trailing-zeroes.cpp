@@ -1,9 +1,9 @@
-172. Factorial Trailing Zeroes
-Difficulty: Easy
+// 172. Factorial Trailing Zeroes
+// Difficulty: Easy
 
-Given an integer n, return the number of trailing zeroes in n!.
+// Given an integer n, return the number of trailing zeroes in n!.
 
-Note: Your solution should be in logarithmic time complexity.
+// Note: Your solution should be in logarithmic time complexity.
 
 // Time:  O(logn) = O(1)
 // Space: O(1)

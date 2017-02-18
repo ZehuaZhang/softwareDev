@@ -1,13 +1,13 @@
-64. Minimum Path Sum
-Difficulty: Medium
+// 64. Minimum Path Sum
+// Difficulty: Medium
 
-Given a m x n grid filled with non-negative numbers, 
-find a path from top left to bottom right which minimizes the sum of all numbers along its path.
+// Given a m x n grid filled with non-negative numbers, 
+// find a path from top left to bottom right which minimizes the sum of all numbers along its path.
 
-Note: You can only move either down or right at any point in time.
+// Note: You can only move either down or right at any point in time.
 
-// Time Complexity: O(mn)
-// Space Complexity: O(n)
+// Time : O(m * n)
+// Space: O(n)
 
 class Solution {
 public:

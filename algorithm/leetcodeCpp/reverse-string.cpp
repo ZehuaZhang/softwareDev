@@ -1,7 +1,7 @@
-344. Reverse String
-Difficulty: Easy
+// 344. Reverse String
+// Difficulty: Easy
 
-Write a function that takes a string as input and returns the string reversed.
+// Write a function that takes a string as input and returns the string reversed.
 
 // Time:  O(n)
 // Space: O(1)

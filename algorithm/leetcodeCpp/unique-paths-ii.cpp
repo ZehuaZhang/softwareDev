@@ -1,26 +1,26 @@
-63. Unique Paths II
-Difficulty: Medium
+// 63. Unique Paths II
+// Difficulty: Medium
 
-Follow up for "Unique Paths":
+// Follow up for "Unique Paths":
 
-Now consider if some obstacles are added to the grids. How many unique paths would there be?
+// Now consider if some obstacles are added to the grids. How many unique paths would there be?
 
-An obstacle and empty space is marked as 1 and 0 respectively in the grid.
+// An obstacle and empty space is marked as 1 and 0 respectively in the grid.
 
-For example,
-There is one obstacle in the middle of a 3x3 grid as illustrated below.
+// For example,
+// There is one obstacle in the middle of a 3x3 grid as illustrated below.
 
-[
-  [0,0,0],
-  [0,1,0],
-  [0,0,0]
-]
-The total number of unique paths is 2.
+// [
+//   [0,0,0],
+//   [0,1,0],
+//   [0,0,0]
+// ]
+// The total number of unique paths is 2.
 
-Note: m and n will be at most 100.
+// Note: m and n will be at most 100.
 
-// Time Complexity: O(mn)
-// Space Complexity: O(n)
+// Time : O(m * n)
+// Space: O(n)
 
 class Solution {
 public:
@@ -37,7 +37,7 @@ public:
             for (int j = 1; j < n; j++) {
                 f[j] = obstacleGrid[i][j] ? 0 : (f[j] + f[j - 1]);
             }
-            return f[n - 1];
         }
+        return f[n - 1];
     }
 };

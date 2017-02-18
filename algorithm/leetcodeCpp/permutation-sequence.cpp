@@ -1,18 +1,18 @@
-60. Permutation Sequence
-Difficulty: Medium
+// 60. Permutation Sequence
+// Difficulty: Medium
 
-The set [1,2,3,…,n] contains a total of n! unique permutations.
+// The set [1,2,3,…,n] contains a total of n! unique permutations.
 
-By listing and labeling all of the permutations in order,
-We get the following sequence (ie, for n = 3):
+// By listing and labeling all of the permutations in order,
+// We get the following sequence (ie, for n = 3):
 
-"123"
-"132"
-"213"
-"231"
-"312"
-"321"
-Given n and k, return the kth permutation sequence.
+// "123"
+// "132"
+// "213"
+// "231"
+// "312"
+// "321"
+// Given n and k, return the kth permutation sequence.
 
 // Time:  O(n^2)
 // Space: O(n)

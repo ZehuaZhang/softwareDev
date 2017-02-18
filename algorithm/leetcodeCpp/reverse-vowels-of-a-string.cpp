@@ -1,16 +1,16 @@
-345. Reverse Vowels of a String
-Difficulty: Easy
+// 345. Reverse Vowels of a String
+// Difficulty: Easy
 
-Write a function that takes a string as input and reverse only the vowels of a string.
+// Write a function that takes a string as input and reverse only the vowels of a string.
 
-Example 1:
-Given s = "hello", return "holle".
+// Example 1:
+// Given s = "hello", return "holle".
 
-Example 2:
-Given s = "leetcode", return "leotcede".
+// Example 2:
+// Given s = "leetcode", return "leotcede".
 
-Note:
-The vowels does not include the letter "y".
+// Note:
+// The vowels does not include the letter "y".
 
 // Time:  O(n)
 // Space: O(1)

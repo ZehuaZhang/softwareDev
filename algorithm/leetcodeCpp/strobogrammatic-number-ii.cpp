@@ -1,15 +1,15 @@
-247. Strobogrammatic Number II
-Difficulty : Medium 
+// 247. Strobogrammatic Number II
+// Difficulty : Medium 
 
-A strobogrammatic number is a number that looks the same when rotated 180 degrees (looked at upside down).
+// A strobogrammatic number is a number that looks the same when rotated 180 degrees (looked at upside down).
 
-Find all strobogrammatic numbers that are of length = n.
+// Find all strobogrammatic numbers that are of length = n.
 
-For example,
-Given n = 2, return ["11","69","88","96"].
+// For example,
+// Given n = 2, return ["11","69","88","96"].
 
-Hint:
-Try to use recursion and notice that it should recurse with n - 2 instead of n - 1
+// Hint:
+// Try to use recursion and notice that it should recurse with n - 2 instead of n - 1
 
 // Time:  O(n^2 * 5^(n/2))
 // Space: O(n)
@@ -17,7 +17,7 @@ Try to use recursion and notice that it should recurse with n - 2 instead of n -
 class Solution {
 public:
     vector<string> findStrobogrammatic(int n) {
-        return findStrobogrammaticRecu(n, n);
+        return findStrobogrammatic(n, n);
     }
     
     vector<string> findStrobogrammatic(const int n, int k) {

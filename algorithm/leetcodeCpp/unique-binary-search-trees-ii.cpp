@@ -1,16 +1,16 @@
-95. Unique Binary Search Trees II
-Difficulty: Medium
+// 95. Unique Binary Search Trees II
+// Difficulty: Medium
 
-Given an integer n, generate all structurally unique BST (binary search trees) that store values 1...n.
+// Given an integer n, generate all structurally unique BST (binary search trees) that store values 1...n.
 
-For example,
-Given n = 3, your program should return all 5 unique BST shown below.
+// For example,
+// Given n = 3, your program should return all 5 unique BST shown below.
 
-   1         3     3      2      1
-    \       /     /      / \      \
-     3     2     1      1   3      2
-    /     /       \                 \
-   2     1         2                 3
+//    1         3     3      2      1
+//     \       /     /      / \      \
+//      3     2     1      1   3      2
+//     /     /       \                 \
+//    2     1         2                 3
 
 // Time:  O(n!)
 // Space: O(h)

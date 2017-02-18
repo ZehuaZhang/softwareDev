@@ -1,12 +1,12 @@
-43. Multiply Strings
-Difficulty: Medium
+// 43. Multiply Strings
+// Difficulty: Medium
 
-Given two numbers represented as strings, return multiplication of the numbers as a string.
+// Given two numbers represented as strings, return multiplication of the numbers as a string.
 
-Note:
-The numbers can be arbitrarily large and are non-negative.
-Converting the input string to integer is NOT allowed.
-You should NOT use internal library such as BigInteger.
+// Note:
+// The numbers can be arbitrarily large and are non-negative.
+// Converting the input string to integer is NOT allowed.
+// You should NOT use internal library such as BigInteger.
 
 // Time:  O(m * n)
 // Space: O(m + n)
@@ -37,63 +37,4 @@ public:
                   tmp.rend(), back_inserter(res), intToChar);
         return res;
     }
-};
-
-// Time:  O(m * n)
-// Space: O(m + n)
-// Define a new BigInt class solution. 
-class Solution2 {
-public:
-    string multiply(string num1, string num2) {
-        return BigInt(num1) * BigInt(num2);
-    }
-
-    class BigInt {
-    public:
-        BigInt(const string& s) {
-            transform(s.rbegin(), s.rend(), back_inserter(n_), 
-                      [](const char c) { return c - '0'; });
-        }
-    
-        operator string() {
-            string s;
-            transform(find_if(n_.rbegin(), prev(n_.rend()),
-                             [](const int i) { return i != 0; }),
-                      n_.rend(), back_inserter(s), 
-                      [](const int i) { return i + '0'; });
-            return s;
-        }
-    
-        BigInt operator*(const BigInt &rhs) const {
-            BigInt res(n_.size() + rhs.size(), 0);
-            for(auto i = 0; i < n_.size(); ++i) {
-                for(auto j = 0; j < rhs.size(); ++j) {
-                    res[i + j] += n_[i] * rhs[j];
-                    res[i + j + 1] += res[i + j] / 10;
-                    res[i + j] %= 10;
-                }
-            }
-            return res;
-        }
-    
-    private:
-        vector<int> n_;
-    
-        BigInt(int num, int val): n_(num, val) {
-        }
-    
-        // Getter.
-        int operator[] (int i) const {
-            return n_[i];
-        }
-    
-        // Setter.
-        int & operator[] (int i) {
-            return n_[i];
-        }
-    
-        size_t size() const {
-            return n_.size();
-        }
-    };
 };

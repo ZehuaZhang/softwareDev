@@ -1,18 +1,18 @@
-49. Group Anagrams
-Difficulty: Medium
+// 49. Group Anagrams
+// Difficulty: Medium
 
-Given an array of strings, group anagrams together.
+// Given an array of strings, group anagrams together.
 
-For example, given: ["eat", "tea", "tan", "ate", "nat", "bat"], 
-Return:
+// For example, given: ["eat", "tea", "tan", "ate", "nat", "bat"], 
+// Return:
 
-[
-  ["ate", "eat","tea"],
-  ["nat","tan"],
-  ["bat"]
-]
+// [
+//   ["ate", "eat","tea"],
+//   ["nat","tan"],
+//   ["bat"]
+// ]
 
-Note: All inputs will be in lower-case.
+// Note: All inputs will be in lower-case.
 
 // Time:  O(n * glogg), g is the max size of groups.
 // Space: O(n)

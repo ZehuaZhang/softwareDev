@@ -1,19 +1,11 @@
-148. Sort List
-Difficulty: Medium
+// 148. Sort List
+// Difficulty: Medium
 
-Sort a linked list in O(n log n) time using constant space complexity.
+// Sort a linked list in O(n log n) time using constant space complexity.
 
 // Time:  O(nlogn)
 // Space: O(logn)
 
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
- */
 class Solution {
 public:
     ListNode* sortList(ListNode* head) {

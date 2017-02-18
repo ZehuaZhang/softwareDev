@@ -1,20 +1,20 @@
-131. Palindrome Partitioning
-Difficulty: Medium
+// 131. Palindrome Partitioning
+// Difficulty: Medium
 
-Given a string s, partition s such that every substring of the partition is a palindrome.
+// Given a string s, partition s such that every substring of the partition is a palindrome.
 
-Return all possible palindrome partitioning of s.
+// Return all possible palindrome partitioning of s.
 
-For example, given s = "aab",
-Return
+// For example, given s = "aab",
+// Return
 
-[
-  ["aa","b"],
-  ["a","a","b"]
-]
+// [
+//   ["aa","b"],
+//   ["a","a","b"]
+// ]
 
-// Time Complexity: average: O(n^2), worst: O(n^2 * 2^n)
-// Space Complexity: average: O(1), worst: O(2^n)
+// Time : average: O(n^2), worst: O(n^2 * 2^n)
+// Space: average: O(1), worst: O(2^n)
 
 class Solution {
     public:

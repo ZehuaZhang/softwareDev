@@ -1,19 +1,19 @@
-341. Flatten Nested List Iterator
-Difficulty: Medium
+// 341. Flatten Nested List Iterator
+// Difficulty: Medium
 
-Given a nested list of integers, implement an iterator to flatten it.
+// Given a nested list of integers, implement an iterator to flatten it.
 
-Each element is either an integer, or a list -- whose elements may also be integers or other lists.
+// Each element is either an integer, or a list -- whose elements may also be integers or other lists.
 
-Example 1:
-Given the list [[1,1],2,[1,1]],
+// Example 1:
+// Given the list [[1,1],2,[1,1]],
 
-By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,1,2,1,1].
+// By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,1,2,1,1].
 
-Example 2:
-Given the list [1,[4,[6]]],
+// Example 2:
+// Given the list [1,[4,[6]]],
 
-By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,4,6].
+// By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,4,6].
 
 // Time:  O(n), n is the number of the integers.
 // Space: O(h), h is the depth of the nested lists.

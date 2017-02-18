@@ -1,15 +1,15 @@
-221. Maximal Square
-Difficulty: Medium
+// 221. Maximal Square
+// Difficulty: Medium
 
-Given a 2D binary matrix filled with 0 and 1, find the largest square containing only 1 and return its area.
+// Given a 2D binary matrix filled with 0 and 1, find the largest square containing only 1 and return its area.
 
-For example, given the following matrix:
+// For example, given the following matrix:
 
-1 0 1 0 0
-1 0 1 1 1
-1 1 1 1 1
-1 0 0 1 0
-Return 4.
+// 1 0 1 0 0
+// 1 0 1 1 1
+// 1 1 1 1 1
+// 1 0 0 1 0
+// Return 4.
 
 // Time:  O(n^2)
 // Space: O(n)

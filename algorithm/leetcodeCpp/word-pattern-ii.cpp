@@ -1,20 +1,20 @@
-291. Word Pattern II
-Difficulty : Hard 
+// 291. Word Pattern II
+// Difficulty : Hard 
 
-Given a pattern and a string str, find if str follows the same pattern.
+// Given a pattern and a string str, find if str follows the same pattern.
 
-Here follow means a full match, such that there is a bijection between a letter in pattern 
-and a non-empty substring in str.
+// Here follow means a full match, such that there is a bijection between a letter in pattern 
+// and a non-empty substring in str.
 
-Examples:
+// Examples:
 
-pattern = "abab", str = "redblueredblue" should return true.
-pattern = "aaaa", str = "asdasdasdasd" should return true.
-pattern = "aabb", str = "xyzabcxzyabc" should return false.
+// pattern = "abab", str = "redblueredblue" should return true.
+// pattern = "aaaa", str = "asdasdasdasd" should return true.
+// pattern = "aabb", str = "xyzabcxzyabc" should return false.
  
 
-Notes:
-You may assume both pattern and str contains only lowercase letters.
+// Notes:
+// You may assume both pattern and str contains only lowercase letters.
 
 // Time:  O(n * C(n - 1, c - 1)), n is length of str, c is unique count of pattern,
 //                                there are H(n - c, c - 1) = C(n - 1, c - 1) possible splits of string,

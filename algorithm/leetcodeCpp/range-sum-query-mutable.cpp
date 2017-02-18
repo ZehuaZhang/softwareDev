@@ -1,19 +1,25 @@
-Range Sum Query - Mutable
-Difficulty: Medium
+// Range Sum Query - Mutable
+// Difficulty: Medium
 
-Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
+// Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
 
-The update(i, val) function modifies nums by updating the element at index i to val.
-Example:
-Given nums = [1, 3, 5]
+// The update(i, val) function modifies nums by updating the element at index i to val.
+// Example:
+// Given nums = [1, 3, 5]
 
-sumRange(0, 2) -> 9
-update(1, 2)
-sumRange(0, 2) -> 8
+// sumRange(0, 2) -> 9
+// update(1, 2)
+// sumRange(0, 2) -> 8
 
-Note:
-The array is only modifiable by the update function.
-You may assume the number of calls to update and sumRange function is distributed evenly.
+// Note:
+// The array is only modifiable by the update function.
+// You may assume the number of calls to update and sumRange function is distributed evenly.
+
+// Your NumArray object will be instantiated and called as such:
+// NumArray numArray(nums);
+// numArray.sumRange(0, 1);
+// numArray.update(1, 10);
+// numArray.sumRange(1, 2);
 
 // Time:  ctor:   O(n),
 //        update: O(logn),
@@ -62,9 +68,3 @@ private:
     vector<int> _nums;  // nums staring @ index 1
     vector<int> _bits;  // diff
 };
-
-// Your NumArray object will be instantiated and called as such:
-// NumArray numArray(nums);
-// numArray.sumRange(0, 1);
-// numArray.update(1, 10);
-// numArray.sumRange(1, 2);

@@ -1,12 +1,12 @@
-69. Sqrt(x)
-Difficulty: Medium
+// 69. Sqrt(x)
+// Difficulty: Medium
 
-Implement int sqrt(int x).
+// Implement int sqrt(int x).
 
-Compute and return the square root of x.
+// Compute and return the square root of x.
 
-// Time Complexity: O(n)
-// Space Complexity: O(1)
+// Time : O(n)
+// Space: O(1)
 
 class Solution {
     public:

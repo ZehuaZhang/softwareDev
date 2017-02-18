@@ -1,19 +1,19 @@
-267. Palindrome Permutation II
-Difficulty : Medium 
+// 267. Palindrome Permutation II
+// Difficulty : Medium 
 
-Given a string s, return all the palindromic permutations (without duplicates) of it.
-Return an empty list if no palindromic permutation could be form.
+// Given a string s, return all the palindromic permutations (without duplicates) of it.
+// Return an empty list if no palindromic permutation could be form.
 
-For example:
+// For example:
 
-Given s = "aabb", return ["abba", "baab"].
+// Given s = "aabb", return ["abba", "baab"].
 
-Given s = "abc", return [].
+// Given s = "abc", return [].
 
-Hint:
-If a palindromic permutation exists, we just need to generate the first half of the string.
-To generate all distinct permutations of a (half of) string, use a similar approach from: 
-Permutations II or Next Permutation.
+// Hint:
+// If a palindromic permutation exists, we just need to generate the first half of the string.
+// To generate all distinct permutations of a (half of) string, use a similar approach from: 
+// Permutations II or Next Permutation.
 
 // Time:  O(n * n!)
 // Space: O(n)

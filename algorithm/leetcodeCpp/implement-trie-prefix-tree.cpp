@@ -1,10 +1,10 @@
-208. Implement Trie (Prefix Tree)
-Difficulty: Medium
+// 208. Implement Trie (Prefix Tree)
+// Difficulty: Medium
 
-Implement a trie with insert, search, and startsWith methods.
+// Implement a trie with insert, search, and startsWith methods.
 
-Note:
-You may assume that all inputs are consist of lowercase letters a-z.
+// Note:
+// You may assume that all inputs are consist of lowercase letters a-z.
 
 // Time:  O(n), per operation
 // Space: O(1)
@@ -31,7 +31,7 @@ public:
             if (!curr->leaves.count(c)) {
                 curr->leaves[c] = new TrieNode();
             }
-            curr = cur->leaves[c];
+            curr = curr->leaves[c];
         }
         curr->isString = true;
     }

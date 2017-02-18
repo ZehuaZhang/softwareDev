@@ -1,13 +1,13 @@
-119. Pascal Triangle II
-Difficulty: Easy
+// 119. Pascal Triangle II
+// Difficulty: Easy
 
-Given an index k, return the kth row of the Pascal triangle.
+// Given an index k, return the kth row of the Pascal triangle.
 
-For example, given k = 3,
-Return [1,3,3,1].
+// For example, given k = 3,
+// Return [1,3,3,1].
 
-Note:
-Could you optimize your algorithm to use only O(k) extra space?
+// Note:
+// Could you optimize your algorithm to use only O(k) extra space?
 
 // Time:  O(n^2)
 // Space: O(1)

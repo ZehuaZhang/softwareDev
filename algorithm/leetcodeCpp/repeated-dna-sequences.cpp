@@ -1,17 +1,17 @@
-187. Repeated DNA Sequences
-Difficulty: Medium
+// 187. Repeated DNA Sequences
+// Difficulty: Medium
 
-All DNA is composed of a series of nucleotides abbreviated as A, C, G, and T, for example: "ACGAATTCCG". 
-When studying DNA, it is sometimes useful to identify repeated sequences within the DNA.
+// All DNA is composed of a series of nucleotides abbreviated as A, C, G, and T, for example: "ACGAATTCCG". 
+// When studying DNA, it is sometimes useful to identify repeated sequences within the DNA.
 
-Write a function to find all the 10-letter-long sequences (substrings) that occur more than once in a DNA molecule.
+// Write a function to find all the 10-letter-long sequences (substrings) that occur more than once in a DNA molecule.
 
-For example,
+// For example,
 
-Given s = "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT",
+// Given s = "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT",
 
-Return:
-["AAAAACCCCC", "CCCCCAAAAA"].
+// Return:
+// ["AAAAACCCCC", "CCCCCAAAAA"].
 
 class Solution {
 public:
@@ -37,34 +37,3 @@ public:
         return result;
     }
 };
-
-// convert to long
-class Solution {
- public:
-     vector<string> findRepeatedDnaSequences(string s) {
-         
-         vector<string> result;
-         if (s.size() <= 10)
-             return result;
-
-         map<long, int> cnt;
-             
-         for (int i = 0; i < s.size()-9; i++) {
-             string subS = s.substr(i, 10);
-
-             for (int j = 0; j < 10; j++) {
-                 char &c = subS[j];
-                 switch (c) {
-                 case 'A': c = '0'; break;
-                 case 'C': c = '1'; break;
-                 case 'G': c = '2'; break;
-                 case 'T': c = '3'; break;
-                 }
-             }
-             if (++cnt[stol(subS)] == 2) {
-             	result.push_back(s.substr(i, 10));
-             }
-         }
-         return result;
-     }
- }

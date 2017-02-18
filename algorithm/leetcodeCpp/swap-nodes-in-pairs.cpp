@@ -1,12 +1,12 @@
-24. Swap Nodes in Pairs
-Difficulty: Easy
+// 24. Swap Nodes in Pairs
+// Difficulty: Easy
 
-Given a linked list, swap every two adjacent nodes and return its head.
+// Given a linked list, swap every two adjacent nodes and return its head.
 
-For example,
-Given 1->2->3->4, you should return the list as 2->1->4->3.
+// For example,
+// Given 1->2->3->4, you should return the list as 2->1->4->3.
 
-Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.
+// Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.
 
 // Time:  O(n)
 // Space: O(1)

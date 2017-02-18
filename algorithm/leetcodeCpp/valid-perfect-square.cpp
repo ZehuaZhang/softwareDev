@@ -1,18 +1,18 @@
-367. Valid Perfect Square
-Difficulty: Medium
+// 367. Valid Perfect Square
+// Difficulty: Medium
 
-Given a positive integer num, write a function which returns True if num is a perfect square else False.
+// Given a positive integer num, write a function which returns True if num is a perfect square else False.
 
-Note: Do not use any built-in library function such as sqrt.
+// Note: Do not use any built-in library function such as sqrt.
 
-Example 1:
+// Example 1:
 
-Input: 16
-Returns: True
-Example 2:
+// Input: 16
+// Returns: True
+// Example 2:
 
-Input: 14
-Returns: False
+// Input: 14
+// Returns: False
 
 // Time:  O(logn)
 // Space: O(1)

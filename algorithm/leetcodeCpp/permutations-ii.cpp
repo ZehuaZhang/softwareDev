@@ -1,51 +1,47 @@
-47. Permutations II
-Difficulty: Medium
+// 47. Permutations II
+// Difficulty: Medium
 
-Given a collection of numbers that might contain duplicates, return all possible unique permutations.
+// Given a collection of numbers that might contain duplicates, return all possible unique permutations.
 
-For example,
-[1,1,2] have the following unique permutations:
+// For example,
+// [1,1,2] have the following unique permutations:
 
-[
-  [1,1,2],
-  [1,2,1],
-  [2,1,1]
-]
+// [
+//   [1,1,2],
+//   [1,2,1],
+//   [2,1,1]
+// ]
 
-// Time Complexity: O(n!)
-// Space Complexity: O(n)
+// Time : O(n!)
+// Space: O(n)
 
 class Solution {
     public:
         vector<vector<int> > permute(vector<int>& nums) {
             sort(nums.begin(), nums.end());
-            unordered_map<int, int> count;
-            for(auto num : nums) {
-                ++count[num];
-            }
-
+            vector<int> visited(nums.size(), false);
             vector<vector<int> > ans;
             vector<int> path;
-            n = nums.size();
-            permute(count, path, ans);
+            permute(nums, visited, path, ans);
 
             return ans;
         }
 
     private:
-        size_t n;
-        void permute(unordered_map<int, int> &count, vector<int> &path, vector<vector<int> > &ans) {
-            if (n == path.size()) {
+        void permute(vector<int>& nums, vector<int> &visited, vector<int> &path, vector<vector<int> > &ans) {
+            if (nums.size() == path.size()) {
                 ans.push_back(path);
+                return;
             }
 
-            for (auto pair : count) {
-                if (pair.second > 0) {
-                    path.push_back(pair.first);
-                    --pair.second;
-                    permute(count, path, ans);
-                    path.pop_back();
-                    ++pair.second;
+            for (int i = 0; i < nums.size(); i++) {
+                if (!visited[i]) {
+                  path.push_back(nums[i]);
+                  visited[i] = true;
+                  permute(nums, visited, path, ans);
+                  path.pop_back();
+                  visited[i] = false;
+                  for (; i < nums.size() - 1 && nums[i] == nums[i + 1]; i++);
                 }
             }
         }

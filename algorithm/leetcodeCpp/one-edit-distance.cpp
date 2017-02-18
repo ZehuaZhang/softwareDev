@@ -1,7 +1,7 @@
-161. One Edit Distance 
-Difficulty: Medium
+// 161. One Edit Distance 
+// Difficulty: Medium
 
-Given two strings S and T, determine if they are both one edit distance apart.
+// Given two strings S and T, determine if they are both one edit distance apart.
 
 // Time:  O(m + n) 
 // Space: O(1)
@@ -21,34 +21,5 @@ public:
             }
         }
         return abs(s.size() - t.size()) == 1;   // both strings are the same, except last character(s) of longer string
-    }
-};
-
-// Time:  O(m + n)
-// Space: O(1)
-
-class Solution {
-public:
-    bool isOneEditDistance(string s, string t) {
-        const int m = s.length(), n = t.length();
-        if (m > n) {
-            return isOneEditDistance(t, s);
-        }
-        if (n - m > 1) {
-            return false;
-        }
-        
-        int i = 0, shift = n - m;
-        while (i < m && s[i] == t[i]) {
-            ++i;
-        }
-        if (shift == 0) {   // string length is same
-            ++i;
-        }
-        while (i < m && s[i] == t[i + shift]) {
-            ++i;
-        }
-            
-        return i == m;
     }
 };

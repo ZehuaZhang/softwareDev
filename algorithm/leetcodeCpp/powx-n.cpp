@@ -1,12 +1,11 @@
-50. Pow(x, n)
-Difficulty: Medium
+// 50. Pow(x, n)
+// Difficulty: Medium
 
-Implement pow(x, n).
+// Implement pow(x, n).
 
 // Time:  O(logn) = O(1)
 // Space: O(logn)
 
-// Iterative solution.
 class Solution {
 public:
     double myPow(double x, int n) {
