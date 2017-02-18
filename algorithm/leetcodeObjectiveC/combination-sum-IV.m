@@ -1,7 +1,7 @@
 // 377. Combination Sum IV
 // Difficulty: Medium
 
-// Given an integer array with all positive numbers and no duplicates, 
+// Given an integer array with all positive numbers and no duplicates,
 // find the number of possible combinations that add up to a positive integer target.
 
 // Example:
@@ -30,19 +30,18 @@
 // Time:  O(nlogn + n * t), t is the value of target.
 // Space: O(t)
 
-class Solution {
-public:
-    int combinationSum4(vector<int>& nums, int target) {
-        vector<int> dp(target + 1, 0);
-        dp[0] = 1;
-        sort(nums.begin(), nums.end());
+#import <Foundation/Foundation.h>
 
-        for (int i = 1; i <= target; ++i) {
-            for (int j = 0; j < nums.size() && nums[j] <= i; ++j) {
-                dp[i] += dp[i - nums[j]];
-            }
-        }
-
-        return dp[target];
+int combinationSum4(NSArray* nums, int target) {
+  int dp[target + 1];
+  dp[0] = 1;
+  NSArray* sorted = [nums sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+    return [obj1 compare:obj2];
+  }];
+  for (int i = 1; i <= target; ++i) {
+    for (int j = 0; j < sorted.count && [sorted[j] intValue] <= i; ++j) {
+      dp[i] += dp[i - [sorted[j] intValue]];
     }
-};
+  }
+  return dp[target];
+}

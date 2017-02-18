@@ -28,26 +28,35 @@
 // Time:  O(n)
 // Space: O(n)
 
-class Solution {
-public:
-    Solution(vector<int> nums) : _nums(nums) {
-        
-    }
-    
-    /** Resets the array to its original configuration and return it. */
-    vector<int> reset() {
-        return _nums;
-    }
-    
-    /** Returns a random shuffling of the array. */
-    vector<int> shuffle() {
-        vector<int> nums(_nums);
-        for (int i = 0; i < nums.size(); ++i) {
-            swap(nums[i],  nums[i + rand() % (nums.size() - i)]);   // [i, nums.size() - 1]
-        }
-        return nums;
-    }
+#import <Foundation/Foundation.h>
 
-private:
-    const vector<int> _nums;
-};
+@interface Solution : NSObject
+@end
+
+@implementation Solution
+
+NSArray* _nums;
+
+-(instancetype)initWithArray:(NSArray*)nums {
+  self = [super init];
+  if (self) {
+    _nums = [NSArray arrayWithArray:nums];
+  }
+  return self;
+}
+
+/** Resets the array to its original configuration and return it. */
+-(NSArray*)resetArray {
+  return _nums;
+}
+
+/** Returns a random shuffling of the array. */
+-(NSArray*)shuffle {
+  NSMutableArray* nums = _nums.mutableCopy;
+  for (int i = 0; i < nums.count; ++i) {
+    [nums exchangeObjectAtIndex:i withObjectAtIndex:i + arc4random_uniform((int)nums.count - i)];
+  }
+  return nums;
+}
+
+@end

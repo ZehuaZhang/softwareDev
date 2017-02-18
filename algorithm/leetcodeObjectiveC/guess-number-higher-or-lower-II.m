@@ -7,7 +7,7 @@
 
 // Every time you guess wrong, Ill tell you whether the number I picked is higher or lower.
 
-// However, when you guess a particular number x, and you guess wrong, you pay $x. 
+// However, when you guess a particular number x, and you guess wrong, you pay $x.
 // You win the game when you guess the number I picked.
 
 // Example:
@@ -24,29 +24,28 @@
 
 // Hint:
 
-// The best strategy to play the game is to minimize the maximum loss you could possibly face. 
+// The best strategy to play the game is to minimize the maximum loss you could possibly face.
 // Another strategy is to minimize the expected loss. Here, we are interested in the first scenario.
 // Take a small example (n = 3). What do you end up paying in the worst case?
-// The purely recursive implementation of minimax would be worthless for even a small n. 
+// The purely recursive implementation of minimax would be worthless for even a small n.
 // You MUST use dynamic programming.
-// As a follow-up, how would you modify your code to solve the problem of minimizing the expected loss, 
-// instead of the worst-case loss?
+// As a follow-up, how would you modify your code to solve the problem of minimizing the expected loss,
+//instead of the worst-case loss?
 
 // Time:  O(n^2)
 // Space: O(n^2)
 
-class Solution {
-public:
-    int getMoneyAmount(int n) {
-        vector<vector<int>> pay(n + 1, vector<int>(n));
-        for (int i = n - 1; i >= 0; --i) {
-            for (int j = i + 1; j < n; ++j) {
-                pay[i][j] = INT_MAX;
-                for (int k = i; k <= j; ++k) {
-                    pay[i][j] = min(pay[i][j], k + 1 + max(pay[i][k - 1], pay[k + 1][j]));
-                }
-            }
-        }
-        return pay[0][n - 1];
+#import <Foundation/Foundation.h>
+
+int getMoneyAmount(int n) {
+  int pay[n + 1][n];
+  for (int i = n - 1; i >= 0; --i) {
+    for (int j = i + 1; j < n; ++j) {
+      pay[i][j] = INT_MAX;
+      for (int k = i; k <= j; ++k) {
+        pay[i][j] = MIN(pay[i][j], k + 1 + MAX(pay[i][k - 1], pay[k + 1][j]));
+      }
     }
-};
+  }
+  return pay[0][n - 1];
+}

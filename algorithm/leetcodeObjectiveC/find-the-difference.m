@@ -9,10 +9,13 @@
 // Time:  O(n)
 // Space: O(1)
 
-class Solution {
-public:
-    char findTheDifference(string s, string t) {
-        return accumulate(s.cbegin(), s.cend(), 0, std::bit_xor<int>()) ^
-               accumulate(t.cbegin(), t.cend(), 0, std::bit_xor<int>());
-    }
-};
+#import <Foundation/Foundation.h>
+
+char findTheDifference(NSString* s, NSString* t) {
+  char result = 0;
+  for (int i = 0; i < s.length; i++) {
+    result ^= [s characterAtIndex:i] ^ [t characterAtIndex:i];
+  }
+  return result ^ [t characterAtIndex:t.length - 1];
+}
+

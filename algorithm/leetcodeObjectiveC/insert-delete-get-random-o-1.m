@@ -5,7 +5,7 @@
 
 // insert(val): Inserts an item val to the set if not already present.
 // remove(val): Removes an item val from the set if present.
-// getRandom: Returns a random element from current set of elements. 
+// getRandom: Returns a random element from current set of elements.
 // Each element must have the same probability of being returned.
 
 // Example:
@@ -45,46 +45,51 @@
 // Time:  O(1)
 // Space: O(n)
 
-class RandomizedSet {
-public:
-    /** Initialize your data structure here. */
-    RandomizedSet() {
-        
-    }
-    
-    /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
-    bool insert(int val) {
-        if (_used.count(val)) {
-            return false;
-        }
+#import <Foundation/Foundation.h>
 
-        _set.emplace_back(val);
-        _used[val] = _set.size() - 1;
+@interface RandomizedSet : NSObject
+@end
 
-        return true;
-    }
-    
-    /** Removes a value from the set. Returns true if the set contained the specified element. */
-    bool remove(int val) {
-        if (!_used.count(val)) {
-            return false;
-        }
+@implementation RandomizedSet
 
-        _used[_set.back()] = _used[val];
-        swap(_set[_used[val]], _set.back());
+NSMutableArray* _set;
+NSMutableDictionary* _used;
 
-        _used.erase(val);
-        _set.pop_back();
+/** Initialize your data structure here. */
+-(instancetype)init{
+  self = [super init];
+  if (self) {
+    _set = @[].mutableCopy;
+    _used = @{}.mutableCopy;
+  }
+  return self;
+}
 
-        return true;
-    }
-    
-    /** Get a random element from the set. */
-    int getRandom() {
-        return _set[rand() % _set.size()];
-    }
+/** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
+-(BOOL)insert:(int)value {
+  if (_used[@(value)]) {
+    return NO;
+  }
+  [_set addObject:@(value)];
+  _used[@(value)] = @([_set count] - 1);
+  return YES;
+}
 
-private:
-    vector<int> _set;
-    unordered_map<int, int> _used;
-};
+/** Removes a value from the set. Returns true if the set contained the specified element. */
+-(BOOL)remove:(int)value {
+  if (!_used[@(value)]) {
+    return NO;
+  }
+  _used[[_set lastObject]] = _used[@(value)];
+  [_set exchangeObjectAtIndex:_set.count - 1 withObjectAtIndex:[_used[@(value)] intValue]];
+  [_used removeObjectForKey:@(value)];
+  [_set removeLastObject];
+  return YES;
+}
+
+/** Get a random element from the set. */
+-(int)getRandom {
+  return [_set[arc4random_uniform((int)_set.count)] intValue];
+}
+
+@end

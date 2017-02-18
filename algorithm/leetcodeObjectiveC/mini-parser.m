@@ -60,34 +60,59 @@
  * };
  */
 
-// Iterative solution. 
-class Solution {
-public:
-    NestedInteger deserialize(string s) {
-        if (s.empty()) {
-            return NestedInteger();
-        }
+#import <Foundation/Foundation.h>
 
-        if (s[0] != '[') {
-            return NestedInteger(stoi(s));
-        }
+#pragma mark Stack
 
-        stack<NestedInteger> stk;
-        for (int i = 0, j = 0; j < s.length(); ++j) {
-            if (s[j] == '[') {
-                stk.emplace(NestedInteger()); 
-                i = j + 1;
-            } else if (s[j] == ',' || s[j] == ']') {
-                if (isdigit(s[j - 1])) {
-                    stk.top().add(NestedInteger(stoi(s.substr(i, j - i))));
-                }
-                if (s[j] == ']' && stk.size() > 1) {
-                    NestedInteger cur = stk.top(); stk.pop();
-                    stk.top().add(cur);
-                }
-                i = j + 1;
-            }
-        }
-        return stk.top();
+@interface Stack : NSObject
+
+- (instancetype)init;
+- (id)top;
+- (id)pop;
+- (void)push:(id)element;
+- (BOOL)isEmpty;
+-(NSInteger)count;
+
+@end
+
+#pragma mark NestedInteger
+
+@interface NestedInteger : NSObject
+
+-(instancetype)initWithInteger:(NSInteger)integer;
+-(instancetype)init;
+-(int)getInteger;
+-(BOOL)isInteger;
+-(void)addNestedInteger:(NestedInteger*)integer;
+-(NSArray*)getList;
+
+@end
+
+#pragma mark Solution
+// Iterative solution.
+
+NestedInteger* deserialize(NSString* s) {
+  if (!s.length) {
+    return [[NestedInteger alloc] init];
+  }
+  if ([s characterAtIndex:0] != '[') {
+    return [[NestedInteger alloc] initWithInteger:[s intValue]];
+  }
+  Stack* stack = [[Stack alloc] init];
+  for (int i = 0, j = 0; j < s.length; ++j) {
+    if ([s characterAtIndex:j] == '[') {
+      [stack push:[[NestedInteger alloc] init]];
+      i = j + 1;
+    } else if ([s characterAtIndex:j] == ',' || [s characterAtIndex:j] == ']') {
+      if (isdigit([s characterAtIndex:j - 1])) {
+        [(NestedInteger*)[stack top] addNestedInteger:[[NestedInteger alloc] initWithInteger:[[s substringWithRange:NSMakeRange(i, j - i)] integerValue]]];
+      }
+      if ([s characterAtIndex:j] == ']' && stack.count > 1) {
+        NestedInteger* curr = [stack pop];
+        [[stack top] addNestedInteger:curr];
+      }
+      i = j + 1;
     }
-};
+  }
+  return [stack top];
+}
