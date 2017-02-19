@@ -13,8 +13,6 @@
 static Singleton* _gInstance = nil;
 float _ivarFrameRate;
 
-int _ha;
-
 + (Singleton*)instance
 {
   @synchronized(self)
