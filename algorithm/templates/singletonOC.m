@@ -8,10 +8,11 @@
 
 @end
 
-@implementation Singleton
+@implementation Singleton {
+  float _ivarFrameRate;
+}
 
 static Singleton* _gInstance = nil;
-float _ivarFrameRate;
 
 + (Singleton*)instance
 {
