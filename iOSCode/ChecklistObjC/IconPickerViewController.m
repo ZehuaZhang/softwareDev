@@ -1,9 +1,9 @@
 //
 //  IconPickerViewController.m
-//  techbowA2checklistsObjC
+//  ChecklistsOC
 //
-//  Created by ZhangZehua on 11/23/15.
-//  Copyright © 2015 ZhangZehua. All rights reserved.
+//  Created by ZhangZehua on 2/20/17.
+//  Copyright © 2017 ZhangZehua. All rights reserved.
 //
 
 #import "IconPickerViewController.h"
@@ -12,33 +12,24 @@
 
 @end
 
-@implementation IconPickerViewController
-
-#pragma mark - initialize
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder
-{
-    self = [super initWithCoder:aDecoder];
-    
-    if (self) {
-        _icons = @[@"No Icon",
-                  @"Appointments",
-                  @"Birthdays",
-                  @"Chores",
-                  @"Drinks",
-                  @"Folder",
-                  @"Groceries",
-                  @"Inbox",
-                  @"Photos",
-                  @"Trips" ];
-        _delegate = nil;
-    }
-    return self;
+@implementation IconPickerViewController {
+  NSArray* _icons;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+  _icons = @[
+             @"No Icon",
+             @"Appointments",
+             @"Birthdays",
+             @"Chores",
+             @"Drinks",
+             @"Folder",
+             @"Groceries",
+             @"Inbox",
+             @"Photos",
+             @"Trips"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -48,29 +39,22 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _icons.count;
+  return [_icons count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"IconCell"];
-    NSString *iconName = _icons[indexPath.row];
-    
-    cell.textLabel.text = iconName;
-    cell.imageView.image = [UIImage imageNamed:iconName];
-    
-    return cell;
+  UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"IconCell"];
+  NSString* icon = _icons[indexPath.row];
+  cell.textLabel.text = icon;
+  cell.imageView.image = [UIImage imageNamed:icon];
+  
+  return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (_delegate != nil) {
-        NSString *iconName = _icons[indexPath.row];
-        [_delegate iconPicker:self didPickIcon:iconName];
-    }
+  NSString* iconName = _icons[indexPath.row];
+  [self.delegate iconPicker:self didPickIcon:iconName];
 }
 
 @end

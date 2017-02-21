@@ -1,33 +1,22 @@
 //
 //  ChecklistItem.h
-//  techbowA2checklistsObjC
+//  ChecklistsOC
 //
-//  Created by ZhangZehua on 11/20/15.
-//  Copyright © 2015 ZhangZehua. All rights reserved.
+//  Created by ZhangZehua on 2/19/17.
+//  Copyright © 2017 ZhangZehua. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-
-//#import "DataModel.h"
 
 @interface ChecklistItem : NSObject <NSCoding>
 
-@property (nonatomic) NSString* text;
+@property (nonatomic, copy) NSString* text;
 @property (nonatomic) BOOL checked;
-@property (nonatomic) NSDate* dueDate;
+@property (nonatomic, copy) NSDate* dueDate;
 @property (nonatomic) BOOL shouldRemind;
-@property (nonatomic) NSInteger itemID;
+@property (nonatomic) NSInteger itemId;
 
-- (void)encodeWithCoder:(NSCoder *)coder;
-- (instancetype)initWithCoder:(NSCoder *)coder;
-
-- (void)dealloc;
-
-- (UILocalNotification *) notificationForThisItem;
-- (void) scheduleNotification;
-- (void) toggleChecked;
+- (void)toggleChecked;
+- (void)scheduleNotification;
 
 @end
-
-

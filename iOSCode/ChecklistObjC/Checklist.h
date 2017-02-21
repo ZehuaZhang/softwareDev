@@ -1,25 +1,19 @@
 //
 //  Checklist.h
-//  techbowA2checklistsObjC
+//  ChecklistsOC
 //
-//  Created by ZhangZehua on 11/22/15.
-//  Copyright © 2015 ZhangZehua. All rights reserved.
+//  Created by ZhangZehua on 2/20/17.
+//  Copyright © 2017 ZhangZehua. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-
-#import "ChecklistItem.h"
 
 @interface Checklist : NSObject <NSCoding>
 
-@property (nonatomic) NSString* name;
-@property (nonatomic) NSMutableArray <ChecklistItem *>*items;
-@property (nonatomic) NSString* iconName;
+@property (nonatomic, copy) NSString* name;
+@property (nonatomic, strong) NSMutableArray* items;
+@property (nonatomic, copy) NSString* iconName;
 
-- (instancetype)initWithName: (NSString *) name;
-- (instancetype)initWithName:(NSString *)name iconName:(NSString *) iconName;
-- (NSInteger) countUncheckedItems;
-- (void) sortChecklistItems;
+- (int)countUncheckedItems;
 
 @end

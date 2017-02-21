@@ -1,114 +1,111 @@
 //
 //  DataModel.m
-//  techbowA2checklistsObjC
+//  ChecklistsOC
 //
-//  Created by ZhangZehua on 11/21/15.
-//  Copyright © 2015 ZhangZehua. All rights reserved.
+//  Created by ZhangZehua on 2/20/17.
+//  Copyright © 2017 ZhangZehua. All rights reserved.
 //
 
 #import "DataModel.h"
+#import "Checklist.h"
+#import "UserNotifications/UserNotifications.h"
 
 @implementation DataModel
 
+static UNUserNotificationCenter* _center;
+
+- (void)registerDefaults {
+  NSDictionary* dictionary = @{@"ChecklistIndex":@-1, @"FirstTime":@YES, @"ChecklistItemId":@0};
+  [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
+}
+
+- (void)handleFirstTime {
+  BOOL firstTime = [[NSUserDefaults standardUserDefaults] boolForKey:@"FirstTime"];
+  if (firstTime) {
+    Checklist* checklist = [[Checklist alloc] init];
+    checklist.name = @"List";
+    [self.lists addObject:checklist];
+    [self setIndexOfSelectedChecklist:0];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"FirstTime"];
+  }
+}
+
 - (instancetype)init
 {
-    self = [super init];
-    if (self) {
-        _lists = [[NSMutableArray<Checklist *> alloc] init];
-        [self loadChecklists];
-        [self registerDefaults];
-        [self handleFirstTime];
-    }
-    return self;
+  self = [super init];
+  if (self) {
+    [self loadChecklists];
+    [self registerDefaults];
+    [self handleFirstTime];
+  }
+  return self;
 }
 
-#pragma mark - setter getter
-
-- (NSInteger) indexOfSelectedChecklist {
-    return [[NSUserDefaults standardUserDefaults] integerForKey:@"ChecklistIndex"];
+- (NSString*)documentsDirectory {
+  NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+  NSString* documentsDirectory = [paths firstObject];
+  return documentsDirectory;
 }
 
-- (void) setIndexOfSelectedChecklist:(NSInteger)indexOfSelectedChecklist {
-    [[NSUserDefaults standardUserDefaults] setInteger:indexOfSelectedChecklist forKey:@"ChecklistIndex"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+- (NSString*)dataFilePath {
+  return [[self documentsDirectory] stringByAppendingPathComponent:@"Checklists.plist"];
 }
 
-#pragma mark - fileManage
-
-- (NSString *) documentsDirectory {
-    NSArray<NSString *> *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true);
-    return paths[0];
+- (void)saveChecklists {
+  NSMutableData* data = [[NSMutableData alloc] init];
+  NSKeyedArchiver* archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+  [archiver encodeObject:self.lists forKey:@"Checklists"];
+  [archiver finishEncoding];
+  [data writeToFile:[self dataFilePath] atomically:YES];
 }
 
-- (NSString *) dataFilePath {
-    return [[self documentsDirectory] stringByAppendingPathComponent:@"Checklists.plist"];
+- (void)loadChecklists {
+  NSString* path = [self dataFilePath];
+  if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+    NSData* data = [[NSData alloc] initWithContentsOfFile:path];
+    NSKeyedUnarchiver* unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+    self.lists = [unarchiver decodeObjectForKey:@"Checklists"];
+    [unarchiver finishDecoding];
+  } else {
+    self.lists = [[NSMutableArray alloc] initWithCapacity:20];
+  }
 }
 
-- (void) saveChecklists {
-    NSMutableData *data = [[NSMutableData alloc] init];
-    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
-    [archiver encodeObject:_lists forKey:@"Checklist"];
-    [archiver finishEncoding];
-    [data writeToFile:[self dataFilePath] atomically:YES];
+- (NSInteger)indexOfSelectedChecklist {
+  return [[NSUserDefaults standardUserDefaults] integerForKey:@"ChecklistIndex"];
 }
 
-- (void) loadChecklists {
-    NSString *path = [self dataFilePath];
-    NSLog(@"%@", path);
-    
-    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-        NSData *data = [[NSData alloc]initWithContentsOfFile:path];
-        if (data != nil) {
-            NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-            _lists = (NSMutableArray<Checklist *>*)[unarchiver decodeObjectForKey: @"Checklist"];
-            [unarchiver finishDecoding];
-            
-            // [self sortChecklists];
-        }
-    }
+- (void)setIndexOfSelectedChecklist:(NSInteger)index {
+  [[NSUserDefaults standardUserDefaults] setInteger:index forKey:@"ChecklistIndex"];
 }
 
-- (void) registerDefaults {
-    NSDictionary *dictionary = @{
-                                 @"ChecklistIndex": [NSNumber numberWithInteger: -1],
-                                 @"FirstTime": [NSNumber numberWithBool: YES],
-                                 @"ChecklistItemID": [NSNumber numberWithInteger: 0]
-                                };
-    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
+- (void)sortChecklists {
+  [self.lists sortUsingSelector:@selector(compare:)];
 }
 
-- (void) handleFirstTime {
-    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-    bool firstTime = [userDefault boolForKey:@"FirstTime"];
-    
-    NSLog(@"First Time ? %d", firstTime);
-    
-    if (firstTime) {
-        Checklist *checklist = [[Checklist alloc] initWithName:@"List"];
-        [_lists addObject:checklist];
-        self.indexOfSelectedChecklist = 0;
-        
-        [userDefault setBool:NO forKey:@"FirstTime"];
-    }
++ (NSInteger)nextChecklistItemId {
+  NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+  NSInteger itemId = [userDefaults integerForKey:@"ChecklistItemId"];
+  [userDefaults setInteger:itemId + 1 forKey:@"ChecklistItemId"];
+  [userDefaults synchronize];
+  return itemId;
 }
 
-+ (NSInteger) nextChecklistItemID {
-    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-    NSInteger itemID = [userDefault integerForKey:@"ChecklistItemID"];
-    [userDefault setInteger:itemID + 1 forKey:@"ChecklistItemID"];
-    [userDefault synchronize];
-    
-    return itemID;
++ (UNUserNotificationCenter*)getCenter {
+  [self setUpNotification];
+  return _center;
 }
 
-#pragma mark - others
-- (void) sortChecklists {
-    _lists = (NSMutableArray<Checklist *> *)[[_lists sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-        NSString *first = [(Checklist *) obj1 name];
-        NSString *second =[(Checklist *) obj2 name];
-        return [first compare:second];
-    }]mutableCopy];
++ (void)setUpNotification {
+  if (_center == nil) {
+  _center = [UNUserNotificationCenter currentNotificationCenter];
+  [_center requestAuthorizationWithOptions:UNAuthorizationOptionAlert | UNAuthorizationOptionSound
+                                   completionHandler:^(BOOL granted, NSError * _Nullable error) {
+                                     if (!granted) {
+                                       NSLog(@"Failed to instantiate notification center");
+                                     }
+                                   }];
+  }
 }
-
 
 @end

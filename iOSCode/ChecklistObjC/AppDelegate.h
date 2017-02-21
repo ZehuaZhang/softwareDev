@@ -1,19 +1,17 @@
 //
 //  AppDelegate.h
-//  techbowA2checklistsObjC
+//  ChecklistsOC
 //
-//  Created by ZhangZehua on 11/20/15.
-//  Copyright © 2015 ZhangZehua. All rights reserved.
+//  Created by ZhangZehua on 2/19/17.
+//  Copyright © 2017 ZhangZehua. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "DataModel.h"
-#import "AllListsViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (nonatomic) DataModel* dataModel;
+
 
 @end
 

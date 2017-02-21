@@ -1,19 +1,18 @@
 //
 //  AllListsViewController.h
-//  techbowA2checklistsObjC
+//  ChecklistsOC
 //
-//  Created by ZhangZehua on 11/23/15.
-//  Copyright © 2015 ZhangZehua. All rights reserved.
+//  Created by ZhangZehua on 2/20/17.
+//  Copyright © 2017 ZhangZehua. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "DataModel.h"
 #import "ListDetailViewController.h"
-#import "ChecklistViewController.h"
-#import "ListDetailViewController.h"
+
+@class DataModel;
 
 @interface AllListsViewController : UITableViewController <ListDetailViewControllerDelegate, UINavigationControllerDelegate>
 
-@property (nonatomic) DataModel *dataModel;
+@property (nonatomic, strong) DataModel* dataModel;
 
 @end

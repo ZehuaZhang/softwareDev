@@ -1,9 +1,9 @@
 //
 //  IconPickerViewController.h
-//  techbowA2checklistsObjC
+//  ChecklistsOC
 //
-//  Created by ZhangZehua on 11/23/15.
-//  Copyright © 2015 ZhangZehua. All rights reserved.
+//  Created by ZhangZehua on 2/20/17.
+//  Copyright © 2017 ZhangZehua. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -12,15 +12,12 @@
 
 @protocol IconPickerViewControllerDelegate <NSObject>
 
-- (void) iconPicker:(IconPickerViewController *)picker didPickIcon:(NSString *)iconName;
+- (void)iconPicker:(IconPickerViewController*)picker didPickIcon:(NSString*)iconName;
 
 @end
-
 
 @interface IconPickerViewController : UITableViewController
 
 @property (nonatomic, weak) id <IconPickerViewControllerDelegate> delegate;
-
-@property (nonatomic) NSArray<NSString *> *icons;
 
 @end

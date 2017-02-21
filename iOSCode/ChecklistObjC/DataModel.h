@@ -1,30 +1,26 @@
 //
 //  DataModel.h
-//  techbowA2checklistsObjC
+//  ChecklistsOC
 //
-//  Created by ZhangZehua on 11/21/15.
-//  Copyright © 2015 ZhangZehua. All rights reserved.
+//  Created by ZhangZehua on 2/20/17.
+//  Copyright © 2017 ZhangZehua. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "Checklist.h"
+
+@class UNUserNotificationCenter;
 
 @interface DataModel : NSObject
 
-@property (nonatomic) NSMutableArray <Checklist *> *lists;
-@property (nonatomic) NSInteger indexOfSelectedChecklist;
+@property (nonatomic, strong) NSMutableArray* lists;
 
-- (NSInteger) indexOfSelectedChecklist;
-- (void) setIndexOfSelectedChecklist:(NSInteger)indexOfSelectedChecklist;
+- (void)saveChecklists;
+- (NSInteger)indexOfSelectedChecklist;
+- (void)setIndexOfSelectedChecklist:(NSInteger)index;
+- (void)sortChecklists;
 
-- (NSString *) documentsDirectory;
-- (NSString *) dataFilePath;
-- (void) saveChecklists;
-- (void) loadChecklists;
-- (void) registerDefaults;
-- (void) handleFirstTime;
-+ (NSInteger) nextChecklistItemID;
-
-- (void) sortChecklists;
++ (NSInteger)nextChecklistItemId;
++ (UNUserNotificationCenter*)getCenter;
++ (void)setUpNotification;
 
 @end

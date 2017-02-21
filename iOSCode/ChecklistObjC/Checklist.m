@@ -1,66 +1,56 @@
 //
 //  Checklist.m
-//  techbowA2checklistsObjC
+//  ChecklistsOC
 //
-//  Created by ZhangZehua on 11/22/15.
-//  Copyright © 2015 ZhangZehua. All rights reserved.
+//  Created by ZhangZehua on 2/20/17.
+//  Copyright © 2017 ZhangZehua. All rights reserved.
 //
 
 #import "Checklist.h"
+#import "ChecklistItem.h"
 
 @implementation Checklist
 
-- (instancetype)initWithName: (NSString *) name
+- (instancetype)init
 {
-    self = [self initWithName:name iconName:@"No Icon"];
-    
-    return self;
-}
-
-- (instancetype)initWithName:(NSString *)name iconName:(NSString *) iconName
-{
-    self = [super init];
-    if (self) {
-        _items = [[NSMutableArray<ChecklistItem *> alloc] init];
-        _name = name;
-        _iconName = iconName;
-    }
-    return self;
+  self = [super init];
+  if (self) {
+    self.items = [[NSMutableArray  alloc] initWithCapacity:20];
+    self.iconName = @"No Icon";
+  }
+  return self;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
-    if (self) {
-        _name = (NSString *)[coder decodeObjectForKey:@"Name"];
-        _items = (NSMutableArray<ChecklistItem *> *)[[coder decodeObjectForKey:@"Items"]mutableCopy];
-        _iconName = (NSString *)[coder decodeObjectForKey:@"IconName"];
-    }
-    return self;
+  self = [super init];
+  if (self) {
+    self.name = [coder decodeObjectForKey:@"Name"];
+    self.items = [coder decodeObjectForKey:@"Items"];
+    self.iconName = [coder decodeObjectForKey:@"IconName"];
+  }
+  return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
-    [coder encodeObject:_name forKey:@"Name"];
-    [coder encodeObject:_items forKey:@"Items"];
-    [coder encodeObject:_iconName forKey:@"IconName"];
+  [coder encodeObject:self.name forKey:@"Name"];
+  [coder encodeObject:self.items forKey:@"Items"];
+  [coder encodeObject:self.iconName forKey:@"IconName"];
 }
 
-- (NSInteger) countUncheckedItems {
-    NSInteger count = 0;
-    for (ChecklistItem* item in _items) {
-        if (!item.checked) {
-            count++;
-        }
+- (int)countUncheckedItems {
+  int count = 0;
+  for (ChecklistItem* item in self.items) {
+    if (!item.checked) {
+      count += 1;
     }
-    return count;
+  }
+  return count;
 }
 
-- (void) sortChecklistItems {
-    
-    _items = (NSMutableArray <ChecklistItem *> *)[[_items sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-        NSDate *date1 = [(ChecklistItem *) obj1 dueDate];
-        NSDate *date2 = [(ChecklistItem *) obj2 dueDate];
-        return [date1 compare: date2];
-    }]mutableCopy];
+- (NSComparisonResult)compare:(Checklist*)otherChecklist {
+  return [self.name localizedStandardCompare:otherChecklist.name];
 }
+
 @end

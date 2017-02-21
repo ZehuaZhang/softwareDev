@@ -1,34 +1,35 @@
 //
 //  ListDetailViewController.h
-//  techbowA2checklistsObjC
+//  ChecklistsOC
 //
-//  Created by ZhangZehua on 11/23/15.
-//  Copyright © 2015 ZhangZehua. All rights reserved.
+//  Created by ZhangZehua on 2/20/17.
+//  Copyright © 2017 ZhangZehua. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "Checklist.h"
 #import "IconPickerViewController.h"
 
 @class ListDetailViewController;
+@class Checklist;
 
 @protocol ListDetailViewControllerDelegate <NSObject>
 
-- (void) listDetailViewControllerDidCancel:(ListDetailViewController *)controller;
-- (void) listDetailViewController:(ListDetailViewController *)controller didFinishAddingChecklist:(Checklist *) checklist;
-- (void) listDetailViewController:(ListDetailViewController *)controller didFinishEditingChecklist:(Checklist *) checklist;
+- (void)listDetailViewControllerDidCancel:(ListDetailViewController*)controller;
+- (void)listDetailViewController:(ListDetailViewController*)controller didFinishAddingChecklist:(Checklist*)checklist;
+- (void)listDetailViewController:(ListDetailViewController*)controller didFinishEditingChecklist:(Checklist*)checklist;
 
 @end
 
-@interface ListDetailViewController : UITableViewController <UITextFieldDelegate, IconPickerViewControllerDelegate>
+@interface ListDetailViewController : UITableViewController<UITextFieldDelegate, IconPickerViewControllerDelegate>
 
+@property (nonatomic, weak) IBOutlet UITextField* textField;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem* doneBarButoon;
 @property (nonatomic, weak) id <ListDetailViewControllerDelegate> delegate;
+@property (nonatomic, strong) Checklist* checklistToEdit;
 
-@property (nonatomic, weak) IBOutlet UITextField *textField;
-@property (nonatomic, weak) IBOutlet UIBarButtonItem *doneBarButton;
-@property (nonatomic, weak) IBOutlet UIBarButtonItem *iconImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 
-@property (nonatomic) Checklist* checklistToEdit;
-@property (nonatomic) NSString* iconName;
+- (IBAction)cancel;
+- (IBAction)done;
 
 @end
