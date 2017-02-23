@@ -4,4 +4,4 @@ Foundation, CoreData, CoreAnimation, CoreLocation, MapKit, UIKit, AudioToolBox
 
 ### Notes
 
-a __Demo.pdf is in each _appname_OC folder
+a __DEMO.pdf is in each _appname_OC folder
