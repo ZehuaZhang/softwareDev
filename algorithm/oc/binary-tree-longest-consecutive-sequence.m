@@ -93,7 +93,7 @@ int longestConsecutiveHelper(TreeNode *root, int* maxLen) {
   if (root.right && root.right.value == root.value + 1) {
     currLen = MAX(currLen, rightLen + 1);
   }
-  *maxLen = MAX(*maxLen, MAX(currLen, MAX(leftLen, rightLen)));
+  *maxLen = MAX(*maxLen, currLen);
   return currLen;
 }
 

@@ -49,9 +49,9 @@
 
 #pragma mark Solution
 
-ListNode *addTwoNumber(ListNode *L1, ListNode *L2) {
-  ListNode *dummy = [[ListNode alloc] init];
-  ListNode *curr = dummy;
+ListNode* addTwoNumber(ListNode* L1, ListNode* L2) {
+  ListNode* dummy = [[ListNode alloc] init];
+  ListNode* curr = dummy;
   
   NSInteger carry = 0;
   

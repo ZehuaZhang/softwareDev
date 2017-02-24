@@ -86,15 +86,15 @@
 
 // Iterative
 TreeNode *upsideDownBinaryTree(TreeNode *root) {
-  TreeNode *curr = root, *prev = NULL, *next = NULL, *prevRight = NULL;
+  TreeNode *curr = root, *parent = NULL, *next = NULL, *cousin = NULL;
   while (curr) {
     next = curr.left;
-    curr.left = prevRight;  // its cousin
-    prevRight = curr.right;
-    curr.right = prev;  // its parent
+    curr.left = cousin;  // its cousin
+    cousin = curr.right;
+    curr.right = parent;  // its parent
     
-    prev = curr;
+    parent = curr;
     curr = next;
   }
-  return prev;
+  return parent;
 }

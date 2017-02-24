@@ -16,7 +16,7 @@
 int maxProfit(NSArray* prices) {
   int ans = 0;
   
-  for(NSInteger i = 1; i < [prices count]; ++i) {
+  for (NSInteger i = 1; i < [prices count]; ++i) {
     int diff = [prices[i] intValue]- [prices[i - 1] intValue];
     if (diff > 0)
       ans += diff;
