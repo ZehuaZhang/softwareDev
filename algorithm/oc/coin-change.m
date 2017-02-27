@@ -24,19 +24,19 @@
 // DP solution
 
 int coinChange(NSArray* coins, int amount) {
-  int amounts[amount + 1];
-  amounts[0] = 0;
-  for (int i = 1; i < amount + 1; i++) {
-    amounts[i] = INT_MAX;
+  int minCoinsForAmount[amount + 1];
+  minCoinsForAmount[0] = 0;
+  for (int i = 1; i < minCoinsForAmount + 1; i++) {
+    minCoinsForAmount[i] = INT_MAX;
   }
-  for (int i = 0; i <= amount; ++i) {
-    if (amounts[i] != INT_MAX) {
+  for (int i = 0; i <= minCoinsForAmount; ++i) {
+    if (minCoinsForAmount[i] != INT_MAX) {
       for (id coin in coins) {
-        if (i + [coin intValue] <= amount) {
-          amounts[i + [coin intValue]] = MIN(amounts[i + [coin intValue]], amounts[i] + 1);
+        if (i + [coin intValue] <= minCoinsForAmount) {
+          minCoinsForAmount[i + [coin intValue]] = MIN(minCoinsForAmount[i + [coin intValue]], minCoinsForAmount[i] + 1);
         }
       }
     }
   }
-  return amounts[amount] == INT_MAX ? -1 : amounts[amount];
+  return minCoinsForAmount[amount] == INT_MAX ? -1 : minCoinsForAmount[amount];
 }
