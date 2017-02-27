@@ -16,7 +16,7 @@ NSInteger maxArea(NSArray* height) {
   NSInteger start = 0, end = [height count] - 1, ans = 0;
   
   while (start < end) {
-    ans = MAX(ans, [height[end] integerValue] * (end - start));
+    ans = MAX(ans, MIN([height[start] integerValue], [height[end] integerValue]) * (end - start));
     if (height[start] <= height[end]) {
       start++;
     } else {
