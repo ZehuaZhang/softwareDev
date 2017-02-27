@@ -74,7 +74,9 @@ int countPrimes(int n) {
   
   int num = n / 2;   // cut-off even except 2, (n - 1) / 2 + 1 <=> n / 2
   BOOL isPrime[n];
-  memset(isPrime, YES, sizeof(BOOL) * n);
+  for (int i =  0; i <  n; i++) {
+    isPrime[i] = YES;
+  }
   
   // check ONLY odd
   for (int i = 3; i * i < n; i += 2) {

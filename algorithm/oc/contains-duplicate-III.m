@@ -88,7 +88,7 @@ NSInteger lower_bound(NSArray* nums, int target) {
 
 BOOL containsNearbyAlmostDuplicate(NSArray* nums, int k, int t) {
   if (k < 0 || t < 0) {
-    return false;
+    return NO;
   }
   Queue* window = [[Queue alloc] init];
   NSMutableArray* multiSet = @[].mutableCopy;
@@ -103,14 +103,14 @@ BOOL containsNearbyAlmostDuplicate(NSArray* nums, int k, int t) {
       return [obj1 compare:obj2];
     }];
     
-    const NSInteger index = lower_bound(nums, [nums[i] intValue] - t);
+    const NSInteger index = lower_bound(multiSet, [nums[i] intValue] - t);
     
-    if (index == [nums count] || ([nums[index] intValue] - [nums[i] intValue]) > t) {
+    if (index == [multiSet count] || ([multiSet[index] intValue] - [nums[i] intValue]) > t) {
       [window push:nums[i]];
       [multiSet addObject:nums[i]];
     } else {
-      return true;
+      return YES;
     }
   }
-  return false;
+  return NO;
 }

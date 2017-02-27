@@ -21,7 +21,7 @@ NSString* countAndSay(int n) {
   while(--n) {
     NSMutableString* nextSeq = @"".mutableCopy;
     for (NSInteger i = 0; i < [seq length];) {
-      NSInteger j;
+      NSInteger j = i;
       for (;j < [seq length]; j++) {
         if ([seq characterAtIndex:j] != [seq characterAtIndex:i]) {
           break;

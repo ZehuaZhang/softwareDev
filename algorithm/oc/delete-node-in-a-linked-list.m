@@ -48,8 +48,11 @@
 #pragma mark Solution
 
 void deleteNode(ListNode* node) {
-  if (!node || !node.next) {
+  if (!node) {
     return;
+  }
+  if (!node.next) {
+    free((__bridge void*)node);
   }
   ListNode* next = node.next;
   node.value = next.value;

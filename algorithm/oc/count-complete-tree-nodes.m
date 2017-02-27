@@ -61,45 +61,23 @@
 #pragma mark Solution
 
 // Check if the nth node exist.
-BOOL exist(TreeNode *root, int n) {
-  int k;
-  for (k = 1; k <= n; k <<= 1);
-  k >>= 2;
-  
-  TreeNode *node = root;
-  while (k > 0) {
-    if ((n & k) == 0) {
-      node = node.left;
-    } else {
-      node = node.right;
-    }
-    k >>= 1;
-  }
-  return node != nil;
-}
 
 int countNodes(TreeNode* root) {
-  if (!root) {
-    return 0;
+  int hLeft = 0, hRight = 0;
+  TreeNode* pLeft = root;
+  TreeNode* pRight = root;
+  while (pLeft) {
+    ++hLeft;
+    pLeft = pLeft.left;
   }
-  
-  TreeNode *node = root;
-  int level = 0;
-  while (node.left) {
-    node = node.left;
-    ++level;
+  while (pRight) {
+    ++hRight;
+    pRight = pRight.right;
   }
-  
-  int left = pow(2, level), right = pow(2, level + 1);
-  while (left < right) {
-    int mid = left + (right - left) / 2;
-    if (!exist(root, mid)) {
-      right = mid;
-    } else {
-      left = mid + 1;
-    }
+  if (hLeft == hRight) { 
+    return pow(2, hLeft) - 1;
   }
-  return left - 1;
+  return countNodes(root.left) + countNodes(root.right) + 1;
 }
 
 
