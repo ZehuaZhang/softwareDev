@@ -116,7 +116,7 @@ NSDictionary* _direction;
  @return The game's score after the move. Return -1 if game over.
  Game over when snake crosses the screen boundary or bites its body. */
 -(int)moveDirection:(NSString*)direction {
-  int x = [[_snake front][2] intValue] + [_direction[direction][0] intValue];
+  int x = [[_snake front][0] intValue] + [_direction[direction][0] intValue];
   int y = [[_snake front][1] intValue] + [_direction[direction][1] intValue];
   NSArray* tail = [_snake back];
   

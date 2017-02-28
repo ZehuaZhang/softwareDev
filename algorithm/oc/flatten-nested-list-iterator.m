@@ -80,9 +80,7 @@ Stack* _depth;
 -(instancetype)initWithNestedInteger:(NSArray*)nestedList {
   self = [super init];
   if (self) {
-    for (int i = 0; i < nestedList.count; i++) {
-      [_depth push:[nestedList objectEnumerator]];
-    }
+    [_depth push:[nestedList objectEnumerator]];
   }
   return self;
 }
@@ -93,14 +91,13 @@ Stack* _depth;
 
 -(BOOL)hasNext {
   while (![_depth isEmpty]) {
-    NSEnumerator* it = [[_depth top] copy];
-    if (![it nextObject]) {
+    NestedInteger* object = [[_depth top] nextObject];
+    if (!object) {
       [_depth pop];
-    } else if ([[it nextObject] isInteger]) {
+    } else if ([object isInteger]) {
       return YES;
     } else {
-      NSArray* nestedList = [[[_depth top] nextObject] getList];
-      [_depth push:[nestedList objectEnumerator]];
+      [_depth push:[[object getList] objectEnumerator]];
     }
   }
   return NO;

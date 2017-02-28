@@ -89,12 +89,12 @@ NSMutableArray* _used;
   if (number < 0 || number >= _numbers.count) {
     return NO;
   }
-  return ![_used[number] charValue];
+  return ![_used[number] boolValue];
 }
 
 /** Recycle or release a number. */
 -(void)release:(int)number {
-  if (number < 0 || number >= _numbers.count || ![_used[number] charValue]) {
+  if (number < 0 || number >= _numbers.count || ![_used[number] boolValue]) {
     return;
   }
   _used[number] = @NO;
