@@ -14,10 +14,10 @@ NSString* intToRoman(int num) {
   const int nums[] = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
   NSArray* romans = @[@"M", @"CM", @"D", @"CD", @"C", @"XC", @"L", @"XL", @"X", @"IX", @"V", @"IV", @"I"];
   
-  NSString* result;
+  NSMutableString* result = @"".mutableCopy;
   for (int i = 0; num > 0; ++i) {
     for (int count = num / nums[i]; count; --count) {
-      [result stringByAppendingString:romans[i]];
+      [result appendString:romans[i]];
     }
     num %= nums[i];
   }

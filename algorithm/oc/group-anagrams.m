@@ -31,9 +31,9 @@ NSArray* groupAnagrams(NSArray* strs) {
     [groups[sortedStr] addObject:strs[i]];
   }
   
-  NSMutableArray* result;
+  NSMutableArray* result = @[].mutableCopy;
   for (id key in groups) {
-    [result addObject:obj];
+    [result addObject:groups[key]];
   }
   return result;
 }

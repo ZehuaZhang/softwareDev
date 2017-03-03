@@ -111,7 +111,6 @@ Stack* _out;
   return [[_out top] intValue];
 }
 
-
 -(BOOL)empty {
   return [_in isEmpty] && [_out isEmpty];
 }

@@ -27,11 +27,9 @@ NSArray* generateParenthesis(int n) {
   }
   NSMutableArray* result = @[].mutableCopy;
   for (int i = 0; i < n; ++i) {
-    NSArray* inner = generateParenthesis(i);
-    NSArray* outer = generateParenthesis(n - 1 - i);
-    for (int j = 0; j < [inner count]; j++) {
-      for (int k = 0; k < [outer count]; k++) {
-        [result addObject:[NSString stringWithFormat:@"(%@)%@", inner[j], outer[k]]];
+    for (NSString* inner in generateParenthesis(i)) {
+      for (NSString* outer in generateParenthesis(n - 1 - i)) {
+        [result addObject:[NSString stringWithFormat:@"(%@)%@", inner, outer]];
       }
     }
   }

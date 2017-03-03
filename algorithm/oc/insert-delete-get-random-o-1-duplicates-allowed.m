@@ -81,8 +81,7 @@ NSMutableDictionary* _used;
   if (!_used[@(value)]) {
     return NO;
   }
-  _used[[_list lastObject]][[[_list lastObject] count] - 1] = [_used[@(value)] lastObject];
-  [_list exchangeObjectAtIndex:_list.count - 1 withObjectAtIndex:[[_used[@(value)] lastObject] intValue]];
+  _used[[_list lastObject]][[_used[[_list lastObject]] count] - 1] = [_used[@(value)] lastObject];
   [_list exchangeObjectAtIndex:_list.count - 1 withObjectAtIndex:[[_used[@(value)] lastObject] intValue]];
   [_used[@(value)] removeLastObject];
   if (![_used[@(value)] count]) {

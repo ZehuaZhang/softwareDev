@@ -38,7 +38,7 @@ NSArray* groupStrings(NSArray* strings) {
     }
     [groups[hash] addObject:str];
   }
-  NSMutableArray* result;
+  NSMutableArray* result = @[].mutableCopy;
   for (id key in groups) {
     [result addObject:groups[key]];
   }
