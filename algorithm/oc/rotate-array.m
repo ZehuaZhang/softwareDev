@@ -19,19 +19,8 @@
 void rotate(NSMutableArray** nums, int k) {
   if ([*nums count]) {
     k %= [*nums count];
-    
-    [*nums enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-      if (idx < ([*nums count] - k) / 2) {
-        [*nums exchangeObjectAtIndex:idx withObjectAtIndex:[*nums count] - 1 - k - idx];
-      } else if (idx >= [*nums count] - k && idx < [*nums count] - k / 2){
-        [*nums exchangeObjectAtIndex:idx withObjectAtIndex:2 * [*nums count] - k - 1 - idx];
-      }
-    }];
-    
-    [*nums enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-      if (idx < [*nums count] / 2) {
-        [*nums exchangeObjectAtIndex:idx withObjectAtIndex:[*nums count] - 1 - idx];
-      }
-    }];
+    NSArray* array1= [[[*nums subarrayWithRange:NSMakeRange(0, [*nums length] - k)] reverseObjectEnumerator] allObject];
+    NSArray* array2 = [[[*nums subarrayWithRange:NSMakeRange([*nums length] - k), k] reverseObjectEnumerator] allObject];
+    *nums = [[[array1 arrayByAddObjectsFromArray:array2] reverseObjectEnumerator] allObject];
   }
 }

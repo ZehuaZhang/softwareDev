@@ -32,12 +32,12 @@ BOOL searchMatrix(NSArray* matrix, int target) {
   NSInteger i = 0, j = [matrix[0] count] - 1;
   while (i < [matrix count] && j >= 0) {
     if ([matrix[i][j] intValue] == target) {
-      return true;
+      return YES;
     } else if ([matrix[i][j] intValue] > target) {
       --j;
     } else {
       ++i;
     }
   }
-  return false;
+  return NO;
 }

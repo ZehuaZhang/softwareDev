@@ -33,17 +33,19 @@ BOOL findItineraryHelper(NSString* from, NSInteger ticketCnt, NSMutableDictionar
     return YES;
   }
   
-  for (id to in graph[from]) {
-    if ([graph[from][to] intValue] > 0) {
-      graph[from][to] = @([graph[from][to] intValue] - 1);
-      [*ans addObject:[to copy]];
-      if (findItineraryHelper(to, ticketCnt - 1, graph, ans)) {
-        return YES;
-      }
-      [*ans removeLastObject];
-      graph[from][to] = @([graph[from][to] intValue] + 1);
+  NSArray* arr = [graph[from] copy];
+  int i = 0;
+  for (id to in arr) {
+    [graph[from] removeObjectAtIndex:i];
+    [*ans addObject:[to copy]];
+    if (findItineraryHelper(to, ticketCnt - 1, graph, ans)) {
+      return YES;
     }
+    [*ans removeLastObject];
+    [graph[from] addObjectAtIndex:i];
+    i++;
   }
+  
   return NO;
 }
 
@@ -51,7 +53,7 @@ NSArray* findItinerary(NSArray* tickets) {
   NSMutableDictionary* graph = @{}.mutableCopy;
   for (id ticket in tickets) {
     if (graph[ticket[0]]) {
-      graph[ticket[0]] = @{}.mutableCopy;
+      graph[ticket[0]] = @[].mutableCopy; // sort
     }
     graph[ticket[0]][ticket[1]] = @([graph[ticket[0]][ticket[1]] intValue] + 1);
   }

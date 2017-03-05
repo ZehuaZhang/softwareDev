@@ -30,7 +30,7 @@ NSArray* findRepeatedDnaSequences(NSString* s) {
   int mask = 0x7FFFFFF;   // 27-lsb needs to left-shift by 3, for next ten
   while (i < [s length]) {
     currTen = ((currTen & mask) << 3) | ([s characterAtIndex:i++] & 7);
-    cnt[@(currTen)] = cnt[@(currTen)] ? @([cnt[@(currTen)] intValue] + 1) : @0;
+    cnt[@(currTen)] = @([cnt[@(currTen)] intValue] + 1);
     if ([cnt[@(currTen)] intValue] == 2) {
       [result addObject:[s substringWithRange:NSMakeRange(i - 10, 10)]];
     }

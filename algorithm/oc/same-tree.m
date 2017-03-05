@@ -60,13 +60,13 @@
 
 BOOL isSameTree(TreeNode *p, TreeNode *q) {
   if (!p && !q) {
-    return true;
+    return YES;
   }
   if (!p || !q) {
-    return false;
+    return NO;
   }
   if (p.value != q.value) {
-    return false;
+    return NO;
   }
   return isSameTree(p.left, q.left) &&
   isSameTree(p.right, q.right);

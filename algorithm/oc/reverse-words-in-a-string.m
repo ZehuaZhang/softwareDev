@@ -24,7 +24,7 @@ NSString *reversedString(NSString *s)
 {
   NSMutableString* trimmedS = [s stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     while ([trimmedS rangeOfString:@"  "].location != NSNotFound) {
-      trimmedS = [trimmedS  stringByReplacingOccurrencesOfString:@"  " withString:@" "];
+      trimmedS = [trimmedS  replaceOccurrencesOfString:@"  " withString:@" "];
     }
   return [[[[trimmedS componentsSeparatedByString:@" "] reverseObjectEnumerator] allObjects] componentsJoinedByString:@" "];
 }

@@ -16,7 +16,7 @@ NSInteger romanToInt(NSString* s) {
   NSInteger prev = 0;
   for (NSInteger i = 0; i < [s length]; ++i) {
     NSInteger curr = [roman2int[[s substringWithRange:NSMakeRange(i, 1)]] integerValue];
-    if (i > 0 && curr > prev) {
+    if (curr > prev) {
       decimal -= 2 * prev;
     }
     decimal += curr;

@@ -91,8 +91,8 @@ void reorderList(ListNode *head) {
     return;
   }
   
-  ListNode *slow = head, *fast = head;
-  while (fast && fast.next) {
+  ListNode* slow = head, *fast = head;
+  while (fast.next && fast.next.next) {
     slow = slow.next;
     fast = fast.next.next;
   }

@@ -35,12 +35,12 @@ BOOL searchMatrix(NSArray* matrix, int target) {
     NSInteger mid = left + (right - left) / 2;
     NSInteger value = [matrix[mid / n][mid % n] integerValue];
     if (value == target) {
-      return true;
+      return YES;
     } else if (value < target) {
       left = mid + 1;
     } else {
       right = mid;
     }
   }
-  return false;
+  return NO;
 }

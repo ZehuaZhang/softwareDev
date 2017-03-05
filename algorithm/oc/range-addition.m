@@ -51,7 +51,7 @@ NSArray* getModifiedArray(int length, NSArray* updates) {
   
   for (id update in updates) {
     result[[update[0] intValue]] += [update[2] intValue]; // add action to start
-    if ([update[1] intValue] + 1 < length) {   // add action to end, if end is not last position
+    if ([update[1] intValue] + 1 < length) {   // add action to the 1st element after end, if end is not last position
       result[[update[1] intValue] + 1] -= [update[2] intValue];
     }
   }

@@ -55,9 +55,9 @@ ListNode* deleteDuplicates(ListNode* head) {
     if (head.next && head.next.value == head.value) {
       NSInteger value = head.value;
       while (head && head.value == value) {
-        ListNode *toDelete = head;
+        ListNode* toDelete = head;
         head = head.next;
-        free((__bridge void *)(toDelete));
+        free((__bridge void*)(toDelete));
       }
       prev.next = head;
     } else {

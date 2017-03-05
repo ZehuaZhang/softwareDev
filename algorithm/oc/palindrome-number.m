@@ -23,7 +23,7 @@ BOOL isPalindrome(NSInteger x) {
   }
   NSInteger curX = x;
   NSInteger reversed = 0;
-  while (curX != 0) {
+  while (curX) {
     reversed = reversed * 10 + curX % 10;
     curX /= 10;
   }

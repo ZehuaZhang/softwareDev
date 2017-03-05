@@ -37,7 +37,3 @@ NSString* getPermutation(int n, int k) {
 
   return permutation;
 }
-
-int main() {
-  NSLog(@"%@", getPermutation(3, 3));
-}

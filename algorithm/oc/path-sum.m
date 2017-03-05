@@ -70,7 +70,7 @@
 
 BOOL hasPathSum(TreeNode *root, NSInteger sum) {
   if (!root)
-    return false;
+    return NO;
   
   if (!root.left && !root.right)
     return sum == root.value;

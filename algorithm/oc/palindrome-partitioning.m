@@ -30,7 +30,8 @@ NSArray* partition(NSString* s) {
   
   NSMutableArray* subPalins = @[].mutableCopy;
   for (NSInteger i = s.length - 1; i >= 0; --i) {
-    for (NSInteger j = i; j < s.length; ++j)
+    subPalins[i] = @[].mutableCopy;
+    for (NSInteger j = i; j < s.length; ++j) {
       if (p[i][j]) {
         NSString* palindrome = [s substringWithRange:NSMakeRange(i, j - i + 1)];
         if (j + 1 < s.length) {
@@ -42,6 +43,7 @@ NSArray* partition(NSString* s) {
           [subPalins[i] addObject:@[palindrome].mutableCopy];
         }
       }
+    }
   }
   
   return subPalins[0];
