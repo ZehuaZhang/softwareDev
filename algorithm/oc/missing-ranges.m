@@ -17,7 +17,7 @@ NSString* getRange(NSInteger lower, NSInteger upper) {
   }
 }
 
-NSArray *findMissingRange(NSArray *nums, NSInteger lower, NSInteger upper) {
+NSArray *findMissingRange(NSArray* nums, NSInteger lower, NSInteger upper) {
   NSMutableArray *ranges = @[].mutableCopy;
 
   for (NSInteger i = 0, pre = lower - 1, cur = 0; i <= nums.count; i++, pre = cur) {

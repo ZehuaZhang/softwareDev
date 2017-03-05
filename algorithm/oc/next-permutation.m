@@ -16,32 +16,28 @@
 
 #import <Foundation/Foundation.h>
 
-void nextPermutation(NSMutableArray** nums) {
-  if ([(*nums) count] < 2) {
+void nextPermutation(NSMutableArray* nums) {
+  if ([nums count] < 2) {
     return;
   }
   
   NSInteger i;
   // Find the first element (pivot) which is less than its successor.
-  for (i = [*nums count] - 2; i >= 0; i--) {
-    if ([(*nums)[i] integerValue] < [(*nums)[i + 1] integerValue]) {
+  for (i = [nums count] - 2; i >= 0; i--) {
+    if ([nums[i] integerValue] < [nums[i + 1] integerValue]) {
       break;
     }
   }
   
   if (i >= 0) {
     // Find the number which is first greater than pivot from reverse start, and swap it with pivot
-    for (NSInteger j = [*nums count] - 1; j >= i; j--) {
-      if ((*nums)[j] > (*nums)[i]) {
-        [*nums exchangeObjectAtIndex:j withObjectAtIndex:i];
+    for (NSInteger j = [nums count] - 1; j >= i; j--) {
+      if (nums[j] > nums[i]) {
+        [nums exchangeObjectAtIndex:j withObjectAtIndex:i];
         break;
       }
     }
   }
   // Make the sequence after pivot non-descending
-  [*nums enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-    if (idx > i && idx < (idx + [*nums count] - 1) / 2) {
-      [*nums exchangeObjectAtIndex:idx withObjectAtIndex:[*nums count] - (idx - i)];
-    }
-  }];
+  [nums replaceObjectsInRange:NSMakeRange(i + 1, nums.length - i - 1) withObjectsFromArray:[nums reverseObjectEnumerator] allObject] range:NSMakeRange(i + 1, nums.length - i - 1)];  
 }

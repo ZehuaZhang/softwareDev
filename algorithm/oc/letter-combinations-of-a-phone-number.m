@@ -23,7 +23,7 @@ void letterCombinationsHelper(NSString* digits, int curr, NSString* path, NSMuta
   }
   NSString* currStr = keyboard[[digits characterAtIndex:curr] - '0'];
   for (int i = 0; i < [currStr length]; i++) {
-    letterCombinationsHelper(digits, curr + 1, [NSString stringWithFormat:@"%@%c", path, [currStr characterAtIndex:i]], result);
+    letterCombinationsHelper(digits, curr + 1, [path stringByAppendingFormat:@"%@%c", path, [currStr characterAtIndex:i]], result);
   }
 }
 

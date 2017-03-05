@@ -19,7 +19,7 @@
 
 int lengthOfLastWord(NSString* s) {
   int len = 0;
-  for (NSInteger i = 0; i < [s length] && [s characterAtIndex:i]; i++) {
+  for (NSInteger i = 0; i < [s length]; i++) {
     if ([s characterAtIndex:i] != ' ') {
       ++len;
     } else if (i + 1 < [s length] && [s characterAtIndex:i + 1] != ' ') {

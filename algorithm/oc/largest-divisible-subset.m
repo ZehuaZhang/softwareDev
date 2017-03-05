@@ -36,7 +36,7 @@ NSArray* largestDivisibleSubset(NSMutableArray* nums) {
   NSMutableArray* prev = @[].mutableCopy;
   for (int i = 0; i < nums.count; i++) {
     dp[i] = @1;
-    prev[0] = @(-1);
+    prev[i] = @(-1);
   }
   int maxIdx = 0;
   

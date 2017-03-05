@@ -34,21 +34,17 @@ NSInteger lower_bound(NSArray* nums, int target) {
   return left;
 }
 
-void insert(NSMutableArray** lis, const int target) {
-  NSInteger i = lower_bound(*lis, target);
-  
-  if (i == (*lis).count) {
-    [*lis addObject:@(target)];
-  } else {
-    (*lis)[i] = @(target);
-  }
-}
-
 NSInteger lengthOfLIS(NSArray* nums) {
   NSMutableArray* lis = @[].mutableCopy;
   
   for (id num in nums) {
-    insert(&lis, [num intValue]);
+    NSInteger i = lower_bound(*lis, [num intValue]);
+  
+    if (i == lis.count) {
+      lis addObject:num];
+    } else {
+      lis[i] = num;
+    }
   }
   return lis.count;
 }
