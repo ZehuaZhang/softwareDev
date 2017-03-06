@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 
 NSString* simplifyPath(NSString* path) {
-  NSMutableArray* dirs;
+  NSMutableArray* dirs = @[].mutableCopy;
   NSArray* tokens = [[path stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] componentsSeparatedByString:@"/"];
   for (int i = 0; i < [tokens count]; i++) {
     if ([tokens[i] isEqual: @".."] && [dirs count]) {

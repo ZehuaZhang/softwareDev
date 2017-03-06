@@ -88,7 +88,7 @@ NSMutableArray* _array;
 
 #pragma mark Solution
 
-void wallsAndGates(NSArray* rooms) {
+void wallsAndGates(NSMutableArray* rooms) {
   const int INF = INT_MAX;
   Queue* queue = [[Queue alloc] init];
   for (int i = 0; i < rooms.count; ++i) {

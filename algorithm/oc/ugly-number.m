@@ -15,7 +15,7 @@
 
 BOOL isUgly(int num) {
   if (num <= 0) {
-    return false;
+    return NO;
   }
   for (id prime in @[@2, @3, @5]) {
     while (num % [prime intValue] == 0) {

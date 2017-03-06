@@ -53,16 +53,14 @@ NSMutableDictionary* _lookup;
     if (_lookup[abbr]) {
       _lookup[abbr] = @[].mutableCopy;
     }
-    _lookup[abbr] = word;
+    [_lookup[abbr] addObject:word];
   }
   return self;
 }
 
 BOOL isUnique(NSString* word) {
   NSString* abbr = [NSString stringWithFormat:@"%c%ld%c", [word characterAtIndex:0], word.length, [word characterAtIndex:word.length - 1]];
-  return _lookup[abbr] == nil || [[_lookup[abbr] indexesOfObjectsPassingTest:^BOOL(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-    return [obj compare:word];
-  }] count] == 1;
+  return _lookup[abbr] == nil || [_lookup[abbr] indexeOfObject:word] < [_lookup[abbr] count];
 }
 
 @end

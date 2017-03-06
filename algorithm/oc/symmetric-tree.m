@@ -76,7 +76,7 @@
 
 bool isSymmetric(TreeNode* root) {
   if (!root) {
-    return true;
+    return YES;
   }
   // isSymmetricHelper(root->left, root->right)
   NSMutableArray* nodes;
@@ -92,7 +92,7 @@ bool isSymmetric(TreeNode* root) {
       continue;
     }
     if (!left || !right || left.value != right.value) {
-      return false;
+      return NO;
     }
     
     [nodes addObject:left.right];
@@ -101,5 +101,5 @@ bool isSymmetric(TreeNode* root) {
     [nodes addObject:left.left];
     [nodes addObject:right.right];
   }
-  return true;
+  return YES;
 }

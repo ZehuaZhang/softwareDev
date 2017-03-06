@@ -19,7 +19,7 @@ void setZeroes(NSArray** matrix) {
     return;
   }
   
-  bool hasZero = false;
+  bool hasZero = NO;
   int firstRowZero = -1, firstColZero = -1;
   
   for (int i = 0; i < [*matrix count]; ++i) {
@@ -29,7 +29,7 @@ void setZeroes(NSArray** matrix) {
         if (!hasZero) {
           firstRowZero = i;
           firstColZero = j;
-          hasZero = true;
+          hasZero = YES;
         }
         // cast shadows of every zero element, onto 1st found-zero col & row
         (*matrix)[firstRowZero][j] = @0;

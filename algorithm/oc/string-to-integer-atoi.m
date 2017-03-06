@@ -36,16 +36,15 @@ NSInteger strToInt(NSString *s) {
     i++;
   }
 
-  NSInteger result = 0;
+  NSInteger result = 0, prev = 0;
   while (i < n && isdigit([s characterAtIndex:i])) {
     NSInteger digit = (NSInteger)([s characterAtIndex:i] - '0');
-    if ((sign == 1) && (result > INT_MAX / 10 || (result == INT_MAX / 10 && digit >= INT_MAX % 10))) {
-      return INT_MAX;
-    } else if ((sign == -1) && (result > INT_MAX / 10 || (result == INT_MAX / 10 && digit > INT_MAX % 10))){
-      return INT_MIN;
-    }
+    prev = result;
     result = result * 10 + digit;
+    if (prev != result / 10) {
+      return sign == 1 ? INT_MAX : INT_MIN;
+    }
     i++;
   }
-  retrun sign * result;
+  return sign * result;
 }

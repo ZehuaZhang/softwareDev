@@ -75,7 +75,7 @@ BOOL isValid(NSString* s) {
     NSString* c = [NSString stringWithFormat:@"%c", [s characterAtIndex:i]];
     if ([dict objectForKey:c]) {
       if ([lefts isEmpty] || ![[lefts top] isEqualToString: [dict objectForKey:c]]) {
-        return false;
+        return NO;
       }
       [lefts pop];
     } else {

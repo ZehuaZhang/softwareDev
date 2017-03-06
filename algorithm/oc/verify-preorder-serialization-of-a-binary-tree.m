@@ -48,7 +48,7 @@ BOOL isValidSerialization(NSString* preorder) {
     // for full tree, leaves are always one more than its parent nodes
     if ([tokens[i] isEqual:@"#"]) {
       if (parents-- == 0) {   // preorder, root is before leaf
-        return false;
+        return NO;
       }
     } else {
       ++parents;

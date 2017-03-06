@@ -34,9 +34,9 @@ NSArray* subsetsWithDup(NSArray* nums) {
     
     for (NSInteger j = 0; j < size; ++j) {
       // Only union non-duplicate element or new union set.
-      if (i == 0 || [nums[i] isNotEqualTo:nums[i - 1]] || j >= prevSize) {
+      if (i == 0 || [sorted[i] isNotEqualTo:sorted[i - 1]] || j >= prevSize) {
         [result addObject:[result[j] mutableCopy]];
-        [[result lastObject] addObject:nums[i]];
+        [[result lastObject] addObject:sorted[i]];
       }
     }
     prevSize = size;

@@ -51,7 +51,7 @@ NSMutableDictionary* _lookup;
 // Find if there exists any pair of numbers which sum is equal to the value.
 -(BOOL) find:(int)value {
   for (id key in _lookup) {
-    int gap = value - [_lookup[key] intValue];
+    int gap = value - [key intValue];
     if (_lookup[@(gap)] && (gap != [key intValue] || [_lookup[@(gap)] intValue] > 1)) {
       return YES;
     }

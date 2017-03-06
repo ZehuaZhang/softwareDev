@@ -27,11 +27,11 @@ BOOL validPalindrome(NSString *s) {
     } else if (!isalnum([s characterAtIndex:right])) {
       right++;
     } else if (tolower([s characterAtIndex:left]) != tolower([s characterAtIndex:right])) {
-      return false;
+      return NO;
     } else {
       left++;
       right--;
     }
   }
-  return true;
+  return YES;
 }

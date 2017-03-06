@@ -25,9 +25,9 @@ BOOL isValid(char c, BOOL *used) {
 
 BOOL isValidSudoku(NSArray* board) {
   BOOL used[9];
-  memset(used, NO, sizeof(BOOL) * 9);
   
   for (int k = 0; k < 9; ++k) {
+    memset(used, NO, sizeof(BOOL) * 9);
     // check row
     for (int col = 0; col < 9; col++) {
       if (!isValid([board[k][col] charValue], used)) {

@@ -20,7 +20,7 @@
 
 #import <Foundation/Foundation.h>
 
-NSInteger minimumTotal(NSArray* triangle) {
+NSInteger minimumTotal(NSMutableArray* triangle) {
   for (NSInteger i = [triangle count] - 2; i >= 0; --i) {
     for (NSInteger j = 0; j <= i; ++j) {
       triangle[i][j] = @([triangle[i][j] integerValue] + MIN([triangle[i + 1][j] integerValue], [triangle[i + 1][j + 1] integerValue]));

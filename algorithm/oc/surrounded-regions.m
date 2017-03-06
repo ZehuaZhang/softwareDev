@@ -136,7 +136,7 @@ void solve(NSArray* board) {
     int i = [pos[0] intValue];
     int j = [pos[1] intValue];
     
-    if ([board[i][j] charValue] == 'O' || [board[i][j] charValue] == 'V') {
+    if ([board[i][j] charValue] == 'O') {
       board[i][j] = @('V');
       NSArray* directions = @[@[@0, @(-1)], @[@0, @1], @[@(-1), @0], @[@1, @0]];
       for (id dir in directions) {
@@ -144,7 +144,6 @@ void solve(NSArray* board) {
         if (0 <= x  && x < [board count] &&
             0 <= y && y < [board[0] count] &&
             [board[x][y] charValue]== 'O') {
-          board[x][y] = @('V');
           [queue push:@[@(x), @(y)]];
         }
       }

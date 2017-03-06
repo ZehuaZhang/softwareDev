@@ -70,10 +70,10 @@
 
 BOOL isValidBSTHelper(TreeNode* root, NSInteger lower, NSInteger upper) {
   if (!root) {
-    return true;
+    return YES;
   }
   if (root.value < lower || root.value > upper) {
-    return false;
+    return NO;
   }
   return isValidBSTHelper(root.left, lower, root.value) &&
   isValidBSTHelper(root.right, root.value, upper);

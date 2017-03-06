@@ -25,14 +25,13 @@ public:
         return result;
     }
     void strobogrammaticInRange(string low, string high, string path, int &result) {
-        if (path.size() > 1 && path[0] == '0') {    // prune
-            return;
-        }
         if (path.size() >= low.size() && path.size() <= high.size()) {
             if (path.compare(low) < 0 || path.compare(high) > 0) {
                 return;
             }
-            ++result;   // found strobogrammatic
+            if (path[0] != '0') { 
+                ++result;   // found strobogrammatic
+            }
         }
         if (path.size() + 2 > high.size()) {    // prune
             return;

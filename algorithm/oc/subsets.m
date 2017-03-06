@@ -35,7 +35,7 @@ NSArray* subsets(NSArray* nums) {
     
     for (NSInteger j = 0; j < size; ++j) {
       [result addObject:[result[j] mutableCopy]];
-      [[result lastObject] addObject:nums[i]];
+      [[result lastObject] addObject:sorted[i]];
     }
   }
   return result;

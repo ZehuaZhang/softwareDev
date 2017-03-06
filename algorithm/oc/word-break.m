@@ -16,7 +16,7 @@
 #import <Foundation/Foundation.h>
 
 BOOL wordBreak(NSString* s, NSSet* wordDict) {
-  int f[s.length + 1];  // before index can break into words
+  BOOL f[s.length + 1];  // before index can break into words
   memset(f, NO, sizeof(BOOL) * (s.length + 1));
   f[0] = YES;
   
