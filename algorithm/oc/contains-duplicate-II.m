@@ -9,15 +9,15 @@
 
 #import <Foundation/Foundation.h>
 
-  BOOL containsNearbyDuplicate(NSArray* nums, int k) {
-    NSMutableDictionary* index = @{}.mutableCopy;
-    for (int i = 0; i < [nums count]; ++i) {
-      if (index[nums[i]]) {
-        if (i - [index[nums[i]] intValue] <= k) {
-          return YES;
-        }
+BOOL containsNearbyDuplicate(NSArray* nums, int k) {
+  NSMutableDictionary* index = @{}.mutableCopy;
+  for (int i = 0; i < [nums count]; ++i) {
+    if (index[nums[i]]) {
+      if (i - [index[nums[i]] intValue] <= k) {
+        return YES;
       }
-      index[nums[i]] = @(i);
     }
-    return NO;
+    index[nums[i]] = @(i);
   }
+  return NO;
+}

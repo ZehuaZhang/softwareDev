@@ -123,21 +123,19 @@ GraphNode* cloneGraph(GraphNode* node) {
   if(!node) {
     return nil;
   }
-  NSMutableDictionary* copied = [[NSMutableDictionary alloc] init];
-  [copied setObject:[[GraphNode alloc] initWithValue:node.label]  forKey:node];
+  NSMutableDictionary* copied = @{}.mutableCopy;
+  copied[node] = [[GraphNode alloc] initWithValue:node.label];
   Queue* q = [[Queue alloc] init];
   [q push:node];
   
   while (![q isEmpty]) {
     GraphNode* node = [q pop];
     for (GraphNode* nbr in node.neighbors) {
-      GraphNode *copiedNbr = [copied objectForKey:nbr];
-      if (!copiedNbr) {
-        copiedNbr = [[GraphNode alloc] initWithValue:nbr.label];
-        [copied setObject:copiedNbr forKey:nbr];
+      if (!copied[nbr]) {
+        copied[nbr] = [[GraphNode alloc] initWithValue:nbr.label];
         [q push:nbr];
       }
-      [[[copied objectForKey:node] neighbors] addObject:copiedNbr];
+      [[copied[node] neighbors] addObject:copied[nbr]];
     }
   }
   return copied[node];

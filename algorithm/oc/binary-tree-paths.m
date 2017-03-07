@@ -75,12 +75,9 @@ void binaryTreePathsHelper(TreeNode* node, NSArray* path, NSMutableArray** resul
     [*result addObject:[[path arrayByAddingObject:node] componentsJoinedByString:@"->"]];
     return;
   }
-  if (node.left) {
-    binaryTreePathsHelper(node.left, [path arrayByAddingObject:node], result);
-  }
-  if (node.right) {
-    binaryTreePathsHelper(node.right, [path arrayByAddingObject:node], result);
-  }
+  binaryTreePathsHelper(node.left, [path arrayByAddingObject:node], result);
+
+  binaryTreePathsHelper(node.right, [path arrayByAddingObject:node], result);
 }
 
 NSArray* binaryTreePaths(TreeNode* root) {

@@ -46,7 +46,7 @@ public:
         if (start == s.length()) {
             string tmp;
             for (auto str : path) {
-                tmp += str + "" ;
+                tmp += str + " ";
             }
             tmp.pop_back();
             result.emplace_back(tmp);

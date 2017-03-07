@@ -104,8 +104,16 @@ NSArray* _array;
   if (self) {
     _array = [NSArray arrayWithObjects:a1, a2, nil];
     _queue = [[Queue alloc] init];
-    [_queue push:@[@0, @0]];
-    [_queue push:@[@1, @0]];
+    if (a1.length) {
+      NSEnumerator* enum = [a1 objectEnumerator];
+      NSNumber* value = [enum nextObject];
+      [_queue push:@[enum, value]];
+    }
+    if (a2.length) {
+      NSEnumerator* enum = [a2 objectEnumerator];
+      NSNumber* value = [enum nextObject];
+      [_queue push:@[enum, value]];
+    }
   }
   return self;
 }
@@ -116,11 +124,11 @@ NSArray* _array;
 
 -(int)next {
   NSArray* top = [_queue pop];
-  NSInteger i = [top[0] integerValue];
-  NSInteger j = [top[1] integerValue];
-  int value = [_array[i][j++] intValue];
-  if (j < [_array[i] count]) {
-    [_queue push:@[@(i), @(j)]];
+  NSEnumerator* enum = top[0];
+  int value = [top[1] intValue];
+  NSNumber* next = [enum nextObject];
+  if (next) {
+    [_queue push:@[enum, next]];
   }
   return value;
 }

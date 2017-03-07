@@ -25,7 +25,7 @@
 #import <Foundation/Foundation.h>
 
 NSString* add(NSString* s1, NSString* s2) {
-  NSMutableString* res;
+  NSMutableString* res = @"".mutableCopy;
   int carry = 0;
   for (int i = 0; i < MAX(s1.length, s2.length); ++i) {
     int a = i < s1.length ? [s1 characterAtIndex:s1.length - 1 - i] - '0' : 0;

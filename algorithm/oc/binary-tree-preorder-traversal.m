@@ -71,7 +71,7 @@ NSArray* preorderTraversal(TreeNode* root) {
   if (root) {
     [stack addObject:root];
   }
-  NSMutableArray* result;
+  NSMutableArray* result = @[].mutableCopy;
   while ([stack count]) {
     const TreeNode* curr = [stack lastObject];
     [stack removeLastObject];

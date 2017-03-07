@@ -94,8 +94,8 @@ TrieNode* root;
   if (node.leaves[@(c)]) {
     return [self searchWord:word fromNode:node.leaves[@(c)] atIndex:index + 1];
   } else if (c == '.') {
-    for (id leaf in node.leaves) {
-      if ([self searchWord:word fromNode:leaf atIndex:index + 1]) {
+    for (id cStr in node.leaves) {
+      if ([self searchWord:word fromNode:node.leaves[cStr] atIndex:index + 1]) {
         return YES;
       }
     }

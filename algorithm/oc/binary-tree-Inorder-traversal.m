@@ -68,7 +68,7 @@ NSArray* inorderTraversal(TreeNode* root) {
   NSMutableArray* result = @[].mutableCopy;
   NSMutableArray* stack = @[].mutableCopy;
   const TreeNode* curr = root;
-  while (![stack count] || curr) {
+  while ([stack count] || curr) {
     if (curr) {
       [stack addObject:curr];
       curr = curr.left;

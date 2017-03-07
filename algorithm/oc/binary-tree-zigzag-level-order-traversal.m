@@ -89,7 +89,7 @@ NSArray* zigzagLevelOrder(TreeNode *root) {
   NSMutableArray* result;
   zigzagLevelOrderHelper(root, 1, &result);
   
-  bool isLeftToRight = true;
+  BOOL isLeftToRight = YES;
   for (int i = 0; i < [result count]; i++) {
     if (!isLeftToRight) {
       result[i] = [[[result[i] reverseObjectEnumerator] allObjects] mutableCopy];

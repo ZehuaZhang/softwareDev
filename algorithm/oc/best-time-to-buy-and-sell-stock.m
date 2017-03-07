@@ -23,10 +23,6 @@
 #import <Foundation/Foundation.h>
 
 int maxProfit(NSArray* prices) {
-  if ([prices count] < 2) {
-    return 0;
-  }
-  
   int profit = 0;
   int priceMin = [prices[0] intValue];
   

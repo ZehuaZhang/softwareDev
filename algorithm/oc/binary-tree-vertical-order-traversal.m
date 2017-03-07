@@ -80,11 +80,11 @@ NSArray* verticalOrder(TreeNode* root) {
   int minIdx = 0, maxIdx = 0;
   
   while (![queue isEmpty]) {
-    TreeNode *curr = [queue front][0];
+    TreeNode* curr = [queue front][0];
     int idx = [[queue front][1] intValue];
     [queue pop];
     
-    if (cols[@(idx)]) {
+    if (!cols[@(idx)]) {
       cols[@(idx)] = @[].mutableCopy;
     }
     [cols[@(idx)] addObject:@(curr.value)];
