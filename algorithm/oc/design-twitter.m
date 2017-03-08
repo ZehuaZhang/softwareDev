@@ -120,28 +120,35 @@ NSArray* getNewsFeed(int userId) {
   PriorityQueue* heap = [[PriorityQueue alloc] init];
   
   if ([_messages[@(userId)] count]) {
-    [heap push:@[[(DeQueue*)_messages[@(userId)] back][0], [_messages[@(userId)] reverseObjectEnumerator]]];
+    [heap push:@[_messages[@(userId)] reverseObjectEnumerator]];
   }
   for (id followeeID in _followings[@(userId)]) {
     if ([_messages[followeeID] count]) {
-      [heap push:@[[(DeQueue*)_messages[followeeID] back][0], [_messages[followeeID] reverseObjectEnumerator]]];
+      [heap push:@[_messages[followeeID] reverseObjectEnumerator]];
     }
   }
   NSMutableArray* result = @[].mutableCopy;
   while (![heap isEmpty] && [result count] < _numberOfMostRecentTweets) {
-    NSArray* pair = [heap pop];
-    [result addObject:[pair[1] nextObject]];
-    
-    if ([[pair[1] copy] nextObject]) {
-      [heap push:@[pair[0], pair[1]]];
+    id obj;
+    NSEnumerator* enum;
+    do {
+      enum = [heap pop];
+      obj = [enum nextObject];
+    } while (!obj)
+
+    if ([heap isEmpty]) {
+      break;
     }
+
+    [result addObject:obj];
+    [heap push:enum];
   }
   return result;
 }
 
 /** Follower follows a followee. If the operation is invalid, it should be a no-op. */
 -(void)followFollowee:(int)followeeId fromFollower:(int)followerId {
-  if (_followings[@(followerId)]) {
+  if (!_followings[@(followerId)]) {
     _followings[@(followerId)] = [[NSMutableSet alloc] init];
   }
   if (followerId != followeeId && ![_followings[@(followerId)] containsObject:@(followeeId)]) {

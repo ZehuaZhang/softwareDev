@@ -22,7 +22,7 @@ int evalRPN(NSArray* tokens) {
   if (![tokens count]) {
     return 0;
   }
-  NSMutableArray* stack;
+  NSMutableArray* stack = @[].mutableCopy;
   for (id token in tokens) {
     if (!isOperator(token)) {
       [stack addObject:@([token intValue])];

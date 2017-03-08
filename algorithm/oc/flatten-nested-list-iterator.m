@@ -80,24 +80,30 @@ Stack* _depth;
 -(instancetype)initWithNestedInteger:(NSArray*)nestedList {
   self = [super init];
   if (self) {
-    [_depth push:[nestedList objectEnumerator]];
+    NSEnumerator* enum = [nestedList objectEnumerator];
+    id obj = [enum nextObject];
+    [_depth push:@[obj, enum]];
   }
   return self;
 }
 
 -(int)next {
-  return [[[_depth top] nextObject] getInteger];
+  int value = [[_depth top][0] getInteger];
+  [_depth top][0] = [[_depth top][1] nextObject];
+  return value;
 }
 
 -(BOOL)hasNext {
   while (![_depth isEmpty]) {
-    NestedInteger* object = [[_depth top] nextObject];
-    if (!object) {
+    id obj = [_depth top][0];
+    if (!obj) {
       [_depth pop];
-    } else if ([object isInteger]) {
+    } else if ([obj isInteger]) {
       return YES;
     } else {
-      [_depth push:[[object getList] objectEnumerator]];
+      NSEnumerator* enum = [[obj getList] objectEnumerator];
+      id object = [enum nextObject];
+      [_depth push:@[object, enum]];
     }
   }
   return NO;

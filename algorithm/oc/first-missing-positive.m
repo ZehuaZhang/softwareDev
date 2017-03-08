@@ -14,14 +14,10 @@
 #import <Foundation/Foundation.h>
 
 NSInteger firstMissingPositive(NSArray *nums) {
-  NSMutableSet* set = [[NSMutableSet alloc] init];
-  
-  for (NSNumber* num in nums) {
-    [set addObject:num];
-  }
+  NSMutableSet* set = [[NSSet setWithArray: nums]];
   
   for (NSInteger i = 1; i <= [nums count]; i++) {
-    if (![set containsObject:[[NSNumber alloc] initWithInteger:i]])
+    if (![set containsObject:@(i)])
       return i;
   }
   return 1;

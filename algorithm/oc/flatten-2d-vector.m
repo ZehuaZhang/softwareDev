@@ -55,8 +55,7 @@ NSInteger y;
 }
 
 -(int)next {
-  const int  ret = [vec[x][y] intValue];
-  ++y;
+  const int  ret = [vec[x][y++] intValue];
   [self adjustNextIter];
   return ret;
 }
