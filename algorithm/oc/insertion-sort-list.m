@@ -52,7 +52,7 @@ ListNode* insertionSortList(ListNode* head) {
     for (ListNode* prev = dummy; prev && prev.value <= curr.value; prev = prev.next) {
       position = prev;
     }
-    ListNode *next = curr.next;
+    ListNode* next = curr.next;
     curr.next = position.next;
     position.next = curr;
     curr = next;

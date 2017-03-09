@@ -30,7 +30,6 @@ BOOL isHappy(int n) {
       next += pow(n % 10, 2);
       n /= 10;
     }
-    
     n = next;
   }
   return n == 1;
