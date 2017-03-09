@@ -17,19 +17,16 @@
 #import <Foundation/Foundation.h>
 
 NSUInteger lenOfLongestStr(NSString *s) {
-  NSMutableDictionary *charMap = [[NSMutableDictionary alloc] init];
-  NSInteger lenS = [s length];
+  NSMutableDictionary* charMap = @{}.mutableCopy;
   NSInteger maxLen = 0;
   NSInteger start = 0;
-  for (NSInteger end = 0; end < lenS; end++) {
-    NSString *c = [s substringWithRange:NSMakeRange(end, 1)];
-    NSNumber *cPos = [charMap objectForKey:c];
+  for (NSInteger end = 0; end < [s length]; end++) {
+    char c = [s characterAtIndex:end];
     
-    if (cPos && [cPos integerValue] >= start) {
-      start = [cPos integerValue] + 1;
+    if (charMap[@(c)] != nil && [charMap[@(c)] integerValue] >= start) {
+      start = [charMap[@(c)] integerValue] + 1;
     }
-    
-    [charMap setObject:[[NSNumber alloc] initWithInteger:end] forKey:c];
+    charMap[@(c)] = @(end);
     
     maxLen = MAX(maxLen, end - start + 1);
   }

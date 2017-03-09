@@ -13,7 +13,7 @@
 #import <Foundation/Foundation.h>
 
 NSArray* majorityElement(NSArray* nums) {
-  NSMutableArray* res;
+  NSMutableArray* res = @[].mutableCopy;
   int candidate0 = 0, candidate1 = 0, count0 = 0, count1 = 0;
   for (id num in nums) {
     if ([num intValue]== candidate0) {

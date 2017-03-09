@@ -38,7 +38,7 @@ NSInteger lengthOfLIS(NSArray* nums) {
   NSMutableArray* lis = @[].mutableCopy;
   
   for (id num in nums) {
-    NSInteger i = lower_bound(*lis, [num intValue]);
+    NSInteger i = lower_bound(lis, [num intValue]);
   
     if (i == lis.count) {
       lis addObject:num];
