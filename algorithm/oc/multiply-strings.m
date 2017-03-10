@@ -25,5 +25,5 @@ NSString* multiply(NSString* num1, NSString* num2) {
       sum[i + j + 1] = @([sum[i + j + 1] intValue] + multiply / 10);
     }
   }
-  return [[sum reverseObjectEnumerator] allObject] componentsJoinedByString];
+  return [[sum reverseObjectEnumerator] allObject] componentsJoinedByString:@""];
 }

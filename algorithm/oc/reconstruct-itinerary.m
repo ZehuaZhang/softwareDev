@@ -42,7 +42,7 @@ BOOL findItineraryHelper(NSString* from, NSInteger ticketCnt, NSMutableDictionar
       return YES;
     }
     [*ans removeLastObject];
-    [graph[from] addObjectAtIndex:i];
+    [graph[from] addObject:to atIndex:i];
     i++;
   }
   
@@ -52,10 +52,10 @@ BOOL findItineraryHelper(NSString* from, NSInteger ticketCnt, NSMutableDictionar
 NSArray* findItinerary(NSArray* tickets) {
   NSMutableDictionary* graph = @{}.mutableCopy;
   for (id ticket in tickets) {
-    if (graph[ticket[0]]) {
-      graph[ticket[0]] = @[].mutableCopy; // sort
+    if (!graph[ticket[0]]) {
+      graph[ticket[0]] = @[].mutableCopy;
     }
-    graph[ticket[0]][ticket[1]] = @([graph[ticket[0]][ticket[1]] intValue] + 1);
+    [graph[ticket[0]] addObject:ticket[1]]; // sort
   }
   NSString* from = @"JFK";
   NSMutableArray* ans = @[from].mutableCopy;

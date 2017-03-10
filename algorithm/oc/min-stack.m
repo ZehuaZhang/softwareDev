@@ -68,7 +68,7 @@ int _stackMin;
 }
 
 - (int) top {
-  if ([[_diff lastObject] intValue]> 0) {
+  if ([[_diff lastObject] intValue] > 0) {
     return _stackMin + [[_diff lastObject] intValue];
   } else {
     return _stackMin;

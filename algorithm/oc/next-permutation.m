@@ -39,5 +39,6 @@ void nextPermutation(NSMutableArray* nums) {
     }
   }
   // Make the sequence after pivot non-descending
-  [nums replaceObjectsInRange:NSMakeRange(i + 1, nums.length - i - 1) withObjectsFromArray:[nums reverseObjectEnumerator] allObject] range:NSMakeRange(i + 1, nums.length - i - 1)];  
+  [nums replaceObjectsInRange:NSMakeRange(i + 1, nums.length - i - 1) 
+         withObjectsFromArray:[[[nums subarrayWithRange:NSMakeRange(i + 1, nums.length - i - 1)] reverseObjectEnumerator] allObject]];
 }
