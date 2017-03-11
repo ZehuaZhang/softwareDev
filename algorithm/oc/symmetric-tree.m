@@ -79,7 +79,7 @@ bool isSymmetric(TreeNode* root) {
     return YES;
   }
   // isSymmetricHelper(root->left, root->right)
-  NSMutableArray* nodes;
+  NSMutableArray* nodes = @[].mutableCopy;
   [nodes addObject:root.left];
   [nodes addObject:root.right];
   

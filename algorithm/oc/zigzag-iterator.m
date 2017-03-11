@@ -104,12 +104,12 @@ NSArray* _array;
   if (self) {
     _array = [NSArray arrayWithObjects:a1, a2, nil];
     _queue = [[Queue alloc] init];
-    if (a1.length) {
+    if (a1.count) {
       NSEnumerator* enum = [a1 objectEnumerator];
       NSNumber* value = [enum nextObject];
       [_queue push:@[enum, value]];
     }
-    if (a2.length) {
+    if (a2.count) {
       NSEnumerator* enum = [a2 objectEnumerator];
       NSNumber* value = [enum nextObject];
       [_queue push:@[enum, value]];

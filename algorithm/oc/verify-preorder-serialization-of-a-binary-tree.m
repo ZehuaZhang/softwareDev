@@ -38,9 +38,6 @@
 #import <Foundation/Foundation.h>
 
 BOOL isValidSerialization(NSString* preorder) {
-  if (!preorder.length) {
-    return NO;
-  }
   NSArray* tokens = [preorder componentsSeparatedByString:@","];
   
   int parents = 0;

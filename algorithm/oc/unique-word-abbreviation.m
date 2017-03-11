@@ -50,7 +50,7 @@ NSMutableDictionary* _lookup;
   self = [super init];
   for (NSString* word in dictionary) {
     NSString* abbr = [NSString stringWithFormat:@"%c%ld%c", [word characterAtIndex:0], word.length, [word characterAtIndex:word.length - 1]];
-    if (_lookup[abbr]) {
+    if (!_lookup[abbr]) {
       _lookup[abbr] = @[].mutableCopy;
     }
     [_lookup[abbr] addObject:word];
@@ -60,7 +60,9 @@ NSMutableDictionary* _lookup;
 
 BOOL isUnique(NSString* word) {
   NSString* abbr = [NSString stringWithFormat:@"%c%ld%c", [word characterAtIndex:0], word.length, [word characterAtIndex:word.length - 1]];
-  return _lookup[abbr] == nil || [_lookup[abbr] indexeOfObject:word] < [_lookup[abbr] count];
+  return [_lookup[abbr] count] == [_lookup[abbr] indexesOfObjectsPassingTest:^BOOL(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    return [obj isEqual:word];
+  }].count;
 }
 
 @end

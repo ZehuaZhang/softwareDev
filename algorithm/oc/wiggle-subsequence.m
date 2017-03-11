@@ -36,9 +36,6 @@
 #import <Foundation/Foundation.h>
 
 int wiggleMaxLength(NSArray* nums) {
-  if (nums.count < 2) {
-    return (int)nums.count;
-  }
   int length = 1, up = 0;
   
   for (int i = 1; i < nums.count; ++i) {

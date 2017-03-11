@@ -12,14 +12,12 @@
 
 NSArray* summaryRanges(NSArray* nums) {
   NSMutableArray* ranges = @[].mutableCopy;
-  if ([nums count]) {
-    return ranges;
-  }
+
   int start = [nums[0] intValue], end = [nums[0] intValue];
   for (int i = 1; i <= [nums count]; ++i) {
     if (i < [nums count] && [nums[i] intValue] == end + 1) {
       end = [nums[i] intValue];
-    } else  {
+    } else {
       if (start != end) {
         [ranges addObject:[NSString stringWithFormat:@"%d->%d", start, end]];
       } else {

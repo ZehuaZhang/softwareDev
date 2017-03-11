@@ -116,12 +116,12 @@ NSMutableArray* _array;
 
 #pragma mark Solution
 
-void solve(NSArray* board) {
+void solve(NSMutableArray* board) {
   if (![board count]) {
     return;
   }
   
-  Queue *queue;
+  Queue *queue = [[Queue alloc] init];
   for (int i = 0; i < [board count]; ++i) {
     [queue push:@[@(i), @0]];
     [queue push:@[@(i), @([board[0] count] - 1)]];

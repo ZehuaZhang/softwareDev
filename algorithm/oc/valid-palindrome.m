@@ -25,7 +25,7 @@ BOOL validPalindrome(NSString *s) {
     if (!isalnum([s characterAtIndex:left])) {
       left++;
     } else if (!isalnum([s characterAtIndex:right])) {
-      right++;
+      right--;
     } else if (tolower([s characterAtIndex:left]) != tolower([s characterAtIndex:right])) {
       return NO;
     } else {

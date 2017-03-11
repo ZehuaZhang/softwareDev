@@ -73,8 +73,8 @@ BOOL isValid(NSString* s) {
   
   for (NSInteger i = 0; i < [s length]; i++) {
     NSString* c = [NSString stringWithFormat:@"%c", [s characterAtIndex:i]];
-    if ([dict objectForKey:c]) {
-      if ([lefts isEmpty] || ![[lefts top] isEqualToString: [dict objectForKey:c]]) {
+    if (dict[c]) {
+      if ([lefts isEmpty] || ![[lefts top] isEqualToString: dict[c]]) {
         return NO;
       }
       [lefts pop];

@@ -18,10 +18,10 @@ TreeNode* sortedListToBST(ListNode* head) {
   for (TreeNode* curr = head; curr; curr = curr.next) {
       count++;
   }
-  return sortedListToBSTRecur(&head, n);
+  return sortedListToBSTRecur(&head, count);
 }
 
-void BinaryTree2DoubleLinkedListHelper(DoubleListNode* root, DoubleListNode** head, DoubleListNode** prev) {
+void BinaryTree2DoubleLinkedListHelper(TreeNode* root, TreeNode** head, TreeNode** prev) {
     if (!root) {
       return;
     }
@@ -31,7 +31,7 @@ void BinaryTree2DoubleLinkedListHelper(DoubleListNode* root, DoubleListNode** he
     if (*prev == nil) {
         *head = root;
     } else {
-        root.left = prev;
+        root.left = *prev;
         (*prev).right = root;
     }
     *prev = root;
@@ -39,7 +39,7 @@ void BinaryTree2DoubleLinkedListHelper(DoubleListNode* root, DoubleListNode** he
     BinaryTree2DoubleLinkedListHelper(root.right, head, prev);
 }
 
-void BinaryTree2DoubleLinkedList(DoubleListNode* root, DoubleListNode** head) {
-    DoubleListNode* prev = nil;
+void BinaryTree2DoubleLinkedList(TreeNode* root, TreeNode** head) {
+    TreeNode* prev = nil;
     BinaryTree2DoubleLinkedListHelper(root, head, &prev)
 }

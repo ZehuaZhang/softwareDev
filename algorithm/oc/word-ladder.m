@@ -86,7 +86,7 @@ NSMutableArray* _array;
 int ladderLength(NSString* beginWord, NSString* endWord, NSSet* wordDict) {
   NSMutableDictionary* pathLength;
   Queue* queue = [[Queue alloc] init];
-  [pathLength setObject:@1 forKey:beginWord];
+  pathLength[beginWord] = @1;
   [queue push:beginWord];
   
   while (![queue isEmpty]) {
@@ -96,11 +96,11 @@ int ladderLength(NSString* beginWord, NSString* endWord, NSSet* wordDict) {
       for (char ch = 'a'; ch <= 'z'; ++ch) {
         [newWord replaceCharactersInRange:NSMakeRange(i, 1) withString:[NSString stringWithFormat:@"%c", ch]];
         if (newWord == endWord) {
-          return [[pathLength objectForKey:word] intValue] + 1;
+          return [pathLength[word] intValue] + 1;
         }
-        if ([wordDict containsObject:newWord] && ![pathLength objectForKey:newWord]) {
+        if ([wordDict containsObject:newWord] && !pathLength[newWord]) {
           [queue push:newWord];
-          [pathLength setObject:@([[pathLength objectForKey:word] intValue] + 1)  forKey:newWord];
+          pathLength[newWord] = @([pathLength[word] intValue] + 1);
         }
       }
     }

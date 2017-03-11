@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 
 NSInteger strToInt(NSString *s) {
-  NSInteger length = (NSInteger)[s length];
+  NSInteger n = [s length];
 
   NSInteger i = 0;
   while (i < n && isspace([s characterAtIndex:i])) {
@@ -38,7 +38,7 @@ NSInteger strToInt(NSString *s) {
 
   NSInteger result = 0, prev = 0;
   while (i < n && isdigit([s characterAtIndex:i])) {
-    NSInteger digit = (NSInteger)([s characterAtIndex:i] - '0');
+    NSInteger digit = [s characterAtIndex:i] - '0';
     prev = result;
     result = result * 10 + digit;
     if (prev != result / 10) {

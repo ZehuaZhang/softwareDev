@@ -17,7 +17,7 @@
 // Time:  O(logn)
 // Space: O(1)
 
-#import<Foundation/Foundation.h>
+#import <Foundation/Foundation.h>
 
 BOOL isPerfectSquare(int num) {
   int left = 1, right = num;

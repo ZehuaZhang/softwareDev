@@ -84,9 +84,6 @@ NSArray* generateHelper(int start, int end) {
 }
 
 NSArray* generateTrees(int n) {
-  if (n == 0) {
-    return generateHelper(1, 0);
-  }
   return generateHelper(1, n);
 }
 

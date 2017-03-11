@@ -19,7 +19,7 @@
 // Time:  O(n)
 // Space: O(1)
 
-#import<Foundation/Foundation.h>
+#import <Foundation/Foundation.h>
 
 int shortestWordDistance(NSArray* words, NSString* word1, NSString* word2) {
   int dist = INT_MAX;

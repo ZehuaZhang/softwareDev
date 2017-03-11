@@ -16,19 +16,14 @@
 
 #import <Foundation/Foundation.h>
 
-NSArray* twoSum(NSArray* intArray,  NSNumber* target)
-{
-  // use a hash to save searching time
+NSArray* twoSum(NSArray* intArray,  NSInteger* target) {
   NSMutableDictionary *numIdx = @{}.mutableCopy;
   
   for (NSInteger i = 0; i < intArray.count; i++){
-    NSNumber *diff = @([target integerValue] - [intArray[i] integerValue]);
-    NSNumber *diffIdx = [numIdx objectForKey:diff];
-    if (diffIdx) {
-      // find it, return index in hash first as it is smaller than current index
-      return @[diffIdx, @(i)];
+    if (numIdx[@(target - [intArray[i] integerValue])]) {
+      return @[@(target - [intArray[i] integerValue]), @(i)];
     }
-    [numIdx setObject:@(i) forKey:intArray[i]];
+    numIdx[intArray[i]] = @(i);
   };
   return nil;
 }
