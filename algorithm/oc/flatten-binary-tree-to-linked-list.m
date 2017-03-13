@@ -84,7 +84,7 @@ void flatten(TreeNode* root) {
   if (!root) {
     return;
   }
-  NSMutableArray* stack;
+  NSMutableArray* stack = @[].mutableCopy;
   [stack addObject:root];
   while ([stack count]) {
     TreeNode* curr = [stack lastObject];

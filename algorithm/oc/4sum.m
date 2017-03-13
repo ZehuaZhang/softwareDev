@@ -41,7 +41,7 @@ NSArray* fourSum(NSArray* nums, int target) {
                 [result addObject:@[sorted[i], sorted[j], sorted[left], sorted[right]]];
                 ++left;
                 --right;
-              } else if ([sorted[left] integerValue] + [sorted[right] integerValue]> sum) {
+              } else if ([sorted[left] integerValue] + [sorted[right] integerValue] > sum) {
                 --right;
               } else {
                   ++left;

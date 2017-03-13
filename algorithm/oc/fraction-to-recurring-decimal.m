@@ -36,14 +36,14 @@ NSString* fractionToDecimal(int numerator, int denominator) {
   }
   
   NSMutableDictionary* idx = @{}.mutableCopy;
-  for (a %= b; a && ![idx objectForKey:@(a)]; a %= b) {
-    [idx setObject:@([result length]) forKey:@(a)];
+  for (a %= b; a && !idx[@(a)]; a %= b) {
+    idx[@(a)] = @([result length]);
     a *= 10;
     [result appendFormat:@"%lld", a / b];
   }
   
-  if ([idx objectForKey:@(a)]) {
-    [result insertString:@"(" atIndex:[[idx objectForKey:@(a)] intValue]];
+  if (idx[@(a)]) {
+    [result insertString:@"(" atIndex:[idx[@(a)] intValue]];
     [result appendString:@")"];
   }
   return result;

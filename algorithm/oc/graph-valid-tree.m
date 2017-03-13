@@ -38,7 +38,7 @@ BOOL validTree(int n, NSArray* edges) {
   for (id edge in edges) {
     int x = find(roots, [edge[0] intValue]), y = find(roots, [edge[1] intValue]);
     if (x == y) {
-      return false;
+      return NO;
     }
     roots[x] = y;
   }

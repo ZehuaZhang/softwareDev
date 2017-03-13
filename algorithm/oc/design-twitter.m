@@ -151,7 +151,7 @@ NSArray* getNewsFeed(int userId) {
   if (!_followings[@(followerId)]) {
     _followings[@(followerId)] = [[NSMutableSet alloc] init];
   }
-  if (followerId != followeeId && ![_followings[@(followerId)] containsObject:@(followeeId)]) {
+  if (followerId != followeeId) {
     [_followings[@(followerId)] addObject:@(followeeId)];
   }
 }

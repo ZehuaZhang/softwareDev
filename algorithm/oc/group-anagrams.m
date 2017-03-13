@@ -22,8 +22,7 @@
 NSArray* groupAnagrams(NSArray* strs) {
   NSMutableDictionary* groups = @{}.mutableCopy;
   for (int i = 0; i < [strs count]; i++) {
-    NSArray* charArr = [strs[i] componentsSeparatedByString:@""];
-    NSString* sortedStr = [[charArr sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] componentsJoinedByString:@""];
+    NSString* sortedStr = [[[strs[i] componentsSeparatedByString:@""] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] componentsJoinedByString:@""];
     
     if (!groups[sortedStr]) {
       groups[sortedStr] = @[].mutableCopy;

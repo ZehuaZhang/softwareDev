@@ -93,23 +93,16 @@ BOOL containsNearbyAlmostDuplicate(NSArray* nums, int k, int t) {
   Queue* window = [[Queue alloc] init];
   NSMutableArray* multiSet = @[].mutableCopy;
 
-  for (int i = 0; i < [nums count ]; ++i) {
-    if ([multiSet count] > k) {
-      int num = [[window pop] intValue];
-      [multiSet removeObjectAtIndex:[multiSet indexOfObject:@(num)]];
-    }
-    
-    [multiSet sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-      return [obj1 compare:obj2];
-    }];
-    
+  for (int i = 0; i < [nums count]; ++i) {
     const NSInteger index = lower_bound(multiSet, [nums[i] intValue] - t);
     
-    if (index == [multiSet count] || ([multiSet[index] intValue] - [nums[i] intValue]) > t) {
-      [window push:nums[i]];
-      [multiSet addObject:nums[i]];
-    } else {
+    if (index != [multiSet count] || ([multiSet[index] intValue] - [nums[i] intValue]) <= t) {
       return YES;
+    }
+    [window push:nums[i]];
+    [multiSet addObject:nums[i]];
+    if ([multiSet count] > k) {
+      [multiSet removeObject:[window pop]];
     }
   }
   return NO;

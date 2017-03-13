@@ -22,9 +22,6 @@
 #import <Foundation/Foundation.h>
 
 int maxKilledEnemies(NSArray* grid) {
-  if (![grid count] || ![grid[0] count]) {
-    return 0;
-  }
   NSInteger m = grid.count, n = [grid[0] count];
   int rowCnt = 0, colCnt[n];
   int result = 0;

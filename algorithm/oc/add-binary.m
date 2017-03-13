@@ -16,7 +16,7 @@
 NSString* addBinary(NSString* a, NSString* b) {
   const NSInteger m = [a length];
   const NSInteger n = [b length];
-  NSMutableString* sumStr;
+  NSMutableString* sumStr = @"".mutableCopy;
   
   int carry = 0;
   for (int i = 0; i < MAX(m, n) || carry; ++i) {

@@ -31,7 +31,7 @@ void gameOfLife(NSArray* board) {
       int count = 0;
       // Count live cells in 3x3 block.
       for (int I = MAX(i - 1, 0); I < MIN(i + 2, m); ++I) {
-        for (int J = MAX(j - 1, 0); J < MMIN(j + 2, n); ++J) {
+        for (int J = MAX(j - 1, 0); J < MIN(j + 2, n); ++J) {
           count += [board[I][J] intValue] & 1;
         }
       }

@@ -79,7 +79,7 @@ NSMutableArray* _array;
 // Support +, -, *, /, (, ).
 
 bool isOperator(NSString* op) {
-  return [@"+-*/" rangeOfString:op].location != NSNotFound;
+  return [@"+-*/(" rangeOfString:op].location != NSNotFound;
 }
 
 int precedence(const char op) {
@@ -118,14 +118,14 @@ int calculate(NSString* s) {
         [operands push:@(d)];
         d = 0;
       }
-    } else if ([s characterAtIndex:i] == '(' || isOperator([s substringWithRange:NSMakeRange(i, 1)])) {
+    } else if (isOperator([s substringWithRange:NSMakeRange(i, 1)])) {
       while (![operators isEmpty] && precedence([s characterAtIndex:i]) <= precedence([[operators top] charValue])) {
         compute(operands, operators);
       }
       [operators push:@([s characterAtIndex:i])];
     } else if ([s characterAtIndex:i] == ')') {
       // operators at least one element, i.e. ')'.
-      while (![[operators top]  isEqual: @('(')]) {
+      while (![[operators top] isEqual: @('(')]) {
         compute(operands, operators);
       }
       [operators pop];

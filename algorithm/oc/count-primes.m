@@ -72,7 +72,7 @@ int countPrimes(int n) {
     return 0;
   }
   
-  int num = n / 2;   // cut-off even except 2, (n - 1) / 2 + 1 <=> n / 2
+  int num = n / 2;   // cut-off even except 2, (n - 2) / 2 + 1 <=> n / 2
   BOOL isPrime[n];
   for (int i =  0; i <  n; i++) {
     isPrime[i] = YES;

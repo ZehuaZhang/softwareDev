@@ -32,9 +32,7 @@ void combinationSumHelper(NSArray* candidates, NSInteger gap, NSInteger begin, N
     if (gap < [candidates[i] integerValue]) {
       return;
     }
-    NSMutableArray* nextPath = path.mutableCopy;
-    [nextPath addObject:candidates[i]];
-    combinationSumHelper(candidates, gap - [candidates[i] integerValue], i, [nextPath copy], ans);
+    combinationSumHelper(candidates, gap - [candidates[i] integerValue], i, [path arrayByAddingObject:candidates[i]], ans);
   }
 }
 

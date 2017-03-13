@@ -22,7 +22,7 @@
 
 #import <Foundation/Foundation.h>
 
-bool canWin(NSString* s) {
+BOOL canWin(NSString* s) {
   for (int i = 1; i < s.length; ++i) {
     if ([s characterAtIndex:i] == '+' && [s characterAtIndex:i - 1] == '+' &&
         !canWin([NSString stringWithFormat:@"%@%@%@", [s substringToIndex:i - 1], @"--", [s substringFromIndex:i + 1]])) {
