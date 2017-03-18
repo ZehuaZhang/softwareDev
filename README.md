@@ -1,11 +1,16 @@
-## algorithm
+## Algorithm
 
-Algorithm and data structures written in Objective C, C++, Java
+* Leetcode of 1 - 390 written in Objective C, C++, Java
+* Interview Coding Questions
+* Data structure templates
 
-## iOSCode
+## iOS code
 
-Source code and demos of iOS applications
+* Source code and demos of iOS applications written in Objective C, Swift
 
-## iOSDemo
+## iOS demo
 
-Demos of iOS applications
+* Demos of iOS applications
+
+## About
+* [Linkedin](https://www.linkedin.com/in/zehuazhang/) 
