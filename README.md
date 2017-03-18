@@ -11,3 +11,6 @@
 ## iOSDemo
 
 * Demos of iOS applications
+
+## About
+* [Linkedin](https://www.linkedin.com/in/zehuazhang/) 
