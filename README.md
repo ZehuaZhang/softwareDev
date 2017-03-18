@@ -1,8 +1,8 @@
 ## algorithm
 
-### Leetcode of 1 - 390 written in Objective C, C++, Java
-### Interview Coding Questions
-### Data structure templates
+* Leetcode of 1 - 390 written in Objective C, C++, Java
+* Interview Coding Questions
+* Data structure templates
 
 ## iOSCode
 
