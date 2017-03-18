@@ -6,8 +6,8 @@
 
 ## iOSCode
 
-Source code and demos of iOS applications written in Objective C, Swift
+* Source code and demos of iOS applications written in Objective C, Swift
 
 ## iOSDemo
 
-Demos of iOS applications
+* Demos of iOS applications
