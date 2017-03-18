@@ -16,7 +16,7 @@ NSArray* majorityElement(NSArray* nums) {
   NSMutableArray* res = @[].mutableCopy;
   int candidate0 = 0, candidate1 = 0, count0 = 0, count1 = 0;
   for (id num in nums) {
-    if ([num intValue]== candidate0) {
+    if ([num intValue] == candidate0) {
       ++count0;
     } else if ([num intValue] == candidate1) {
       ++count1;

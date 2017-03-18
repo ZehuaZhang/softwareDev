@@ -69,11 +69,11 @@ NSArray* generateHelper(int start, int end) {
   if (start > end) {
     return @[[NSNull null]];
   }
-  NSMutableArray* subTree;
+  NSMutableArray* subTree = @[].mutableCopy;
   for (int k = start; k <= end; k++) {
     for (id left in generateHelper(start, k - 1)) {
       for (id right in generateHelper(k + 1, end)) {
-        TreeNode *node = [[TreeNode alloc] initWithValue:k];
+        TreeNode* node = [[TreeNode alloc] initWithValue:k];
         node.left = left == [NSNull null] ? nil : left;
         node.right = right == [NSNull null] ? nil : right;
         [subTree addObject:node];

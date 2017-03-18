@@ -45,8 +45,8 @@ private:
 				break;
 			default:
 				if (*str != *ptr) {
-					if (!star) return {
-						false;
+					if (!star) {
+						return false;
 					}
 					str = ++s;
 					ptr = p;

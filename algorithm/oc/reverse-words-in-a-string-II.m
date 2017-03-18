@@ -12,10 +12,6 @@
 // Space: O(1)
 
 #import <Foundation/Foundation.h>
-void reverseWords(NSMutableString** s) {
-  [*s enumerateSubstringsInRange:NSMakeRange(0, [*s length])
-                        options:NSStringEnumerationByWords | NSStringEnumerationLocalized
-                     usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop){
-                       [*s replaceCharactersInRange:substringRange withString:substring];
-                     }];
+void reverseWords(NSMutableString* s) {
+  return [[[[s componentsSeparatedByString:@" "] reverseObjectEnumerator] allObjects] componentsJoinedByString:@" "];
 }

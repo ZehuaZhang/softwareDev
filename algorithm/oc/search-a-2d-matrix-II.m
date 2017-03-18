@@ -27,7 +27,7 @@
 
 BOOL searchMatrix(NSArray* matrix, int target) {
   if ([matrix count] || [matrix[0] count]) {
-    return false;
+    return NO;
   }
   NSInteger i = 0, j = [matrix[0] count] - 1;
   while (i < [matrix count] && j >= 0) {

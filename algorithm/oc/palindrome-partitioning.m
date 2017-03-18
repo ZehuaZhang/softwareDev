@@ -22,16 +22,11 @@ NSArray* partition(NSString* s) {
   BOOL p[s.length][s.length];
   memset(p, NO, sizeof(BOOL) * s.length * s.length);
   
-  for (NSInteger i = s.length - 1; i >= 0; --i) {
-    for (NSInteger j = i; j < s.length; ++j) {
-      p[i][j] = [s characterAtIndex:i] == [s characterAtIndex:j] && ((j - i < 2) || p[i + 1][j - 1]);
-    }
-  }
-  
   NSMutableArray* subPalins = @[].mutableCopy;
   for (NSInteger i = s.length - 1; i >= 0; --i) {
     subPalins[i] = @[].mutableCopy;
     for (NSInteger j = i; j < s.length; ++j) {
+      p[i][j] = [s characterAtIndex:i] == [s characterAtIndex:j] && ((j - i < 2) || p[i + 1][j - 1]);
       if (p[i][j]) {
         NSString* palindrome = [s substringWithRange:NSMakeRange(i, j - i + 1)];
         if (j + 1 < s.length) {

@@ -162,8 +162,8 @@ TreeNode* invertTree2(TreeNode* root) {  // preorder
     TreeNode* right = root.right;
     swap(&left, &right);
     
-    invertTree(root.left);
-    invertTree(root.right);
+    invertTree2(root.left);
+    invertTree2(root.right);
   }
   return root;
 }

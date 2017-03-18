@@ -26,7 +26,7 @@
 // Time:  O(m * n * l), A is m x n matrix, B is n x l matrix
 // Space: O(m * l)
 
-#import<Foundation/Foundation.h>
+#import <Foundation/Foundation.h>
 
 NSArray* multiply(NSArray* A, NSArray* B) {
   const NSInteger m = A.count, l = [A[0] count], n = [B[0] count];

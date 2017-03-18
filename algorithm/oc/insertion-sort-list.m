@@ -13,7 +13,7 @@
 @interface ListNode : NSObject
 
 @property (atomic, assign) NSInteger value;
-@property (atomic, strong) ListNode *next;
+@property (atomic, strong) ListNode* next;
 
 - (id)initWithValue:(NSInteger)value next:(ListNode *)next;
 - (id)initWithValue:(NSInteger)value;

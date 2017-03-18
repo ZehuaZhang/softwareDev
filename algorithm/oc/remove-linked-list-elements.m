@@ -50,14 +50,17 @@
 
 ListNode* removeElements(ListNode* head, int val) {
   ListNode* dummy = [[ListNode alloc] init];
-  dummy.next = head;
   
-  for (ListNode* prev = dummy, *curr = head; curr; curr = curr.next) {
-    if (curr.value == val) {
-      prev.next = curr.next;
-      free((__bridge void*)curr);
+  for (ListNode* prev = dummy; head;) {
+    if (head.value == val) {
+      ListNode* toDelete = head;
+      head = head.next;
+      prev.next = head;
+      free((__bridge void*)toDelete);
     } else {
-      prev = curr;
+      prev.next = head;
+      prev = head;
+      head = head.next;
     }
   }
   return dummy.next;

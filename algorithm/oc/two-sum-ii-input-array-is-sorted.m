@@ -13,17 +13,15 @@
 
 #import <Foundation/Foundation.h>
 
-NSArray *twoSumII(NSArray *nums,  NSNumber *target)
-{
+NSArray* twoSumII(NSArray* nums,  NSInteger target) {
   NSInteger left = 0;
   NSInteger right = nums.count - 1;
   while ( left <= right ) {
     NSInteger sum = [nums[left] integerValue] + [nums[right] integerValue];
-    NSInteger targetVal = [target integerValue];
     
-    if (sum > targetVal) {
+    if (sum > target) {
       right--;
-    } else if (sum < targetVal) {
+    } else if (sum < target) {
       left++;
     } else {
       return @[@(left + 1),@(right + 1)];

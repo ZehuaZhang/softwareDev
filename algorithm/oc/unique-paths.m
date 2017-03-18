@@ -15,10 +15,8 @@
 
 int uniquePaths(int m, int n) {
   int f[n]; // number of unique paths from (0, 0) to (i, j)
-  for (int i = 0; i < n; i++) {
-    f[i] = 1;
-  }
-  for (int i = 1; i < m; ++i) {
+  f[0] = 1;
+  for (int i = 0; i < m; ++i) {
     for (int j = 1; j < n; ++j) {
       f[j] += f[j - 1];
     }

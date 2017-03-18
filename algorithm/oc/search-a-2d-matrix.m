@@ -23,7 +23,7 @@
 
 BOOL searchMatrix(NSArray* matrix, int target) {
   if ([matrix count]) {
-    return false;
+    return NO;
   }
   
   const NSInteger m = [matrix count];

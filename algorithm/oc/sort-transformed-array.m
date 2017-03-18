@@ -27,9 +27,7 @@ int f(int x, int a, int b, int c) {
 
 NSArray* sortTransformedArray(NSArray* nums, int a, int b, int c) {
   NSMutableArray* result = @[].mutableCopy;
-  if (![nums count]) {
-    return result;
-  }
+
   int d = a > 0 ? -1 : 1; // a > 0 concave, decrease then increase; a < 0 convex, increase then decrease
   for (NSInteger left = 0, right = nums.count - 1; left <= right;) {
     int yLeft = f([nums[left] intValue], a, b, c);

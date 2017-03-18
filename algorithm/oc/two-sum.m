@@ -16,12 +16,12 @@
 
 #import <Foundation/Foundation.h>
 
-NSArray* twoSum(NSArray* intArray,  NSInteger* target) {
+NSArray* twoSum(NSArray* intArray,  NSInteger target) {
   NSMutableDictionary *numIdx = @{}.mutableCopy;
   
   for (NSInteger i = 0; i < intArray.count; i++){
-    if (numIdx[@(target - [intArray[i] integerValue])]) {
-      return @[@(target - [intArray[i] integerValue]), @(i)];
+    if (numIdx[@(target - [intArray[i] integerValue])] != nil) {
+      return @[numIdx[@(target - [intArray[i] integerValue])], @(i)];
     }
     numIdx[intArray[i]] = @(i);
   };

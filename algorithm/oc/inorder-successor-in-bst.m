@@ -68,7 +68,7 @@ TreeNode* inorderSuccessor(TreeNode* root, TreeNode* p) {
     return p;
   }
   // Search from root.
-  TreeNode *successor = nil;
+  TreeNode* successor = nil;
   while (root && root != p) {
     if (root.value > p.value) {
       successor = root;

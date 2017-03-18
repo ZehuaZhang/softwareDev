@@ -30,8 +30,8 @@ int uniquePathsWithObstacles(NSArray* obstacleGrid) {
   if ([obstacleGrid[0][0] intValue] || [obstacleGrid[m - 1][n - 1] intValue]) {
     return 0;
   }
+  
   int f[n];
-  memset(f, 0, sizeof(int) * n);
   f[0] = 1;
   for (int i = 0; i < m; i++) {
     f[0] = [obstacleGrid[i][0] boolValue]  ? 0 : f[0];

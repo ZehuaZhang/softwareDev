@@ -24,9 +24,6 @@
 #import <Foundation/Foundation.h>
 
 BOOL isIsomorphic(NSString* s, NSString* t) {
-  if (s.length != t.length) {
-    return NO;
-  }
   int s2t[256], t2s[256];
   memset(s2t, 0, sizeof(int) * 256);
   memset(t2s, 0, sizeof(int) * 256);

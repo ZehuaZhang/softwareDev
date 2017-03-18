@@ -13,9 +13,9 @@ DoubleListNode* sortedListToBSTHelper(DoubleListNode** head, int n) {
   return root;
 }
 
-TreeNode* sortedListToBST(ListNode* head) {
+DoubleListNode* sortedListToBST(DoubleListNode* head) {
   int count = 0;
-  for (TreeNode* curr = head; curr; curr = curr.next) {
+  for (DoubleListNode* curr = head; curr; curr = curr.next) {
       count++;
   }
   return sortedListToBSTRecur(&head, count);
