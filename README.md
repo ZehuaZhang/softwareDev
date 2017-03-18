@@ -1,6 +1,6 @@
 ## algorithm
 
-Algorithm and data structures written in Objective C, C++, Java
+Leetcode of 1 - 390 written in Objective C, C++, Java
 
 ## iOSCode
 
