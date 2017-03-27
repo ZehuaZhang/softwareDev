@@ -1,10 +1,20 @@
-/**
- * @see <a href="https://leetcode.com/problems/3sum-closest/">3Sum Closest</a>
- */
+// 16. 3Sum Closest
+// Difficulty: Medium
+// Given an array S of n integers, find three integers in S such that the sum is closest to a given number, target. 
+// Return the sum of the three integers. You may assume that each input would have exactly one solution.
+
+// For example, given array S = {-1 2 1 -4}, and target = 1.
+
+// The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
+
+// Time:  O(n^2)
+// Space: O(1)
 
 public class Solution {
     public int threeSumClosest(int[] nums, int target) {
-        if (nums == null) throw new NullPointerException();
+        if (nums == null) {
+            throw new NullPointerException();
+        }
         int minDistance = Integer.MAX_VALUE;
         int res = 0;
         Arrays.sort(nums);
@@ -20,8 +30,10 @@ public class Solution {
                 }
                 if (sum > target) {
                     --k;
-                } else {
+                } else if (sum < target) {  // Should increase sum.
                     ++j;
+                } else {
+                    return target;
                 }
             }
         }
