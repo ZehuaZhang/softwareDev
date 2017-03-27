@@ -1,6 +1,6 @@
 ## Algorithm
 
-* Leetcode of 1 - 390 written in Objective C, C++, Java
+* Leetcode of 1 - 390 written in Objective C, Java, C++, Swift(upcoming!)
 * Interview Coding Questions
 * Data structure templates
 
