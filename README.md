@@ -14,7 +14,7 @@
 
 ## Web demo
 
-* Demos of web applications using AngularJS, ReactJS, NodeJS
+* Demos of web applications written in AngularJS, ReactJS, NodeJS
 
 ## About
 * [Linkedin](https://www.linkedin.com/in/zehuazhang/) 
