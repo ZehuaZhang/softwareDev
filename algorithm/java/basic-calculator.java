@@ -1,6 +1,21 @@
-/**
- * @see <a href="https://leetcode.com/problems/basic-calculator/">Basic Calculator</a>
- */
+// 224. Basic Calculator
+// Difficulty: Hard
+
+// Implement a basic calculator to evaluate a simple expression string.
+
+// The expression string may contain open ( and closing parentheses ), the plus + or minus sign -, non-negative integers and empty spaces .
+
+// You may assume that the given expression is always valid.
+
+// Some examples:
+// "1 + 1" = 2
+// " 2-1 + 2 " = 3
+// "(1+(4+5+2)-3)+(6+8)" = 23
+
+// Time:  O(n)
+// Space: O(n)
+
+// Support +, -, *, /, (, ).
 
 public class Solution {
     // using stack for the operand and operator respectivley.
