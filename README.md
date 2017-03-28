@@ -1,9 +1,3 @@
-## Algorithm
-
-* Leetcode of 1 - 390 written in Objective C, Java, C++, Swift(upcoming!)
-* Interview Coding Questions
-* Data structure templates
-
 ## iOS code
 
 * Source code and demos of iOS applications written in Objective C, Swift
