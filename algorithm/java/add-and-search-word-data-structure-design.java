@@ -30,6 +30,7 @@
 
 // Time:  O(min(n, h)), per operation
 // Space: O(min(n, h))
+
 public class WordDictionary {
     private class TrieNode {
         boolean isWord;
@@ -37,61 +38,48 @@ public class WordDictionary {
         Map<Character, TrieNode> hm;
         TrieNode() {
             isWord = false;
-            hm = new HashMap<>();
+            leaves = new HashMap<>();
         }
     }
     
     // Adds a word into the data structure.
     private TrieNode root;
-    private int minLen;
-    private int maxLen;
     public WordDictionary() {
         root = new TrieNode();
-        minLen = Integer.MAX_VALUE;
-        maxLen = Integer.MIN_VALUE;
     }
     public void addWord(String word) {
-        if (word.equals("")) root.isWord = true;
         TrieNode cur = root;
         for (int i = 0; i < word.length(); ++i) {
-            if (!cur.hm.containsKey(word.charAt(i))) {
+            if (!cur.leaves.containsKey(word.charAt(i))) {
                 TrieNode node = new TrieNode();
                 node.c = word.charAt(i);
-                cur.hm.put(word.charAt(i), node);
+                cur.leaves.put(word.charAt(i), node);
             }
-            cur = cur.hm.get(word.charAt(i));
-            if (i == word.length() - 1) {
-                cur.isWord = true;
-                minLen = Math.min(minLen, word.length());
-                maxLen = Math.max(maxLen, word.length());
-            }
+            cur = cur.leaves.get(word.charAt(i));
         }
+        cur.isWord = true;
     }
 
     // Returns if the word is in the data structure. A word could
     // contain the dot character '.' to represent any one letter.
     public boolean search(String word) {
-        if (word.length() < minLen || word.length() > maxLen) return false;
-        return search(word, root);
+        return search(word, root, 0);
     }
     
-    public boolean search(String word, TrieNode node) {        
-        if (word.length() == 0) return node.isWord;
-        if (node.hm.isEmpty()) return false;
-        if (word.charAt(0) == '.') {
-            for(char c : node.hm.keySet()) {
-                if (search(word.substring(1), node.hm.get(c))) {
+    public boolean search(String word, TrieNode node, int index) {        
+        if (index == word.length()) {
+            return node.isWord;
+        }
+        if (node.leaves.containsKey(word.charAt(index))) {
+            return search(word, node.leaves.get(word.charAt(index)), index + 1);
+        } else if (word.charAt(index) == '.') {
+            for(TrieNode leaf : node.leaves.values()) {
+                if (search(word, leaf, index + 1)) {
                     return true;
                 }
             }
-            return false;
-        } else {
-            if (!node.hm.containsKey(word.charAt(0))) {
-                return false;
-            } else {
-                return search(word.substring(1), node.hm.get(word.charAt(0)));
-            }
         }
+        return false;
     }
 }
 

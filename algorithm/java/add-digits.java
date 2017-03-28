@@ -1,15 +1,24 @@
-/**
- * @see <a href="https://leetcode.com/problems/add-digits/">Add Digits</a>
- */
+// 258. Add Digits
+// Difficulty: Easy
+
+// Given a non-negative integer num, repeatedly add all its digits until the result has only one digit.
+
+// For example:
+// Given num = 38, the process is like: 3 + 8 = 11, 1 + 1 = 2. Since 2 has only one digit, return it.
+
+// Follow up:
+// Could you do it without any loop/recursion in O(1) runtime?
+
+// Hint:
+// A naive implementation of the above process is trivial. Could you come up with other methods?
+// What are all the possible results?
+// How do they occur, periodically or randomly?
+
+// Time:  O(1)
+// Space: O(1)
 
 public class Solution {
     public int addDigits(int num) {
-        // how to make it O(1)?
-        // we only have 0 ~ 9, 10 possible solutions.
-        // 0 is returned when and only when num == 0
-        // after that, 1 ~ 9 are return one by one.
-        if (num == 0) return 0;
-        if (num % 9 == 0)  return 9;
-        else return num % 9;
+        return (num - 1) % 9 + 1;
     }
 }

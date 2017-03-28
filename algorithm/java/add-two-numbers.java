@@ -1,34 +1,30 @@
-/**
- * @see <a href="https://leetcode.com/problems/add-two-numbers/">Add Two Numbers</a>
- */
+//2. Add Two Numbers
+//Difficulty: Medium
+//
+//You are given two linked lists representing two non-negative numbers.
+//The digits are stored in reverse order and each of their nodes contain a single digit.
+//Add the two numbers and return it as a linked list.
+//
+//Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+//Output: 7 -> 0 -> 8
 
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
- * }
- */
+// Time:  O(n)
+// Space: O(1)
 
 public class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        int carryIn = 0;
-        ListNode cur1 = l1, cur2 = l2;
-        ListNode dummy = new ListNode(0), prev = dummy;
-        while (cur1 != null || cur2 != null) {
-            int num1 = cur1 == null ? 0 : cur1.val;
-            int num2 = cur2 == null ? 0 : cur2.val;
-            int sum = carryIn + num1 + num2;
+        int carry = 0;
+        ListNode dummy = new ListNode(0);
+        while (l1 != null || l2 != null || carry) {
+            int num1 = l1 == null ? 0 : l1.val;
+            int num2 = l2 == null ? 0 : l2.val;
+            int sum = carry + num1 + num2;
             int digit = sum % 10;
-            carryIn = sum / 10;
-            prev.next =  new ListNode(digit);
-            prev = prev.next;
-            if (cur1 != null) cur1 = cur1.next;
-            if (cur2 != null) cur2 = cur2.next;
-        }
-        if (carryIn != 0) {
-            prev.next =  new ListNode(carryIn);;
+            carry = sum / 10;
+            curr.next =  new ListNode(digit);
+            curr = curr.next;
+            l1 = l1 != null ? l1.next : null;
+            l2 = l2 != null ? l2.next : null;
         }
         return dummy.next;
     }
