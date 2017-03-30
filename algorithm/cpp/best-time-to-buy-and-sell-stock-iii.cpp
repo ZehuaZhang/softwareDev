@@ -10,22 +10,22 @@
 
 class Solution {
 public:
-    int maxProfit(vector<int> &prices) {
-        if (prices.empty()) {
-        	return 0;
-        }
-        const int transaction = 2;
-        int maxVal[transaction + 1] = {0};
-        int currMax[transaction + 1] = {0};
-
-        for (int i = 0; i < prices.size() - 1; ++i) {
-            int diff = prices[i + 1] - prices[i];
-            for (int j = transaction; j >= 1; --j) {
-            				// replace j's transaction,			update j's transaction
-                currMax[j] = max(maxVal[j - 1] + max(diff, 0), currMax[j] + diff);
-                maxVal[j] = max(currMax[j], maxVal[j]);
-            }
-        }
-        return maxVal[transaction];
+  int maxProfit(vector<int> &prices) {
+    if (prices.empty()) {
+      return 0;
     }
+    const int transaction = 2;
+    int maxVal[transaction + 1] = {0};
+    int currMax[transaction + 1] = {0};
+
+    for (int i = 0; i < prices.size() - 1; ++i) {
+      int diff = prices[i + 1] - prices[i];
+      for (int j = transaction; j >= 1; --j) {
+        // replace j's transaction,			update j's transaction
+        currMax[j] = max(maxVal[j - 1] + max(diff, 0), currMax[j] + diff);
+        maxVal[j] = max(currMax[j], maxVal[j]);
+      }
+    }
+    return maxVal[transaction];
+  }
 };

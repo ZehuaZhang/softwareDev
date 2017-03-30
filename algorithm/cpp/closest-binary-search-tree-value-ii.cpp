@@ -7,7 +7,7 @@
 // Given target value is a floating point.
 // You may assume k is always valid, that is: k ≤ total nodes.
 // You are guaranteed to have only one unique set of k values in the BST that are closest to the target.
- 
+
 
 // Follow up:
 // Assume that the BST is balanced, could you solve it in less than O(n) runtime (where n = total nodes)?
@@ -33,31 +33,33 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+
 class Solution {
 public:
-    vector<int> closestKValues(TreeNode* root, double target, int k) {
-        vector<int> closest;
-        int start = 0;
-        stack<TreeNode *> s;
-        TreeNode *curr = root;
+  vector<int> closestKValues(TreeNode* root, double target, int k) {
+    vector<int> closest;
+    int start = 0;
+    stack<TreeNode *> s;
+    TreeNode *curr = root;
 
-        while (curr || !s.empty()) {
-            if (curr) {
-                s.push(curr);
-                curr = curr->left;
-            } else {
-                curr = s.top(); s.pop();
-                if (closest.size() < k) {
-                    closest.push_back(curr->val);
-                } else if (abs(curr->val - target) < abs(closest[start] - target)) {
-                    closest.push_back(curr->val);
-                    start++;
-                } else {
-                    break;
-                }
-                curr = curr->right;
-            }
+    while (curr || !s.empty()) {
+      if (curr) {
+        s.push(curr);
+        curr = curr->left;
+      } else {
+        curr = s.top(); s.pop();
+        if (closest.size() < k) {
+          closest.push_back(curr->val);
+        } else if (abs(curr->val - target) < abs(closest[start] - target)) {
+          closest.push_back(curr->val);
+          start++;
+        } else {
+          break;
         }
-        vector<int> result(closest.begin() + start, closest.end());
-        return result;
+        curr = curr->right;
+      }
+    }
+    vector<int> result(closest.begin() + start, closest.end());
+    return result;
+  }
 };

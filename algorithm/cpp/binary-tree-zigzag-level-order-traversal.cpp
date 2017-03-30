@@ -23,33 +23,34 @@
 
 class Solution {
 public:
-    vector<vector<int> > zigzagLevelOrder(TreeNode *root) {
-        vector<vector<int>> result;
-        zigzagLevelOrder(root, 1, result);
-        
-        bool isLeftToRight = true;
-        for (auto &element : result) {
-            if (!isLeftToRight) {
-                reverse(element.begin(), element.end());
-            }
-            isLeftToRight = !isLeftToRight;
-        } 
+  vector<vector<int> > zigzagLevelOrder(TreeNode *root) {
+    vector<vector<int>> result;
+    zigzagLevelOrder(root, 1, result);
 
-        return result;
+    bool isLeftToRight = true;
+    for (auto &element : result) {
+      if (!isLeftToRight) {
+        reverse(element.begin(), element.end());
+      }
+      isLeftToRight = !isLeftToRight;
+    } 
+    return result;
+  }
+
+private:
+  void levelOrderBottom(TreeNode *root, size_t level, vector<vector<int>> &result) {
+    if (!root) {
+      return;
     }
-    void levelOrderBottom(TreeNode *root, size_t level, vector<vector<int>> &result) {
-        if (!root) {
-            return;
-        }
 
-        if (level > result.size()) {
-            result.push_back(vector<int>());
-        }
-        result[level - 1].push_back(root->val);
-
-        levelOrderBottom(root->left, level + 1, result);
-        levelOrderBottom(root->right, level + 1, result);
+    if (level > result.size()) {
+      result.push_back(vector<int>());
     }
+    result[level - 1].push_back(root->val);
+
+    levelOrderBottom(root->left, level + 1, result);
+    levelOrderBottom(root->right, level + 1, result);
+  }
 };
 
 

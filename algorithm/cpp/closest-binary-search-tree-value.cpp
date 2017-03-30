@@ -13,23 +13,23 @@
 
 class Solution {
 public:
-    int closestValue(TreeNode* root, double target) {
-        double gap = INT_MAX;
-        int closest = INT_MAX;
-        
-        while (root) {
-            if (abs(static_cast<double>(root->val) - target) < gap) {
-                gap = abs(root->val - target);
-                closest = root->val;
-            }
-            if (target == root->val) {
-                break;
-            } else if (target < root->val) {
-                root = root->left;
-            } else {
-                root = root->right;
-            }
-        }
-        return closest;
+  int closestValue(TreeNode* root, double target) {
+    double gap = INT_MAX;
+    int closest = INT_MAX;
+    
+    while (root) {
+      if (abs(static_cast<double>(root->val) - target) < gap) {
+        gap = abs(root->val - target);
+        closest = root->val;
+      }
+      if (target == root->val) {
+        break;
+      } else if (target < root->val) {
+        root = root->left;
+      } else {
+        root = root->right;
+      }
     }
+    return closest;
+  }
 };

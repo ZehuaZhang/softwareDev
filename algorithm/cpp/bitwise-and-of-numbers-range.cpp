@@ -9,10 +9,10 @@
 
 class Solution {
 public:
-    int rangeBitwiseAnd(int m, int n) {
-        while (m < n) {  // Remove the lsb set until n <= m.
-            n &= n - 1;	// <=> n -= n & (-n) <=> n &= ~(-n)
-        }
-        return n;
+  int rangeBitwiseAnd(int m, int n) {
+    while (m < n) {  // Remove the lsb set until n <= m.
+      n &= n - 1;	// <=> n -= n & (-n) <=> n &= ~(-n)
     }
+    return n;
+  }
 };

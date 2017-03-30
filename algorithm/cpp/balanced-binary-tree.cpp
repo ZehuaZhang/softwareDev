@@ -18,6 +18,7 @@ public:
 	* Returns the height of `root` if `root` is a balanced tree,
 	* otherwise, returns `-1`.
 	*/
+private:
 	int balancedHeight (TreeNode* root) {
 		if (!root) {
 			return 0;

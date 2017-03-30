@@ -1,18 +1,18 @@
-124. Binary Tree Maximum Path Sum
-Difficulty: Hard
+// 124. Binary Tree Maximum Path Sum
+// Difficulty: Hard
 
-Given a binary tree, find the maximum path sum.
+// Given a binary tree, find the maximum path sum.
 
-For this problem, a path is defined as any sequence of nodes from some starting node to any node in the tree 
-along the parent-child connections. The path does not need to go through the root.
+// For this problem, a path is defined as any sequence of nodes from some starting node to any node in the tree 
+// along the parent-child connections. The path does not need to go through the root.
 
-For example:
-Given the below binary tree,
+// For example:
+// Given the below binary tree,
 
-       1
-      / \
-     2   3
-Return 6.
+//        1
+//       / \
+//      2   3
+// Return 6.
 
 // Time:  O(n)
 // Space: O(h)
@@ -25,7 +25,7 @@ public:
 		return maxSum;
 	}
 private:
-	int maxPathSum(const TreeNode *root, int &maxSum) {
+	int maxPathSum(const TreeNode* root, int& maxSum) {
 		if (!root) {
 			return 0;
 		}
@@ -35,6 +35,6 @@ private:
 		int currMax = root->val + max(0, max(leftSum + rightSum, max(leftSum, rightSum)));
 		maxSum = max(maxSum, currMax);
 		
-		return max(root->val, root->val + max(leftSum, rightSum));
+		return root->val + max(0, max(leftSum, rightSum));
 	}
 };

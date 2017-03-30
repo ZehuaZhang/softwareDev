@@ -18,25 +18,25 @@
 
 class Solution {
 public:
-    vector<int> preorderTraversal(TreeNode* root) {
-        stack<const TreeNode *> s;
-        if (root) {
-            s.push(root);
-        }
-        vector<int> result;
-        while (!s.empty()) {
-            const TreeNode *curr = s.top(); s.pop();
-            result.push_back(curr->val);
-            
-            if (curr->right) {
-                s.push(curr->right);
-            }
-            if (curr->left) {
-                s.push(curr->left);
-            }
-        }
-        return result;
+  vector<int> preorderTraversal(TreeNode* root) {
+    stack<const TreeNode *> s;
+    if (root) {
+      s.push(root);
     }
+    vector<int> result;
+    while (!s.empty()) {
+      const TreeNode *curr = s.top(); s.pop();
+      result.push_back(curr->val);
+      
+      if (curr->right) {
+        s.push(curr->right);
+      }
+      if (curr->left) {
+        s.push(curr->left);
+      }
+    }
+    return result;
+  }
 };
 
 
@@ -45,28 +45,28 @@ public:
 
 class Solution2 {
 public:
-    vector<int> preorderTraversal(TreeNode* root) {
-        vector<int> res;
-        auto *curr = root;
-        while (curr) {
-            if (!curr->left) {
-                res.emplace_back(curr->val);
-                curr = curr->right;
-            } else {
-                auto *node = curr->left;
-                while (node->right && node->right != curr) {
-                    node = node->right;
-                }
-                if (!node->right) {
-                    res.emplace_back(curr->val);
-                    node->right = curr;
-                    curr = curr->left;
-                } else {
-                    node->right = nullptr;
-                    curr = curr->right;
-                }
-            }
+  vector<int> preorderTraversal(TreeNode* root) {
+    vector<int> res;
+    auto *curr = root;
+    while (curr) {
+      if (!curr->left) {
+        res.emplace_back(curr->val);
+        curr = curr->right;
+      } else {
+        auto *node = curr->left;
+        while (node->right && node->right != curr) {
+          node = node->right;
         }
-        return res; 
+        if (!node->right) {
+          res.emplace_back(curr->val);
+          node->right = curr;
+          curr = curr->left;
+        } else {
+          node->right = nullptr;
+          curr = curr->right;
+        }
+      }
     }
+    return res; 
+  }
 };

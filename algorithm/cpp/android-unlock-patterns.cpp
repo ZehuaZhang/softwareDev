@@ -11,7 +11,7 @@
 // If the line connecting two consecutive keys in the pattern passes through any other keys, 
 // the other keys must have previously selected in the pattern. No jumps through non selected key is allowed.
 // The order of keys used matters.
- 
+
 // Explanation:
 
 // | 1 | 2 | 3 |
@@ -38,24 +38,26 @@
 
 class Solution {
 public:
-    int numberOfPatterns(int m, int n) {
-        return count(m, n, 0, 1, 1);
+  int numberOfPatterns(int m, int n) {
+    return count(m, n, 0, 1, 1);
+  }
+
+private:
+  int count(int m, int n, int used, int i1, int j1) {
+    if (!n) {
+      return 1;
     }
-    int count(int m, int n, int used, int i1, int j1) {
-        if (!n) {
-            return 1;
+    int result = m <= 0;
+
+    for (int i2 = 0; i2 < 3; ++i2) {
+      for (int j2 = 0; j2 < 3; ++j2) {
+        int I = i1 + i2, J = j1 + j2, used2 = used | (1 << (i2 * 3 + j2));
+        // added new, median doesn't exist, or median has added
+        if (used2 > used && (I % 2 || J % 2 || used2 & (1 << (I / 2 * 3 + J / 2)))) {
+          result += count(m - 1, n - 1, used2, I, J);
         }
-        int result = m <= 0;
-        
-        for (int i2 = 0; i2 < 3; ++i2) {
-            for (int j2 = 0; j2 < 3; ++j2) {
-                int I = i1 + i2, J = j1 + j2, used2 = used | (1 << (i2 * 3 + j2));
-                // added new, median doesn't exist, or median has added
-                if (used2 > used && (I % 2 || J % 2 || used2 & (1 << (I / 2 * 3 + J / 2)))) {
-                    result += count(m - 1, n - 1, used2, I, J);
-                }
-            }
-        }
-        return result;
+      }
     }
+    return result;
+  }
 };

@@ -14,15 +14,14 @@ public:
 	TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
 		return buildTree(begin(preorder), end(preorder), begin(inorder), end(inorder));
 	}
+
+private:
 	template<typename It>
 	TreeNode* buildTree(It preFirst, It preLast, It inFirst, It inLast) {
-		if (preFirst == preLast) {
+		if (preFirst == preLast || inFirst == inLast) {
 			return nullptr;
 		}
-		if (inFirst == inLast) {
-			return nullptr;
-		}
-		auto root = new TreeNode(*preFirst);
+		TreeNode* root = new TreeNode(*preFirst);
 		auto inRootPos = find(inFirst, inLast, *preFirst);
 		auto leftSize = distance(inFirst, inRootPos);
 		root->left = buildTree(next(preFirst), next(preFirst, leftSize + 1), inFirst, inRootPos);

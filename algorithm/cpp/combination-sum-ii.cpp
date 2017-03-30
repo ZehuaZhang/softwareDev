@@ -22,32 +22,32 @@
 // Space: O(1)
 
 class Solution {
-    public:
-        vector<vector<int> > combinationSum2(vector<int> &num, int target) {
-            sort(num.begin(), num.end());
-            vector<vector<int> > ans;
-            vector<int> path;
-            dfs(num, target, 0, path, ans);
-            return ans;
-        }
+public:
+  vector<vector<int> > combinationSum2(vector<int> &num, int target) {
+    sort(num.begin(), num.end());
+    vector<vector<int> > ans;
+    vector<int> path;
+    dfs(num, target, 0, path, ans);
+    return ans;
+  }
 
-    private:
-        void dfs(vector<int>& num, int gap, int begin, vector<int>& path, vector<vector<int> > &ans) {
-            if (gap == 0) {
-                ans.push_back(path);
-                return;
-            }
+private:
+  void dfs(vector<int>& num, int gap, int begin, vector<int>& path, vector<vector<int>>& ans) {
+    if (gap == 0) {
+      ans.push_back(path);
+      return;
+    }
 
-            for (size_t i = begin; i < num.size(); i++) {
-                if (gap < num[i]) {
-                    return; // pruning
-                }
-                if (i > begin && num[i] == num[i - 1]) {    // skip duplicates
-                    continue;
-                }
-                path.push_back(num[i]);
-                dfs(num, gap - num[i], i + 1, v, ans); // each element could be chosen only once
-                path.pop_back();
-            }
-        }
+    for (size_t i = begin; i < num.size(); i++) {
+      if (gap < num[i]) {
+        return; // pruning
+      }
+      if (i > begin && num[i] == num[i - 1]) {    // skip duplicates
+        continue;
+      }
+      path.push_back(num[i]);
+      dfs(num, gap - num[i], i + 1, path, ans); // each element could be chosen only once
+      path.pop_back();
+    }
+  }
 };

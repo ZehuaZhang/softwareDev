@@ -10,13 +10,13 @@
 
 class Solution {
 public:
-    int climbStairs(int n) {
-        int prev = 0, curr = 1;
-        for (int i = 1; i <= n; ++i) {
-        	int nextPrev = curr;
-        	curr += prev;
-        	prev = nextPrev;
-        }
-        return curr;
+  int climbStairs(int n) {
+    int curr = 1, prev = 0, int prevPrev = 0;
+    for (int i = 1; i <= n; ++i) {
+      prevPrev = prev;
+      prev = curr;
+      curr = prevPrev + prev;
     }
+    return curr;
+  }
 };

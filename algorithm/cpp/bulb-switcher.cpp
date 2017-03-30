@@ -21,12 +21,12 @@
 
 class Solution {
 public:
-    int bulbSwitch(int n) {
-    	// state of bulbs <=> factors of numbers
-    	// find all pairs of factors of a number to multiply to this number
-    	// numbers are even if number is not square, while numbers are odd if number is square
-    	// state of bulb is off, if even, (Initial off, then on -> off, on -> off)
-        // thus, state of bulb <=> find all numbers with odd factor pairs <=> find the number of full squares.
-        return static_cast<int>(sqrt(n));
-    }
+  int bulbSwitch(int n) {
+  	// state of bulbs <=> factors of numbers
+  	// find all pairs of factors of a number to multiply to this number
+  	// numbers are even if number is not square, while numbers are odd if number is square
+  	// state of bulb is off, if even, (Initial off, then on -> off, on -> off)
+    // thus, state of bulb <=> find all numbers with odd factor pairs <=> find the number of full squares.
+    return static_cast<int>(sqrt(n));
+  }
 };

@@ -24,49 +24,48 @@
 
 class Solution {
 public:
-    bool isAdditiveNumber(string num) {
-        for (int i = 1; i < num.length(); ++i) {
-            for (int j = i + 1; j < num.length(); ++j) {
-                string s1 = num.substr(0, i);
-                string s2 = num.substr(i, j - i);
-                if ((s1.length() > 1 && s1[0] == '0') ||
-                    (s2.length() > 1 && s2[0] == '0')) {
-                    continue;
-                }
-                
-                string next = add(s1, s2);
-                string cur = s1 + s2 + next;
-                while (cur.length() < num.length()) {
-                    s1 = s2;
-                    s2 = next;
-                    next = add(s1, s2);
-                    cur += next;
-                }
-                if (cur == num) {
-                    return true;
-                }
-            }
-        }
-        return false;
+  bool isAdditiveNumber(string num) {
+    for (int i = 1; i < num.length(); ++i) {
+      for (int j = i + 1; j < num.length(); ++j) {
+        string s1 = num.substr(0, i);
+        string s2 = num.substr(i, j - i);
+        if ((s1.length() > 1 && s1[0] == '0') ||
+          (s2.length() > 1 && s2[0] == '0')) {
+          continue;
+      }
+      string next = add(s1, s2);
+      string cur = s1 + s2 + next;
+      while (cur.length() < num.length()) {
+        s1 = s2;
+        s2 = next;
+        next = add(s1, s2);
+        cur += next;
+      }
+      if (cur == num) {
+        return true;
+      }
     }
+  }
+  return false;
+}
 
 private:
-        string add(const string& s1, const string& s2) {
-            string res;
+  string add(const string& s1, const string& s2) {
+    string res;
     
-            int carry = 0;
-            for (int i = 0; i < max(s1.length(), s2.length()); ++i) {
-                int a = i < s1.length() ? s1[s1.length() - 1 - i] - '0' : 0;
-                int b = i < s2.length() ? s2[s2.length() - 1 - i] - '0' : 0;
-                int sum = carry + a + b;
-                carry = sum / 10;
-                res.push_back('0' + sum % 10);
-            }
-            if (carry) {
-                res.push_back('0' + carry);
-            }
-            reverse(res.begin(), res.end());
+    int carry = 0;
+    for (int i = 0; i < max(s1.length(), s2.length()); ++i) {
+      int a = i < s1.length() ? s1[s1.length() - 1 - i] - '0' : 0;
+      int b = i < s2.length() ? s2[s2.length() - 1 - i] - '0' : 0;
+      int sum = carry + a + b;
+      carry = sum / 10;
+      res.push_back('0' + sum % 10);
+    }
+    if (carry) {
+      res.push_back('0' + carry);
+    }
+    reverse(res.begin(), res.end());
     
-            return res;
-        }
+    return res;
+  }
 };

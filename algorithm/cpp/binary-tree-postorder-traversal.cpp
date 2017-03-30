@@ -18,29 +18,29 @@
 // Space: O(h)
 class Solution {
 public:
-    vector<int> postorderTraversal(TreeNode *root) {
-        vector<int> result;
-        stack<const TreeNode *> s;
-        const TreeNode *curr = root;
-        do {
-            while (curr != nullptr) {
-                s.push(curr);
-                curr = curr->left;
-            }
-            TreeNode *prev = nullptr;
-            while (!s.empty()) {
-                curr = s.top(); s.pop();
+  vector<int> postorderTraversal(TreeNode *root) {
+    vector<int> result;
+    stack<const TreeNode*> s;
+    const TreeNode* curr = root;
+    do {
+      while (curr) {
+        s.push(curr);
+        curr = curr->left;
+      }
+      TreeNode* prev = nullptr;
+      while (!s.empty()) {
+        curr = s.top(); s.pop();
 
-                if (curr->right == prev) {
-                    result.push_back(curr->val);
-                    prev = curr;
-                } else {
-                    s.push(curr);
-                    curr = curr->right;
-                    break;
-                }
-            }
-        } while (!s.empty());
-        return result;
-    }
+        if (curr->right == prev) {
+          result.push_back(curr->val);
+          prev = curr;
+        } else {
+          s.push(curr);
+          curr = curr->right;
+          break;
+        }
+      }
+    } while (!s.empty());
+    return result;
+  }
 };

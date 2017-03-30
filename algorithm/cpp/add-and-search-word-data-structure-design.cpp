@@ -33,51 +33,50 @@
 
 class WordDictionary {
 public:
-    struct TrieNode {
-        bool isString = false;
-        unordered_map<char, TrieNode *> leaves;
-    };
+  struct TrieNode {
+    bool isString = false;
+    unordered_map<char, TrieNode*> leaves;
+  };
 
-    WordDictionary() {
-        _root = new TrieNode();
-        _root->isString = false;
+  WordDictionary() {
+    _root = new TrieNode();
+    _root->isString = false;
+  }
+
+  // Adds a word into the data structure.
+  void addWord(string word) {
+    TrieNode* curr = _root;
+    for (const auto& c : word) {
+      if (!curr->leaves.count(c)) {
+        curr->leaves[c] = new TrieNode();
+      }
+      curr = curr->leaves[c];
     }
+    curr->isString = true;
+  }
 
-    // Adds a word into the data structure.
-    void addWord(string word) {
-            TrieNode* curr = _root;
-            for (const auto& c : word) {
-                if (!curr->leaves.count(c)) {
-                    curr->leaves[c] = new TrieNode();
-                }
-                curr = curr->leaves[c];
-            }
-            curr->isString = true;
+  // Returns if the word is in the data structure. A word could
+  // contain the dot character '.' to represent any one letter.
+  bool search(string word) {
+    return searchWord(word, _root, 0);
+  }
+
+  bool searchWord(string word, TrieNode* node, int index) {
+    if (index == word.length()) {
+      return node->isString;
     }
-
-    // Returns if the word is in the data structure. A word could
-    // contain the dot character '.' to represent any one letter.
-    bool search(string word) {
-        return searchWord(word, _root, 0);
-    }
-
-    bool searchWord(string word, TrieNode *node, int index) {
-        if (index == word.length()) {
-            return node->isString;
+    if (node->leaves.count(word[index])) {
+      return searchWord(word, node->leaves[word[index]], index + 1);
+    } else if (word[index] == '.') {  // Skip the char.
+      for (const auto& leaf : node->leaves) {
+        if (searchWord(word, leaf.second, index + 1)) {
+          return true;
         }
-        // Match the char.
-        if (node->leaves.count(word[index])) {
-            return searchWord(word, node->leaves[word[index]], index + 1);
-        } else if (word[index] == '.') {  // Skip the char.
-            for (auto leaf : node->leaves) {
-                if (searchWord(word, leaf.second, index + 1)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+      }
     }
+    return false;
+  }
 
 private:
-    TrieNode *_root;
+  TrieNode* _root;
 };

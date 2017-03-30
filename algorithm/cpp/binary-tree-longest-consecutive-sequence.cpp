@@ -31,28 +31,29 @@
 
 class Solution {
 public:
-    int longestConsecutive(TreeNode* root) {
-        int maxLen = 0;
-        longestConsecutive(root, maxLen);
-        return maxLen;
+  int longestConsecutive(TreeNode* root) {
+    int maxLen = 0;
+    longestConsecutive(root, maxLen);
+    return maxLen;
+  }
+
+private:
+  int longestConsecutive(TreeNode* root, int& max_len) {
+    if (!root) {
+      return 0;
     }
 
-    int longestConsecutive(TreeNode *root, int &max_len) {
-        if (!root) {
-            return 0;
-        }
+    const int leftLen = longestConsecutive(root->left, maxLen);
+    const int rightLen = longestConsecutive(root->right, maxLen);
 
-        const int leftLen = longestConsecutive(root->left, maxLen);
-        const int rightLen = longestConsecutive(root->right, maxLen);
-
-        int currLen = 1;
-        if (root->left && root->left->val == root->val + 1) {
-            currLen = max(currLen, leftLen + 1);
-        }
-        if (root->right && root->right->val == root->val + 1) {
-            currLen = max(currLen, rightLen + 1);
-        }
-        maxLen = max(maxLen, max(currLen, max(leftLen, rightLen)));
-        return currLen;
+    int currLen = 1;
+    if (root->left && root->left->val == root->val + 1) {
+      currLen = max(currLen, leftLen + 1);
     }
+    if (root->right && root->right->val == root->val + 1) {
+      currLen = max(currLen, rightLen + 1);
+    }
+    maxLen = max(maxLen, currLen);
+    return currLen;
+  }
 };

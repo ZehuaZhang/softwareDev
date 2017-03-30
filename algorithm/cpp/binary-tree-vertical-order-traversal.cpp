@@ -39,32 +39,32 @@
 
 class Solution {
 public:
-    vector<vector<int>> verticalOrder(TreeNode* root) {
-        unordered_map<int, vector<int>> cols;
-        queue<pair<TreeNode *, int>> q;
-        q.push({root, 0});
-        int minIdx = 0, maxIdx = 0;
+  vector<vector<int>> verticalOrder(TreeNode* root) {
+    unordered_map<int, vector<int>> cols;
+    queue<pair<TreeNode*, int>> q;
+    q.emplace(root, 0);
+    int minIdx = 0, maxIdx = 0;
 
-        while (!q.empty()) {
-            TreeNode *curr = q.front().first;
-            int idx = q.front().second;
-            q.pop();
+    while (!q.empty()) {
+      TreeNode* curr = q.front().first;
+      int idx = q.front().second;
+      q.pop();
 
-            cols[idx].emplace_back(curr->val);
-            if (curr->left) {
-                q.push_back({curr->left, idx - 1});
-                minIdx = min(minIdx, idx - 1);
-            }
-            if (curr->right) {
-                q.push_back({curr->right, idx + 1});
-                maxIdx = max(maxIdx, idx + 1);
-            }
-        }
-
-        vector<vector<int>> result;
-        for (int i = minIdx; i <= maxIdx; ++i) {
-            result.emplace_back(cols[i]);
-        }
-        return result;
+      cols[idx].emplace_back(curr->val);
+      if (curr->left) {
+        q.emplace(curr->left, idx - 1);
+        minIdx = min(minIdx, idx - 1);
+      }
+      if (curr->right) {
+        q.emplace(curr->right, idx + 1);
+        maxIdx = max(maxIdx, idx + 1);
+      }
     }
+
+    vector<vector<int>> result;
+    for (int i = minIdx; i <= maxIdx; ++i) {
+      result.emplace_back(cols[i]);
+    }
+    return result;
+  }
 };

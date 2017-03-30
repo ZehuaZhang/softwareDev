@@ -22,19 +22,14 @@
 
 class Solution {
 public:
-    int maxProfit(vector<int> &prices) {
-        if (prices.size() < 2) {
-            return 0;
-        }
+  int maxProfit(vector<int>& prices) {
+    int profit = 0;
+    int priceMin = INT_MAX;
 
-        int profit = 0;
-        int priceMin = prices[0];
-
-        for (const auto price : prices) {
-            priceMin = min(priceMin, price);
-            profit = max(profit, price - priceMin);
-        }
-
-        return profit;
+    for (const auto price : prices) {
+      priceMin = min(priceMin, price);
+      profit = max(profit, price - priceMin);
     }
+    return profit;
+  }
 };

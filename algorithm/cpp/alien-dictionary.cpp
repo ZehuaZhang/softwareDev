@@ -15,7 +15,7 @@
 //   "ett",
 //   "rftt"
 // ]
- 
+
 
 // The correct order is: "wertf".
 
@@ -31,44 +31,38 @@
 // BFS
 class Solution {
 public:
-    string alienOrder(vector<string>& words) {
-        unordered_set<char> letters;
-        for (auto word : words) {
-            letters.insert(word.begin(), word.end());
-        }
-
-        set<pair<char, char>> orders;
-        for (int i = 0; i < words.size() - 1; ++i) {
-            for (int j = 0; j < min(words[i].size(), words[i + 1].size()); ++j) {
-                if (words[i][j] != words[i + 1][j]) {
-                    orders.insert(make_pair(words[i][j], words[i + 1][j]));
-                    break;
-                }
-            }
-        }
-        vector<int> in(256, 0);
-        for (auto order : orders) {
-            ++in[order.second];
-        }
-        queue<char> q;
-        string result = "";
-        for (auto letter : letters) {
-            if (in[letter] == 0) {
-                q.push(letter);
-                result += letter;
-            } 
-        }
-        while (!q.empty()) {
-            char letter = q.front(); q.pop();
-            for (auto order : orders) {
-                if (order.first == letter) {
-                    if (--in[order.second] == 0) {
-                        q.push(order.second);
-                        result += order.second;
-                    }
-                }
-            }
-        }
-        return result.size() == letter.size() ? result : "";
+  string alienOrder(vector<string>& words) {
+    unordered_set<char> letters;
+    for (auto word : words) {
+      letters.insert(word.begin(), word.end());
     }
+    vector<int> inDegree(256, 0);
+    unordered_map<char, unorder_set<char>> dependList;
+    for (int i = 0; i < words.size() - 1; ++i) {
+      for (int j = 0; j < min(words[i].size(), words[i + 1].size()); ++j) {
+        if (words[i][j] != words[i + 1][j]) {
+          dependList[words[i][j]].insert(words[i + 1][j]);
+          ++inDegree[words[i + 1][j]];
+          break;
+        }
+      }
+    }
+    queue<char> q;
+    string result = "";
+    for (auto letter : letters) {
+      if (inDegree[letter] == 0) {
+        q.push(letter);
+      } 
+    }
+    while (!q.empty()) {
+      char letter = q.front(); q.pop();
+      result += letter;
+      for (auto dependent : dependList[letter]) {
+        if (--inDegree[dependent] == 0) {
+          q.push(dependent);
+        }
+      }
+    }
+    return result.size() == letter.size() ? result : "";
+  }
 };

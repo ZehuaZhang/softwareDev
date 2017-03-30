@@ -27,28 +27,26 @@
 // Space: O(n)
 
 class Solution {
-    public:
-        UndirectedGraphNode *cloneGraph(UndirectedGraphNode *node) {
-            if(!node) {
-                return nullptr;
-            }
-            unordered_map<const UndirectedGraphNode *, UndirectedGraphNode *> copied;
-            copied[node] = new UndirectedGraphNode(node->label);
-            queue<const UndirectedGraphNode *> q;
-            q.push(node);
-            while (!q.empty()) {
-                auto node = q.front(); q.pop();
+public:
+  UndirectedGraphNode *cloneGraph(UndirectedGraphNode *node) {
+    if(!node) {
+      return nullptr;
+    }
+    unordered_map<const UndirectedGraphNode *, UndirectedGraphNode *> copied;
+    copied[node] = new UndirectedGraphNode(node->label);
+    queue<const UndirectedGraphNode *> q;
+    q.push(node);
+    while (!q.empty()) {
+      const UndirectedGraphNode* node = q.front(); q.pop();
 
-                for (auto nbr : node->neighbors) {
-                    if (!copied.count(nbr)) {
-                        copied[nbr] = new UndirectedGraphNode(nbr->label);
-                        q.push(nbr);
-                    }
-
-                    copied[node]->neighbors.push_back(copied[nbr]);
-                }
-            }
-
-            return copied[node];
+      for (auto nbr : node->neighbors) {
+        if (!copied.count(nbr)) {
+          copied[nbr] = new UndirectedGraphNode(nbr->label);
+          q.push(nbr);
         }
+        copied[node]->neighbors.push_back(copied[nbr]);
+      }
+    }
+    return copied[node];
+  }
 };

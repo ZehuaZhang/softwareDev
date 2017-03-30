@@ -22,12 +22,14 @@
 
 class Solution {
 public:
-	vector<vector<int>> levelOrder(TreeNode *root) {
+	vector<vector<int>> levelOrder(TreeNode* root) {
 		vector<vector<int>> result;
 		levelOrder(root, 1, result);
 		return result;
 	}
-	void levelOrder(TreeNode *root, size_t level, vector<vector<int>> &result) {
+
+private:
+	void levelOrder(TreeNode* root, size_t level, vector<vector<int>>& result) {
 		if (!root) {
 			return;
 		}

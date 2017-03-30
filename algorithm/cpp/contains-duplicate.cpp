@@ -10,18 +10,18 @@
 
 class Solution {
 public:
-    bool containsDuplicate(vector<int>& nums) {
-        unordered_set<int> numsSet(nums.begin(), nums.end());
-        return numsSet.size() != nums.size();
-    }
+  bool containsDuplicate(vector<int>& nums) {
+    unordered_set<int> numsSet(nums.begin(), nums.end());
+    return numsSet.size() != nums.size();
+  }
 };
 
 // Time:  O(nlogn)
 // Space: O(1)
 class Solution2 {
 public:
-    bool containsDuplicate(vector<int>& nums) {
-        sort(nums.begin(), nums.end());
-        return unique(nums.begin(), nums.end()) != nums.end();
-    }
+  bool containsDuplicate(vector<int>& nums) {
+    sort(nums.begin(), nums.end());
+    return unique(nums.begin(), nums.end()) != nums.end();
+  }
 };

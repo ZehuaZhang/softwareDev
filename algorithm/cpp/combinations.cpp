@@ -20,22 +20,22 @@
 
 class Solution {
 public:
-    vector<vector<int> > combine(int n, int k) {
-        vector<vector<int> > ans;
-        vector<int> path;
-        combine(n, k, 1, path, ans);
-        return ans;
+  vector<vector<int> > combine(int n, int k) {
+    vector<vector<int> > ans;
+    vector<int> path;
+    combine(n, k, 1, path, ans);
+    return ans;
+  }
+  void combine(int n, int k, int start, vector<int>& path, vector<vector<int>>& ans) {
+    if (k == 0) {
+      ans.push_back(path);
+      return;
     }
-    void combine(int n, int k, int start, vector<int> &path, vector<vector<int> > &ans) {
-        if (k == 0) {
-            ans.push_back(path);
-            return;
-        }
 
-        for(int i = start; i <= n; ++i) {
-            path.push_back(i);
-            combine(n, k - 1, i + 1, path, ans);
-            path.pop_back();
-        }
+    for(int i = start; i <= n; ++i) {
+      path.push_back(i);
+      combine(n, k - 1, i + 1, path, ans);
+      path.pop_back();
     }
+  }
 };

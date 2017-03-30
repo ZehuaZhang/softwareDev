@@ -9,16 +9,16 @@
 
 class Solution {
 public:
-    bool containsNearbyDuplicate(vector<int>& nums, int k) {
-        unordered_map<int, int> index;
-        for (int i = 0; i < nums.size(); ++i) {
-            if (index.count(nums[i])) {
-                if (i - index[nums[i]] <= k) {
-                    return true;
-                }
-            }
-            index[nums[i]] = i;
+  bool containsNearbyDuplicate(vector<int>& nums, int k) {
+    unordered_map<int, int> index;
+    for (int i = 0; i < nums.size(); ++i) {
+      if (index.count(nums[i])) {
+        if (i - index[nums[i]] <= k) {
+          return true;
         }
-        return false;
+      }
+      index[nums[i]] = i;
     }
+    return false;
+  }
 };

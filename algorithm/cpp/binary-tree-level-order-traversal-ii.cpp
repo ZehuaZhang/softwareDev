@@ -19,13 +19,15 @@
 
 class Solution {
 public:
-	vector<vector<int>> levelOrderBottom(TreeNode *root) {
+	vector<vector<int>> levelOrderBottom(TreeNode* root) {
 		vector<vector<int>> result;
 		levelOrderBottom(root, 1, result);
 		reverse(result.begin(), result.end());
 		return result;
 	}
-	void levelOrderBottom(TreeNode *root, size_t level, vector<vector<int>> &result) {
+
+private:
+	void levelOrderBottom(TreeNode* root, size_t level, vector<vector<int>>& result) {
 		if (!root) {
 			return;
 		}

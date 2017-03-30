@@ -20,30 +20,30 @@
 
 class Solution {
 public:
-    int minTotalDistance(vector<vector<int>>& grid) {
-        vector<int> x, y;
-        for (int i = 0; i < grid.size(); ++i) {
-            for (int j = 0; j < grid[0].size(); ++j) {
-                if (grid[i][j]) {
-                    x.emplace_back(i);
-                    y.emplace_back(j);
-                }
-            }
+  int minTotalDistance(vector<vector<int>>& grid) {
+    vector<int> x, y;
+    for (int i = 0; i < grid.size(); ++i) {
+      for (int j = 0; j < grid[0].size(); ++j) {
+        if (grid[i][j]) {
+          x.emplace_back(i);
+          y.emplace_back(j);
         }
-        // Find median, in even-number-of-element array, pick either 1st, or 2nd median 
-        nth_element(x.begin(), x.begin() + x.size() / 2, x.end()); // O(n) average, worst O(n^2)
-        nth_element(y.begin(), y.begin() + y.size() / 2, y.end()); 
-        const int midX = x[x.size() / 2];
-        const int midY = y[y.size() / 2];
-        
-        int sum = 0;
-        for (int i = 0; i < grid.size(); ++i) {
-            for (int j = 0; j < grid[0].size(); ++j) {
-                if (grid[i][j]) {
-                    sum += abs(midX - i) + abs(midY - j);
-                }
-            }
-        }
-        return sum;
+      }
     }
+    // Find median, in even-number-of-element array, pick either 1st, or 2nd median 
+    nth_element(x.begin(), x.begin() + x.size() / 2, x.end()); // O(n) average, worst O(n^2)
+    nth_element(y.begin(), y.begin() + y.size() / 2, y.end()); 
+    const int midX = x[x.size() / 2];
+    const int midY = y[y.size() / 2];
+    
+    int sum = 0;
+    for (int i = 0; i < grid.size(); ++i) {
+      for (int j = 0; j < grid[0].size(); ++j) {
+        if (grid[i][j]) {
+          sum += abs(midX - i) + abs(midY - j);
+        }
+      }
+    }
+    return sum;
+  }
 };

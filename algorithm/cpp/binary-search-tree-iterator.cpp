@@ -16,29 +16,27 @@
 
 class BSTIterator {
 public:
-    BSTIterator(TreeNode *root) : _curr(root) {
+  BSTIterator(TreeNode* root) : _curr(root) {
+  }
+
+  /** @return whether we have a next smallest number */
+  bool hasNext() {
+    return !_s.empty() || !_curr;
+  }
+
+  /** @return the next smallest number */
+  int next() {
+    // Go to the left most descendant.
+    while (_curr) {
+      _s.emplace(_curr);
+      _curr = _curr->left;
     }
-
-    /** @return whether we have a next smallest number */
-    bool hasNext() {
-        return !_s.empty() || _curr != nullptr;
-    }
-
-    /** @return the next smallest number */
-    int next() {
-        // Go to the left most descendant.
-        while (_curr != nullptr) {
-            _s.emplace(_curr);
-            _curr = _curr->left;
-        }
-        TreeNode* node = _s.top(); _s.pop(); // Left most node.
-
-        _curr = node->right;  // Visit right child.
-
-        return node->val;
-    }
+    TreeNode* node = _s.top(); _s.pop();
+    _curr = node->right;
+    return node->val;
+  }
 
 private:
-    stack<TreeNode *> _s;
-    TreeNode *_curr;
+  stack<TreeNode*> _s;
+  TreeNode* _curr;
 };

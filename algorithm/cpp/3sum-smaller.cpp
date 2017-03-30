@@ -18,22 +18,20 @@
 
 class Solution {
 public:
-    int threeSumSmaller(vector<int>& nums, int target) {
-        sort(nums.begin(), nums.end());
+  int threeSumSmaller(vector<int>& nums, int target) {
+    sort(nums.begin(), nums.end());
 
-        int count = 0;
-        for (int k = 2; k < nums.size(); ++k) {
-            int i = 0, j = k - 1;
-            while (i < j) {  // Two Pointers, linear time.
-                if (nums[i] + nums[j] + nums[k] >= target) {
-                    --j;
-                } else {
-                    count += j - i;
-                    ++i;
-                }
-            }
+    int count = 0;
+    for (int i = 0; i < nums.size() - 2; ++i) {
+      for (int left = i + 1, right = nums.size() - 1; left < right;) {
+        if (nums[i] + nums[left] + nums[right] >= target) {
+          --right;
+        } else {
+          count += right - left;
+          ++left;
         }
-
-        return count;
+      }
     }
+    return count;
+  }
 };

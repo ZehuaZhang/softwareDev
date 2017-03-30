@@ -19,61 +19,61 @@
 // Support +, -, *, /, (, ).
 class Solution {
 public:
-    int calculate(string s) {
-        stack<int64_t> operands;
-        stack<char> operators;
-        int d = 0;
-        for (int i = 0; i < s.length(); ++i) {
-            if (isdigit(s[i])) {
-                d = d * 10 + s[i] - '0';
-                if (i == s.length() - 1 || !isdigit(s[i + 1])) {
-                    operands.push(d);
-                    d = 0;
-                }
-            } else if (s[i] == '(' || isOperator(s[i])) {
-                while (!operators.empty() && precedence(s[i]) <= precedence(operators.top())) {
-                    compute(operands, operators);
-                }
-                operators.emplace(s[i]);
-            } else if (s[i] == ')') {
-                // operators at least one element, i.e. ')'.
-                while (operators.top() != '(') {
-                    compute(operands, operators);
-                }
-                operators.pop();
-            }
+  int calculate(string s) {
+    stack<int64_t> operands;
+    stack<char> operators;
+    string operand;
+    for (int i = 0; i < s.length(); ++i) {
+      if (isdigit(s[i])) {
+        operand.push_back(s[i]);
+        if (i == s.length() - 1 || !isdigit(s[i + 1])) {
+          operands.empalce(stol(operand));
+          operand.clear();
         }
-        while (!operators.empty()) {
-            compute(operands, operators);
+      } else if (isOperator(s[i])) {
+        while (!operators.empty() && precedence(s[i]) <= precedence(operators.top())) {
+          compute(operands, operators);
         }
-        return operands.top();
-    }
-    
-    bool isOperator(const char op) {
-        return string("+-*/").find(op) != string::npos;
-    }
-    
-    int precedence(const char op) {
-        switch(op) {
-        case '+' : return 1;
-        case '-' : return 1;
-        case '*' : return 2;
-        case '/' : return 2;
-        case '(' : return 3;
+        operators.emplace(s[i]);
+      } else if (s[i] == '(') {
+        operators.emplace(s[i]);
+      } else if (s[i] == ')') {
+        while (operators.top() != '(') {
+          compute(operands, operators);
         }
-        return 0;
+        operators.pop();
+      }
     }
+    while (!operators.empty()) {
+      compute(operands, operators);
+    }
+    return operands.top();
+  }
 
-    void compute(stack<int64_t>& operands, stack<char>& operators) {
-        const int64_t y = operands.top(); operands.pop();
-        const int64_t x = operands.top(); operands.pop();
-        const char op = operators.top(); operators.pop();
+  bool isOperator(const char op) {
+    return string("+-*/").find(op) != string::npos;
+  }
 
-        switch (op) {
-        case '+' : operands.emplace(x + y); break;
-        case '-' : operands.emplace(x - y); break;
-        case '*' : operands.emplace(x * y); break;
-        case '/' : operands.emplace(x / y); break;
-        }
+  int precedence(const char op) {
+    switch(op) {
+      case '+' : return 1;
+      case '-' : return 1;
+      case '*' : return 2;
+      case '/' : return 2;
     }
+    return 0;
+  }
+
+  void compute(stack<int64_t>& operands, stack<char>& operators) {
+    const int64_t y = operands.top(); operands.pop();
+    const int64_t x = operands.top(); operands.pop();
+    const char op = operators.top(); operators.pop();
+
+    switch (op) {
+      case '+' : operands.emplace(x + y); break;
+      case '-' : operands.emplace(x - y); break;
+      case '*' : operands.emplace(x * y); break;
+      case '/' : operands.emplace(x / y); break;
+    }
+  }
 };

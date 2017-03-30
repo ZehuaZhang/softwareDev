@@ -21,29 +21,29 @@
 // Space: O(1)
 
 class Solution {
-    public:
-        vector<vector<int> > combinationSum(vector<int> &candidates, int target) {
-            sort(candidates.begin(), candidates.end());
-            vector<vector<int> > ans;
-            vector<int> path;
-            dfs(candidates, target, 0, path, ans);
-            return ans;
-        }
+public:
+  vector<vector<int> > combinationSum(vector<int> &candidates, int target) {
+    sort(candidates.begin(), candidates.end());
+    vector<vector<int> > ans;
+    vector<int> path;
+    dfs(candidates, target, 0, path, ans);
+    return ans;
+  }
 
-    private:
-        void dfs(vector<int>& candidates, int gap, int begin, vector<int>& path,vector<vector<int> > &ans) {
-            if (gap == 0) {
-                ans.push_back(path);
-                return;
-            }
+private:
+  void dfs(vector<int>& candidates, int gap, int begin, vector<int>& path, vector<vector<int>>& ans) {
+    if (gap == 0) {
+      ans.push_back(path);
+      return;
+    }
 
-            for (size_t i = begin; i < candidates.size(); i++) {
-                if (gap < candidates[i]) {
-                    return;
-                }
-                path.push_back(candidates[i]);
-                dfs(candidates, gap - candidates[i], i, path, ans);
-                path.pop_back();
-            }
-        }
+    for (size_t i = begin; i < candidates.size(); i++) {
+      if (gap < candidates[i]) {
+        return;
+      }
+      path.push_back(candidates[i]);
+      dfs(candidates, gap - candidates[i], i, path, ans);
+      path.pop_back();
+    }
+  }
 };
