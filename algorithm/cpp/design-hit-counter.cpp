@@ -47,35 +47,34 @@
 
 class HitCounter {
 public:
-    /** Initialize your data structure here. */
-    HitCounter() : count_(0) {
-        
+  /** Initialize your data structure here. */
+  HitCounter() : _count(0) {
+  }
+
+  /** Record a hit.
+      @param timestamp - The current timestamp (in seconds granularity). */
+  void hit(int timestamp) {
+    getHits(timestamp);
+    if (!_dq.empty() && _dq.back().first == timestamp) {
+      ++_dq.back().second;
+    } else {
+      _dq.emplace_back(timestamp, 1);
     }
-    
-    /** Record a hit.
-        @param timestamp - The current timestamp (in seconds granularity). */
-    void hit(int timestamp) {
-        getHits(timestamp);
-        if (!_dq.empty() && _dq.back().first == timestamp) {
-            ++_dq.back().second;
-        } else {
-            _dq.emplace_back(timestamp, 1);
-        }
-        ++_count;
+    ++_count;
+  }
+
+  /** Return the number of hits in the past 5 minutes.
+      @param timestamp - The current timestamp (in seconds granularity). */
+  int getHits(int timestamp) {
+    while (!_dq.empty() && _dq.front().first <= timestamp - _k) {
+      _count -= _dq.front().second;
+      _dq.pop_front();
     }
-    
-    /** Return the number of hits in the past 5 minutes.
-        @param timestamp - The current timestamp (in seconds granularity). */
-    int getHits(int timestamp) {
-        while (!_dq.empty() && _dq.front().first <= timestamp - _k) {
-            _count -= _dq.front().second;
-            _dq.pop_front();
-        }
-        return _count;
-    }
+    return _count;
+  }
 
 private:
-    const int _k = 300;
-    int _count;
-    deque<pair<int, int>> _dq;
+  const int _k = 300;
+  int _count;
+  deque<pair<int, int>> _dq;
 };

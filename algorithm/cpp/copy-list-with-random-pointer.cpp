@@ -10,30 +10,29 @@
 
 class Solution {
 public:
-    RandomListNode *copyRandomList(RandomListNode *head) {
-        // Insert the copied node after the original one.
-        for (RandomListNode *curr = head; curr; curr = curr->next->next) {
-            RandomListNode *node = new RandomListNode(curr->label);
-            node->next = curr->next;
-            curr->next = node;
-        }
-
-        // Update random node.
-        for (RandomListNode *curr = head; curr; curr = curr->next->next) {
-            if (curr->random) {
-                curr->next->random = curr->random->next;
-            }
-        }
-
-        // Seperate the copied nodes from original ones.
-        RandomListNode dummy(0);
-        for (RandomListNode *curr = head, *copyCurr = &dummy;
-             curr;
-             copyCurr = copyCurr->next, curr = curr->next) {
-            copyCurr->next = curr->next;
-            curr->next = curr->next->next;
-        }
-
-        return dummy.next;
+  RandomListNode *copyRandomList(RandomListNode *head) {
+    // Copy and Insert
+    for (RandomListNode *curr = head; curr; curr = curr->next->next) {
+      RandomListNode *node = new RandomListNode(curr->label);
+      node->next = curr->next;
+      curr->next = node;
     }
+
+    // Update random
+    for (RandomListNode *curr = head; curr; curr = curr->next->next) {
+      if (curr->random) {
+        curr->next->random = curr->random->next;
+      }
+    }
+
+    // Seperate copy from original
+    RandomListNode dummy(0);
+    for (RandomListNode *curr = head, *copyCurr = &dummy;
+         curr;
+         copyCurr = copyCurr->next, curr = curr->next) {
+      copyCurr->next = curr->next;
+      curr->next = curr->next->next;
+    }
+    return dummy.next;
+  }
 };

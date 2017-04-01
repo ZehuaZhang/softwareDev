@@ -67,30 +67,27 @@
 
 class Solution {
 public:
-    int countPrimes(int n) {
-        if (n <= 2) {
-            return 0;
-        }
-
-        auto num = n / 2;   // cut-off even except 2, n / 2 - 1 + 1 <=> n / 2
-        vector<int> isPrime(n, true);
-
-        // check ONLY odd
-        for (int i = 3; i * i < n; i += 2) {
-            if (!isPrime[i]) {
-                continue;
-            }
-
-            for (int j = i * i; j < n; j += 2 * i) {    // mark not prime on its perfect square and up by factor of 2 * i, (j += 1 * i -> even)
-                if (!isPrime[j]) {
-                    continue;
-                }
-
-                --num;
-                isPrime[j] = false;
-            }
-        }
-
-        return num;
+  int countPrimes(int n) {
+    if (n <= 2) {
+      return 0;
     }
+
+    int num = n / 2;   // (n - 2) / 2 + 1 <=> odd from 3 - ..., plus 2
+    vector<int> isPrime(n, true);
+
+    // check ONLY odd
+    for (int i = 3; i * i < n; i += 2) {
+      if (!isPrime[i]) {
+        continue;
+      }
+      for (int j = i * i; j < n; j += 2 * i) { 
+        if (!isPrime[j]) {
+          continue;
+        }
+        --num;
+        isPrime[j] = false;
+      }
+    }
+    return num;
+  }
 };

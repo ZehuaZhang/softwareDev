@@ -11,13 +11,17 @@
 
 class Solution {
 public:
-    void deleteNode(ListNode* node) {
-        if (!node || !node->next) {
-            return;
-        }
-        ListNode* next = node->next;
-        node->val = next->val;
-        node->next = next->next;
-        delete next;
+  void deleteNode(ListNode* node) {
+    if (!node) {
+      return;
     }
+    if (!node->next) {
+      delete node;
+      return;
+    }
+    ListNode* next = node->next;
+    node->val = next->val;
+    node->next = next->next;
+    delete next;
+  }
 };

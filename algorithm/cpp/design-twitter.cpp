@@ -52,69 +52,64 @@
 // Space: O(t + f), t is the total number of tweets,
 //                  f is the total number of followings.
 
-class Twitter {
-public:
-    /** Initialize your data structure here. */
-    Twitter() : _time(0) {
-        
-    }
-    
-    /** Compose a new tweet. */
-    void postTweet(int userId, int tweetId) {
-        _messages[userId].emplace_back(make_pair(++_time, tweetId));
-    }
-    
-    /** Retrieve the 10 most recent tweet ids in the user's news feed. Each item in the news feed must be posted by users who the user followed or by the user herself. Tweets must be ordered from most recent to least recent. */
-    vector<int> getNewsFeed(int userId) {
-        using RIT = deque<pair<size_t, int>>::reverse_iterator;
-        priority_queue<tuple<size_t, RIT, RIT>> heap;
+ class Twitter {
+ public:
+  /** Initialize your data structure here. */
+  Twitter() : _time(0) {
+  }
 
-        if (_messages[userId].size()) {
-            heap.emplace(make_tuple(_messages[userId].rbegin()->first,
-                                    _messages[userId].rbegin(),
-                                    _messages[userId].rend()));
-        }
-        for (const auto& id : _followings[userId]) {
-            if (_messages[id].size()) {
-                heap.emplace(make_tuple(_messages[id].rbegin()->first,
-                                        _messages[id].rbegin(),
-                                        _messages[id].rend()));
-            }
-        }
-        vector<int> res;
-        while (!heap.empty() && res.size() < _number_of_most_recent_tweets) {
-            const auto& top = heap.top();
-            size_t t;
-            RIT begin, end;
-            tie(t, begin, end) = top;
-            heap.pop();
+  /** Compose a new tweet. */
+  void postTweet(int userId, int tweetId) {
+    _messages[userId].emplace_back(++_time, tweetId);
+  }
 
-            if (next(begin) != end) {
-                heap.emplace(make_tuple(next(begin)->first, next(begin), end));
-            }
+  /** Retrieve the 10 most recent tweet ids in the user's news feed.
+      Each item in the news feed must be posted by users who the user followed or by the user herself.
+      Tweets must be ordered from most recent to least recent. */
+  vector<int> getNewsFeed(int userId) {
+    using RIT = deque<pair<size_t, int>>::reverse_iterator;
+    priority_queue<tuple<size_t, RIT, RIT>> heap;
 
-            res.emplace_back(begin->second);
-        }
-        return res;
+    if (_messages[userId].size()) {
+      heap.emplace(_messages[userId].rbegin()->first, _messages[userId].rbegin(), _messages[userId].rend());
     }
-    
-    /** Follower follows a followee. If the operation is invalid, it should be a no-op. */
-    void follow(int followerId, int followeeId) {
-        if (followerId != followeeId && !_followings[followerId].count(followeeId)) {
-            _followings[followerId].emplace(followeeId);
-        }
+    for (const auto& id : _followings[userId]) {
+      if (_messages[id].size()) {
+        heap.emplace(make_tuple(_messages[id].rbegin()->first, _messages[id].rbegin(), _messages[id].rend()));
+      }
     }
-    
-    /** Follower unfollows a followee. If the operation is invalid, it should be a no-op. */
-    void unfollow(int followerId, int followeeId) {
-        if (_followings[followerId].count(followeeId)) {
-            _followings[followerId].erase(followeeId);
-        }
+    vector<int> res;
+    while (!heap.empty() && res.size() < _number_of_most_recent_tweets) {
+      const auto& top = heap.top(); heap.pop();
+      size_t t;
+      RIT begin, end;
+      tie(t, begin, end) = top;
+      
+      if (next(begin) != end) {
+        heap.emplace(next(begin)->first, next(begin), end);
+      }
+      res.emplace_back(begin->second);
     }
+    return res;
+  }
+
+  /** Follower follows a followee. If the operation is invalid, it should be a no-op. */
+  void follow(int followerId, int followeeId) {
+    if (followerId != followeeId && !_followings[followerId].count(followeeId)) {
+      _followings[followerId].emplace(followeeId);
+    }
+  }
+
+  /** Follower unfollows a followee. If the operation is invalid, it should be a no-op. */
+  void unfollow(int followerId, int followeeId) {
+    if (_followings[followerId].count(followeeId)) {
+      _followings[followerId].erase(followeeId);
+    }
+  }
 
 private:
-    const size_t _number_of_most_recent_tweets = 10;
-    unordered_map<int, unordered_set<int>> _followings;
-    unordered_map<int, deque<pair<size_t, int>>> _messages;
-    size_t _time;
+  const size_t _number_of_most_recent_tweets = 10;
+  unordered_map<int, unordered_set<int>> _followings;
+  unordered_map<int, deque<pair<size_t, int>>> _messages;
+  size_t _time;
 };

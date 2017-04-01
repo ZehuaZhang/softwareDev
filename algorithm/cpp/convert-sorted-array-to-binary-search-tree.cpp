@@ -11,8 +11,10 @@ public:
 	TreeNode* sortedArrayToBST (vector<int>& num) {
 		return sortedArrayToBST(num.begin(), num.end());
 	}
+
+private:
 	template<typename It>
-	TreeNode* sortedArrayToBST (It first, It last) {
+	TreeNode* sortedArrayToBST(It first, It last) {
 		if (first >= last) {
 			return nullptr;
 		}

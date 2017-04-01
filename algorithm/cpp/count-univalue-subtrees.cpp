@@ -13,7 +13,7 @@
 //             1   5
 //            / \   \
 //           5   5   5
- 
+
 
 // return 4.
 
@@ -22,27 +22,28 @@
 
 class Solution {
 public:
-    int countUnivalSubtrees(TreeNode* root) {
-        int count = 0;
-        isUnivalSubtrees(root, count);
-        return count;
+  int countUnivalSubtrees(TreeNode* root) {
+    int count = 0;
+    isUnivalSubtrees(root, count);
+    return count;
+  }
+
+private:
+  bool isUnivalSubtrees(TreeNode* root, int& count) {
+    if (!root) {
+      return true;
     }
-    
-    bool isUnivalSubtrees(TreeNode* root, int &count) {
-        if (root == nullptr) {
-            return true;
-        }
-        bool left = isUnivalSubtrees(root->left, count);
-        bool right = isUnivalSubtrees(root->right, count);
-        if (isSame(root, root->left, left) &&
-            isSame(root, root->right, right)) {
-                ++count;
-                return true;
-        }
-        return false;
+    bool left = isUnivalSubtrees(root->left, count);
+    bool right = isUnivalSubtrees(root->right, count);
+    if (isSame(root, root->left, left) &&
+        isSame(root, root->right, right)) {
+      ++count;
+      return true;
     }
-    
-    bool isSame(TreeNode* root, TreeNode* child, bool isUni) {
-        return child == nullptr || (isUni && root->val == child->val);
-    }
+    return false;
+  }
+
+  bool isSame(TreeNode* root, TreeNode* child, bool isUni) {
+    return child == nullptr || (isUni && root->val == child->val);
+  }
 };

@@ -16,17 +16,17 @@
 
 class Solution {
 public:
-    string countAndSay(int n) {
-        string seq("1");
-        while(--n) {
-            stringstream seqStream;
-            for (auto i = seq.begin(); i != seq.end();) {
-                auto j = find_if(i, seq.end(), bind1st(not_equal_to<char>(), *i));
-                seqStream << distance(i, j) << *i;
-                i = j;
-            }
-            seq = seqStream.str();
-        }
-        return seq;
+  string countAndSay(int n) {
+    string seq("1");
+    while(--n) {
+      stringstream seqStream;
+      for (auto i = seq.begin(); i != seq.end();) {
+        auto j = find_if(i, seq.end(), bind1st(not_equal_to<char>(), *i));
+        seqStream << distance(i, j) << *i;
+        i = j;
+      }
+      seq = seqStream.str();
     }
+    return seq;
+  }
 };

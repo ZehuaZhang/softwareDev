@@ -28,35 +28,35 @@
 
 class Solution {
 public:
-    vector<int> diffWaysToCompute(string input) {
-        const int n = input.length();
-        vector<vector<vector<int>>> lookup(n + 1, vector<vector<int>>(n + 1));
-        return diffWaysToCompute(input, 0, input.length(), lookup);
-    }
+  vector<int> diffWaysToCompute(string input) {
+    const int n = input.length();
+    vector<vector<vector<int>>> lookup(n + 1, vector<vector<int>>(n + 1));
+    return diffWaysToCompute(input, 0, input.length(), lookup);
+  }
 
-    vector<int> diffWaysToCompute(const string& input, const int start, const int end,
-                                    vector<vector<vector<int>>>& lookup) {
-        if (!lookup[start][end].empty()) {
-            return lookup[start][end];
-        }
-        vector<int> result;
-        for (int i = start; i < end; ++i) {
-            if (input[i] == '+' || input[i] == '-' || input[i] == '*') {
-                for (auto left : diffWaysToCompute(input, start, i, lookup)) {
-                    for (auto right : diffWaysToCompute(input, i + 1, end, lookup)) {
-                        switch (input[i]) {
-                        case '+' : result.emplace_back(left + right); break;
-                        case '-' : result.emplace_back(left - right); break;
-                        case '*' : result.emplace_back(left * right); break;
-                        }
-                    }
-                }
-            }
-        }
-        // If the input string contains only number.
-        if (result.empty()) {
-            result.emplace_back(stoi(input.substr(start, end - start)));
-        }
-        return lookup[start][end] = result;
+private:
+  vector<int> diffWaysToCompute(const string& input, const int start, const int end, vector<vector<vector<int>>>& lookup) {
+    if (!lookup[start][end].empty()) {
+      return lookup[start][end];
     }
+    vector<int> result;
+    for (int i = start; i < end; ++i) {
+      if (input[i] == '+' || input[i] == '-' || input[i] == '*') {
+        for (auto left : diffWaysToCompute(input, start, i, lookup)) {
+          for (auto right : diffWaysToCompute(input, i + 1, end, lookup)) {
+            switch (input[i]) {
+              case '+' : result.emplace_back(left + right); break;
+              case '-' : result.emplace_back(left - right); break;
+              case '*' : result.emplace_back(left * right); break;
+            }
+          }
+        }
+      }
+    }
+    // If the input string contains only number.
+    if (result.empty()) {
+      result.emplace_back(stoi(input.substr(start, end - start)));
+    }
+    return lookup[start][end] = result;
+  }
 };

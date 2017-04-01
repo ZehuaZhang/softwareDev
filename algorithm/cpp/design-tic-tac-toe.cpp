@@ -64,40 +64,39 @@
 // Time:  O(1), per move.
 // Space: O(n^2)
 
-class TicTacToe {
-public:
-    /** Initialize your data structure here. */
-    TicTacToe(int n) : _rows(n, {0, 0}), _cols(n, {0, 0}),
-                       _diag(2, 0), _antiDiag(2, 0) {
+ class TicTacToe {
+ public:
+  /** Initialize your data structure here. */
+  TicTacToe(int n) : _rows(n, {0, 0}), _cols(n, {0, 0}), _diag(2, 0), _antiDiag(2, 0) {
+  }
+
+  /** Player {player} makes a move at ({row}, {col}).
+      @param row The row of the board.
+      @param col The column of the board.
+      @param player The player, can be either 1 or 2.
+      @return The current winning condition, can be either:
+      0: No one wins.
+      1: Player 1 wins.
+      2: Player 2 wins. */
+  int move(int row, int col, int player) {
+    const auto i = player - 1;
+    ++_rows[row][i], ++_cols[col][i];
+    if (row == col) {
+      ++_diag[i];
     }
-    
-    /** Player {player} makes a move at ({row}, {col}).
-        @param row The row of the board.
-        @param col The column of the board.
-        @param player The player, can be either 1 or 2.
-        @return The current winning condition, can be either:
-                0: No one wins.
-                1: Player 1 wins.
-                2: Player 2 wins. */
-    int move(int row, int col, int player) {
-        const auto i = player - 1;
-        ++_rows[row][i], ++_cols[col][i];
-        if (row == col) {
-            ++_diag[i];
-        }
-        if (col + row == _rows.size() - 1) {
-            ++_antiDiag[i];
-        }
-        if (_rows[row][i] == _rows.size() ||
-            _cols[col][i] == _cols.size() ||
-            _diag[i] == _rows.size() ||
-            _antiDiag[i] == _cols.size()) {
-            return player;
-        }
-        return 0;
+    if (col + row == _rows.size() - 1) {
+      ++_antiDiag[i];
     }
+    if (_rows[row][i] == _rows.size() ||
+      _cols[col][i] == _cols.size() ||
+      _diag[i] == _rows.size() ||
+      _antiDiag[i] == _cols.size()) {
+      return player;
+    }
+    return 0;
+  }
 
 private:
-    vector<vector<int>> _rows, _cols;
-    vector<int> _diag, _antiDiag;
+  vector<vector<int>> _rows, _cols;
+  vector<int> _diag, _antiDiag;
 };

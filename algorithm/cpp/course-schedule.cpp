@@ -30,33 +30,33 @@
 
 class Solution {
 public:
-    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
-        vector<vector<int>> graph(numCourses, vector<int>(0));
-        vector<int> inDegree(numCourses, 0);
-        for (auto prerequisite : prerequisites) {
-            graph[prerequisite[1]].push_back(prerequisite[0]);
-            ++inDegree[prerequisite[0]];
-        }
-
-        queue<int> q;
-        for (int i = 0; i < numCourses; ++i) {
-            if (inDegree[i] == 0) {
-                q.push(i);
-            }
-        }
-        while (!q.empty()) {
-            int course = q.front(); q.pop();
-            for (auto advancedCourse : graph[course]) {
-                if (--inDegree[advancedCourse] == 0) {
-                    q.push(advancedCourse);
-                }
-            }
-        }
-        for (int i = 0; i < numCourses; ++i) {
-            if (inDegree[i] != 0) {
-                return false;
-            }
-        }
-        return true;
+  bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+    vector<vector<int>> graph(numCourses, vector<int>(0));
+    vector<int> inDegree(numCourses, 0);
+    for (auto prerequisite : prerequisites) {
+      graph[prerequisite[1]].push_back(prerequisite[0]);
+      ++inDegree[prerequisite[0]];
     }
+
+    queue<int> q;
+    for (int i = 0; i < numCourses; ++i) {
+      if (inDegree[i] == 0) {
+        q.push(i);
+      }
+    }
+    while (!q.empty()) {
+      int course = q.front(); q.pop();
+      for (auto advancedCourse : graph[course]) {
+        if (--inDegree[advancedCourse] == 0) {
+          q.push(advancedCourse);
+        }
+      }
+    }
+    for (int i = 0; i < numCourses; ++i) {
+      if (inDegree[i] != 0) {
+        return false;
+      }
+    }
+    return true;
+  }
 };

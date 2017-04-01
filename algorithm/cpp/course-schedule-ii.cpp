@@ -37,32 +37,32 @@
 // Topological sort solution.
 class Solution {
 public:
-    vector<int> findOrder(int numCourses, vector<pair<int, int>>& prerequisites) {
-        vector<int> courses;
-        vector<vector<int> > graph(numCourses, vector<int>(0));
-        vector<int> in(numCourses, 0);
-        for (auto &a : prerequisites) {
-            graph[a.second].push_back(a.first);
-            ++in[a.first];
-        }
-        queue<int> q;
-        for (int i = 0; i < numCourses; ++i) {
-            if (in[i] == 0) {
-                q.push(i);
-            }
-        }
-        while (!q.empty()) {
-            int course = q.front(); q.pop();
-            courses.push_back(course); 
-            for (auto advancedCourse : graph[course]) {
-                if (--in[advancedCourse] == 0) {
-                    q.push(advancedCourse);
-                }
-            }
-        }
-        if (courses.size() != numCourses) {
-            courses.clear();
-        }
-        return courses;
+  vector<int> findOrder(int numCourses, vector<pair<int, int>>& prerequisites) {
+    vector<int> courses;
+    vector<vector<int> > graph(numCourses, vector<int>(0));
+    vector<int> in(numCourses, 0);
+    for (auto &a : prerequisites) {
+      graph[a.second].push_back(a.first);
+      ++in[a.first];
     }
+    queue<int> q;
+    for (int i = 0; i < numCourses; ++i) {
+      if (in[i] == 0) {
+        q.push(i);
+      }
+    }
+    while (!q.empty()) {
+      int course = q.front(); q.pop();
+      courses.push_back(course); 
+      for (auto advancedCourse : graph[course]) {
+        if (--in[advancedCourse] == 0) {
+          q.push(advancedCourse);
+        }
+      }
+    }
+    if (courses.size() != numCourses) {
+      courses.clear();
+    }
+    return courses;
+  }
 };

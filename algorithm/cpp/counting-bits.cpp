@@ -24,11 +24,11 @@
 
 class Solution {
 public:
-    vector<int> countBits(int num) {
-        vector<int> result{0};
-        for (int i = 1; i <= num; ++i) {
-            result.emplace_back(result[i >> 1] + (i & 1));  // msb, lsb
-        }
-        return result;
+  vector<int> countBits(int num) {
+    vector<int> result{0};
+    for (int i = 1; i <= num; ++i) {
+      result.emplace_back(result[i >> 1] + (i & 1));
     }
+    return result;
+  }
 };

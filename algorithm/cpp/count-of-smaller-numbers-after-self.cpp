@@ -20,35 +20,36 @@
 
 class Solution {
 public:
-    vector<int> countSmaller(vector<int>& nums) {
-        vector<pair<int, int>> numIndex;
-        for (int i = 0; i < nums.size(); ++i) {
-            numIndex.emplace_back(nums[i], i);  // need to remember original index for counts array
-        }
-        vector<int> counts(nums.size());
-        countAndMergeSort(numIndex, 0, numIndex.size() - 1, counts);
-        return counts;
+  vector<int> countSmaller(vector<int>& nums) {
+    vector<pair<int, int>> numIndex;
+    for (int i = 0; i < nums.size(); ++i) {
+      numIndex.emplace_back(nums[i], i);  // need to remember original index for counts array
     }
+    vector<int> counts(nums.size());
+    countAndMergeSort(numIndex, 0, numIndex.size() - 1, counts);
+    return counts;
+  }
 
-    void countAndMergeSort(vector<pair<int, int>> &numIndex, int start, int end, vector<int> &counts) {
-        if (start >= end) {
-            return;
-        }
-        int mid = start + (end - start) / 2;
-        countAndMergeSort(numIndex, start, mid, counts);
-        countAndMergeSort(numIndex, mid + 1, end, counts);
-
-        int j = mid + 1;    // 2nd half
-        vector<pair<int, int>> merge;
-        for (int i = start; i <= mid; ++i) {
-            // Merge the two sorted arrays.
-            while (j <= end && numIndex[i].first > numIndex[j].first) { // inversion - 1st half greater than 2nd half
-                merge.emplace_back(numIndex[j++]);
-            }
-            merge.emplace_back(numIndex[i]);
-            counts[numIndex[i].second] += j - (mid + 1);
-        }
-        // Copy merge back to numIndex.
-        copy(merge.begin(), merge.end(), numIndex.begin() + start);
+private:
+  void countAndMergeSort(vector<pair<int, int>> &numIndex, int start, int end, vector<int> &counts) {
+    if (start >= end) {
+      return;
     }
+    int mid = start + (end - start) / 2;
+    countAndMergeSort(numIndex, start, mid, counts);
+    countAndMergeSort(numIndex, mid + 1, end, counts);
+
+    int j = mid + 1;
+    vector<pair<int, int>> merge;
+    for (int i = start; i <= mid; ++i) {
+      // Merge the two sorted arrays.
+      while (j <= end && numIndex[i].first > numIndex[j].first) { // inversion - 1st half greater than 2nd half
+        merge.emplace_back(numIndex[j++]);
+      }
+      merge.emplace_back(numIndex[i]);
+      counts[numIndex[i].second] += j - (mid + 1);
+    }
+    // Copy merge back to numIndex.
+    copy(merge.begin(), merge.end(), numIndex.begin() + start);
+  }
 };
