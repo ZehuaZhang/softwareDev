@@ -37,34 +37,34 @@
  */
  
 // Using stack and iterator.
-class NestedIterator {
-public:
-    using it = vector<NestedInteger>::const_iterator;
-    NestedIterator(vector<NestedInteger> &nestedList) {
-        _depth.emplace(nestedList.cbegin(), nestedList.cend());
-    }
+ class NestedIterator {
+ public:
+  using it = vector<NestedInteger>::const_iterator;
+  NestedIterator(vector<NestedInteger> &nestedList) {
+    _depth.emplace(nestedList.cbegin(), nestedList.cend());
+  }
 
-    int next() {
-        return (_depth.top().first++)->getInteger();
+  int next() {
+    return (_depth.top().first++)->getInteger();
+  }
+  
+  bool hasNext() {
+    while (!_depth.empty()) {
+      auto cur = _depth.top();
+      if (cur.first == cur.second) {
+        _depth.pop();
+      } else if (cur.first->isInteger()) {
+        return true;
+      } else {
+        auto nestedList = (cur.first++)->getList();
+        _depth.emplace(nestedList.cbegin(), nestedList.cend());
+      }
     }
-    
-    bool hasNext() {
-        while (!_depth.empty()) {
-            auto cur = _depth.top();
-            if (cur.first == cur.second) {
-                _depth.pop();
-            } else if (cur.first->isInteger()) {
-                return true;
-            } else {
-                auto nestedList = (cur.first++)->getList();
-                _depth.emplace(nestedList.cbegin(), nestedList.cend());
-            }
-        }
-        return false;
-    }
+    return false;
+  }
 
 private:
-    stack<pair<it, it>> _depth;
+  stack<pair<it, it>> _depth;
 };
 
 /**

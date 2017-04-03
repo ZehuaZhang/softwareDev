@@ -17,25 +17,20 @@
 
 class Solution {
 public:
-    int rob(vector<int>& nums) {
-        if (nums.size() == 0) {
-            return 0;
-        }
-        if (nums.size() == 1) {
-            return nums[0];
-        }
-
-        return max(robRange(nums, 0, nums.size() - 1), // Include the first one of nums without the last one.
-                   robRange(nums, 1, nums.size()));    // Include the last one of nums without the first one.
+  int rob(vector<int>& nums) {
+    if (num.size() <= 1) {
+      return num.empty() ? 0 : num[0];
     }
+    return max(robRange(nums, 0, nums.size() - 1), robRange(nums, 1, nums.size()));
+  }
 
-    int robRange(vector<int>& nums, int start, int end) {
-        int curr = nums[start], prev = 0, prevPrev = 0;
-        for (int i = start + 1; i < end; ++i) {
-            prevPrev = prev;
-            prev = curr;
-            curr = max(nums[i] + prevPrev, prev);
-        }
-        return curr;
+  int robRange(vector<int>& nums, int start, int end) {
+    int curr = nums[start], prev = 0, prevPrev = 0;
+    for (int i = start + 1; i < end; ++i) {
+      prevPrev = prev;
+      prev = curr;
+      curr = max(nums[i] + prevPrev, prev);
     }
+    return curr;
+  }
 };

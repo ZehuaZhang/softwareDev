@@ -45,46 +45,45 @@
 // Time:  O(1)
 // Space: O(n)
 
-class RandomizedSet {
-public:
-    /** Initialize your data structure here. */
-    RandomizedSet() {
-        
+ class RandomizedSet {
+ public:
+  /** Initialize your data structure here. */
+  RandomizedSet() {
+  }
+
+  /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
+  bool insert(int val) {
+    if (_idx.count(val)) {
+      return false;
     }
-    
-    /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
-    bool insert(int val) {
-        if (_used.count(val)) {
-            return false;
-        }
 
-        _set.emplace_back(val);
-        _used[val] = _set.size() - 1;
+    _set.emplace_back(val);
+    _idx[val] = _set.size() - 1;
 
-        return true;
+    return true;
+  }
+
+  /** Removes a value from the set. Returns true if the set contained the specified element. */
+  bool remove(int val) {
+    if (!_idx.count(val)) {
+      return false;
     }
-    
-    /** Removes a value from the set. Returns true if the set contained the specified element. */
-    bool remove(int val) {
-        if (!_used.count(val)) {
-            return false;
-        }
 
-        _used[_set.back()] = _used[val];
-        swap(_set[_used[val]], _set.back());
+    _idx[_set.back()] = _idx[val];
+    swap(_set[_idx[val]], _set.back());
 
-        _used.erase(val);
-        _set.pop_back();
+    _idx.erase(val);
+    _set.pop_back();
 
-        return true;
-    }
-    
-    /** Get a random element from the set. */
-    int getRandom() {
-        return _set[rand() % _set.size()];
-    }
+    return true;
+  }
+
+  /** Get a random element from the set. */
+  int getRandom() {
+    return _set[rand() % _set.size()];
+  }
 
 private:
-    vector<int> _set;
-    unordered_map<int, int> _used;
+  vector<int> _set;
+  unordered_map<int, int> _idx;
 };

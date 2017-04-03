@@ -42,26 +42,25 @@
 
 class Logger {
 public:
-    /** Initialize your data structure here. */
-    Logger() {
-        
+  /** Initialize your data structure here. */
+  Logger() {  
+  }
+
+  /** Returns true if the message should be printed in the given timestamp, otherwise returns false. The timestamp is in seconds granularity. */
+  bool shouldPrintMessage(int timestamp, string message) {
+    while (!_dq.empty() && _dq.front().first <= timestamp - 10) {
+      _printed.erase(_dq.front().second);
+      _dq.pop_front();
     }
-    
-    /** Returns true if the message should be printed in the given timestamp, otherwise returns false. The timestamp is in seconds granularity. */
-    bool shouldPrintMessage(int timestamp, string message) {
-        while (!_dq.empty() && _dq.front().first <= timestamp - 10) {
-            _printed.erase(_dq.front().second);
-            _dq.pop_front();
-        }
-        if (_printed.count(message)) {
-            return false;
-        }
-        _dq.emplace_back(timestamp, message);
-        _printed.emplace(message);
-        return true;
+    if (_printed.count(message)) {
+      return false;
     }
+    _dq.emplace_back(timestamp, message);
+    _printed.emplace(message);
+    return true;
+  }
 
 private:
-    deque<pair<int, string>> _dq;
-    unordered_set<string> _printed;
+  deque<pair<int, string>> _dq;
+  unordered_set<string> _printed;
 };

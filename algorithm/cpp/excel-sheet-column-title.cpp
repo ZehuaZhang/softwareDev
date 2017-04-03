@@ -19,15 +19,15 @@
 // Iterative solution.
 class Solution {
 public:
-    string convertToTitle(int n) {
-        string result;
-        
-        while (n--) {
-            result.push_back(n % 26 + 'A');
-            n /= 26;
-        }
-        reverse(result.begin(), result.end());
-
-        return result;
+  string convertToTitle(int n) {
+    string result;
+    
+    while (n--) {
+      result.push_back(n % 26 + 'A');
+      n /= 26;
     }
+    reverse(result.begin(), result.end());
+
+    return result;
+  }
 };

@@ -28,40 +28,38 @@
 
 class Solution {
 public:
-    int largestBSTSubtree(TreeNode* root) {
-        if (!root) {
-            return 0;
-        }
-
-        int maxSize = 1;
-        largestBSTSubtreeHelper(root, maxSize);
-        return maxSize;
+  int largestBSTSubtree(TreeNode* root) {
+    if (!root) {
+      return 0;
     }
+
+    int maxSize = 1;
+    largestBSTSubtreeHelper(root, maxSize);
+    return maxSize;
+  }
 
 private:
-    tuple<int, int, int> largestBSTSubtreeHelper(TreeNode* root, int &maxSize) {
-        if (!root->left && !root->right) {
-            return make_tuple(1, root->val, root->val);
-        }
-
-        int leftSize = 0, leftMin = root->val, leftMax = root->val;
-        if (root->left) {
-            tie(leftSize, leftMin, leftMax) = largestBSTSubtreeHelper(root->left, maxSize);
-        }
-
-        int rightSize = 0, rightMin = root->val, rightMax = root->val;
-        if (root->right) {
-            tie(rightSize, rightMin, rightMax) = largestBSTSubtreeHelper(root->right, maxSize);
-        }
-
-        int size = 0;
-        if ((!root->left || leftSize > 0) && 
-            (!root->right || rightSize > 0) &&
-            leftMax <= root->val && root->val <= rightMin) {
-            size = 1 + leftSize + rightSize;
-            maxSize = max(maxSize, size);
-        }
-
-        return make_tuple(size, leftMin, rightMax);
+  tuple<int, int, int> largestBSTSubtreeHelper(TreeNode* root, int& maxSize) {
+    if (!root->left && !root->right) {
+      return make_tuple(1, root->val, root->val);
     }
+
+    int leftSize = 0, leftMin = root->val, leftMax = root->val;
+    if (root->left) {
+      tie(leftSize, leftMin, leftMax) = largestBSTSubtreeHelper(root->left, maxSize);
+    }
+
+    int rightSize = 0, rightMin = root->val, rightMax = root->val;
+    if (root->right) {
+      tie(rightSize, rightMin, rightMax) = largestBSTSubtreeHelper(root->right, maxSize);
+    }
+
+    int size = 0;
+    if ((!root->left || leftSize > 0) && (!root->right || rightSize > 0) &&
+        leftMax <= root->val && root->val <= rightMin) {
+      size = 1 + leftSize + rightSize;
+      maxSize = max(maxSize, size);
+    }
+    return make_tuple(size, leftMin, rightMax);
+  }
 };

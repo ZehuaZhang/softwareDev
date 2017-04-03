@@ -12,23 +12,15 @@
 
 class Solution {
 public:
-    string largestNumber(vector<int>& nums) {
-        // sort numbers
-        sort(nums.begin(), nums.end(), [](const int &i, const int &j) {
-            return to_string(i) + to_string(j) > to_string(j) + to_string(i);
-        });
+  string largestNumber(vector<int>& nums) {
+    sort(nums.begin(), nums.end(), [](const int &i, const int &j) {
+      return to_string(i) + to_string(j) > to_string(j) + to_string(i);
+    });
 
-        // combine the numbers
-        string max;
-        for (auto num : nums) {
-            max.append(to_string(num));
-        }
-
-        // special case: start with zero (e.g. [0, 0])
-        if (!max.empty() && max[0] == '0')  {
-            return "0";
-        }
-
-        return max;
+    string max;
+    for (auto num : nums) {
+      max.append(to_string(num));
     }
+    return !max.empty() && max[0] == '0' ? "0" : max;
+  }
 };

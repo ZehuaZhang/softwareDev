@@ -13,14 +13,16 @@
 // DP
 class Solution {
 public:
-    int rob(vector<int> &num) {
-        if (num.size() <= 1) {
-        	return num.empty() ? 0 : num[0];
-        }
-        vector<int> dp = {num[0], max(num[0], num[1])};
-        for (int i = 2; i < num.size(); ++i) {
-            dp.push_back(max(num[i] + dp[i - 2], dp[i - 1]));
-        }
-        return dp.back();
+  int rob(vector<int> &num) {
+    if (num.size() <= 1) {
+      return num.empty() ? 0 : num[0];
     }
+    int curr = nums[0], prev = 0, prevPrev = 0;
+    for (int i = 1; i < num.size(); ++i) {
+      prevPrev = prev;
+      prev = curr;
+      curr = max(nums[i] + prevPrev, prev);
+    }
+    return curr;
+  }
 };

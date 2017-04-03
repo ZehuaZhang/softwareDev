@@ -16,32 +16,33 @@
 
 class Solution {
 public:
-    int findKthLargest(vector<int>& nums, int k) {
-        int left = 0, right = nums.size() - 1;
-        while (left <= right) {
-            int pivotIdx = left + rand() % (right - left + 1);
-            int newPivotIdx = PartitionAroundPivot(left, right, pivotIdx, nums);
-            if (newPivotIdx == k - 1) {
-                return nums[newPivotIdx];
-            } else if (newPivotIdx > k - 1) {
-                right = newPivotIdx - 1;
-            } else {
-                left = newPivotIdx + 1;
-            }
-        }
-        return nums[left];
+  int findKthLargest(vector<int>& nums, int k) {
+    int left = 0, right = nums.size() - 1;
+    while (left <= right) {
+      int pivotIdx = left + rand() % (right - left + 1);
+      int newPivotIdx = partitionAroundPivot(left, right, pivotIdx, nums);
+      if (newPivotIdx == k - 1) {
+        return nums[newPivotIdx];
+      } else if (newPivotIdx > k - 1) {
+        right = newPivotIdx - 1;
+      } else {
+        left = newPivotIdx + 1;
+      }
     }
-    
-    int PartitionAroundPivot(int left, int right, int pivotIdx, vector<int>& nums) {
-        swap(nums[pivotIdx], nums[right]);
-        int pivot = nums[right];
-        int newPivotIdx = left;
-        for (int i = left; i < right; ++i) {
-            if (nums[i] > pivot) {
-                swap(nums[i], nums[newPivotIdx++]);
-            }
-        }
-        swap(nums[right], nums[newPivotIdx]);
-        return newPivotIdx;
+    return nums[left];
+  }
+
+private:
+  int partitionAroundPivot(int left, int right, int pivotIdx, vector<int>& nums) {
+    swap(nums[pivotIdx], nums[right]);
+    int pivot = nums[right];
+    int newPivotIdx = left;
+    for (int i = left; i < right; ++i) {
+      if (nums[i] > pivot) {
+        swap(nums[i], nums[newPivotIdx++]);
+      }
     }
+    swap(nums[right], nums[newPivotIdx]);
+    return newPivotIdx;
+  }
 };

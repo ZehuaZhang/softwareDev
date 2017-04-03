@@ -45,45 +45,44 @@
 
 class RandomizedCollection {
 public:
-    /** Initialize your data structure here. */
-    RandomizedCollection() {
-        
+  /** Initialize your data structure here. */
+  RandomizedCollection() {
+  }
+
+  /** Inserts a value to the collection. Returns true if the collection did not already contain the specified element. */
+  bool insert(int val) {
+    bool has = _idx.count(val);
+
+    _list.emplace_back(val);
+    _idx[val].emplace_back(list_.size() - 1);
+
+    return !has; 
+  }
+
+  /** Removes a value from the collection. Returns true if the collection contained the specified element. */
+  bool remove(int val) {
+    if (!_idx.count(val)) {
+      return false;
     }
-    
-    /** Inserts a value to the collection. Returns true if the collection did not already contain the specified element. */
-    bool insert(int val) {
-        bool has = _used.count(val);
 
-        _list.emplace_back(val);
-        _used[val].emplace_back(list_.size() - 1);
+    _idx[_list.back()].back() = _idx[val].back();
+    swap(_list[_idx[val].back()], _list.back());
 
-        return !has; 
+    _idx[val].pop_back();
+    if (_idx[val].empty()) {
+      _idx.erase(val);
     }
-    
-    /** Removes a value from the collection. Returns true if the collection contained the specified element. */
-    bool remove(int val) {
-        if (!_used.count(val)) {
-            return false;
-        }
+    _list.pop_back();
 
-        _used[_list.back()].back() = _used[val].back();
-        swap(_list[_used[val].back()], _list.back());
+    return true;  
+  }
 
-        _used[val].pop_back();
-        if (_used[val].empty()) {
-            _used.erase(val);
-        }
-        _list.pop_back();
-
-        return true;  
-    }
-    
-    /** Get a random element from the collection. */
-    int getRandom() {
-        return list_[rand() % list_.size()];
-    }
+  /** Get a random element from the collection. */
+  int getRandom() {
+    return _list[rand() % _list.size()];
+  }
 
 private:
-    vector<int> _list;
-    unordered_map<int, vector<int>> _used;
+  vector<int> _list;
+  unordered_map<int, vector<int>> _idx;
 };

@@ -28,25 +28,24 @@
 // Time:  O(n)
 // Space: O(1)
 
-class Solution {
-public:
-    /** @param head The linked list's head. Note that the head is guanranteed to be not null, so it contains at least one node. */
-    Solution(ListNode* head) : _head(head) {
-        
+ class Solution {
+ public:
+  /** @param head The linked list's head. Note that the head is guanranteed to be not null, so it contains at least one node. */
+  Solution(ListNode* head) : _head(head) {
+  }
+
+  /** Returns a random node's value. */
+  int getRandom() {
+    int random = _head->val;
+    int n = 1;
+    for (ListNode* curr = _head->next; curr; curr = curr->next) {
+      if (rand() % ++n == 0) {
+        random = curr->val;
+      }
     }
-    
-    /** Returns a random node's value. */
-    int getRandom() {
-        auto random = _head->val;
-        auto n = 1;
-        for (auto curr = _head->next; curr; curr = curr->next) {
-            if (rand() % ++n == 0) {
-                random = curr->val;
-            }
-        }
-        return random;
-    }
+    return random;
+  }
 
 private:
-    ListNode *_head;
+  ListNode* _head;
 };

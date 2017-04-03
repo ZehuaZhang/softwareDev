@@ -13,17 +13,17 @@
 
 class Solution {
 public:
-    bool increasingTriplet(vector<int>& nums) {
-        int a = INT_MAX, b = INT_MAX;
-        for (const auto& num : nums) {
-            if (num <= a) {
-                a = num;
-            } else if (num <= b) {
-                b = num;
-            } else {    // a < b < num, or b < a < num
-                return true;
-            }
-        }
-        return false;
+  bool increasingTriplet(vector<int>& nums) {
+    int a = INT_MAX, b = INT_MAX;
+    for (const auto& num : nums) {
+      if (num <= a) {
+        a = num;
+      } else if (num <= b) {
+        b = num;
+      } else {    // a < b < num, or b < a < num
+        return true;
+      }
     }
+    return false;
+  }
 };

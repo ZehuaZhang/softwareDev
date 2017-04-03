@@ -43,23 +43,23 @@
 
 class Solution {
 public:
-    int lengthLongestPath(string input) {
-        size_t maxLen = 0;
-        unordered_map<int, int> pathLen;
-        pathLen[0] = 0;
-        
-        istringstream ss(input);
-        string line;
-        while(getline(ss, line, '\n')) {
-            auto name = line.substr(line.find_first_not_of("\t"));
-            auto depth = line.length() - name.length();
+  int lengthLongestPath(string input) {
+    size_t maxLen = 0;
+    unordered_map<int, int> pathLen;
+    pathLen[0] = 0;
+    
+    istringstream ss(input);
+    string line;
+    while(getline(ss, line, '\n')) {
+      auto name = line.substr(line.find_first_not_of("\t"));
+      auto depth = line.length() - name.length();
 
-            if (name.find('.') != string::npos) {
-                maxLen = max(maxLen, pathLen[depth] + name.length());
-            } else {
-                pathLen[depth + 1] = pathLen[depth] + name.length() + 1;    // update base len for next depth, 1 <=> '\'
-            }
-        }
-        return maxLen;
+      if (name.find('.') != string::npos) {
+        maxLen = max(maxLen, pathLen[depth] + name.length());
+      } else {
+        pathLen[depth + 1] = pathLen[depth] + name.length() + 1;    // update base len for next depth, 1 <=> '\'
+      }
     }
+    return maxLen;
+  }
 };

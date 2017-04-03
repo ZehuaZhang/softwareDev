@@ -20,64 +20,66 @@
 
 class Stack {
 public:
-    queue<int> _q;
-    
-    // Push element x onto stack.
-    void push(int x) {  // O(n)
-        _q.emplace(x);
-        for (int i = 0; i < _q.size() - 1; ++i) {
-            _q.emplace(_q.front());
-            _q.pop();
-        }
+  // Push element x onto stack.
+  void push(int x) {  // O(n)
+    _q.emplace(x);
+    for (int i = 0; i < _q.size() - 1; ++i) {
+      _q.emplace(_q.front());
+      _q.pop();
     }
+  }
 
-    // Remove the element on top of the stack.
-    void pop() {  // O(1)
-        _q.pop();
-    }
+  // Remove the element on top of the stack.
+  void pop() {  // O(1)
+    _q.pop();
+  }
 
-    // Get the top element.
-    int top() {  // O(1)
-        return _q.front();
-    }
+  // Get the top element.
+  int top() {  // O(1)
+    return _q.front();
+  }
 
-    // Return whether the stack is empty.
-    bool empty() {  // O(1)
-        return _q.empty();
-    }
+  // Return whether the stack is empty.
+  bool empty() {  // O(1)
+    return _q.empty();
+  }
+
+private:
+  queue<int> _q;
 };
 
 // Time:  push: O(1), pop: O(n), top: O(1)
 // Space: O(n)
 class Stack2 {
 public:
-    queue<int> _q;
-    int _top;
-    
-    // Push element x onto stack.
-    void push(int x) {  // O(1)
-        _q.emplace(x);
-        _top = x;
-    }
+  // Push element x onto stack.
+  void push(int x) {  // O(1)
+    _q.emplace(x);
+    _top = x;
+  }
 
-    // Remove the element on top of the stack.
-    void pop() {  // O(n)
-        for (int i = 0; i < _q.size() - 1; ++i) {
-            _top = _q.front();
-            _q.emplace(_top);
-            _q.pop();
-        }
-        _q.pop();
+  // Remove the element on top of the stack.
+  void pop() {  // O(n)
+    for (int i = 0; i < _q.size() - 1; ++i) {
+      _top = _q.front();
+      _q.emplace(_top);
+      _q.pop();
     }
+    _q.pop();
+  }
 
-    // Get the top element.
-    int top() {  // O(1)
-        return _top;
-    }
+  // Get the top element.
+  int top() {  // O(1)
+    return _top;
+  }
 
-    // Return whether the stack is empty.
-    bool empty() {  // O(1)
-        return _q.empty();
-    }
+  // Return whether the stack is empty.
+  bool empty() {  // O(1)
+    return _q.empty();
+  }
+
+private:
+  queue<int> _q;
+  int _top;
 };
 

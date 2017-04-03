@@ -29,54 +29,54 @@
 
 // Time:  O(n)
 // Space: O(h)
-// recursion
+// stack
 class Solution {
 public:
-    void flatten(TreeNode *root) {
-        if (!root) {
-          return;
-        }
-        if (root->left) {
-          flatten(root->left);
-        }
-        if (root->right) {
-            flatten(root->right);
-        }
-        TreeNode *right = root->right;
-        root->right = root->left;
-        root->left = nullptr;
-        while (root->right) {
-            root = root->right;
-        }
-        root->right = right;
+  void flatten(TreeNode* root) {
+    if (!root) {
+      return;
     }
+    stack<TreeNode*> s;
+    s.push(root);
+    while (!s.empty()) {
+      TreeNode *curr = s.top(); s.pop();
+      if (curr->left) {
+        TreeNode *left = curr->left;
+        while (left->right) {
+          left = left->right;
+        }
+        left->right = curr->right;
+        curr->right = curr->left;
+        curr->left = NULL;
+      }
+      if (curr->right) {
+        s.push(curr->right);
+      }
+    }
+  }
 };
 
 // Time:  O(n)
 // Space: O(h)
-// stack
+// recursion
 class Solution {
 public:
-    void flatten(TreeNode* root) {
-        if (!root) {
-            return;
-        }
-        stack<TreeNode*> s;
-        s.push(root);
-        while (!s.empty()) {
-            TreeNode *curr = s.top(); s.pop();
-            if (curr->left) {
-                TreeNode *left = curr->left;
-                while (left->right) {
-                    left = left->right;
-                }
-                left->right = curr->right;
-                curr->right = curr->left;
-                curr->left = NULL;
-            }
-            if (curr->right) {
-                s.push(curr->right);
-            }
-        }
+  void flatten(TreeNode *root) {
+    if (!root) {
+      return;
     }
+    if (root->left) {
+      flatten(root->left);
+    }
+    if (root->right) {
+      flatten(root->right);
+    }
+    TreeNode *right = root->right;
+    root->right = root->left;
+    root->left = nullptr;
+    while (root->right) {
+      root = root->right;
+    }
+    root->right = right;
+  }
 };

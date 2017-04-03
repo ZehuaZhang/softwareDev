@@ -18,34 +18,33 @@
 
 class Queue {
 public:
-    // Push element x to the back of queue.
-    void push(int x) {
-        _in.emplace(x);
-    }
+  // Push element x to the back of queue.
+  void push(int x) {
+    _in.emplace(x);
+  }
 
-    // Removes the element from in front of queue.
-    void pop(void) {
-        peek();
-        _out.pop();
-    }
+  // Removes the element from in front of queue.
+  void pop(void) {
+    peek();
+    _out.pop();
+  }
 
-    // Get the front element.
-    int peek(void) {
-        if (_out.empty()) {
-          // Transfers the elements from _in to _out.
-          while (!_in.empty()) {
-            _out.emplace(_in.top());
-            _in.pop();
-          }
-        }
-        return _out.top();
+  // Get the front element.
+  int peek(void) {
+    if (_out.empty()) {
+      while (!_in.empty()) {
+        _out.emplace(_in.top());
+        _in.pop();
+      }
     }
+    return _out.top();
+  }
 
-    // Return whether the queue is empty.
-    bool empty(void) {
-        return _in.empty() && _out.empty();
-    }
+  // Return whether the queue is empty.
+  bool empty(void) {
+    return _in.empty() && _out.empty();
+  }
 
- private:
+private:
   stack<int> _in, _out;
 };

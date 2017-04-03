@@ -24,22 +24,21 @@
 
 class Solution {
 public:
-    vector<vector<string>> groupStrings(vector<string>& strings) {
-        unordered_map<string, multiset<string>> groups;
-        for (auto str : strings) {  
-            string hashStr = "";
-            // Grouping using characters distance offset (to first character) of each word 
-            for (auto c : str) {
-                hashStr += (c - str[0] + 26) % 26 + 'a';
-            }
-            groups[hashStr].insert(str);
-        }
-        
-        vector<vector<string>> result;
-        for (auto group : groups) {
-            result.push_back(vector<string>(group.second.begin(), group.second.end()));
-        }
-
-        return result;
+  vector<vector<string>> groupStrings(vector<string>& strings) {
+    unordered_map<string, multiset<string>> groups;
+    for (auto str : strings) {  
+      string hashStr = "";
+      // Grouping using characters distance offset (to first character) of each word 
+      for (auto c : str) {
+        hashStr += (c - str[0] + 26) % 26 + 'a';
+      }
+      groups[hashStr].insert(str);
     }
+
+    vector<vector<string>> result;
+    for (auto group : groups) {
+      result.push_back(vector<string>(group.second.begin(), group.second.end()));
+    }
+    return result;
+  }
 };

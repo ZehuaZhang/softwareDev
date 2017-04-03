@@ -14,29 +14,27 @@
 // Try to utilize the property of a BST.
 // What if you could modify the BST node structure?
 // The optimal runtime complexity is O(height of BST).
- 
+
 // Time:  O(max(h, k))
 // Space: O(h)
+
 class Solution2 {
 public:
-    int kthSmallest(TreeNode* root, int k) {
-        stack<TreeNode *> s;
-        TreeNode *cur = root;
-        int rank = 0;
-        while (!s.empty() || cur) {
-            if (cur) {
-                s.emplace(cur);
-                cur = cur->left;
-            } else {
-                cur = s.top();
-                s.pop();
-                if (++rank == k) {
-                    return cur->val;
-                }
-                cur = cur->right;
-            }
-        }
-
-        return INT_MIN;
+  int kthSmallest(TreeNode* root, int k) {
+    stack<TreeNode *> s;
+    TreeNode* cur = root;
+    int rank = 0;
+    int ans = INT_MIN;
+    while (!s.empty() || cur || rank != k) {
+      if (cur) {
+        s.emplace(cur);
+        cur = cur->left;
+      } else {
+        cur = s.top(); s.pop();
+        ans = cur->val;
+        cur = cur->right;
+      }
     }
+    return ans;
+  }
 };

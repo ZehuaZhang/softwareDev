@@ -32,12 +32,10 @@ public:
     for (int len = 2; len < nums.size(); ++len) {
       for (int left = 0; left + len < nums.size(); ++left) {
         for (int i = left + 1, right = left + len; i < right; ++i) {  // left, i, right
-          maxCoins[left][right] = max(maxCoins[left][right], 
-                                      nums[left] * nums[i] * nums[right] + maxCoins[left][i] + maxCoins[i][right]);
+          maxCoins[left][right] = max(maxCoins[left][right], nums[left] * nums[i] * nums[right] + maxCoins[left][i] + maxCoins[i][right]);
         }
       }
     }
-    
     return maxCoins[0][nums.size() - 1];
   }
 };

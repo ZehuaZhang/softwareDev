@@ -18,26 +18,18 @@
 // Binary search solution with STL.
 class Solution {
 public:
-    int lengthOfLIS(vector<int>& nums) {
-        vector<int> lis;
+  int lengthOfLIS(vector<int>& nums) {
+    vector<int> lis;
 
-        for (auto num : nums) {
-            insert(lis, num);
-        }
+    for (auto num : nums) {
+      auto it = lower_bound(lis.begin(), lis.end(), num);
 
-        return lis.size();
+      if (it == lis.end()) {
+        lis.emplace_back(num);
+      } else {
+        *it = num;
+      }
     }
-
-private:
-    void insert(vector<int> &lis, const int target) {
-        // Find the first index "left" which satisfies lis[left] >= target
-        auto it = lower_bound(lis.begin(), lis.end(), target);
-
-        // If not found, append the target.
-        if (it == lis.end()) {
-            lis.emplace_back(target);
-        } else {
-            *it = target;
-        }
-    }
+    return lis.size();
+  }
 };

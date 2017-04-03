@@ -26,25 +26,24 @@
 // Counting sort.
 class Solution {
 public:
-    int hIndex(vector<int>& citations) {
-        const auto n = citations.size();
-        vector<int> count(n + 1, 0);
-        for (auto citation : citations) {
-            // Put all x >= n in the same bucket.
-            if (citation >= n) {
-                ++count[n];
-            } else {
-                ++count[citation];
-            }
-        }
-
-        int h = 0;
-        for (int i = n; i >= 0; --i) {
-            h += count[i];
-            if (h >= i) {
-                return i;
-            }
-        }
-        return h;
+  int hIndex(vector<int>& citations) {
+    const auto n = citations.size();
+    vector<int> count(n + 1, 0);
+    for (auto citation : citations) {
+      if (citation >= n) {
+        ++count[n];
+      } else {
+        ++count[citation];
+      }
     }
+
+    int h = 0;
+    for (int i = n; i >= 0; --i) {
+      h += count[i];
+      if (h >= i) {
+        return i;
+      }
+    }
+    return h;
+  }
 };

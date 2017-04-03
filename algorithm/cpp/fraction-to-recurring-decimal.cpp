@@ -21,31 +21,31 @@
 
 class Solution {
 public:
-    string fractionToDecimal(int numerator, int denominator) {
-        string result;
-        if ((numerator ^ denominator) >> 31 && numerator != 0) {
-            result = "-";
-        }
-
-        auto a = llabs(numerator);
-        auto b = llabs(denominator);
-        result += to_string(a / b);
-
-        if (a % b > 0) {
-            result += ".";
-        }
-        
-        unordered_map<long long, int> idx;
-        for (a %= b; a && !idx.count(a); a %= b) {
-            idx[a] = result.length();
-            a *= 10;
-            result += to_string(a / b);
-        }
-
-        if (idx.count(a)) {
-            result.insert(idx[a], "(");
-            result.push_back(')');
-        }
-        return result;
+  string fractionToDecimal(int numerator, int denominator) {
+    string result;
+    if ((numerator ^ denominator) >> 31 && numerator != 0) {
+      result = "-";
     }
+
+    long long a = llabs(numerator);
+    long long b = llabs(denominator);
+    result += to_string(a / b);
+
+    if (a % b > 0) {
+      result += ".";
+    }
+
+    unordered_map<long long, int> idx;
+    for (a %= b; a && !idx.count(a); a %= b) {
+      idx[a] = result.length();
+      a *= 10;
+      result += to_string(a / b);
+    }
+
+    if (idx.count(a)) {
+      result.insert(idx[a], "(");
+      result.push_back(')');
+    }
+    return result;
+  }
 };

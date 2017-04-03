@@ -37,19 +37,18 @@
  */
 class Solution {
 public:
-    int rob(TreeNode* root) {
-        auto result = robHelper(root);
-        return max(result.first, result.second);
-    }
+  int rob(TreeNode* root) {
+    auto result = robHelper(root);
+    return max(result.first, result.second);
+  }
 
 private:
-    pair<int, int> robHelper(TreeNode* root) {  // max profit <=> {include self node, exclude self node}
-        if (!root) {
-            return {0, 0};
-        }
-        auto left = robHelper(root->left);
-        auto right = robHelper(root->right);
-        return {root->val + left.second + right.second,
-                max(left.first, left.second) + max(right.first, right.second)};
+  pair<int, int> robHelper(TreeNode* root) {  // max profit <=> {include self node, exclude self node}
+    if (!root) {
+      return {0, 0};
     }
+    auto left = robHelper(root->left);
+    auto right = robHelper(root->right);
+    return {root->val + left.second + right.second, max(left.first, left.second) + max(right.first, right.second)};
+  }
 };

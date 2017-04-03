@@ -13,20 +13,19 @@
 
 class Solution {
 public:
-    ListNode *detectCycle(ListNode *head) {
-        ListNode *slow = head, *fast = head;
+  ListNode *detectCycle(ListNode *head) {
+    ListNode *slow = head, *fast = head;
 
-        while (fast && fast->next) {
-            slow = slow->next, fast = fast->next->next;
-            if (slow == fast) {  // There is a cycle.
-                slow = head;
-                // Both pointers advance at the same time.
-                while (slow != fast) {
-                    slow = slow->next, fast = fast->next;
-                }
-                return slow;  // slow is the begin of cycle.
-            }
+    while (fast && fast->next) {
+      slow = slow->next, fast = fast->next->next;
+      if (slow == fast) {
+        slow = head;
+        while (slow != fast) {
+          slow = slow->next, fast = fast->next;
         }
-        return nullptr;  // No cycle.
+        return slow;
+      }
     }
+    return nullptr;
+  }
 };

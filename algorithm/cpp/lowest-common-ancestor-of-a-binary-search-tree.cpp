@@ -14,7 +14,7 @@
 //    0      _4       7       9
 //          /  \
 //          3   5
-         
+
 // For example, the lowest common ancestor (LCA) of nodes 2 and 8 is 6. 
 // Another example is LCA of nodes 2 and 4 is 2, since a node can be a descendant of itself according to the LCA definition.
 
@@ -23,16 +23,13 @@
 
 class Solution {
 public:
-    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        int minVal = min(p->val, q->val);
-        int maxVal = max(p->val, q->val);
+  TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+    int minVal = min(p->val, q->val);
+    int maxVal = max(p->val, q->val);
 
-        while (root->val < minVal || root->val > maxVal) {
-            // Keep searching since root is outside of [s, b].
-            root = root->val > maxVal ? root->left : root->right;
-        }
-
-        // s <= root->val && root->val <= b.
-        return root; 
+    while (root->val < minVal || root->val > maxVal) {
+      root = root->val > maxVal ? root->left : root->right;
     }
+    return root; 
+  }
 };
