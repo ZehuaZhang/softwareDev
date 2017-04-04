@@ -19,17 +19,16 @@
 
 class Solution {
 public:
-    ListNode* oddEvenList(ListNode* head) {
-        if (head) {
-            for (ListNode* odd = head, *even = head->next;
-                 even && even->next;
-                 even = even->next, odd = odd->next) {
-                ListNode *evenHead = odd->next;
-                odd->next = even->next;
-                even->next = even->next->next;
-                odd->next->next = evenHead;
-            }
-        }
-        return head;
+  ListNode* oddEvenList(ListNode* head) {
+    if (!head) {
+      return head;
     }
+    for (ListNode* odd = head, *even = head->next; even && even->next; even = even->next, odd = odd->next) {
+      ListNode* evenHead = odd->next;
+      odd->next = even->next;
+      even->next = even->next->next;
+      odd->next->next = evenHead;
+    }
+    return head;
+  }
 };

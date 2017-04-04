@@ -11,31 +11,26 @@
 
 class Solution {
 public:
-    bool isPalindrome(ListNode* head) {
-        // reverse the first half list
-        ListNode *prev = nullptr, *fast = head;
-        while (fast && fast->next) {
-            fast = fast->next->next;
-            ListNode* next = head->next;
-            head->next = prev;
-            prev = head;
-            head = next;
-        }
-
-        // skip median if number of list elements is odd
-        fast = fast? head->next : head;
-
-        // compare two halves and restore first half
-        bool isPalindrome = true;
-        while (prev) {
-            isPalindrome = isPalindrome && fast->val == prev->val;
-            ListNode* next = prev->next;
-            prev->next = head;
-            head = prev;
-            prev = next;
-            fast = fast->next;
-        }
-            
-        return isPalindrome;   
+  bool isPalindrome(ListNode* head) {
+    ListNode *prev = nullptr, *fast = head;
+    while (fast && fast->next) {
+      fast = fast->next->next;
+      ListNode* next = head->next;
+      head->next = prev;
+      prev = head;
+      head = next;
     }
+    fast = fast? head->next : head; // skip median if number of list elements is odd
+
+    bool isPalindrome = true;
+    while (prev) {
+      isPalindrome = isPalindrome && fast->val == prev->val;
+      ListNode* next = prev->next;
+      prev->next = head;
+      head = prev;
+      prev = next;
+      fast = fast->next;
+    }
+    return isPalindrome;   
+  }
 };

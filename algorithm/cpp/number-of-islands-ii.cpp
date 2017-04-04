@@ -46,51 +46,45 @@
 // Using unordered_map.
 class Solution {
 public:
-    vector<int> numIslands2(int m, int n, vector<pair<int, int>>& positions) {
-        vector<int> numbers;
-        int number = 0;
-        unordered_map<int, int> islands; // (point in island, delegate point of island)
+  vector<int> numIslands2(int m, int n, vector<pair<int, int>>& positions) {
+    vector<int> numbers;
+    int number = 0;
+    unordered_map<int, int> islands;
 
-        for (auto position : positions) {
-            islands[nodeId(position, n)] = nodeId(position, n); // make current delegate of its own island
-            ++number;
+    for (auto position : positions) {
+      islands[nodeId(position, n)] = nodeId(position, n);
+      ++number;
 
-            vector<pair<int, int>> directions{{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
+      for (auto direction : vector<pair<int, int>>{{0, -1}, {0, 1}, {-1, 0}, {1, 0}}) {
+        auto neighbor = make_pair(position.first + direction.first, position.second + direction.second);
 
-            for (auto direction : directions) {
-                auto neighbor = make_pair(position.first + direction.first,
-                                            position.second + direction.second);
-                // neighbour is an island
-                if (neighbor.first >= 0 && neighbor.first < m &&
-                    neighbor.second >= 0 && neighbor.second < n &&
-                    islands.count(nodeId(neighbor, n))) {   
-                    // check current and neighbour is not considered same island
-                    if (find(nodeId(position, n), islands) != find(nodeId(neighbor, n), islands)) {
-                        // Merge two islands, amortised time: O(log*k) ~= O(1)
-                        union(islands, nodeId(position, n), nodeId(neighbor, n));
-                        --number;
-                    }
-                }
-            }
-            numbers.emplace_back(number);
+        if (neighbor.first >= 0 && neighbor.first < m && neighbor.second >= 0 && neighbor.second < n &&
+            islands.count(nodeId(neighbor, n))) {   
+          if (find(nodeId(position, n), islands) != find(nodeId(neighbor, n), islands)) {
+            union(islands, nodeId(position, n), nodeId(neighbor, n));
+            --number;
+          }
         }
-
-        return numbers;
+      }
+      numbers.emplace_back(number);
     }
+    return numbers;
+  }
 
-    int nodeId(pair<int, int> node, int n) {
-        return node.first * n + node.second;
-    }
+private:
+  int nodeId(pair<int, int> node, int n) {
+    return node.first * n + node.second;
+  }
 
-    int find(int x, unordered_map<int, int> &set) {
-       if (set[x] != x) {   // check who is the delegate of points in island, delegate of itself is itself
-           set[x] = find(set[x], set);  // path compression.
-       }
-       return set[x];
+  int find(int x, unordered_map<int, int>& set) {
+    while (set[x] != x) {
+      x = find(set[x], set);
     }
+    return x;
+  }
 
-    void union(unordered_map<int, int> &set, const int x, const int y) {
-        int xRoot = find(x, set), yRoot = find(y, set);
-        set[min(xRoot, yRoot)] = max(xRoot, yRoot); // make bigger-value of nodeID the delegate of smaller
-    }
+  void union(unordered_map<int, int>& set, const int x, const int y) {
+    int xRoot = find(x, set), yRoot = find(y, set);
+    set[min(xRoot, yRoot)] = max(xRoot, yRoot);
+  }
 };

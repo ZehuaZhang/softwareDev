@@ -15,29 +15,12 @@
 
 class Solution {
 public:
-    int countDigitOne(int n) {
-        const int k = 1;
-        int cnt = 0;
-
-        for (int left = n, multiplier = 1; left > 0; left /= 10, multiplier *= 10) {
-            // split number into: left, curr, right
-            int curr = left % 10;
-            int right = n % multiplier;
-
-            // count of (c000 ~ oooc000) = (ooo + (k < curr)? 1 : 0) * 1000
-            cnt += (left / 10 + (k < curr)) * multiplier;
-
-            // if k == 0, oooc000 = (ooo - 1) * 1000
-            if (k == 0 && multiplier > 1) {
-                cnt -= multiplier;
-            }
-
-            // count of (oook000 ~ oookxxx): count += xxx + 1
-            if (curr == k) {
-                cnt += right + 1;
-            }
-        }
-
-        return cnt;
+  int countDigitOne(int n) {
+    int res = 0;
+    for (long k = 1; k <= n; k *= 10) {
+      long r = n / k, m = n % k;
+      res += (r + 8) / 10 * k + (r % 10 == 1 ? m + 1 : 0);
     }
+    return res;
+  }
 };

@@ -21,33 +21,30 @@
 
 class Solution {
 public:
-    int minCostII(vector<vector<int>>& costs) {
-        if (costs.empty()) {
-            return 0;
-        }
-        
-        vector<vector<int>> minCost(2, costs[0]);
-
-        const int n = costs.size();
-        const int k = costs[0].size();
-        for (int i = 1; i < n; ++i) {
-            int minVal = INT_MAX, minVal2 = INT_MAX;
-
-            // find prev house minCost, 2nd minCost
-            for (int j = 0; j < k; ++j) {
-                if (minCost[(i - 1) % 2][j] < minVal) {
-                    minVal2 = minVal;
-                    minVal = minCost[(i - 1) % 2][j];
-                } else if (minCost[(i - 1) % 2][j] < minVal2) {
-                    minVal2 = minCost[(i - 1) % 2][j];
-                }
-            }
-            for (int j = 0; j < k; ++j) {
-                int cost = (minCost[(i - 1) % 2][j] != minVal) ? minVal : minVal2;
-                minCost[i % 2][j] = costs[i][j] + cost;
-            }
-        }
-
-        return *min_element(minCost[(n - 1) % 2].cbegin(), minCost[(n - 1) % 2].cend());
+  int minCostII(vector<vector<int>>& costs) {
+    if (costs.empty()) {
+      return 0;
     }
+    vector<vector<int>> minCost(2, costs[0]);
+
+    const int n = costs.size();
+    const int k = costs[0].size();
+    for (int i = 1; i < n; ++i) {
+      int minVal = INT_MAX, minVal2 = INT_MAX;
+
+      for (int j = 0; j < k; ++j) {
+        int cost = minCost[(i - 1) % 2][j];
+        if (cost < minVal) {
+          minVal2 = minVal;
+          minVal = cost;
+        } else if (cost < minVal2) {
+          minVal2 = cost;
+        }
+      }
+      for (int j = 0; j < k; ++j) {
+        minCost[i % 2][j] = costs[i][j] + (minCost[(i - 1) % 2][j] != minVal) ? minVal : minVal2;;
+      }
+    }
+    return *min_element(minCost[(n - 1) % 2].cbegin(), minCost[(n - 1) % 2].cend());
+  }
 };

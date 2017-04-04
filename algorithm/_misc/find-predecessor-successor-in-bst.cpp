@@ -1,9 +1,9 @@
-Find Predecessor and Successor in BST
+// Find Predecessor and Successor in BST
 
 // findPredSucc(root, target, nullptr, nullptr);
 
 void findPredSucc(TreeNode *root, int target, TreeNode* &pred, TreeNode* &succ) {
-	if (root) {
+	while (root) {
 		if (root->val == target) {
 			if (root->left) {
 				pred = root->left;
@@ -19,10 +19,37 @@ void findPredSucc(TreeNode *root, int target, TreeNode* &pred, TreeNode* &succ) 
 			}
 		} else if (root->val > target) {
 			succ = root;
-			findPredSucc(root->left, target, pred, succ);
+			root = root->left;
 		} else {
 			pred = root;
-			findPredSucc(root->right, target, pred, succ);
-		}
-	}
+      root = root->right;
+    }
+  }
+}
+
+// with parent node
+
+void findPredSucc(TreeNode* root, TreeNode* node, TreeNode* &pred, TreeNode* &succ) {
+  if (node) {
+    if (node->left) {
+      pred = node->left;
+      while (pred->right) {
+        pred = pred->right;
+      }
+    }
+    if (node->right) {
+      succ = node->right;
+      while (succ->left) {
+        succ = succ->left;
+      }
+    }
+  }
+  if (!node->right) {
+    succ = node->parent;
+    for (TreeNode* curr = node; succ && succ->right == curr; curr = succ, succ = succ-> parent);
+  }
+  if (!node->left) {
+    prev = node->parent;
+    for (TreeNode* curr = node; prev && prev->left == curr; curr = prev, prev = prev-> parent);
+  }
 }
