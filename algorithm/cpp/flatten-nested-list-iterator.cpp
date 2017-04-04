@@ -37,9 +37,8 @@
  */
  
 // Using stack and iterator.
- class NestedIterator {
- public:
-  using it = vector<NestedInteger>::const_iterator;
+class NestedIterator {
+public:
   NestedIterator(vector<NestedInteger> &nestedList) {
     _depth.emplace(nestedList.cbegin(), nestedList.cend());
   }
@@ -64,6 +63,7 @@
   }
 
 private:
+  using it = vector<NestedInteger>::const_iterator;
   stack<pair<it, it>> _depth;
 };
 

@@ -16,34 +16,29 @@
 
 class Solution {
 public:
-    void nextPermutation(vector<int> &num) {
-        nextPermutation(num.begin(), num.end());
-    }
-    
-private:
-    template<typename It>
-    bool nextPermutation(It begin, It end) {
-        const auto rfirst = reverse_iterator<It>(end);
-        const auto rlast = reverse_iterator<It>(begin);
-        
-        // Find the first element (pivot) which is less than its successor.
-        auto pivot = next(rfirst);
-        while (pivot != rlast && *pivot >= *prev(pivot)) {
-            ++pivot;
-        }
+  void nextPermutation(vector<int>& num) {
+    nextPermutation(num.begin(), num.end());
+  }
 
-        bool isGreater = true;
-        if (pivot != rlast) {
-            // Find the number which is first greater than pivot from reverse start, and swap it with pivot
-            auto change = find_if(rfirst, pivot, bind1st(less<int>(), *pivot));
-            swap(*change, *pivot);
-        } else {
-            isGreater = false;
-        }
-        
-        // Make the sequence after pivot non-descending
-        reverse(rfirst, pivot);
-        
-        return isGreater;
+private:
+  template<typename It>
+  bool nextPermutation(It begin, It end) {
+    const auto rfirst = reverse_iterator<It>(end);
+    const auto rlast = reverse_iterator<It>(begin);
+
+    auto pivot = next(rfirst);
+    while (pivot != rlast && *pivot >= *prev(pivot)) {
+      ++pivot;
     }
+
+    bool hasGreater = false;
+    if (pivot != rlast) {
+      hasGreater = true;
+      auto change = find_if(rfirst, pivot, bind1st(less<int>(), *pivot));
+      swap(*change, *pivot);
+    }
+    reverse(rfirst, pivot);
+
+    return hasGreater;
+  }
 };

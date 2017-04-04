@@ -1,7 +1,9 @@
 // 310. Minimum Height Trees
 // Difficulty : Medium 
 
-// For a undirected graph with tree characteristics, we can choose any node as the root. The result graph is then a rooted tree. Among all possible rooted trees, those with minimum height are called minimum height trees (MHTs). Given such a graph, write a function to find all the MHTs and return a list of their root labels.
+// For a undirected graph with tree characteristics, we can choose any node as the root. 
+// The result graph is then a rooted tree. Among all possible rooted trees, those with minimum height are called minimum height trees (MHTs). 
+// Given such a graph, write a function to find all the MHTs and return a list of their root labels.
 
 // Format
 // The graph contains n nodes which are labeled from 0 to n - 1. You will be given the number n and a list of undirected edges (each edge is a pair of labels).
@@ -54,40 +56,40 @@
 
 class Solution {
 public:
-    vector<int> findMinHeightTrees(int n, vector<pair<int, int> >& edges) {
-        if (n == 1) {
-            return {0};
-        }
-        vector<int> outDegree(n, 0);
-        vector<vector<int>> graph(n, vector<int>());
-        queue<int> q;
-        for (auto edge : edges) {
-            graph[edge.first].push_back(edge.second);
-            ++outDegree[edge.first];
-            graph[edge.second].push_back(edge.first);
-            ++outDegree[edge.second];
-        }
-        for (int i = 0; i < n; ++i) {
-            if (outDegree[i] == 1) {
-                q.push(i);
-            }
-        }
-        while (n > 2) {
-            int size = q.size();
-            while (size--) {
-                int node = q.front(); q.pop();
-                --n;
-                for (int nbr : graph[node]) {
-                    if (--outDegree[nbr] == 1) {
-                        q.push(nbr);
-                    }
-                }
-            }
-        }
-        vector<int> result;
-        while (!q.empty()) {
-            result.push_back(q.front()); q.pop();
-        }
-        return result;
+  vector<int> findMinHeightTrees(int n, vector<pair<int, int> >& edges) {
+    if (n == 1) {
+      return {0};
     }
+    vector<int> outDegree(n, 0);
+    vector<vector<int>> graph(n, vector<int>());
+    queue<int> q;
+    for (auto edge : edges) {
+      graph[edge.first].push_back(edge.second);
+      ++outDegree[edge.first];
+      graph[edge.second].push_back(edge.first);
+      ++outDegree[edge.second];
+    }
+    for (int i = 0; i < n; ++i) {
+      if (outDegree[i] == 1) {
+        q.push(i);
+      }
+    }
+    while (n > 2) {
+      int size = q.size();
+      while (size--) {
+        int node = q.front(); q.pop();
+        --n;
+        for (int nbr : graph[node]) {
+          if (--outDegree[nbr] == 1) {
+            q.push(nbr);
+          }
+        }
+      }
+    }
+    vector<int> result;
+    while (!q.empty()) {
+      result.push_back(q.front()); q.pop();
+    }
+    return result;
+  }
 };

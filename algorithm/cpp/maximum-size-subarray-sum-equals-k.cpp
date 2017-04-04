@@ -19,20 +19,20 @@
 
 class Solution {
 public:
-    int maxSubArrayLen(vector<int>& nums, int k) {
-        unordered_map<int, int> sums;
-        int sum = 0, maxLen = 0;
-        for (int i = 0; i < nums.size(); ++i) {
-            sum += nums[i];
-            if (sum == k) {
-                maxLen = i + 1;
-            } else if (sums.count(sum - k)) {
-                maxLen = max(maxLen, i - sums[sum - k]);
-            }
-            if (!sums.count(sum)) {
-                sums[sum] = i;  // Only keep the smallest index.
-            }
-        }
-        return maxLen;
+  int maxSubArrayLen(vector<int>& nums, int k) {
+    unordered_map<int, int> idx;
+    int sum = 0, maxLen = 0;
+    for (int i = 0; i < nums.size(); ++i) {
+      sum += nums[i];
+      if (sum == k) {
+        maxLen = i + 1;
+      } else if (idx.count(sum - k)) {
+        maxLen = max(maxLen, i - idx[sum - k]);
+      }
+      if (!idx.count(sum)) {
+        idx[sum] = i;  // Only keep the smallest index.
+      }
     }
+    return maxLen;
+  }
 };

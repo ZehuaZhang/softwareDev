@@ -21,22 +21,21 @@
 
 class MovingAverage {
 public:
-    /** Initialize your data structure here. */
-    MovingAverage(int size) : _size(size), _sum(0) {
+  /** Initialize your data structure here. */
+  MovingAverage(int size) : _size(size), _sum(0) {
+  }
+
+  double next(int val) {
+    if (_q.size() == _size) {
+      _sum -= _q.front(); _q.pop();
     }
-    
-    double next(int val) {
-        if (_q.size() == _size) {
-            _sum -= _q.front();
-            _q.pop();
-        }
-        _q.emplace(val);
-        _sum += val;
-        return 1.0 * _sum / _q.size();
-    }
+    _q.emplace(val);
+    _sum += val;
+    return 1.0 * _sum / _q.size();
+  }
 
 private:
-    int _size;
-    int _sum;
-    queue<int> _q;
+  int _size;
+  int _sum;
+  queue<int> _q;
 };

@@ -14,13 +14,13 @@
 
 class Solution {
 public:
-    int maxSubArray(vector<int>& nums) {
-        int curSum = 0;
-        int maxSum = INT_MIN;
-        for (auto num : nums) {
-            curSum = max(curSum + num, num);
-            maxSum = max(maxSum, curSum);
-        }
-        return maxSum;
+  int maxSubArray(vector<int>& nums) {
+    int curSum = 0;
+    int maxSum = INT_MIN;
+    for (auto num : nums) {
+      curSum = max(curSum + num, num);
+      maxSum = max(maxSum, curSum);
     }
+    return maxSum;
+  }
 };

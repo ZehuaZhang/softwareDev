@@ -14,12 +14,12 @@
 
 class Solution {
 public:
-    void moveZeroes(vector<int>& nums) {
-        int idx = 0;
-        for (auto num : nums) {
-            if (num) {
-                swap(nums[idx++], num);
-            }
-        }
+  void moveZeroes(vector<int>& nums) {
+    int idx = 0;
+    for (auto num : nums) {
+      if (num) {
+        swap(nums[idx++], num);
+      }
     }
+  }
 };

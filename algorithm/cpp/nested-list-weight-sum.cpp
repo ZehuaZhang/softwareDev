@@ -35,20 +35,20 @@
  */
 class Solution {
 public:
-    int depthSum(vector<NestedInteger>& nestedList) {
-        return depthSum(nestedList, 1);
-    }
+  int depthSum(vector<NestedInteger>& nestedList) {
+    return depthSum(nestedList, 1);
+  }
 
 private:
-    int depthSum(const vector<NestedInteger>& nestedList, int depth) {
-        int sum = 0;
-        for (auto list : nestedList) {
-            if (list.isInteger()) {
-                sum += list.getInteger() * depth;
-            } else {
-                sum += depthSum(list.getList(), depth + 1);
-            }
-        }
-        return sum;
+  int depthSum(const vector<NestedInteger>& nestedList, int depth) {
+    int sum = 0;
+    for (auto nested : nestedList) {
+      if (nested.isInteger()) {
+        sum += nested.getInteger() * depth;
+      } else {
+        sum += depthSum(nested.getList(), depth + 1);
+      }
     }
+    return sum;
+  }
 };

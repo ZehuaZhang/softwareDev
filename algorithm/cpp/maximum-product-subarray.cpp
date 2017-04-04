@@ -8,18 +8,18 @@
 
 class Solution {
 public:
-    int maxProduct(vector<int>& nums) {
-        if (nums.empty()) {
-        	return 0;
-        }
-        // kadane algorithm, why currMin <=> '-' * '-' = '+'
-        int maxVal = nums[0], currMax = nums[0], currMin = nums[0];
-        for (int i = 1; i < nums.size(); ++i) {
-            int prevMax = currMax, prevMin = currMin;
-            currMax = max(max(nums[i], prevMax * nums[i]), prevMin * nums[i]);
-            currMin = min(min(nums[i], prevMax * nums[i]), prevMin * nums[i]);
-            maxVal = max(maxVal, currMax);
-        }
-        return maxVal;
+  int maxProduct(vector<int>& nums) {
+    if (nums.empty()) {
+      return 0;
     }
+    // kadane algorithm, why currMin <=> '-' * '-' = '+'
+    int maxVal = INT_MIN, currMax = 1, currMin = 1;
+    for (auto num : nums) {
+      int prevMax = currMax, prevMin = currMin;
+      currMax = max(max(num, prevMax * num), prevMin * num);
+      currMin = min(min(num, prevMax * num), prevMin * num);
+      maxVal = max(maxVal, currMax);
+    }
+    return maxVal;
+  }
 };

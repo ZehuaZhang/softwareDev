@@ -20,29 +20,27 @@
  *     Interval(int s, int e) : start(s), end(e) {}
  * };
  */
-class Solution {
-public:
-    int minMeetingRooms(vector<Interval>& intervals) {
-        vector<int> starts, ends;
-        for (auto interval : intervals) {
-            starts.emplace_back(interval.start);
-            ends.emplace_back(interval.end);
-        }
-        
-        sort(starts.begin(), starts.end());
-        sort(ends.begin(), ends.end());
-        
-        int minRooms = 0, cntRooms = 0;
-        for (int s = 0, e = 0; s < starts.size();) {
-            if (starts[s] < ends[e]) {
-                // acquire a room, update the min number of rooms.
-                minRooms = max(minRooms, ++cntRooms);
-                ++s;
-            } else {
-                --cntRooms;  // Release a room.
-                ++e;
-            }
-        }
-        return minRooms;
+ class Solution {
+ public:
+  int minMeetingRooms(vector<Interval>& intervals) {
+    vector<int> starts, ends;
+    for (auto interval : intervals) {
+      starts.emplace_back(interval.start);
+      ends.emplace_back(interval.end);
     }
+    sort(starts.begin(), starts.end());
+    sort(ends.begin(), ends.end());
+
+    int minRooms = 0, cntRooms = 0;
+    for (int s = 0, e = 0; s < starts.size();) {
+      if (starts[s] < ends[e]) {
+        minRooms = max(minRooms, ++cntRooms);
+        ++s;
+      } else {
+        --cntRooms;
+        ++e;
+      }
+    }
+    return minRooms;
+  }
 };

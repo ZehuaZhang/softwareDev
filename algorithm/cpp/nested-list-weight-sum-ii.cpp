@@ -39,30 +39,28 @@
  */
 class Solution {
 public:
-    int depthSumInverse(vector<NestedInteger>& nestedList) {
-        vector<int> result;
-        for (const auto& list : nestedList) {
-            depthSumInverseHelper(list, 0, result);
-        }
+  int depthSumInverse(vector<NestedInteger>& nestedList) {
+    vector<int> result;
+    depthSumInverseHelper(list, 0, result);
 
-        int sum = 0;
-        for (int i = result.size() - 1; i >= 0; --i) {
-            sum += result[i] * (result.size() - i);
-        }
-        return sum;
+    int sum = 0;
+    for (int i = result.size() - 1; i >= 0; --i) {
+      sum += result[i] * (result.size() - i);
     }
+    return sum;
+  }
 
 private:
-    void depthSumInverseHelper(const NestedInteger &list, int depth, vector<int> &result) {
-        if (result.size() < depth + 1) {
-            result.emplace_back(0);
-        }
-        if (list.isInteger()) {
-            result[depth] += list.getInteger();
-        } else {
-            for (auto l : list.getList()) {
-                depthSumInverseHelper(l, depth + 1, result);
-            }
-        }
+  void depthSumInverseHelper(const vector<NestedInteger>& list, int depth, vector<int>& result) {
+    if (result.size() < depth + 1) {
+      result.emplace_back(0);
     }
+    for (auto nested : list) {
+      if (nested.isInteger()) {
+        result[depth] += nested.getInteger();
+      } else {
+        depthSumInverseHelper(nested.getList(), depth + 1, result);
+      }
+    }
+  }
 };
