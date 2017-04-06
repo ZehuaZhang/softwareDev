@@ -1,10 +1,12 @@
 // 391. Perfect Rectangle
 // Difficulty : Hard 
 
-// Given N axis-aligned rectangles where N > 0, determine if they all together form an exact cover of a rectangular region.
+// Given N axis-aligned rectangles where N > 0
+// determine if they all together form an exact cover of a rectangular region.
 
-// Each rectangle is represented as a bottom-left point and a top-right point. For example, a unit square is represented as [1,1,2,2]. (coordinate of bottom-left point is (1, 1) and top-right point is (2, 2)).
-
+// Each rectangle is represented as a bottom-left point and a top-right point.
+// For example, a unit square is represented as [1,1,2,2].
+// (coordinate of bottom-left point is (1, 1) and top-right point is (2, 2)).
 
 // Example 1:
 
@@ -17,7 +19,7 @@
 // ]
 
 // Return true. All 5 rectangles together form an exact cover of a rectangular region.
- 
+
 
 // Example 2:
 
@@ -57,50 +59,35 @@
 
 class Solution {
 public:
-    bool isRectangleCover(vector<vector<int>>& rectangles) {
-        enum Location {L = 0, B = 1, R = 2, T = 3};
-        int left = numeric_limits<int>::max(), bottom = numeric_limits<int>::max(),
-            right = numeric_limits<int>::min(), top = numeric_limits<int>::min();
-        for (const auto& rect : rectangles) {
-            left = min(left, rect[L]);
-            bottom = min(bottom, rect[B]);
-            right = max(right, rect[R]);
-            top = max(top, rect[T]);
+  bool isRectangleCover(vector<vector<int>>& rectangles) {
+    unordered_set<string> points;
+    int minX = INT_MAX, minY = INT_MAX, maxX = INT_MIN, maxY = INT_MIN;
+    int area = 0;
+    for (auto rect : rectangles) {
+      minX = min(minX, rect[0]);
+      minY = min(minY, rect[1]);
+      maxX = max(maxX, rect[2]);
+      maxY = max(maxY, rect[3]);
+      area += (rect[2] - rect[0]) * (rect[3] - rect[1]);
+      string s1 = to_string(rect[0]) + "_" + to_string(rect[1]); // bottom-left
+      string s2 = to_string(rect[0]) + "_" + to_string(rect[3]); // top-left
+      string s3 = to_string(rect[2]) + "_" + to_string(rect[3]); // top-right
+      string s4 = to_string(rect[2]) + "_" + to_string(rect[1]); // bottom-right
+      for (auto s : vector<string>{ s1, s2, s3, s4 }) {
+        if (points.count(s)) {
+          points.erase(s);
+        } else {
+          points.insert(s);
         }
-
-        using P = pair<pair<int, int>, int>;
-        enum Corner {LB = 1, RB = 2, LT = 4, RT = 8};
-        unordered_map<int, unordered_map<int, int>> corner_count;
-        vector<P> corners{{{L, B}, LB}, {{R, B}, RB}, {{L, T}, LT}, {{R, T}, RT}};
-        for (const auto& rect : rectangles) {
-            for (const auto& corner : corners) {
-                const auto x = rect[corner.first.first];
-                const auto y = rect[corner.first.second];
-                // check if there's overlap, two rectangle can't allow same corner on same coordinate
-                if (corner_count[x][y] & corner.second) {
-                    return false;
-                }
-                corner_count[x][y] |= corner.second;
-            }
-        }
-
-        bitset<16> is_valid;
-        // if each corner[x][y] should belong to only two, or total 4 rectangle
-        // also checks intersection overlaps <=> corner[x][y] only belongs to one rectangle
-        is_valid[LB | RB] = is_valid[LB | LT] = is_valid[RB | RT] = is_valid[LT | RT] = is_valid[LB | RB | LT | RT] = true;
-        for (auto itx = corner_count.cbegin(); itx != corner_count.cend(); ++itx) {
-            const auto x = itx->first;
-            for (auto ity = itx->second.cbegin(); ity != itx->second.cend(); ++ity) {
-                const auto y = ity->first;
-                const auto mask = ity->second;
-                if ((left < x && x < right) || (bottom < y && y < top)) {
-                    if (!is_valid[mask]) {
-                        return false;
-                    }
-                }
-            }
-        }
-
-        return true;
+      }
     }
+    string t1 = to_string(minX) + "_" + to_string(minY);
+    string t2 = to_string(minX) + "_" + to_string(maxY);
+    string t3 = to_string(maxX) + "_" + to_string(maxY);
+    string t4 = to_string(maxX) + "_" + to_string(minY);
+    if (!points.count(t1) || !points.count(t2) || !points.count(t3) || !points.count(t4) || points.size() != 4) {
+      return false;
+    }
+    return area == (maxX - minX) * (maxY - minY);
+  }
 };

@@ -24,17 +24,17 @@
 
 class NumArray {
 public:
-    NumArray(vector<int> &nums) {
-        accu.emplace_back(0);
-        for (auto num : nums) {
-            accu.emplace_back(accu.back() + num);
-        }
+  NumArray(vector<int> &nums) {
+    accu.emplace_back(0);
+    for (auto num : nums) {
+      accu.emplace_back(accu.back() + num);
     }
+  }
 
-    int sumRange(int i, int j) {
-        return accu[j + 1] - accu[i];
-    }
+  int sumRange(int i, int j) {
+    return accu[j + 1] - accu[i];
+  }
 
 private:
-    vector<int> accu;
+  vector<int> accu;
 };

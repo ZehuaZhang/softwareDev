@@ -16,33 +16,33 @@
 // Space: O(n)
 
 class Solution {
-    public:
-        vector<vector<int> > permute(vector<int>& nums) {
-            sort(nums.begin(), nums.end());
-            vector<int> visited(nums.size(), false);
-            vector<vector<int> > ans;
-            vector<int> path;
-            permute(nums, visited, path, ans);
+public:
+  vector<vector<int>> permute(vector<int>& nums) {
+    sort(nums.begin(), nums.end());
+    vector<bool> visited(nums.size(), false);
+    vector<vector<int>> ans;
+    vector<int> path;
+    permute(nums, visited, path, ans);
 
-            return ans;
-        }
+    return ans;
+  }
 
-    private:
-        void permute(vector<int>& nums, vector<int> &visited, vector<int> &path, vector<vector<int> > &ans) {
-            if (nums.size() == path.size()) {
-                ans.push_back(path);
-                return;
-            }
+private:
+  void permute(vector<int>& nums, vector<bool>& visited, vector<int>& path, vector<vector<int>>& ans) {
+    if (nums.size() == path.size()) {
+      ans.push_back(path);
+      return;
+    }
 
-            for (int i = 0; i < nums.size(); i++) {
-                if (!visited[i]) {
-                  path.push_back(nums[i]);
-                  visited[i] = true;
-                  permute(nums, visited, path, ans);
-                  path.pop_back();
-                  visited[i] = false;
-                  for (; i < nums.size() - 1 && nums[i] == nums[i + 1]; i++);
-                }
-            }
-        }
+    for (int i = 0; i < nums.size(); i++) {
+      if (!visited[i]) {
+        path.push_back(nums[i]);
+        visited[i] = true;
+        permute(nums, visited, path, ans);
+        path.pop_back();
+        visited[i] = false;
+        for (; i < nums.size() - 1 && nums[i] == nums[i + 1]; i++);
+      }
+    }
+  }
 };

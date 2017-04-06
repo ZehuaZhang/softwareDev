@@ -21,29 +21,27 @@
 // Space: O(logn)
 
 class Solution {
-    public:
-        vector<vector<int> > pathSum(TreeNode *root, int sum) {
-            pathSum(root, sum);
-            return ans;
-        }
-    private:
-        vector<int> path;
-        vector<vector<int>> ans;
+public:
+  vector<vector<int> > pathSum(TreeNode *root, int sum) {
+    vector<int> path;
+    vector<vector<int>> ans;
+    pathSum(root, sum, path, ans);
+    return ans;
+  }
+private:
+ void pathSum(TreeNode *root, int sum, vector<int>& path, vector<vector<int>>& ans) {
+    if(!root) {
+      return;
+    }
+    path.push_back(root->val);
 
-        void pathSum(TreeNode *root, int sum) {
-            if(!root) {
-                return;
-            }
+    if(!root->left && !root->right && root->val == sum) {
+      ans.push_back(path);
+    }
 
-            path.push_back(root->val);
+    pathSum(root->left, sum - root->val);
+    pathSum(root->right, sum - root->val);
 
-            if(!root->left && !root->right && root->val == sum) {
-                ans.push_back(path);
-            }
-
-            pathSum(root->left, sum - root->val);
-            pathSum(root->right, sum - root->val);
-
-            path.pop_back(); // restore
-        }
+    path.pop_back();
+  }
 };

@@ -19,18 +19,18 @@ public:
 	int removeDuplicates(vector<int>& nums) {
 		const int k = 1; // element appears at most k times
 
-        if (nums.size() <= k) {
-            return nums.size();
-        }
-
-        int index = k;
-        for (int i = k; i < nums.size(); i++) {
-            if (nums[i] != nums[index - k]) {
-                nums[index++] = nums[i];
-            }
-        }
-        return index;
+    if (nums.size() <= k) {
+      return nums.size();
     }
+
+    int index = k;
+    for (int i = k; i < nums.size(); i++) {
+      if (nums[i] != nums[index - k]) {
+        nums[index++] = nums[i];
+      }
+    }
+    return index;
+  }
 };
 
 // Time:  O(n)
@@ -38,15 +38,15 @@ public:
 
 class Solution {
 public:
-    int removeDuplicates(vector<int>& nums) {
-        int last = -1;
-        for (const auto& num : nums) {
-            if (last == -1 || nums[last] != num) {
-                nums[++last] = num;
-            }
-        }
-        return last + 1;
+  int removeDuplicates(vector<int>& nums) {
+    int last = -1;
+    for (const auto& num : nums) {
+      if (last == -1 || nums[last] != num) {
+        nums[++last] = num;
+      }
     }
+    return last + 1;
+  }
 };
 
 // Time:  O(n)

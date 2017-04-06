@@ -12,17 +12,16 @@
 
 class Solution {
 public:
-    ListNode* deleteDuplicates(ListNode* head) {
-        ListNode* curr = head;
-        while (curr) {
-            ListNode* next = curr->next;
-            if (next && next->val == curr->val) {
-                curr->next = next->next;
-                delete next;
-            } else {
-                curr = curr->next;
-            }
-        }
-        return head; 
+  ListNode* deleteDuplicates(ListNode* head) {
+    for (ListNode* curr = head; curr;) {
+      ListNode* next = curr->next;
+      if (next && next->val == curr->val) {
+        curr->next = next->next;
+        delete next;
+      } else {
+        curr = curr->next;
+      }
     }
+    return head; 
+  }
 };

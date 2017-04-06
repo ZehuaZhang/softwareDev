@@ -46,20 +46,20 @@
 
 class Solution {
 public:
-    vector<int> getModifiedArray(int length, vector<vector<int>>& updates) {
-        vector<int> result(length, 0);
+  vector<int> getModifiedArray(int length, vector<vector<int>>& updates) {
+    vector<int> result(length, 0);
 
-        for (const auto& update: updates) {
-            result[update[0]] += update[2]; // add action to start
-            if (update[1] + 1 < length) {   // add action to end, if end is not last position
-                result[update[1] + 1] -= update[2];
-            }
-        }
-
-        for (int i = 1; i < length; ++i) {
-            result[i] += result[i - 1]; // successor is the result of predecessor's action
-        }
-
-        return result;
+    for (const auto& update: updates) {
+      result[update[0]] += update[2]; // add action to start
+      if (update[1] + 1 < length) {   // add action to end, if end is not last position
+        result[update[1] + 1] -= update[2];
+      }
     }
+
+    for (int i = 1; i < length; ++i) {
+      result[i] += result[i - 1]; // successor is the result of predecessor's action
+    }
+
+    return result;
+  }
 };

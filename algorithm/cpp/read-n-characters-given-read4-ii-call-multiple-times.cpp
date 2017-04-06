@@ -14,25 +14,25 @@
 // Space: O(1)
 
 // Forward declaration of the read4 API.
-int read4(char *buf);
+int read4(char* buf);
 
 class Solution {
 public:
-    int read(char *buf, int n) {
-        int i = 0;
-        while (i < n) {
-            if (_i4 < _n4) {  // Any characters in buf4.
-                buf[i++] = _buf4[_i4++];
-            } else if (_n4 = read4(_buf4)) {  // Read more characters.
-                _i4 = 0;
-            } else {  // Buffer has been empty.
-                break;
-            }
-        }
-        return i;
+  int read(char* buf, int n) {
+    int i = 0;
+    while (i < n) {
+      if (_i4 < _n4) {  // Any characters in buf4.
+        buf[i++] = _buf4[_i4++];
+      } else if (_n4 = read4(_buf4)) {  // Read more characters.
+        _i4 = 0;
+      } else {  // Buffer has been empty.
+        break;
+      }
     }
+    return i;
+  }
 
 private:
-    char _buf4[4];
-    int _i4 = 0, _n4 = 0;
+  char _buf4[4];
+  int _i4 = 0, _n4 = 0;
 };

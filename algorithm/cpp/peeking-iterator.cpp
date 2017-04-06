@@ -28,7 +28,7 @@
 // **DO NOT** modify the interface for Iterator.
 class Iterator {
   struct Data;
-	Data* data;
+  Data* data;
 public:
 	Iterator(const vector<int>& nums);
 	Iterator(const Iterator& iter);
@@ -39,39 +39,38 @@ public:
 	bool hasNext() const;
 };
 
-
+// Initialize any member here.
+// **DO NOT** save a copy of nums and manipulate it directly.
+// You should only use the Iterator interface methods.
 class PeekingIterator : public Iterator {
 public:
-    PeekingIterator(const vector<int>& nums) : Iterator(nums), _hasNext(Iterator::hasNext()) {
-        // Initialize any member here.
-        // **DO NOT** save a copy of nums and manipulate it directly.
-        // You should only use the Iterator interface methods.
-    }
+  PeekingIterator(const vector<int>& nums) : Iterator(nums), _hasNext(Iterator::hasNext()) {
+  }
 
-    // Returns the next element in the iteration without advancing the iterator.
-    int peek() {
-        if (!_hasPeeked) {
-            _hasPeeked = true;
-            _val = Iterator::next();
-        }
-        return _val;
+  // Returns the next element in the iteration without advancing the iterator.
+  int peek() {
+    if (!_hasPeeked) {
+      _hasPeeked = true;
+      _val = Iterator::next();
     }
+    return _val;
+  }
 
-    // hasNext() and next() should behave the same as in the Iterator interface.
-    // Override them if needed.
-    int next() {
-        _val = peek();
-        _hasPeeked = false;
-        _hasNext = Iterator::hasNext();
-        return _val;
-    }
+  // hasNext() and next() should behave the same as in the Iterator interface.
+  // Override them if needed.
+  int next() {
+    _val = peek();
+    _hasPeeked = false;
+    _hasNext = Iterator::hasNext();
+    return _val;
+  }
 
-    bool hasNext() const {
-        return _hasNext;
-    }
+  bool hasNext() const {
+    return _hasNext;
+  }
 
 private:
-    int _val;
-    bool _hasNext;
-    bool _hasPeeked = false;
+  int _val;
+  bool _hasNext;
+  bool _hasPeeked = false;
 };

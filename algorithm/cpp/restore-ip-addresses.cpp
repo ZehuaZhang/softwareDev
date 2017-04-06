@@ -12,35 +12,34 @@
 // Space Complexity: O(nm)
 
 class Solution {
-    public:
-        vector<string> restoreIpAddresses(string s) {
-            vector<string> ans;
-            restoreIpAddresses(s, 0, 4, "", ans);
-            return ans;
-        }
+public:
+  vector<string> restoreIpAddresses(string s) {
+    vector<string> ans;
+    restoreIpAddresses(s, 0, 4, "", ans);
+    return ans;
+  }
 
-    private:
-        void restoreIpAddresses(const string &s, int start, int step, string ip, vector<string> &ans) {
-            if (start == s.size() && step == 0) {
-                ip.pop_back();
-                ans.push_back(ip);
-                return;
-            }
+private:
+  void restoreIpAddresses(const string& s, int start, int step, string ip, vector<string>& ans) {
+    if (start == s.size() && step == 0) {
+      ip.pop_back();
+      ans.push_back(ip);
+      return;
+    }
 
-            if (s.size() - start < step ||
-                s.size() - start > step * 3) { // pruning
-                return;
-            }
-            int num = 0;
-            for (int i = start; i < start + 3; ++i) {
-                num = num * 10 + s[i] - '0';
-                if(num > 255) {
-                    break;
-                }
-                restoreIpAddresses(s, i + 1, step - 1, ip + to_string(num) + '.', ans);
-                if (num == 0) {
-                    break; // only one 0
-                }
-            }
-        }
+    if (s.size() - start < step || s.size() - start > step * 3) {
+      return;
+    }
+    int num = 0;
+    for (int i = start; i < start + 3; ++i) {
+      num = num * 10 + s[i] - '0';
+      if (num > 255) {
+        break;
+      }
+      restoreIpAddresses(s, i + 1, step - 1, ip + to_string(num) + '.', ans);
+      if (num == 0) {
+        break; // only one 0
+      }
+    }
+  }
 };

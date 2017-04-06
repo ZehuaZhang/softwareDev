@@ -26,27 +26,24 @@
  */
 class Solution {
 public:
-    ListNode *removeNthFromEnd(ListNode *head, int n) {
-        ListNode dummy{0};
-        dummy.next = head;
-        ListNode* fast = &dummy;
+  ListNode* removeNthFromEnd(ListNode *head, int n) {
+    ListNode dummy{0, head};
+    ListNode* fast = &dummy;
 
-        // fast is n-step ahead.
-        while (n--) {
-            fast = fast->next;
-        }
-
-        // When fast reaches the end, slow must be nth to last node.
-        ListNode* slow = &dummy;
-        while (fast->next) {
-            slow = slow->next;
-            fast = fast->next;
-        }
-
-        ListNode* toDelete = slow->next;
-        slow->next = slow->next->next;
-        delete toDelete;
-
-        return dummy.next;
+    while (n--) {
+      fast = fast->next;
     }
+
+    ListNode* slow = &dummy;
+    while (fast->next) {
+      slow = slow->next;
+      fast = fast->next;
+    }
+
+    ListNode* toDelete = slow->next;
+    slow->next = slow->next->next;
+    delete toDelete;
+
+    return dummy.next;
+  }
 };

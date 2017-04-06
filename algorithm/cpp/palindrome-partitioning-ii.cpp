@@ -15,7 +15,7 @@ class Solution {
 public:      
   int minCut(string s) {
     const int n = s.size();
-    vector<vector<bool> > p(n, vector<bool>(n, false));
+    vector<vector<bool>> p(n, vector<bool>(n, false));
     vector<int> f(n + 1, 0);
 
     for(int i = 0; i <= n; ++i) {

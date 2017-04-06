@@ -18,38 +18,32 @@
 // Two pointers solution.
 class Solution {
 public:
-    ListNode* plusOne(ListNode* head) {
-        if (!head) {
-            return nullptr;
-        }
-
-        ListNode* dummy = new ListNode{0};
-        dummy->next = head;
-
-        ListNode* left = dummy, *right = head;
-        while (right->next) {
-            if (right->val != 9) {
-                left = right;
-            }
-            right = right->next;
-        }
-
-        if (right->val != 9) {
-            ++right->val;
-        } else {
-            ++left->val;
-            right = left->next;
-            while (right) {
-                right->val = 0;
-                right = right->next;
-            }
-        }
-
-        if (dummy->val == 0) {
-            delete dummy;
-            return head;
-        }
-
-        return dummy;
+  ListNode* plusOne(ListNode* head) {
+    if (!head) {
+      return nullptr;
     }
+
+    ListNode dummy{0, head};
+
+    ListNode* left = &dummy, *right = head;
+    for (right->next; right = right->next) {
+      if (right->val != 9) {
+        left = right;
+      }
+    }
+
+    if (right->val != 9) {
+      ++right->val;
+    } else {
+      ++left->val;
+      for (right = left->next; right; right = right->next) {
+        right->val = 0;
+      }
+    }
+
+    if (dummy->val == 0) {
+      return dummy.next;
+    }
+    return &dummy;
+  }
 };

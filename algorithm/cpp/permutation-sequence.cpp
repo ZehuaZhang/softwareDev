@@ -19,22 +19,21 @@
 
 class Solution {
 public:
-    string getPermutation(int n, int k) {
-        vector<int> nums;
-        int total = 1;  // total permutations of n numbers
-        for (int i = 1; i <= n; ++i) {
-            nums.emplace_back(i);
-            total *= i;
-        }
-
-        // Cantor Ordering: index = k / (n - 1)!     new k = k % (n - 1)!
-        stringstream permutation;
-        for (--k; n > 0; k %= total, --n) {
-            total /= n;
-            permutation << nums[k / total];
-            nums.erase(nums.begin() +  k / total);  
-        }
-
-        return permutation.str();
+  string getPermutation(int n, int k) {
+    vector<int> nums;
+    int total = 1;  // total permutations of n numbers
+    for (int i = 1; i <= n; ++i) {
+      nums.emplace_back(i);
+      total *= i;
     }
+
+    // Cantor Ordering: index = k / (n - 1)!     new k = k % (n - 1)!
+    stringstream permutation;
+    for (--k; n > 0; k %= total, --n) {
+      total /= n;
+      permutation << nums[k / total];
+      nums.erase(nums.begin() +  k / total);  
+    }
+    return permutation.str();
+  }
 };

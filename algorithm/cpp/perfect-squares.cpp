@@ -11,15 +11,15 @@
 
 class Solution {
 public:
-    int numSquares(int n) {
-        vector<int> minSquares{0};
-        while (minSquares.size() <= n) {
-            int squares = INT_MAX;
-            for (int i = 1; i * i <= minSquares.size(); ++i) {
-                squares = min(squares, minSquares[minSquares.size() - i * i] + 1);
-            }
-            minSquares.emplace_back(squares);
-        }
-        return minSquares[n];
+  int numSquares(int n) {
+    vector<int> minSquares{0};
+    while (minSquares.size() <= n) {
+      int squares = INT_MAX;
+      for (int i = 1; i * i <= minSquares.size(); ++i) {
+        squares = min(squares, minSquares[minSquares.size() - i * i] + 1);
+      }
+      minSquares.emplace_back(squares);
     }
+    return minSquares[n];
+  }
 };

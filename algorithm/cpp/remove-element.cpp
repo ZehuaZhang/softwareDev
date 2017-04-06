@@ -23,16 +23,16 @@
 
 class Solution {
 public:
-    int removeElement(vector<int>& nums, int val) {
-        int index = 0;
+  int removeElement(vector<int>& nums, int val) {
+    int index = 0;
 
-        for (auto num : nums) {
-            if (num != val) {
-                nums[index++] = num;
-            }
-        }
-        return index;
+    for (auto num : nums) {
+      if (num != val) {
+        nums[index++] = num;
+      }
     }
+    return index;
+  }
 };
 
 // Time:  O(n)
@@ -40,15 +40,15 @@ public:
 
 class Solution {
 public:
-    int removeElement(vector<int>& nums, int val) {
-        int left = 0, right = nums.size();
-        while (left < right) {
-            if (nums[left] != val) {
-                ++left;
-            } else {
-                swap(nums[left],  nums[--right]);
-            }
-        }
-        return right;
+  int removeElement(vector<int>& nums, int val) {
+    int left = 0, right = nums.size();
+    while (left < right) {
+      if (nums[left] != val) {
+        ++left;
+      } else {
+        swap(nums[left],  nums[--right]);
+      }
     }
+    return right;
+  }
 };

@@ -12,24 +12,23 @@
 
 class Solution {
 public:
-    ListNode* deleteDuplicates(ListNode* head) {
-        ListNode dummy{0};
-        auto prev = &dummy;
-        while (head) {
-            if (head->next && head->next->val == head->val) {
-                auto val = head->val;
-                while (head && head->val == val) {
-                    ListNode *temp = head;
-                    head = head->next;
-                    delete temp;
-                }
-                prev->next = head;
-            } else {
-                prev->next = head;
-                prev = head;
-                head = head->next;
-            }
+  ListNode* deleteDuplicates(ListNode* head) {
+    ListNode dummy{0};
+    for (ListNode* prev = &dummy; head;) {
+      if (head->next && head->next->val == head->val) {
+        auto val = head->val;
+        while (head && head->val == val) {
+          ListNode* toDelete = head;
+          head = head->next;
+          delete toDelete;
         }
-        return dummy.next;
+        prev->next = head;
+      } else {
+        prev->next = head;
+        prev = head;
+        head = head->next;
+      }
     }
+    return dummy.next;
+  }
 };

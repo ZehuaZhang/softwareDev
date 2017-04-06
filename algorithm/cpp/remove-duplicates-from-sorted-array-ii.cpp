@@ -15,19 +15,19 @@
 
 class Solution {
 public:
-    int removeDuplicates(vector<int>& nums) {
-        const int k = 2; // element appears at most k times
+  int removeDuplicates(vector<int>& nums) {
+    const int k = 2; // element appears at most k times
 
-        if (nums.size() <= k) {
-            return nums.size();
-        }
-
-        int index = k;
-        for (int i = k; i < nums.size(); i++) {
-            if (nums[i] != nums[index - k]) {
-                nums[index++] = nums[i];
-            }
-        }
-        return index;
+    if (nums.size() <= k) {
+      return nums.size();
     }
+
+    int index = k;
+    for (int i = k; i < nums.size(); i++) {
+      if (nums[i] != nums[index - k]) {
+        nums[index++] = nums[i];
+      }
+    }
+    return index;
+  }
 };

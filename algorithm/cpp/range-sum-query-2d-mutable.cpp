@@ -1,6 +1,6 @@
 // 308. Range Sum Query 2D
 // Difficulty : hard
- 
+
 // Given a 2D matrix matrix, find the sum of the elements inside the rectangle 
 // defined by its upper left corner (row1, col1) and lower right corner (row2, col2).
 
@@ -34,44 +34,44 @@
 // Segment Tree solution.
 class NumMatrix {
 public:
-    NumMatrix(vector<vector<int>> &matrix) : {
-        if (matrix.empty() || matrix[0].empty()) return;
-        _matrix.resize(matrix.size() + 1, vector<int>(matrix[0].size() + 1, 0));
-        _bits.resize(matrix.size() + 1, vector<int>(matrix[0].size() + 1, 0));
-        for (int i = 0; i < matrix.size(); ++i) {
-            for (int j = 0; j < matrix[i].size(); ++j) {
-                update(i, j, matrix[i][j]);
-            }
-        }
+  NumMatrix(vector<vector<int>> &matrix) : {
+    if (matrix.empty() || matrix[0].empty()) return;
+    _matrix.resize(matrix.size() + 1, vector<int>(matrix[0].size() + 1, 0));
+    _bits.resize(matrix.size() + 1, vector<int>(matrix[0].size() + 1, 0));
+    for (int i = 0; i < matrix.size(); ++i) {
+      for (int j = 0; j < matrix[i].size(); ++j) {
+        update(i, j, matrix[i][j]);
+      }
     }
+  }
 
-    void update(int row, int col, int val) {
-        int diff = val - _matrix[row + 1][col + 1];
-        for (int i = row + 1; i < _matrix.size(); i += i & -i) {
-            for (int j = col + 1; j < _matrix[i].size(); j += j & -j) {
-                _bits[i][j] += diff;
-            }
-        }
-        _matrix[row + 1][col + 1] = val;
+  void update(int row, int col, int val) {
+    int diff = val - _matrix[row + 1][col + 1];
+    for (int i = row + 1; i < _matrix.size(); i += i & -i) {
+      for (int j = col + 1; j < _matrix[i].size(); j += j & -j) {
+        _bits[i][j] += diff;
+      }
     }
+    _matrix[row + 1][col + 1] = val;
+  }
 
-    int sumRegion(int row1, int col1, int row2, int col2) {
-        return getSum(row2 + 1, col2 + 1) - getSum(row1, col2 + 1) - getSum(row2 + 1, col1) + getSum(row1, col1);
+  int sumRegion(int row1, int col1, int row2, int col2) {
+    return getSum(row2 + 1, col2 + 1) - getSum(row1, col2 + 1) - getSum(row2 + 1, col1) + getSum(row1, col1);
+  }
+  
+  int getSum(int row, int col) {
+    int result = 0;
+    for (int i = row; i > 0; i -= i & -i) {
+      for (int j = col; j > 0; j -= j & -j) {
+        result += _bits[i][j];
+      }
     }
-    
-    int getSum(int row, int col) {
-        int result = 0;
-        for (int i = row; i > 0; i -= i & -i) {
-            for (int j = col; j > 0; j -= j & -j) {
-                result += bit[i][j];
-            }
-        }
-        return result;
-    } 
-    
+    return result;
+  } 
+  
 private:
-    vector<vector<int>> _matrix;
-    vector<vector<int>> _bits;
+  vector<vector<int>> _matrix;
+  vector<vector<int>> _bits;
 };
 
 

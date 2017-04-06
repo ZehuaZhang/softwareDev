@@ -35,7 +35,7 @@ public:
       if (kvp.second % 2) {
         if (mid.empty()) {
           mid.push_back(kvp.first);
-        } else {  // The count of the middle char is at most one. 
+        } else {
           return {};
         }
       }

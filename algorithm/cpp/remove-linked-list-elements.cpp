@@ -12,18 +12,20 @@
 
 class Solution {
 public:
-    ListNode* removeElements(ListNode* head, int val) {
-        ListNode dummy{0};
-        dummy.next = head;
-        
-        for (ListNode *prev = &dummy, *cur = head; cur; cur = cur->next) {
-            if (cur->val == val) {
-                prev->next = cur->next;
-                delete cur;
-            } else {
-                prev = cur;
-            }
-        }
-        return dummy.next;
+  ListNode* removeElements(ListNode* head, int val) {
+    ListNode dummy{0, head};
+
+    for (ListNode* prev = &dummy, *cur = head; cur;) {
+      if (cur->val == val) {
+        ListNode* toDelete = cur;
+        cur = cur->next;
+        prev->next = cur;
+        delete toDelete;
+      } else {
+        prev = cur;
+        cur = cur->next;
+      }
     }
+    return dummy.next;
+  }
 };

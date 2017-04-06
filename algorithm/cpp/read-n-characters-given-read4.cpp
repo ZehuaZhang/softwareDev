@@ -11,19 +11,19 @@
 // Time:  O(n)
 // Space: O(1)
 
-int read4(char *buf);
+int read4(char* buf);
 
 class Solution {
 public:
-    int read(char *buf, int n) {
-        int readBytes = 0;
-        for (int i = 0; i <= n / 4; ++i) {
-            if (int size = read4(buf + readBytes)) {
-                readBytes += size;
-            } else {
-                break;
-            }
-        }
-        return min(readBytes, n);
+  int read(char* buf, int n) {
+    int readBytes = 0;
+    for (int i = 0; i <= n / 4; ++i) {
+      if (int size = read4(buf + readBytes)) {
+        readBytes += size;
+      } else {
+        break;
+      }
     }
+    return min(readBytes, n);
+  }
 };
