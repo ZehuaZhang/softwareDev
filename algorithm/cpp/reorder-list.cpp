@@ -14,58 +14,57 @@
 
 class Solution {
 public:
-    void reorderList(ListNode *head) {
-        if (!head) {
-            return;
-        }
-
-        ListNode *slow = head, *fast = head;
-        while (fast && fast->next) {
-            slow = slow->next;
-            fast = fast->next->next;
-        }
-
-        // Split into two lists.
-        ListNode *head2 = slow->next;
-        slow->next = nullptr;
-
-        merge(head, reverse(head2));
+  void reorderList(ListNode *head) {
+    if (!head) {
+      return;
     }
+
+    ListNode* slow = head, *fast = head;
+    while (fast->next && fast->next->next) {
+      slow = slow->next;
+      fast = fast->next->next;
+    }
+
+    ListNode* head2 = slow->next;
+    slow->next = nullptr;
+
+    merge(head, reverse(head2));
+  }
 
 private:
-    ListNode *reverse(ListNode *head) {
-        ListNode *prev = nullptr;
+  ListNode* reverse(ListNode* head) {
+    ListNode* prev = nullptr;
 
-        while (head) {
-            ListNode *next = head->next;
-            head->next = prev;
-            prev = head;
-            head = next;
-        }
-
-        return prev;
+    while (head) {
+      ListNode* next = head->next;
+      head->next = prev;
+      prev = head;
+      head = next;
     }
 
-    ListNode *merge(ListNode *list1, ListNode *list2) {
-        ListNode dummy{0};
-        ListNode *curr = &dummy;
+    return prev;
+  }
 
-        while (list1 && list2) {
-            ListNode *next = list1->next;
+  ListNode* merge(ListNode* list1, ListNode* list2) {
+    ListNode dummy{0};
+    ListNode* curr = &dummy;
 
-            curr->next = list1;
-            curr = curr->next;
-            curr->next = list2;
-            curr = curr->next;
+    while (list1 && list2) {
+      ListNode* next = list1->next;
 
-            list1 = next;
-            list2 = list2->next;
-        }
+      curr->next = list1;
+      curr = curr->next;
+      curr->next = list2;
+      curr = curr->next;
 
-        if (list1) {
-            curr->next = list1;
-        }
-
-        return dummy.next;
+      list1 = next;
+      list2 = list2->next;
     }
+
+    if (list1) {
+      curr->next = list1;
+    }
+
+    return dummy.next;
+  }
 };
