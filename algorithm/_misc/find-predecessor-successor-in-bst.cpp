@@ -1,31 +1,31 @@
 // Find Predecessor and Successor in BST
 
-// findPredSucc(root, target, nullptr, nullptr);
-
+// from root
 class Solution {
 public:
   void findPredSucc(TreeNode* root, int target, TreeNode*& pred, TreeNode*& succ) {
-    while (root) {
-      if (root->val == target) {
-        if (root->left) {
-          pred = root->left;
-          while (pred->right) {
-            pred = pred->right;
-          }
-        }
-        if (root->right) {
-          succ = root->right;
-          while (succ->left) {
-            succ = succ->left;
-          }
-        }
-      } else if (root->val > target) {
+    while (root && root->val != target) {
+      if (root->val > target) {
         succ = root;
         root = root->left;
       } else {
         pred = root;
         root = root->right;
       }
+    }
+    if (root && root->val == target) {
+      if (root->left) {
+        pred = root->left;
+        while (pred->right) {
+          pred = pred->right;
+        }
+      }
+      if (root->right) {
+        succ = root->right;
+        while (succ->left) {
+          succ = succ->left;
+        }
+      } 
     }
   }
 };
