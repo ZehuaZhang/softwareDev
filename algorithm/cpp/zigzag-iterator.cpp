@@ -30,30 +30,30 @@
 
 class ZigzagIterator {
 public:
-    ZigzagIterator(vector<int>& v1, vector<int>& v2) {
-        if (!v1.empty()) {
-            q.emplace(v1.cbegin(), v1.cend());
-        }
-        if (!v2.empty()) {
-            q.emplace(v2.cbegin(), v2.cend());
-        }
+  ZigzagIterator(vector<int>& v1, vector<int>& v2) {
+    if (!v1.empty()) {
+      q.emplace(v1.cbegin(), v1.cend());
     }
+    if (!v2.empty()) {
+      q.emplace(v2.cbegin(), v2.cend());
+    }
+  }
 
-    int next() {
-        auto curr = q.top(); q.pop();
-        int val = *curr.first++;
-        if (curr.first != curr.second) {
-            q.emplace(curr.first, curr.second);
-        }
-        return val;
+  int next() {
+    auto curr = q.top(); q.pop();
+    int val = *curr.first++;
+    if (curr.first != curr.second) {
+      q.emplace(curr.first, curr.second);
     }
+    return val;
+  }
 
-    bool hasNext() {
-        return !q.empty();
-    }
+  bool hasNext() {
+    return !q.empty();
+  }
 
 private:
-    queue<pair<vector<int>::const_iterator, vector<int>::const_iterator>> q;
+  queue<pair<vector<int>::const_iterator, vector<int>::const_iterator>> q;
 };
 
 

@@ -23,28 +23,28 @@
 
 class Solution {
 public:
-    int ladderLength(string beginWord, string endWord, unordered_set<string>& wordDict) {
-        unordered_map<string, int> pathLength;
-        queue<string> q;
-        pathLength[beginWord] = 1;
-        q.push(beginWord);
+  int ladderLength(string beginWord, string endWord, unordered_set<string>& wordDict) {
+    unordered_map<string, int> pathLength;
+    queue<string> q;
+    pathLength[beginWord] = 1;
+    q.push(beginWord);
 
-        while (!q.empty()) {
-            string word = q.front(); q.pop();
-            for (int i = 0; i < word.size(); ++i) {
-                string newWord = word;
-                for (char ch = 'a'; ch <= 'z'; ++ch) {
-                    newWord[i] = ch;
-                    if (newWord == endWord) {
-                    	return pathLength[word] + 1;
-                    }
-                    if (wordDict.count(newWord) && !pathLength.count(newWord)) {
-                        q.push(newWord);
-                        pathLength[newWord] = pathLength[word] + 1;
-                    }   
-                }
-            }
+    while (!q.empty()) {
+      string word = q.front(); q.pop();
+      for (int i = 0; i < word.size(); ++i) {
+        string newWord = word;
+        for (char ch = 'a'; ch <= 'z'; ++ch) {
+          newWord[i] = ch;
+          if (newWord == endWord) {
+            return pathLength[word] + 1;
+          }
+          if (wordDict.count(newWord) && !pathLength.count(newWord)) {
+            q.push(newWord);
+            pathLength[newWord] = pathLength[word] + 1;
+          }   
         }
-        return 0;
+      }
     }
+    return 0;
+  }
 };

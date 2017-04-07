@@ -19,17 +19,17 @@
 
 class Solution {
 public:
-    bool wordPattern(string pattern, string str) {
-        unordered_map<char, int> mapP;
-        unordered_map<string, int> mapW;
-        istringstream in(str);
-        int i = 0;
-        for (string word; in >> word; ++i) {
-            if (mapP[pattern[i]] != mapW[word]) {
-                return false;
-            }
-            mapP[pattern[i]] = mapW[word] = i + 1;
-        }
-        return i == pattern.size();
+  bool wordPattern(string pattern, string str) {
+    unordered_map<char, int> mapP;
+    unordered_map<string, int> mapW;
+    istringstream in(str);
+    int i = 0;
+    for (string word; in >> word; ++i) {
+      if (mapP[pattern[i]] != mapW[word]) {
+        return false;
+      }
+      mapP[pattern[i]] = mapW[word] = i + 1;
     }
+    return i == pattern.size();
+  }
 };
