@@ -17,21 +17,21 @@
 
 class Solution {
 public:
-    string reverseVowels(string s) {
-        for (int i = 0, j = s.length() - 1; i < j;) {
-            if (!isVowel(tolower(s[i]))) {
-                ++i;
-            } else if (!isVowel(tolower(s[j]))) {
-                --j;
-            } else {
-                swap(s[i++], s[j--]);
-            }
-        }
-        return s;
+  string reverseVowels(string s) {
+    for (int left = 0, right = s.length() - 1; left < right;) {
+      if (!isVowel(tolower(s[left]))) {
+        ++left;
+      } else if (!isVowel(tolower(s[right]))) {
+        --right;
+      } else {
+        swap(s[left++], s[right--]);
+      }
     }
+    return s;
+  }
 
 private:
-    bool isVowel(char a){
-        return string("aeiou").find(a) != string::npos;
-    }
+  bool isVowel(char a){
+    return string("aeiou").find(a) != string::npos;
+  }
 };

@@ -21,27 +21,26 @@
 // Heap solution. (148ms)
 class Solution {
 public:
-    int nthUglyNumber(int n) {
-        long long ugly_number = 0;
-        priority_queue<long long , vector<long long>, greater<long long>> heap;
-        
-        heap.emplace(1);
-        for (int i = 0; i < n; ++i) {
-            ugly_number = heap.top();
-            heap.pop();
-            if (ugly_number % 2 == 0) {
-                heap.emplace(ugly_number * 2);
-            } else if (ugly_number % 3 == 0) {
-                heap.emplace(ugly_number * 2);
-                heap.emplace(ugly_number * 3);
-            } else {
-                heap.emplace(ugly_number * 2);
-                heap.emplace(ugly_number * 3);
-                heap.emplace(ugly_number * 5);
-            }
-        }
-        return ugly_number;   
+  int nthUglyNumber(int n) {
+    long long ugly_number = 0;
+    priority_queue<long long , vector<long long>, greater<long long>> heap;
+
+    heap.emplace(1);
+    for (int i = 0; i < n; ++i) {
+      ugly_number = heap.top(); heap.pop();
+      if (ugly_number % 2 == 0) {
+        heap.emplace(ugly_number * 2);
+      } else if (ugly_number % 3 == 0) {
+        heap.emplace(ugly_number * 2);
+        heap.emplace(ugly_number * 3);
+      } else {
+        heap.emplace(ugly_number * 2);
+        heap.emplace(ugly_number * 3);
+        heap.emplace(ugly_number * 5);
+      }
     }
+    return ugly_number;   
+  }
 };
 
 // Time:  O(n)
@@ -50,28 +49,28 @@ public:
 // DP solution. (12ms)
 class Solution2 {
 public:
-    int nthUglyNumber(int n) {
-        vector<int> uglies(n);
-        uglies[0] = 1;
+  int nthUglyNumber(int n) {
+    vector<int> uglies(n);
+    uglies[0] = 1;
     
-        int factor2 = 2, factor3 = 3, factor5 = 5;
-        int idx2 = 0, idx3 = 0, idx5 = 0;
+    int factor2 = 2, factor3 = 3, factor5 = 5;
+    int idx2 = 0, idx3 = 0, idx5 = 0;
     
-        for (int i = 1; i < n; ++i) {
-            int minVal = min(min(f2, f3), f5);
-            uglies[i] = minVal;
-    
-            if (minVal == factor2) {
-                factor2 = 2 * uglies[++idx2];
-            }
-            if (minVal == factor3) {
-                factor3 = 3 * uglies[++idx3];
-            }
-            if (minVal == factor5) {
-                factor5 = 5 * uglies[++idx5];
-            }
-        }
-    
-        return uglies[n - 1];
+    for (int i = 1; i < n; ++i) {
+      int minVal = min(min(f2, f3), f5);
+      uglies[i] = minVal;
+
+      if (minVal == factor2) {
+        factor2 = 2 * uglies[++idx2];
+      }
+      if (minVal == factor3) {
+        factor3 = 3 * uglies[++idx3];
+      }
+      if (minVal == factor5) {
+        factor5 = 5 * uglies[++idx5];
+      }
     }
+    
+    return uglies[n - 1];
+  }
 };

@@ -24,17 +24,17 @@
 
 class Solution {
 public:
-    bool canMeasureWater(int x, int y, int z) {
-        return z <= max(x, y) && z % gcd(x, y) == 0;
-    }
-    
+  bool canMeasureWater(int x, int y, int z) {
+    return z <= max(x, y) && z % gcd(x, y) == 0;
+  }
+
 private:
-    int gcd(int a, int b) {
-        while (b != 0) {
-            int nextA = b;
-            b = a % b;
-            a = nextA;
-        }
-        return a;
+  int gcd(int a, int b) {
+    while (b) {
+      int nextA = b;
+      b = a % b;
+      a = nextA;
     }
+    return a;
+  }
 };

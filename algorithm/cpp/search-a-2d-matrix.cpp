@@ -21,25 +21,24 @@
 
 class Solution {
 public:
-    bool searchMatrix(vector<vector<int> > &matrix, int target) {
-        if(matrix.empty()) return false;
-
-        const size_t m = matrix.size();
-        const size_t n = matrix.front().size();
-
-        int start = 0, end = m * n;
-
-        while(start < end) {
-            int mid = (start + end) / 2;
-            int value = matrix[mid / n][mid % n];
-            if (value == target) {
-                return true;
-            } else if (value < target) {
-                start = mid + 1;
-            } else {
-                end = mid;
-            }
-        }
-        return false;
+  bool searchMatrix(vector<vector<int>>& matrix, int target) {
+    if (matrix.empty()) {
+      return false;
     }
+    const size_t m = matrix.size();
+    const size_t n = matrix.front().size();
+
+    for (int left = 0, right = m * n; left < right;) {
+      int mid = left + (right - left) / 2;
+      int value = matrix[mid / n][mid % n];
+      if (value == target) {
+        return true;
+      } else if (value > target) {
+        right = mid;
+      } else {
+        left = mid + 1;
+      }
+    }
+    return false;
+  }
 };

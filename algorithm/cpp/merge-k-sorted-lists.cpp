@@ -25,18 +25,18 @@ public:
   }
 
 private:
-  ListNode *mergeKListsHelper(const vector<ListNode *> &lists, int begin, int end) {
+  ListNode *mergeKListsHelper(const vector<ListNode*>&lists, int begin, int end) {
     if (begin > end) {
       return nullptr;
     }
     if (begin == end) {
       return lists[begin];
     }
-    return mergeTwoLists(mergeKListsHelper(lists, begin, (begin + end) / 2),
-     mergeKListsHelper(lists, (begin + end) / 2 + 1, end));
+    int mid = begin + (end - begin) / 2;
+    return mergeTwoLists(mergeKListsHelper(lists, begin, mid), mergeKListsHelper(lists, mid + 1, end));
   }
 
-  ListNode *mergeTwoLists(ListNode *l1, ListNode *l2) {
+  ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
     ListNode dummy{0};
     auto curr = &dummy;
 

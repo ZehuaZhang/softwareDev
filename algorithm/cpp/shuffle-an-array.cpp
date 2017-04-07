@@ -30,24 +30,24 @@
 
 class Solution {
 public:
-    Solution(vector<int> nums) : _nums(nums) {
-        
+  Solution(vector<int> nums) : _nums(nums) {
+
+  }
+
+  /** Resets the array to its original configuration and return it. */
+  vector<int> reset() {
+    return _nums;
+  }
+
+  /** Returns a random shuffling of the array. */
+  vector<int> shuffle() {
+    vector<int> nums(_nums);
+    for (int i = 0; i < nums.size(); ++i) {
+      swap(nums[i], nums[i + rand() % (nums.size() - i)]);   // [i, nums.size() - 1]
     }
-    
-    /** Resets the array to its original configuration and return it. */
-    vector<int> reset() {
-        return _nums;
-    }
-    
-    /** Returns a random shuffling of the array. */
-    vector<int> shuffle() {
-        vector<int> nums(_nums);
-        for (int i = 0; i < nums.size(); ++i) {
-            swap(nums[i],  nums[i + rand() % (nums.size() - i)]);   // [i, nums.size() - 1]
-        }
-        return nums;
-    }
+    return nums;
+  }
 
 private:
-    const vector<int> _nums;
+  const vector<int> _nums;
 };

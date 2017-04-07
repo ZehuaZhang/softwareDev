@@ -17,23 +17,19 @@
 
 class Solution {
 public:
-	vector<TreeNode *> generateTrees(int n) {
-		if (n == 0) {
-			return generate(1, 0);
-		}
+	vector<TreeNode*> generateTrees(int n) {
 		return generate(1, n);
 	}
 private:
-	vector<TreeNode *> generate(int start, int end) {
-		vector<TreeNode*> subTree;
+	vector<TreeNode*> generate(int start, int end) {
 		if (start > end) {
-			subTree.push_back(nullptr);
-			return subTree;
+			return { nullptr };
 		}
+    vector<TreeNode*> subTree;
 		for (int k = start; k <= end; k++) {
 			for (auto left : generate(start, k - 1)) {
 				for (auto right : generate(k + 1, end)) {
-					TreeNode *node = new TreeNode(k);
+					TreeNode* node = new TreeNode(k);
 					node->left = left;
 					node->right = right;
 					subTree.push_back(node);

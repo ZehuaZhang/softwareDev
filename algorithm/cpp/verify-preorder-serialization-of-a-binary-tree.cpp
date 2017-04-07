@@ -37,30 +37,27 @@
 
 class Solution {
 public:
-    bool isValidSerialization(string preorder) {
-        if (preorder.empty()) {
-            return false;
-        }
-        istringstream in(preorder);
-        vector<string> tokens;
-        string token;
-        
-        while (getline(in, token, ',')) {
-            tokens.push_back(token);
-        }
+  bool isValidSerialization(string preorder) {
+    istringstream in(preorder);
+    vector<string> tokens;
+    string token;
 
-        int parents = 0;
-        for (int i = 0; i < tokens.size() - 1; ++i) {
-            // for full tree, leaves are always one more than parent nodes
-            if (tokens[i] == "#") {
-                if (parents-- == 0) {   // preorder, root is before leaf
-                    return false;
-                }
-            } else {
-                ++parents;
-            }
-        }
-        // by this point - one leaf left, parents should match to leaves
-        return parents == 0 && tokens.back() == "#";   // last one must be "#", leaf
+    while (getline(in, token, ',')) {
+      tokens.push_back(token);
     }
+
+    int parents = 0;
+    for (int i = 0; i < tokens.size() - 1; ++i) {
+      // for full tree, leaves are always one more than parent nodes
+      if (tokens[i] == "#") {
+        if (parents-- == 0) {   // preorder, root is before leaf
+          return false;
+        }
+      } else {
+        ++parents;
+      }
+    }
+    // by this point - one leaf left, parents should match to leaves
+    return parents == 0 && tokens.back() == "#";   // last one must be "#", leaf
+  }
 };

@@ -1,7 +1,8 @@
 // 240. Search a 2D Matrix II
 // Difficulty: Medium
 
-// Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
+// Write an efficient algorithm that searches for a value in an m x n matrix.
+// This matrix has the following properties:
 
 // Integers in each row are sorted in ascending from left to right.
 // Integers in each column are sorted in ascending from top to bottom.
@@ -25,25 +26,24 @@
 
 class Solution {
 public:
-    bool searchMatrix(vector<vector<int>>& matrix, int target) {
-        if (matrix.empty() || matrix[0].empty()) {
-            return false;
-        }
-        const int m = matrix.size();
-        const int n = matrix[0].size();
-        int count = 0;
-
-        int i = 0, j = n - 1;
-        while (i < m && j >= 0) {
-            if (matrix[i][j] == target) {
-                return true;
-            } else if (matrix[i][j] > target) {
-                --j;
-            } else {
-                ++i;
-            }
-        }
-
-        return false;
+  bool searchMatrix(vector<vector<int>>& matrix, int target) {
+    if (matrix.empty() || matrix[0].empty()) {
+      return false;
     }
+    const int m = matrix.size();
+    const int n = matrix[0].size();
+    int count = 0;
+
+    for (int i = 0, j = n - 1; i < m && j >= 0;) {
+      if (matrix[i][j] == target) {
+        return true;
+      } else if (matrix[i][j] > target) {
+        --j;
+      } else {
+        ++i;
+      }
+    }
+
+    return false;
+  }
 };

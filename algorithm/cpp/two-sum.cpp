@@ -16,14 +16,14 @@
 
 class Solution {
 public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        unordered_map<int, int> numIndex;
-        for (int i = 0; i < nums.size(); ++i) {
-            if (numIndex.count(target - nums[i])) {
-                return {numIndex[target - nums[i]], i};
-            }
-            numIndex[nums[i]] = i;
-        }
-        return {};
+  vector<int> twoSum(vector<int>& nums, int target) {
+    unordered_map<int, int> numIndex;
+    for (int i = 0; i < nums.size(); ++i) {
+      if (numIndex.count(target - nums[i])) {
+        return {numIndex[target - nums[i]], i};
+      }
+      numIndex[nums[i]] = i;
     }
+    return {};
+  }
 };

@@ -21,17 +21,15 @@
 
 class Solution {
 public:
-    int reverse(int x) {
-        int result = 0;
-        while (x) {
-            auto prev = result;
-            result = result * 10 + x % 10;
-            if (result / 10 != prev) {
-                result = 0;
-                break;
-            }
-            x /= 10;
-        }
-        return result;
+  int reverse(int x) {
+    int result = 0;
+    for (x; x /= 10) {
+      auto prev = result;
+      result = result * 10 + x % 10;
+      if (result / 10 != prev) {
+        return 0;
+      }
     }
+    return result;
+  }
 };

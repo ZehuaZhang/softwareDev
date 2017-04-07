@@ -21,25 +21,25 @@
 
 class Solution {
 public:
-    int superPow(int a, vector<int>& b) {
-        int result = 1;
-        for (auto digit : b) {
-            result = myPow(result, 10, 1337) * myPow(a, digit, 1337) % 1337;
-        }
-        return result;
+  int superPow(int a, vector<int>& b) {
+    int result = 1;
+    for (auto digit : b) {
+      result = myPow(result, 10, 1337) * myPow(a, digit, 1337) % 1337;
     }
+    return result;
+  }
 
 private:
-    int myPow(int a, int n, int mod) {
-        int result = 1;
-        int x = a % mod;
-        while (n) {
-            if (n & 1) {
-                result = result * x % mod;
-            }
-            n >>= 1;
-            x = x * x % mod;
-        }
-        return result % mod;
+  int myPow(int a, int n, int mod) {
+    int result = 1;
+    for (x = a % mod; n; n >= 1) {
+      if (n & 1) {
+        result *= x % mod;
+        result %= mod;
+      }
+      x *= x;
+      x %= mod;
     }
+    return result % mod;
+  }
 };

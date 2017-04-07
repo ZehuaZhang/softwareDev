@@ -21,25 +21,24 @@
 
 class WordDistance {
 public:
-    WordDistance(vector<string> words) {
-        for (int i = 0; i < words.size(); ++i) {
-            index[words[i]].emplace_back(i);
-        }
+  WordDistance(vector<string> words) {
+    for (int i = 0; i < words.size(); ++i) {
+      index[words[i]].emplace_back(i);
     }
+  }
 
-    int shortest(string word1, string word2) {
-        const vector<int>& idx1 = index[word1];
-        const vector<int>& idx2 = index[word2];
+  int shortest(string word1, string word2) {
+    const vector<int>& idx1 = index[word1];
+    const vector<int>& idx2 = index[word2];
 
-        int dist = INT_MAX;
-        // two pointers
-        for (int i = 0, j = 0; i < idx1.size() && j < idx2.size();) {
-            dist = min(dist, abs(idx1[i] - idx2[j]));
-            idx1[i] < idx2[j] ? ++i : ++j;
-        }
-        return dist;
+    int dist = INT_MAX;
+    for (int i = 0, j = 0; i < idx1.size() && j < idx2.size();) {
+      dist = min(dist, abs(idx1[i] - idx2[j]));
+      idx1[i] < idx2[j] ? ++i : ++j;
     }
+    return dist;
+  }
 
 private:
-    unordered_map<string, vector<int>> index;
+  unordered_map<string, vector<int>> index;
 };

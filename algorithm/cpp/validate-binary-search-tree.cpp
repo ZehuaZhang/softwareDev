@@ -34,7 +34,6 @@ public:
 		if (root->val < lower || root->val > upper) {
 			return false;
 		}
-		return isValidBST(root->left, lower, root->val) &&
-				isValidBST(root->right, root->val, upper);
-		}
+		return isValidBST(root->left, lower, root->val) && isValidBST(root->right, root->val, upper);
+  }
 };

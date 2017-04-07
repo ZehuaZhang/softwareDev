@@ -16,30 +16,28 @@
 
 class Solution {
 public:
-    vector<string> findStrobogrammatic(int n) {
-        return findStrobogrammatic(n, n);
+  vector<string> findStrobogrammatic(int n) {
+    return findStrobogrammatic(n, n);
+  }
+
+  vector<string> findStrobogrammatic(const int n, int k) {
+    if (k == 0) {
+      return {""};
+    } else if (k == 1) {
+      return {"0", "1", "8"};
     }
     
-    vector<string> findStrobogrammatic(const int n, int k) {
-        if (k == 0) {
-            return {""};
-        } else if (k == 1) {
-            return {"0", "1", "8"};
+    vector<string> result;
+    for (auto num : findStrobogrammatic(n, k - 2)) {
+      for (auto pair : lookup) {
+        if (k != n || pair.first != "0") {
+          result.emplace_back(pair.first + num + pair.second);
         }
-    
-        vector<string> result;
-        for (auto num : findStrobogrammatic(n, k - 2)) {
-            for (auto pair : lookup) {
-                if (n != k || pair.first != "0") {
-                    result.emplace_back(pair.first + num + pair.second);
-                }
-            }
-        }
-        return result;
+      }
     }
+    return result;
+  }
 
 private:
-    const unordered_map<string, string> lookup{{"0", "0"}, {"1", "1"},
-                                               {"6", "9"}, {"8", "8"}, 
-                                               {"9", "6"}};
+  const unordered_map<string, string> lookup{ {"0", "0"}, {"1", "1"}, {"6", "9"}, {"8", "8"}, {"9", "6"} };
 };

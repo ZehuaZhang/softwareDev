@@ -16,26 +16,21 @@
 
 class Solution2 {
 public:
-    vector<int> singleNumber(vector<int>& nums) {
-        // Xor all the elements to get x ^ y.
-        int xXorY = 0;
-        for (const auto& num : nums) {
-            xXorY ^= num;
-        }
-
-        // Get the last bit where 1 occurs.
-        const auto bit = xXorY & (-xXorY);
-
-        // Get the subset of A where the number has the bit.
-        // The subset only contains one of the two integers, call it x.
-        // Xor all the elements in the subset to get x.
-        int x = 0;
-        for (const auto& num : nums) {
-            if (num & bit) {
-                x ^= num;
-            }
-        }
-
-        return {x, xXorY ^ x};
+  vector<int> singleNumber(vector<int>& nums) {
+    int xXorY = 0;
+    for (const auto& num : nums) {
+      xXorY ^= num;
     }
+
+    const auto bit = xXorY & (-xXorY);
+    
+    int x = 0;
+    for (const auto& num : nums) {
+      if (num & bit) {
+        x ^= num;
+      }
+    }
+
+    return {x, xXorY ^ x};
+  }
 };

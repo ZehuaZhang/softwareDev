@@ -1,7 +1,8 @@
 // 288. Unique Word Abbreviation
 // Difficulty : Easy 
 
-// An abbreviation of a word follows the form <first letter><number><last letter>. Below are some examples of word abbreviations:
+// An abbreviation of a word follows the form <first letter><number><last letter>.
+// Below are some examples of word abbreviations:
 
 // a) it                      --> it    (no abbreviation)
 
@@ -39,18 +40,18 @@
 
 class ValidWordAbbr {
 public:
-    ValidWordAbbr(vector<string> &dictionary) {
-        for (auto word : dictionary) {
-            string abbr = word.front() + to_string(word.length()) + word.back();
-            _lookup[abbr].emplace(word);
-        }
-    } 
-
-    bool isUnique(string word) {
-        string abbr = word.front() + to_string(word.length()) + word.back();
-        return _lookup[abbr].count(word) == _lookup[abbr].size(); // word not in dictionary, count = 0; while in, count = 1
+  ValidWordAbbr(vector<string>& dictionary) {
+    for (auto word : dictionary) {
+      string abbr = word.front() + to_string(word.length()) + word.back();
+      _lookup[abbr].emplace(word);
     }
+  } 
+
+  bool isUnique(string word) {
+    string abbr = word.front() + to_string(word.length()) + word.back();
+    return _lookup[abbr].count(word) == _lookup[abbr].size(); // word not in dictionary, count = 0; while in, count = 1
+  }
 
 private:
-    unordered_map<string, unordered_set<string>> _lookup;
+  unordered_map<string, unordered_set<string>> _lookup;
 };

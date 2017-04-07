@@ -22,16 +22,16 @@
 // Tri-Partition solution.
 class Solution {
 public:
-    void sortColors(vector<int>& nums) {
-        const int target = 1;
-        for (int red = 0, white = 0, blue = nums.size() - 1; white <= blue;) {
-            if (nums[white] < target) {
-                swap(nums[red++], nums[white++]);
-            } else if (nums[white] > target) {
-                swap(nums[white], nums[blue--]);
-            } else {
-                ++white;
-            }
-        }
+  void sortColors(vector<int>& nums) {
+    const int target = 1;
+    for (int red = 0, white = 0, blue = nums.size() - 1; white <= blue;) {
+      if (nums[white] < target) {
+        swap(nums[red++], nums[white++]);
+      } else if (nums[white] > target) {
+        swap(nums[white], nums[blue--]);
+      } else {
+        ++white;
+      }
     }
+  }
 };

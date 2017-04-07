@@ -21,33 +21,33 @@
 
 class Solution {
 public:
-    vector<int> sortTransformedArray(vector<int>& nums, int a, int b, int c) {
-        const auto f = [](int x, int a, int b, int c) {
-            return a * x * x + b * x + c;
-        };
+  vector<int> sortTransformedArray(vector<int>& nums, int a, int b, int c) {
+    const auto f = [](int x, int a, int b, int c) {
+      return a * x * x + b * x + c;
+    };
 
-        vector<int> result;
-        if (nums.empty()) {
-            return result;
-        }
-
-        int d = a > 0 ? -1 : 1; // a > 0 concave, decrease then increase; a < 0 convex, increase then decrease
-        for (int left = 0, right = nums.size() - 1; left <= right;) {
-            int yLeft = f(nums[left], a, b, c);
-            int yRight = f(nums[right], a, b, c);
-            
-            if (d * yLeft < d * yRight) {
-                result.emplace_back(yLeft);
-                ++left;
-            } else {
-                result.emplace_back(yRight);
-                --right;
-            }
-        }
-        if (d == -1) {
-            reverse(result.begin(), result.end());
-        }
-
-        return result;
+    vector<int> result;
+    if (nums.empty()) {
+      return result;
     }
+
+    int d = a > 0 ? -1 : 1; // a > 0 concave, decrease then increase; a < 0 convex, increase then decrease
+    for (int left = 0, right = nums.size() - 1; left <= right;) {
+      int yLeft = f(nums[left], a, b, c);
+      int yRight = f(nums[right], a, b, c);
+      
+      if (d * yLeft < d * yRight) {
+        result.emplace_back(yLeft);
+        ++left;
+      } else {
+        result.emplace_back(yRight);
+        --right;
+      }
+    }
+    if (d == -1) {
+      reverse(result.begin(), result.end());
+    }
+
+    return result;
+  }
 };

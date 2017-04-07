@@ -21,20 +21,19 @@
  */
 class Solution {
 public:
-    ListNode* swapPairs(ListNode* head) {
-        ListNode dummy{0};
-        dummy.next = head;
-        auto curr = &dummy;
-        while (curr->next && curr->next->next) {
-            auto nextOne = curr->next;
-            auto nextTwo = curr->next->next;
-            
-            curr->next = nextTwo;
-            nextOne->next = nextTwo->next;
-            nextTwo->next = nextOne;
-            
-            curr = nextOne;
-        }
-        return dummy.next;
+  ListNode* swapPairs(ListNode* head) {
+    ListNode dummy{0};
+    dummy.next = head;
+    for (ListNode* curr = &dummy; curr->next && curr->next->next;) {
+      ListNode* nextOne = curr->next;
+      ListNode* nextTwo = curr->next->next;
+
+      curr->next = nextTwo;
+      nextOne->next = nextTwo->next;
+      nextTwo->next = nextOne;
+
+      curr = nextOne;
     }
+    return dummy.next;
+  }
 };
