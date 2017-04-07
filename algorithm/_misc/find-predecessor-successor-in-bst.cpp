@@ -31,9 +31,9 @@ public:
 };
 
 // with parent node
-class Solution {
+class Solution2 {
 public:
-  void findPredSucc(TreeNode* root, TreeNode* node, TreeNode* &pred, TreeNode* &succ) {
+  void findPredSucc(TreeNode* root, TreeNode* node, TreeNode*& pred, TreeNode*& succ) {
     if (node) {
       if (node->left) {
         pred = node->left;
