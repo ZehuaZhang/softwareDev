@@ -30,7 +30,7 @@ public:
   }
 };
 
-// with parent node
+// with parent node, applies to binary tree
 class Solution2 {
 public:
   void findPredSucc(TreeNode* root, TreeNode* node, TreeNode*& pred, TreeNode*& succ) {
