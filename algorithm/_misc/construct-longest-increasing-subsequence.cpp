@@ -16,13 +16,12 @@ public:
       auto it = lower_bound(lis.begin(), lis.end(), nums[i]);
 
       if (it == lis.end()) {
-        prevIdx[i] = *prev(it);
         lis.push_back(i);
       } else {
-        if (it != lis.begin()) {
-          prevIdx[i] = *prev(it);
-        }
         *it = i;
+      }
+      if (it != lis.begin()) {
+        prevIdx[i] = *prev(it);
       }
     }
     
@@ -30,5 +29,20 @@ public:
     for (int i = lis.back(); i >= 0; i = prevIdx[i]) {
       result.push_back(nums[i]);
     }
+  }
+
+private:
+  using IT = vector<int>::iterator;
+  IT lowerBound(const vector<int>& nums, const vector<int>& lis, int target) {
+    IT left = lis.begin(), right = lis.end();
+    while (left != right) {
+      IT mid = left + (right - left) / 2;
+      if (nums[*mid] >= nums[*prev(right)]) {
+        right = mid;
+      } else {
+        left = mid + 1;
+      }
+    }
+    return left;
   }
 };
