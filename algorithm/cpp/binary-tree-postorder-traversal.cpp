@@ -18,7 +18,7 @@
 // Space: O(h)
 class Solution {
 public:
-  vector<int> postorderTraversal(TreeNode *root) {
+  vector<int> postorderTraversal(TreeNode* root) {
     vector<int> result;
     stack<const TreeNode*> s;
     const TreeNode* curr = root;

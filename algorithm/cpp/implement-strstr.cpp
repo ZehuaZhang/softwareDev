@@ -16,6 +16,7 @@ public:
     return KMP(haystack, needle);
   }
 
+private:
   int KMP(const string& text, const string& pattern) {
     const vector<int> prefix = getPrefix(pattern);
     int j = -1;

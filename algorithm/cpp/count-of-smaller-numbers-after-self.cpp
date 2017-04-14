@@ -31,7 +31,7 @@ public:
   }
 
 private:
-  void countAndMergeSort(vector<pair<int, int>> &numIndex, int start, int end, vector<int> &counts) {
+  void countAndMergeSort(vector<pair<int, int>>& numIndex, int start, int end, vector<int>& counts) {
     if (start >= end) {
       return;
     }

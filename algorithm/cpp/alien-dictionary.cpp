@@ -16,7 +16,6 @@
 //   "rftt"
 // ]
 
-
 // The correct order is: "wertf".
 
 // Note:
@@ -48,12 +47,12 @@ public:
       }
     }
     queue<char> q;
-    string result = "";
     for (auto letter : letters) {
       if (inDegree[letter] == 0) {
         q.push(letter);
       } 
     }
+    string result;
     while (!q.empty()) {
       char letter = q.front(); q.pop();
       result += letter;

@@ -24,6 +24,7 @@ public:
     return max(robRange(nums, 0, nums.size() - 1), robRange(nums, 1, nums.size()));
   }
 
+private:
   int robRange(vector<int>& nums, int start, int end) {
     int curr = nums[start], prev = 0, prevPrev = 0;
     for (int i = start + 1; i < end; ++i) {

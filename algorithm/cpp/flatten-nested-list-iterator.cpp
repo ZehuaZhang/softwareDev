@@ -39,7 +39,7 @@
 // Using stack and iterator.
 class NestedIterator {
 public:
-  NestedIterator(vector<NestedInteger> &nestedList) {
+  NestedIterator(vector<NestedInteger>& nestedList) {
     _depth.emplace(nestedList.cbegin(), nestedList.cend());
   }
 
@@ -49,7 +49,7 @@ public:
   
   bool hasNext() {
     while (!_depth.empty()) {
-      auto cur = _depth.top();
+      auto& cur = _depth.top();
       if (cur.first == cur.second) {
         _depth.pop();
       } else if (cur.first->isInteger()) {

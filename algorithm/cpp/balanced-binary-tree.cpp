@@ -11,15 +11,16 @@
 
 class Solution {
 public:
-	bool isBalanced (TreeNode* root) {
-		return balancedHeight (root) >= 0;
+	bool isBalanced(TreeNode* root) {
+		return balancedHeight(root) >= 0;
 	}
-	/**
-	* Returns the height of `root` if `root` is a balanced tree,
-	* otherwise, returns `-1`.
-	*/
+
 private:
-	int balancedHeight (TreeNode* root) {
+  /**
+  * Returns the height of `root` if `root` is a balanced tree,
+  * otherwise, returns `-1`.
+  */
+	int balancedHeight(TreeNode* root) {
 		if (!root) {
 			return 0;
 		}

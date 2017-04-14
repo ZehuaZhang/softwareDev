@@ -28,7 +28,8 @@
 class Solution {
 public:
   string getHint(string secret, string guess) {
-    int miss[256] = {0}, bulls = 0, cows = 0;
+    vector<int> miss;
+    int bulls = 0, cows = 0;
     for (int i = 0; i < secret.size(); ++i) {
       if (secret[i] == guess[i]) {
         ++bulls;

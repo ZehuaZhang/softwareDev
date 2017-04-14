@@ -13,8 +13,7 @@ class Solution {
 public:
   int hIndex(vector<int>& citations) {
     const int n = citations.size();
-    int left = 0;
-    int right = n - 1;
+    int left = 0, right = n - 1;
     while (left <= right) {
       const auto mid = left + (right - left) / 2;
       if (citations[mid] >= n - mid) {

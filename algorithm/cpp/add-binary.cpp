@@ -24,8 +24,7 @@ public:
       const size_t bBit = i < n ? b[n - 1 - i] - '0' : 0;
       size_t sum = carry + aBit + bBit;
       carry = sum / 2;
-      sum %= 2;
-      res.push_back('0' + sum);
+      res.push_back('0' + sum % 2);
     }
     if (carry) {
       res.push_back('0' + carry);

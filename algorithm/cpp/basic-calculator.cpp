@@ -24,9 +24,9 @@ public:
     string operand;
     for (int i = 0; i < s.length(); ++i) {
       if (isdigit(s[i])) {
-        operand.push_back(s[i]);
+        operand.append(s[i]);
         if (i == s.length() - 1 || !isdigit(s[i + 1])) {
-          operands.empalce(stol(operand));
+          operands.emplace(stol(operand));
           operand.clear();
         }
       } else if (isOperator(s[i])) {
@@ -49,6 +49,7 @@ public:
     return operands.top();
   }
 
+private:
   bool isOperator(const char op) {
     return string("+-*/").find(op) != string::npos;
   }

@@ -13,7 +13,7 @@
 // DP
 class Solution {
 public:
-  int rob(vector<int> &num) {
+  int rob(vector<int>& num) {
     if (num.size() <= 1) {
       return num.empty() ? 0 : num[0];
     }

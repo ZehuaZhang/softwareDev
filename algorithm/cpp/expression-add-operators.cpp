@@ -37,8 +37,7 @@ public:
   }
 
   void addOperatorsDFS(const string& num, const int& target, const int& pos,
-   const int& operand1, const int& operand2,
-   vector<string> &expr, vector<string> &result) {
+   const int& operand1, const int& operand2, vector<string>& expr, vector<string>& result) {
     if (pos == num.length() && operand1 + operand2 == target) {
       result.emplace_back(join(expr));
     } else {
@@ -51,17 +50,14 @@ public:
         if (to_string(val) != valStr) {
           break;
         }
-        // Case '+':
         expr.emplace_back("+" + valStr);
         addOperatorsDFS(num, target, i + 1, operand1 + operand2, val, expr, result);
         expr.pop_back();
 
-        // Case '-':
         expr.emplace_back("-" + valStr);
         addOperatorsDFS(num, target, i + 1, operand1 + operand2, -val, expr, result);
         expr.pop_back();
         
-        // Case '*':
         expr.emplace_back("*" + valStr);
         addOperatorsDFS(num, target, i + 1, operand1, operand2 * val, expr, result);
         expr.pop_back();

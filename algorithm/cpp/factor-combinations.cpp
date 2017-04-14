@@ -50,21 +50,21 @@ class Solution {
 public:
   vector<vector<int>> getFactors(int n) {
     vector<vector<int>> res;
-    helper(n, 2, {}, res);
+    vector<int> path;
+    helper(n, 2, path, res);
     return res;
   }
 
 private:
-  void helper(int n, int start, vector<int> out, vector<vector<int>> &res) {
-    if (n == 1 || out.size() > 1) {
-        res.push_back(out);
-      }
+  void helper(int n, int start, vector<int>& path, vector<vector<int>>& res) {
+    if (n == 1 || path.size() > 1) {
+      res.push_back(path);
     } else {
       for (int i = start; i <= n; ++i) {
         if (n % i == 0) {
-          out.push_back(i);
-          helper(n / i, i, out, res);
-          out.pop_back();
+          path.push_back(i);
+          helper(n / i, i, path, res);
+          path.pop_back();
         }
       }
     }

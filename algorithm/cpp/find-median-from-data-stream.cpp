@@ -1,7 +1,8 @@
 // 295. Find Median from Data Stream
 // Difficulty: Hard
 
-// Median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value. So the median is the mean of the two middle value.
+// Median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value.
+// So the median is the mean of the two middle value.
 
 // Examples: 
 // [2,3,4] , the median is 3
@@ -29,27 +30,23 @@ class MedianFinder {
 public:
   // Adds a number into the data structure.
   void addNum(int num) {
-        // Balance smaller half and larger half.
+    // Balance smaller half and larger half.
     if (_minHeap.empty() || num > _minHeap.top()) {
       _minHeap.emplace(num);
       if (_minHeap.size() > _maxHeap.size() + 1) {
-        _maxHeap.emplace(_minHeap.top());
-        _minHeap.pop();
+        _maxHeap.emplace(_minHeap.top()); _minHeap.pop();
       }
     } else {
       _maxHeap.emplace(num);
       if (_maxHeap.size() > _minHeap.size()) {
-        _minHeap.emplace(_maxHeap.top());
-        _maxHeap.pop();
+        _minHeap.emplace(_maxHeap.top()); _maxHeap.pop();
       }
     }
   }
 
   // Returns the median of current data stream
   double findMedian() {
-    return _minHeap.size() == _maxHeap.size() ?
-    (_maxHeap.top() + _minHeap.top()) / 2.0 :
-    _minHeap.top();
+    return _minHeap.size() == _maxHeap.size() ? (_maxHeap.top() + _minHeap.top()) / 2.0 : _minHeap.top();
   }
 
 private:

@@ -18,7 +18,7 @@ class Solution {
 public:
   string countAndSay(int n) {
     string seq("1");
-    while(--n) {
+    while (--n) {
       stringstream seqStream;
       for (auto i = seq.begin(); i != seq.end();) {
         auto j = find_if(i, seq.end(), bind1st(not_equal_to<char>(), *i));

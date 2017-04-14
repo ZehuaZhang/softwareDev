@@ -70,25 +70,25 @@
     using RIT = deque<pair<size_t, int>>::reverse_iterator;
     priority_queue<tuple<size_t, RIT, RIT>> heap;
 
-    if (_messages[userId].size()) {
+    if (!_messages[userId].empty()) {
       heap.emplace(_messages[userId].rbegin()->first, _messages[userId].rbegin(), _messages[userId].rend());
     }
     for (const auto& id : _followings[userId]) {
-      if (_messages[id].size()) {
-        heap.emplace(make_tuple(_messages[id].rbegin()->first, _messages[id].rbegin(), _messages[id].rend()));
+      if (!_messages[id].empty()) {
+        heap.emplace(_messages[id].rbegin()->first, _messages[id].rbegin(), _messages[id].rend());
       }
     }
     vector<int> res;
     while (!heap.empty() && res.size() < _number_of_most_recent_tweets) {
-      const auto& top = heap.top(); heap.pop();
       size_t t;
       RIT begin, end;
-      tie(t, begin, end) = top;
+      tie(t, begin, end) = heap.top(); heap.pop();
       
+      res.emplace_back(begin->second);
+
       if (next(begin) != end) {
         heap.emplace(next(begin)->first, next(begin), end);
       }
-      res.emplace_back(begin->second);
     }
     return res;
   }

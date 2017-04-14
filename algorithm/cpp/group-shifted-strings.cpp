@@ -27,7 +27,7 @@ public:
   vector<vector<string>> groupStrings(vector<string>& strings) {
     unordered_map<string, multiset<string>> groups;
     for (auto str : strings) {  
-      string hashStr = "";
+      string hashStr;
       // Grouping using characters distance offset (to first character) of each word 
       for (auto c : str) {
         hashStr += (c - str[0] + 26) % 26 + 'a';

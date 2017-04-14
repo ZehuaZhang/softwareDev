@@ -24,7 +24,7 @@ public:
       for (int j = T.size(); j > 0; --j) {
         // f(i, j) is composed of:
         // f(i−1,j): not using S[i - 1] 
-        // f(i−1,j−1): using S[i - 1] if S[i - 1] == S[j - 1]
+        // f(i−1,j−1): using S[i - 1] if S[i - 1] == T[j - 1]
         f[j] += (S[i - 1] == T[j - 1]) ? f[j - 1] : 0;
       }
     }

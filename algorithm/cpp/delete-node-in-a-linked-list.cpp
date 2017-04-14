@@ -15,10 +15,6 @@ public:
     if (!node) {
       return;
     }
-    if (!node->next) {
-      delete node;
-      return;
-    }
     ListNode* next = node->next;
     node->val = next->val;
     node->next = next->next;

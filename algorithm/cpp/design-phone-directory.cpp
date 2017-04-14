@@ -78,7 +78,7 @@
       return;
     }
     _used[number] = false;
-    _numbers[--_curr] = number ;
+    _numbers[--_curr] = number;
   }
 
 private:

@@ -27,9 +27,9 @@ public:
     }
     vector<string> result;
     for (int i = 0; i < n; ++i) {
-      for (auto inner : generateParenthesis (i)) {
-        for (auto outer : generateParenthesis (n - 1 - i)) {
-          result.push_back ("(" + inner + ")" + outer);
+      for (auto inner : generateParenthesis(i)) {
+        for (auto outer : generateParenthesis(n - 1 - i)) {
+          result.push_back("(" + inner + ")" + outer);
         }
       }
     }

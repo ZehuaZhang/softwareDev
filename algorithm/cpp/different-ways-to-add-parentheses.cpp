@@ -41,7 +41,7 @@ private:
     }
     vector<int> result;
     for (int i = start; i < end; ++i) {
-      if (input[i] == '+' || input[i] == '-' || input[i] == '*') {
+      if (string("+-*").find(input[i]) != string::npos) {
         for (auto left : diffWaysToCompute(input, start, i, lookup)) {
           for (auto right : diffWaysToCompute(input, i + 1, end, lookup)) {
             switch (input[i]) {
@@ -53,7 +53,6 @@ private:
         }
       }
     }
-    // If the input string contains only number.
     if (result.empty()) {
       result.emplace_back(stoi(input.substr(start, end - start)));
     }

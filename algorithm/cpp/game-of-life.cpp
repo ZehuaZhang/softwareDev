@@ -1,5 +1,6 @@
 // 289. Game of Life
 // Difficulty: Medium
+
 // According to the Wikipedia article: "The Game of Life, also known simply as Life, 
 // is a cellular automaton devised by the British mathematician John Horton Conway in 1970."
 
@@ -25,7 +26,7 @@
 class Solution {
 public:
   void gameOfLife(vector<vector<int>>& board) {
-    const int m = board.size(), n = m ? board[0].size() : 0;
+    const int m = board.size(), n = board[0].size();
     for (int i = 0; i < m; ++i) {
       for (int j = 0; j < n; ++j) {
         int count = 0;
@@ -41,7 +42,7 @@ public:
         //     Any live cell with two live neighbors.
         //     Any dead cell with exactly three live neighbors lives.
         // to summarize, consider #2, & #3 scenarios where next state of board element lives
-        if ((count == 4 && board[i][j]) || count == 3) {
+        if ((count == 4 && (board[i][j] & 1)) || count == 3) {
           board[i][j] |= 2;  // Mark as live. 
         }
       }

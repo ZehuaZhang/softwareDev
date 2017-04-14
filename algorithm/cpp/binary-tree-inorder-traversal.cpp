@@ -41,7 +41,7 @@ class Solution2 {
 public:
   vector<int> inorderTraversal(TreeNode* root) {
     vector<int> res;
-    TreeNode *curr = root;
+    TreeNode* curr = root;
     while (curr) {
       if (!curr->left) {
         res.emplace_back(curr->val);

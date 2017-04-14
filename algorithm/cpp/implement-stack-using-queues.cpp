@@ -24,8 +24,7 @@ public:
   void push(int x) {  // O(n)
     _q.emplace(x);
     for (int i = 0; i < _q.size() - 1; ++i) {
-      _q.emplace(_q.front());
-      _q.pop();
+      _q.emplace(_q.front());  _q.pop();
     }
   }
 

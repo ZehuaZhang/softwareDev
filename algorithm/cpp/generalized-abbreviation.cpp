@@ -22,7 +22,7 @@ public:
   }
 
 private:
-  void generateAbbreviationsHelper(const string& word, int i, string &cur, vector<string> &res) {
+  void generateAbbreviationsHelper(const string& word, int i, string& cur, vector<string>& res) {
     if (i == word.length()) {
       res.emplace_back(cur);
       return;

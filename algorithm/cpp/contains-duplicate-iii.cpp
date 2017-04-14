@@ -16,16 +16,15 @@ public:
 
     queue<int64_t> window;
     multiset<int64_t> bst;
-    for (int i = 0; i < nums.size(); ++i) {
-      const auto it = bst.lower_bound(nums[i] - t);
-      if (it != bst.cend() && (*it - nums[i]) <= t) {
+    for (auto num : nums) {
+      const auto it = bst.lower_bound(num - t);
+      if (it != bst.cend() && (*it - num) <= t) {
         return true;
       }
-      window.emplace(nums[i]);
-      bst.emplace(nums[i]);
+      window.emplace(num);
+      bst.emplace(num);
       if (bst.size() > k) {
-        int num = window.front(); window.pop();
-        bst.erase(bst.find(num));
+        bst.erase(bst.find(window.front())); window.pop();
       }
     }
     return false;

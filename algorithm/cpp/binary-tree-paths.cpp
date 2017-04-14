@@ -32,7 +32,7 @@ private:
       return;
     }
     if (!node->left && !node->right) {
-      string ans = "";
+      string ans;
       for (auto node : path) {
         ans += to_string(node->val) + "->";
       }

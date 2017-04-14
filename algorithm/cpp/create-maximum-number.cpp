@@ -37,6 +37,8 @@ public:
     }
     return res;
   }
+
+private:
   vector<int> maxVector(vector<int> nums, int k) {
     int drop = nums.size() - k;
     vector<int> res;
@@ -53,7 +55,7 @@ public:
   vector<int> mergeVector(vector<int> nums1, vector<int> nums2) {
     vector<int> res;
     while (nums1.size() + nums2.size()) {
-      vector<int> &tmp = nums1 > nums2 ? nums1 : nums2;
+      vector<int>& tmp = nums1 > nums2 ? nums1 : nums2;
       res.push_back(tmp[0]);
       tmp.erase(tmp.begin());
     }

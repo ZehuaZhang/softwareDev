@@ -1,4 +1,4 @@
-ß// 366. Find Leaves of Binary Tree
+// 366. Find Leaves of Binary Tree
 // Difficulty : Medium 
 
 // Given a binary tree, find all leaves and then remove those leaves. 
@@ -39,7 +39,7 @@ public:
   }
 
 private:
-  int findLeaves(TreeNode* node, vector<vector<int>> &result) {
+  int findLeaves(TreeNode* node, vector<vector<int>>& result) {
     if (!node) {
       return -1;
     }

@@ -39,15 +39,15 @@ public:
     stack<TreeNode*> s;
     s.push(root);
     while (!s.empty()) {
-      TreeNode *curr = s.top(); s.pop();
+      TreeNode* curr = s.top(); s.pop();
       if (curr->left) {
-        TreeNode *left = curr->left;
+        TreeNode* left = curr->left;
         while (left->right) {
           left = left->right;
         }
         left->right = curr->right;
         curr->right = curr->left;
-        curr->left = NULL;
+        curr->left = nullptr;
       }
       if (curr->right) {
         s.push(curr->right);

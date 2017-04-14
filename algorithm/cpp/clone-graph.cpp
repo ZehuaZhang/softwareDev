@@ -28,13 +28,13 @@
 
 class Solution {
 public:
-  UndirectedGraphNode *cloneGraph(UndirectedGraphNode *node) {
-    if(!node) {
+  UndirectedGraphNode* cloneGraph(UndirectedGraphNode* node) {
+    if (!node) {
       return nullptr;
     }
-    unordered_map<const UndirectedGraphNode *, UndirectedGraphNode *> copied;
+    unordered_map<const UndirectedGraphNode*, UndirectedGraphNode*> copied;
     copied[node] = new UndirectedGraphNode(node->label);
-    queue<const UndirectedGraphNode *> q;
+    queue<const UndirectedGraphNode*> q;
     q.push(node);
     while (!q.empty()) {
       const UndirectedGraphNode* node = q.front(); q.pop();

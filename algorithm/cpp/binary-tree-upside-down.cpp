@@ -36,8 +36,8 @@
 // Iterative
 class Solution {
 public:
-  TreeNode *upsideDownBinaryTree(TreeNode *root) {
-    TreeNode *curr = root, *prev = NULL, *next = NULL, *prevRight = NULL;
+  TreeNode* upsideDownBinaryTree(TreeNode *root) {
+    TreeNode* curr = root, *prev = NULL, *next = NULL, *prevRight = NULL;
     while (curr) {
       next = curr->left;
       curr->left = prevRight;	// its cousin

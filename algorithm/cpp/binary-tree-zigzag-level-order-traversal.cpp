@@ -23,12 +23,12 @@
 
 class Solution {
 public:
-  vector<vector<int> > zigzagLevelOrder(TreeNode *root) {
+  vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
     vector<vector<int>> result;
     zigzagLevelOrder(root, 1, result);
 
     bool isLeftToRight = true;
-    for (auto &element : result) {
+    for (auto& element : result) {
       if (!isLeftToRight) {
         reverse(element.begin(), element.end());
       }
@@ -38,7 +38,7 @@ public:
   }
 
 private:
-  void levelOrderBottom(TreeNode *root, size_t level, vector<vector<int>> &result) {
+  void levelOrderBottom(TreeNode* root, size_t level, vector<vector<int>>& result) {
     if (!root) {
       return;
     }

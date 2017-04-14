@@ -39,8 +39,8 @@ public:
   vector<int> closestKValues(TreeNode* root, double target, int k) {
     vector<int> closest;
     int start = 0;
-    stack<TreeNode *> s;
-    TreeNode *curr = root;
+    stack<TreeNode*> s;
+    TreeNode* curr = root;
 
     while (curr || !s.empty()) {
       if (curr) {
@@ -59,7 +59,6 @@ public:
         curr = curr->right;
       }
     }
-    vector<int> result(closest.begin() + start, closest.end());
-    return result;
+    return vector<int> (closest.begin() + start, closest.end());
   }
 };

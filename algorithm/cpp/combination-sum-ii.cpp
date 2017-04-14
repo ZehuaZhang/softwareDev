@@ -23,9 +23,9 @@
 
 class Solution {
 public:
-  vector<vector<int> > combinationSum2(vector<int> &num, int target) {
+  vector<vector<int> > combinationSum2(vector<int>&num, int target) {
     sort(num.begin(), num.end());
-    vector<vector<int> > ans;
+    vector<vector<int>> ans;
     vector<int> path;
     dfs(num, target, 0, path, ans);
     return ans;

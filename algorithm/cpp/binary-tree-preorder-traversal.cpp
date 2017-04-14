@@ -25,7 +25,7 @@ public:
     }
     vector<int> result;
     while (!s.empty()) {
-      const TreeNode *curr = s.top(); s.pop();
+      const TreeNode* curr = s.top(); s.pop();
       result.push_back(curr->val);
       
       if (curr->right) {
@@ -47,7 +47,7 @@ class Solution2 {
 public:
   vector<int> preorderTraversal(TreeNode* root) {
     vector<int> res;
-    auto *curr = root;
+    TreeNode* curr = root;
     while (curr) {
       if (!curr->left) {
         res.emplace_back(curr->val);

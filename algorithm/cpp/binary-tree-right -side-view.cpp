@@ -27,7 +27,7 @@ public:
       result.push_back(q.back()->val);
       int size = q.size();
       while (size--) {
-        TreeNode *node = q.front(); q.pop();
+        TreeNode* node = q.front(); q.pop();
         if (node->left) {
           q.push(node->left);
         }

@@ -20,8 +20,8 @@
 
 class Solution {
 public:
-  vector<vector<int> > combine(int n, int k) {
-    vector<vector<int> > ans;
+  vector<vector<int>> combine(int n, int k) {
+    vector<vector<int>> ans;
     vector<int> path;
     combine(n, k, 1, path, ans);
     return ans;

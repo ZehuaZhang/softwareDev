@@ -15,7 +15,7 @@ public:
   TrieNode() : isString(false) {
   }
   bool isString;
-  unordered_map<char, TrieNode *> leaves;
+  unordered_map<char, TrieNode*> leaves;
 };
 
 class Trie {
@@ -26,7 +26,7 @@ public:
 
   // Inserts a word into the trie.
   void insert(string word) {
-    TrieNode *curr = _root;
+    TrieNode* curr = _root;
     for (auto c : word) {
       if (!curr->leaves.count(c)) {
         curr->leaves[c] = new TrieNode();
@@ -48,8 +48,8 @@ public:
   }
 
   // return last character of word in Trie
-  TrieNode *childSearch(const string& word) {
-    TrieNode *curr = _root;
+  TrieNode* childSearch(const string& word) {
+    TrieNode* curr = _root;
     for (const auto& c : word) {
       if (!curr->leaves.count(c)) {
         return nullptr;

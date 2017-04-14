@@ -22,9 +22,9 @@
 
 class Solution {
 public:
-  vector<vector<int> > combinationSum(vector<int> &candidates, int target) {
+  vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
     sort(candidates.begin(), candidates.end());
-    vector<vector<int> > ans;
+    vector<vector<int>> ans;
     vector<int> path;
     dfs(candidates, target, 0, path, ans);
     return ans;

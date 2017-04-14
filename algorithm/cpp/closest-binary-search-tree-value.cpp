@@ -1,4 +1,4 @@
-// Closest Binary Search Tree Value
+// 270. Closest Binary Search Tree Value
 // Difficulty : Easy 
 
 // Given a non-empty binary search tree and a target value, find the value in the BST that is closest to the target.
@@ -19,7 +19,7 @@ public:
     
     while (root) {
       if (abs(static_cast<double>(root->val) - target) < gap) {
-        gap = abs(root->val - target);
+        gap = abs(static_cast<double>(root->val) - target);
         closest = root->val;
       }
       if (target == root->val) {

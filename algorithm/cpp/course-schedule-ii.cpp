@@ -60,9 +60,6 @@ public:
         }
       }
     }
-    if (courses.size() != numCourses) {
-      courses.clear();
-    }
-    return courses;
+    return courses.size() != numCourses ? {} : courses;
   }
 };

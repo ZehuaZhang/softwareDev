@@ -34,9 +34,8 @@
 
 class Solution {
 public:
-  int calculateMinimumHP(vector<vector<int> > &dungeon) {
-    int m = dungeon.size();
-    int n = dungeon[0].size();
+  int calculateMinimumHP(vector<vector<int>>& dungeon) {
+    int m = dungeon.size(), n = dungeon[0].size();
     int dp[m][n];
     dp[m - 1][n - 1] = max(1, 1 - dungeon[m - 1][n - 1]);
 

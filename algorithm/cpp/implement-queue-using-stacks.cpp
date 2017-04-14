@@ -33,8 +33,7 @@ public:
   int peek(void) {
     if (_out.empty()) {
       while (!_in.empty()) {
-        _out.emplace(_in.top());
-        _in.pop();
+        _out.emplace(_in.top()); _in.pop();
       }
     }
     return _out.top();

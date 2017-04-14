@@ -67,8 +67,7 @@ public:
       @param timestamp - The current timestamp (in seconds granularity). */
   int getHits(int timestamp) {
     while (!_dq.empty() && _dq.front().first <= timestamp - _k) {
-      _count -= _dq.front().second;
-      _dq.pop_front();
+      _count -= _dq.front().second; _dq.pop_front();
     }
     return _count;
   }

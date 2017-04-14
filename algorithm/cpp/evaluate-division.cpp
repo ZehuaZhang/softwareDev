@@ -43,19 +43,14 @@ public:
     for (const auto& i : query) {
       unordered_set<string> visited;
       auto ans = check(i.first, i.second, lookup, visited);
-      if (ans.first) {
-        result.emplace_back(ans.second);
-      } else {
-        result.emplace_back(-1);
-      }
+      result.emplace_back(ans.first ? ans.second : -1);
     }
     return result;
   }
 
 private:
   pair<bool, double> check(string up, string down, 
-    unordered_map<string, unordered_map<string, double>> &lookup,
-    unordered_set<string> &visited) {
+    unordered_map<string, unordered_map<string, double>>& lookup, unordered_set<string>& visited) {
     if (lookup[up].count(down)) {
       return {true, lookup[up][down]};
     }

@@ -44,7 +44,7 @@ public:
 
 private:
   int count(int m, int n, int used, int i1, int j1) {
-    if (!n) {
+    if (n == 0) {
       return 1;
     }
     int result = m <= 0;
@@ -54,7 +54,7 @@ private:
         int I = i1 + i2, J = j1 + j2, used2 = used | (1 << (i2 * 3 + j2));
         // added new, median doesn't exist, or median has added
         if (used2 > used && (I % 2 || J % 2 || used2 & (1 << (I / 2 * 3 + J / 2)))) {
-          result += count(m - 1, n - 1, used2, I, J);
+          result += count(m - 1, n - 1, used2, i2, j2);
         }
       }
     }

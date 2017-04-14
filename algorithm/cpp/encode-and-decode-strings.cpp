@@ -53,7 +53,7 @@ public:
 
     for (size_t pos = 0; pos < s.length();) {
       auto slash = s.find("/", pos);
-      size_t len = strtol(s.substr(pos, slash));
+      size_t len = strtol(s.substr(pos, slash - pos));
       strs.push_back(s.substr(++slash, len));
       pos = slash + len;
     }

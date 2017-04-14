@@ -32,22 +32,22 @@ public:
         if ((s1.length() > 1 && s1[0] == '0') ||
           (s2.length() > 1 && s2[0] == '0')) {
           continue;
-      }
-      string next = add(s1, s2);
-      string cur = s1 + s2 + next;
-      while (cur.length() < num.length()) {
-        s1 = s2;
-        s2 = next;
-        next = add(s1, s2);
-        cur += next;
-      }
-      if (cur == num) {
-        return true;
+        }
+        string next = add(s1, s2);
+        string cur = s1 + s2 + next;
+        while (cur.length() < num.length()) {
+          s1 = s2;
+          s2 = next;
+          next = add(s1, s2);
+          cur += next;
+        }
+        if (cur == num) {
+          return true;
+        }
       }
     }
+    return false;
   }
-  return false;
-}
 
 private:
   string add(const string& s1, const string& s2) {
