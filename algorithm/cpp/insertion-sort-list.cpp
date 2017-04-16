@@ -8,7 +8,7 @@
 
 class Solution {
 public:
-  ListNode* insertionSortList(ListNode *head) {
+  ListNode* insertionSortList(ListNode* head) {
     ListNode dummy(INT_MIN);
 
     for (ListNode* curr = head; curr;) {

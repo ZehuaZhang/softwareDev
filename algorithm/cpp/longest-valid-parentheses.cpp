@@ -15,18 +15,17 @@ class Solution {
 public:
   int longestValidParentheses(string s) {
     int maxLen = 0;
-    stack<int> mismatch;
-    matchStart.push(-1);
+    stack<int> idx;
+    idx.push(-1);
     for (int i = 0; i < s.size(); ++i) {
       if (s[i] =='(') {
-        mismatch.push(i);
+        idx.push(i);
       } else {
-        mismatch.pop();
-
-        if (mismatch.empty()) {
-          mismatch.push(i);
+        idx.pop();
+        if (idx.empty()) {
+          idx.push(i);
         } else {
-          maxLen = max(maxLen, i - mismatch.top());
+          maxLen = max(maxLen, i - idx.top());
         }
       }
     }

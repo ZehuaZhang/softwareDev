@@ -21,7 +21,7 @@
 class Solution {
 public:
   string numberToWords(int num) {
-    if (!num) {
+    if (num == 0) {
       return "Zero";
     }
     unordered_map<int, string> lookup = { {1, "One"}, {2, "Two"}, {3, "Three"},
@@ -51,8 +51,8 @@ public:
 private:
   string join(const vector<string>& strings, const string& delimiter) {
     ostringstream joinString;
-    copy(strings.begin(), strings.end(), ostream_iterator<string>(joinString, delimiter.c_str()));
-    return joinString.str().pop_back();
+    copy(strings.begin(), prev(strings.end()), ostream_iterator<string>(joinString, delimiter.c_str()));
+    return joinString.str().append(*prev(strings.end()));
   }
 
   string threeDigits(int num, unordered_map<int, string>& lookup, const string& unit) {
@@ -61,7 +61,7 @@ private:
       res.emplace_back(lookup[num / 100] + " " + "Hundred");
     }
     if (num %= 100) {
-      if (lookup.find(num) != lookup.end()) {
+      if (lookup.count(num)) {
         res.emplace_back(lookup[num]);
       } else {
         res.emplace_back(lookup[(num / 10) * 10] + " " + lookup[num % 10]);

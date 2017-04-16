@@ -18,15 +18,10 @@
 class Solution {
 public:
   bool isPalindrome(int x) {
-    if (x < 0) {
-      return false;
-    }
-    int temp = x;
     int reversed = 0;
-    while (temp) {
+    for (int temp = x; temp; temp /= 10) {
       reversed = reversed * 10 + temp % 10;
-      temp /= 10;
     }
-    return reversed == x;
+    return x < 0 ? false : reversed == x;
   }
 };

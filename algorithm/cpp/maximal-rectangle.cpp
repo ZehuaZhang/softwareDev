@@ -18,11 +18,7 @@
 class Solution {
 public:
   int maximalRectangle(vector<vector<char> > &matrix) {
-    if (matrix.empty()) {
-      return 0;
-    }
-    const int m = matrix.size();
-    const int n = matrix[0].size();
+    const int m = matrix.size(), n = matrix[0].size();
     vector<int> heights(n, 0);
     int maxArea = 0;
     
@@ -30,13 +26,13 @@ public:
       for (int j = 0; j < n; ++j) {
         heights[j] = matrix[i][j] == '1' ? heights[j] + 1 : 0;
       }
-      maxArea = max(maxArea, maximalRectangleTillCurrRow(heights));
+      maxArea = max(maxArea, maxHist(heights));
     }
     return maxArea;
   }
 
 private:
-  int maximalRectangleTillCurrRow(vector<int> heights) {
+  int maxHist(vector<int> heights) {
     stack<int> idx;  // store index of heights
     heights.push_back(0); // for final calculate
     int maxArea = 0;
@@ -47,7 +43,7 @@ private:
       } else {
         int height = heights[idx.top()]; idx.pop();
         int len = idx.empty() ? i : i - idx.top() - 1;
-        maxArea = max(maxArea, heights[idx] * len);
+        maxArea = max(maxArea, height * len);
       }
     }
     return maxArea;

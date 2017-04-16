@@ -24,7 +24,7 @@ public:
     if (!root) {
       return root;
     }
-    stack<TreeNode *> s;
+    stack<TreeNode*> s;
     s.emplace(root);
 
     while (!s.empty()) {

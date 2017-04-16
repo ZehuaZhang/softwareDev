@@ -9,15 +9,12 @@
 class Solution {
 public:
   int maxProduct(vector<int>& nums) {
-    if (nums.empty()) {
-      return 0;
-    }
     // kadane algorithm, why currMin <=> '-' * '-' = '+'
     int maxVal = INT_MIN, currMax = 1, currMin = 1;
     for (auto num : nums) {
       int prevMax = currMax, prevMin = currMin;
-      currMax = max(max(num, prevMax * num), prevMin * num);
-      currMin = min(min(num, prevMax * num), prevMin * num);
+      currMax = max(num, max(prevMax * num, prevMin * num));
+      currMin = min(num, min(prevMax * num, prevMin * num));
       maxVal = max(maxVal, currMax);
     }
     return maxVal;

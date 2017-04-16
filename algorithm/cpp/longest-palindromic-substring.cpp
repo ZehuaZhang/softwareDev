@@ -15,9 +15,9 @@ public:
     bool isPalindrome[n][n];   // [row, col] substring of s is palindrome 
     fill_n(isPalindrome, n * n, false);
 
-    size_t maxLen = 1, start = 0;
-    for (size_t i = s.size() - 1; i >= 0; --i) {
-      for (size_t j = i; j < s.size(); ++j) {
+    size_t maxLen = 0, start = 0;
+    for (size_t i = n - 1; i >= 0; --i) {
+      for (size_t j = i; j < n; ++j) {
         isPalindrome[i][j] = s[i] == s[j] && (j - i < 2 || isPalindrome[i + 1][j - 1]);
         if (isPalindrome[i][j] && maxLen < (j - i + 1)) {
           maxLen = j - i + 1;

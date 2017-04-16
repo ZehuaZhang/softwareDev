@@ -28,8 +28,6 @@ public:
     }
 
     sort(nums.begin(), nums.end());
-    // dp[i]: the size of the largest distinct subset of
-    //        the first i+1 numbers including nums[i]
     vector<int> dp(nums.size() , 1);
     vector<int> prev(nums.size(), -1);
     int maxIdx = 0;

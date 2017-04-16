@@ -19,14 +19,11 @@
 class Solution {
 public:
   string minWindow(string s, string t) {
-    if (t.size() > s.size()) {
-      return "";
-    }
     unordered_map<char, int> cntT;
     for (char c : t) {
       ++cntT[c];
     }
-    string result = "";
+    string result;
     int left = 0, count = 0, minLen = s.size() + 1;
     for (int right = 0; right < s.size(); ++right) {
       if (cntT.count(s[right]) && cntT[s[right]]-- > 0) {

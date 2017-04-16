@@ -12,8 +12,7 @@
 class Solution {
 public:
 	int minPathSum(vector<vector<int> > &grid) {
-		const int m = grid.size();
-		const int n = grid[0].size();
+		const int m = grid.size(), n = grid[0].size();
 		vector<int> f(n, INT_MAX);
 		f[0] = 0;
 		for (int i = 0; i < m; i++) {

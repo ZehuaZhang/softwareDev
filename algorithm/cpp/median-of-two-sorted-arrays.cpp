@@ -22,20 +22,19 @@
 class Solution {
 public:
   double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
-    const int m = A.size();
-    const int n = B.size();
+    const int m = A.size(), n = B.size();
     int total = m + n;
     if (total & 1) {
-      return find_kth(A.begin(), m, B.begin(), n, total / 2 + 1);
+      return findKth(A.begin(), m, B.begin(), n, total / 2 + 1);
     } else {
-      return (find_kth(A.begin(), m, B.begin(), n, total / 2) + find_kth(A.begin(), m, B.begin(), n, total / 2 + 1)) / 2.0;
+      return (findKth(A.begin(), m, B.begin(), n, total / 2) + findKth(A.begin(), m, B.begin(), n, total / 2 + 1)) / 2.0;
     }
   }
 private:
   template<typename It>
-  int find_kth(It A, int m, It B, int n, int k) {
+  int findKth(It A, int m, It B, int n, int k) {
     if (m > n) {
-      return find_kth(B, n, A, m, k);
+      return findKth(B, n, A, m, k);
     }
     if (m == 0) {
       return *(B + k - 1);
@@ -45,9 +44,9 @@ private:
     }
     int ia = min(k / 2, m), ib = k - ia;
     if (*(A + ia - 1) < *(B + ib - 1)) {
-      return find_kth(A + ia, m - ia, B, n, k - ia);
+      return findKth(A + ia, m - ia, B, n, k - ia);
     } else if (*(A + ia - 1) > *(B + ib - 1)) {
-      return find_kth(A, m, B + ib, n - ib, k - ib);
+      return findKth(A, m, B + ib, n - ib, k - ib);
     } else {
       return *(A + ia - 1);
     }

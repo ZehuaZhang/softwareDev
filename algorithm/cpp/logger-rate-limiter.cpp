@@ -49,8 +49,7 @@ public:
   /** Returns true if the message should be printed in the given timestamp, otherwise returns false. The timestamp is in seconds granularity. */
   bool shouldPrintMessage(int timestamp, string message) {
     while (!_dq.empty() && _dq.front().first <= timestamp - 10) {
-      _printed.erase(_dq.front().second);
-      _dq.pop_front();
+      _printed.erase(_dq.front().second); _dq.pop_front();
     }
     if (_printed.count(message)) {
       return false;

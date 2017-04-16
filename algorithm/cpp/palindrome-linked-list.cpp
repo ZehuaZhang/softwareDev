@@ -12,7 +12,7 @@
 class Solution {
 public:
   bool isPalindrome(ListNode* head) {
-    ListNode *prev = nullptr, *fast = head;
+    ListNode* prev = nullptr, *fast = head;
     while (fast && fast->next) {
       fast = fast->next->next;
       ListNode* next = head->next;

@@ -25,7 +25,7 @@ public:
         start = idx[s[i]] + 1; 
       }
       idx[s[i]] = i;
-      ans = max(ans, i - start);
+      ans = max(ans, i - start + 1);
     }
     return ans;
   }

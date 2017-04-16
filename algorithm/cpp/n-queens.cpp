@@ -45,17 +45,12 @@ private:
   void solveNQueens(vector<int>& colQ, vector<vector<string>>& result, int row) {
     const int N = colQ.size();
     if (row == N) {
-      vector<string> solution;
+      result.push_back({})
       for (int i = 0; i < N; ++i) {
-        string rowS(N, '.');
-        for (int j = 0; j < N; ++j) {
-          if (j == colQ[i]) {
-            rowS[j] = 'Q';
-          }
-        }
-        solution.push_back(rowS);
+        string row(N, '.');
+        row[colQ[i]] = 'Q';
+        result.back().push_back(row);
       }
-      result.push_back(solution);
       return;
     }
     for (int j = 0; j < N; ++j) {

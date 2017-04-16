@@ -15,7 +15,7 @@ public:
   vector<int> majorityElement(vector<int>& nums) {
     vector<int> res;
     int candidate0 = 0, candidate1 = 0, count0 = 0, count1 = 0;
-    for (auto &num : nums) {
+    for (auto& num : nums) {
       if (num == candidate0) {
         ++count0;
       } else if (num == candidate1) {

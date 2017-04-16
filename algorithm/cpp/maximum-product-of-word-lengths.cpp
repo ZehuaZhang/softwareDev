@@ -36,14 +36,14 @@ public:
         bits[i] |= (1 << (c - 'a'));
       }
     }
-    int max_product = 0;
-    for (int i = 0; i + 1 < words.size() && pow(words[i].length(), 2) > max_product; ++i) {
-      for (int j = i + 1; j < words.size() && words[i].length() * words[j].length() > max_product; ++j) {
+    int maxLen = 0;
+    for (int i = 0; i + 1 < words.size() && pow(words[i].length(), 2) > maxLen; ++i) {
+      for (int j = i + 1; j < words.size() && words[i].length() * words[j].length() > maxLen; ++j) {
         if (!(bits[i] & bits[j])) {
-          max_product = words[i].length() * words[j].length();
+          maxLen = words[i].length() * words[j].length();
         }
       }
     }
-    return max_product;
+    return maxLen;
   }
 };

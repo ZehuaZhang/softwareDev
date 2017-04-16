@@ -14,11 +14,9 @@ public:
     for (int i = 1; i < nums.size(); i++) {
       if (nums[i] == candidate) {
         ++cnt;
-      } else {
-        if (--cnt == 0) {
-          candidate = nums[i];
-          cnt = 1;
-        }
+      } else if (--cnt == 0) {
+        candidate = nums[i];
+        cnt = 1;
       }
     }
     return candidate; 

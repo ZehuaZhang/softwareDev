@@ -22,11 +22,11 @@ public:
     if (!head) {
       return nullptr;
     }
-
-    ListNode dummy{0, head};
+    ListNode dummy{0};
+    dummy.next = head;
 
     ListNode* left = &dummy, *right = head;
-    for (right->next; right = right->next) {
+    for (; right->next; right = right->next) {
       if (right->val != 9) {
         left = right;
       }
@@ -40,10 +40,6 @@ public:
         right->val = 0;
       }
     }
-
-    if (dummy->val == 0) {
-      return dummy.next;
-    }
-    return &dummy;
+    return dummy->val ? &dummy : dummy.next;
   }
 };

@@ -20,12 +20,12 @@
 // Divide and Conquer solution.
 class Solution2 {
 public:
-  ListNode *mergeKLists(vector<ListNode *> &lists) {
+  ListNode* mergeKLists(vector<ListNode*>& lists) {
     return mergeKListsHelper(lists, 0, lists.size() - 1);
   }
 
 private:
-  ListNode *mergeKListsHelper(const vector<ListNode*>&lists, int begin, int end) {
+  ListNode *mergeKListsHelper(const vector<ListNode*>& lists, int begin, int end) {
     if (begin > end) {
       return nullptr;
     }

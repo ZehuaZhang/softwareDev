@@ -54,7 +54,7 @@ public:
     bool has = _idx.count(val);
 
     _list.emplace_back(val);
-    _idx[val].emplace_back(list_.size() - 1);
+    _idx[val].emplace_back(_list.size() - 1);
 
     return !has; 
   }

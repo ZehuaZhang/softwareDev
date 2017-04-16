@@ -52,7 +52,7 @@ public:
 private:
   int find(int node, vector<int>& set) {
     while (set[node] != node) {
-      node = find(set[node], set);
+      node = set[node];
     }
     return node;
   }

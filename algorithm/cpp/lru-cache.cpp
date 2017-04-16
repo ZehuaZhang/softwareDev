@@ -19,31 +19,31 @@ public:
   }
 
   int get(int key) {
-    if (_listIdx.count(key)) {
-      _list.splice(_list.begin(), _list, _listIdx[key]);
-      _listIdx[key] = _list.begin();
-      return _listIdx[key]->second;
+    if (_idx.count(key)) {
+      _list.splice(_list.begin(), _list, _idx[key]);
+      _idx[key] = _list.begin();
+      return _idx[key]->second;
     } 
     return -1;
   }
 
   void set(int key, int value) {
-    if (_listIdx.count(key)) {
-      _list.splice(_list.begin(), _list, _listIdx[key]);
-      _listIdx[key] = _list.begin();
-      _listIdx[key]->second = value;
+    if (_idx.count(key)) {
+      _list.splice(_list.begin(), _list, _idx[key]);
+      _idx[key] = _list.begin();
+      _idx[key]->second = value;
     } else {
       if (_capacity == _list.size()) {
-        _listIdx.erase(_list.back().first);
+        _idx.erase(_list.back().first);
         _list.pop_back();
       }
       _list.push_front({key, value});
-      _listIdx[key] = _list.begin();
+      _idx[key] = _list.begin();
     }
   }
 
 private:
   list<pair<int, int>> _list; // key, value
-  unordered_map<int, list<pair<int, int>>::iterator> _listIdx; // key, list iterator
+  unordered_map<int, list<pair<int, int>>::iterator> _idx; // key, list iterator
   int _capacity;
 };

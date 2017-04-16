@@ -11,17 +11,14 @@
 // When s3 = "aadbbcbcac", return true.
 // When s3 = "aadbbbaccc", return false.
 
-// Time Complexity: O(m * n)
-// Space Complexity: O(m + n)
+// Time : O(m * n)
+// Space: O(n)
 
 class Solution {
 public:
   bool isInterleave(string s1, string s2, string s3) {
     if (s1.length() + s2.length() != s3.length()) {
       return false;
-    }
-    if (s1.length() < s2.length()) {
-      return isInterleave(s2, s1, s3);
     }
 
     vector<bool> f(s2.length() + 1, true);

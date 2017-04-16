@@ -22,7 +22,7 @@ public:
   }
 
 private:
-  void letterCombinations(const string &digits, size_t curr, string &path, vector<string> &ans) {
+  void letterCombinations(const string& digits, size_t curr, string& path, vector<string>& ans) {
     if (curr == digits.size()) {
       ans.push_back(path);
       return;
@@ -35,5 +35,5 @@ private:
     }
   }
 
-  const vector<string> keyboard { " ", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
+  const vector<string> keyboard = { " ", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
 };

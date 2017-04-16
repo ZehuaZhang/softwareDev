@@ -55,7 +55,7 @@ public:
       islands[nodeId(position, n)] = nodeId(position, n);
       ++number;
 
-      for (auto direction : vector<pair<int, int>>{{0, -1}, {0, 1}, {-1, 0}, {1, 0}}) {
+      for (auto direction : vector<pair<int, int>>{ {0, -1}, {0, 1}, {-1, 0}, {1, 0} }) {
         auto neighbor = make_pair(position.first + direction.first, position.second + direction.second);
 
         if (neighbor.first >= 0 && neighbor.first < m && neighbor.second >= 0 && neighbor.second < n &&
@@ -78,7 +78,7 @@ private:
 
   int find(int x, unordered_map<int, int>& set) {
     while (set[x] != x) {
-      x = find(set[x], set);
+      x = set[x];
     }
     return x;
   }

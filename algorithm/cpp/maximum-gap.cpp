@@ -20,9 +20,6 @@ public:
   };
 
   int maximumGap(vector<int>& nums) {
-    if (nums.size() < 2) {
-      return 0;
-    }
     int maxVal = *max_element(nums.cbegin(), nums.cend());
     int minVal = *min_element(nums.cbegin(), nums.cend());
     int gap = max(1, (maxVal - minVal) / (nums.size() - 1));

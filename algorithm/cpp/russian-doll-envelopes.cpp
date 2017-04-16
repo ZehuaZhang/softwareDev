@@ -17,15 +17,12 @@
 class Solution {
 public:
   int maxEnvelopes(vector<pair<int, int>>& envelopes) {
-    vector<int> result;
-
     sort(envelopes.begin(), envelopes.end(), 
       [](const pair<int, int>& a, const pair<int, int>& b) {
-        if (a.first == b.first) {
-          return a.second > b.second;
-        }
-        return a.first < b.first;
+        return a.first == b.first ? a.second > b.second : a.first < b.first;
       });
+
+    vector<int> result;
 
     for (auto envelope : envelopes) {
       int height = envelope.second;
@@ -33,7 +30,7 @@ public:
       if (it == result.end()) {
         result.emplace_back(height);
       } else {
-        *it = target;
+        *it = height;
       }
     }
 

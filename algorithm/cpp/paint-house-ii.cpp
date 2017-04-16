@@ -27,8 +27,7 @@ public:
     }
     vector<vector<int>> minCost(2, costs[0]);
 
-    const int n = costs.size();
-    const int k = costs[0].size();
+    const int n = costs.size(), k = costs[0].size();
     for (int i = 1; i < n; ++i) {
       int minVal = INT_MAX, minVal2 = INT_MAX;
 

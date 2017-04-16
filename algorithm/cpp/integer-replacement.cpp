@@ -37,24 +37,17 @@
 class Solution {
 public:
   int integerReplacement(int n) {
-    if (n == INT_MAX) {
-      return 2 + integerReplacement(n / 2 + 1);
-    }
-
-    int result = 0;
-    while (n != 1) {
-      const auto b = n & 3;
-      if (n == 3) {
-        --n;
-      } else if (b == 3) {
-        ++n;
-      } else if (b == 1) {
-        --n;
+    int res = 0;
+    while (n > 3) {  
+      if (!(n & 1)) {
+        n >>= 1;  
+      } else if (n & 2) {
+        ++n;  
       } else {
-        n /= 2;
+        --n;  
       }
-      ++result;
-    }
-    return result;
+      ++res;  
+    }  
+    return res + n - 1;  
   }
 };

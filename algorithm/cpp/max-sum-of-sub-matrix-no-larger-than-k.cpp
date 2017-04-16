@@ -22,12 +22,7 @@
 class Solution {
 public:
   int maxSumSubmatrix(vector<vector<int>>& matrix, int k) {
-    if (matrix.empty()) {
-      return 0;
-    }
-
-    const int m = matrix.size();
-    const int n = matrix[0].size();
+    const int m = matrix.size(), n = matrix[0].size();
     int result = INT_MIN;
 
     for (int k = 0; k < m; ++k) {

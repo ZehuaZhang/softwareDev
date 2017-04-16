@@ -21,17 +21,18 @@
 class Solution2 {
 public:
   int kthSmallest(TreeNode* root, int k) {
-    stack<TreeNode *> s;
+    stack<TreeNode*> s;
     TreeNode* cur = root;
     int rank = 0;
     int ans = INT_MIN;
-    while (!s.empty() || cur || rank != k) {
+    while ((!s.empty() || cur) && rank != k) {
       if (cur) {
         s.emplace(cur);
         cur = cur->left;
       } else {
         cur = s.top(); s.pop();
         ans = cur->val;
+        ++rank;
         cur = cur->right;
       }
     }

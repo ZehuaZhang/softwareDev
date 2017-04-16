@@ -15,11 +15,10 @@ public:
     const vector<string> romans{"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
 
     string result;
-    for (int i = 0; num; ++i) {
+    for (int i = 0; num; ++i, num %= nums[i]) {
       for (int count = num / nums[i]; count; --count) {
         result.append(romans[i]);
       }
-      num %= nums[i];
     }        
     return result;
   }

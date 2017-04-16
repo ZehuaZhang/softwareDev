@@ -59,7 +59,7 @@ class Solution {
 public:
   vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
     vector<int> result;
-        // Make sure it is sorted, doesn't count in time.
+    // Make sure it is sorted, doesn't count in time.
     sort(nums1.begin(), nums1.end());
     sort(nums2.begin(), nums2.end());
     for (auto it1 = nums1.cbegin(), it2 = nums2.cbegin(); it1 != nums1.cend() && it2 != nums2.cend();) {

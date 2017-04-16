@@ -29,13 +29,13 @@ public:
     return ans;
   }
 private:
- void pathSum(TreeNode *root, int sum, vector<int>& path, vector<vector<int>>& ans) {
-    if(!root) {
+ void pathSum(TreeNode* root, int sum, vector<int>& path, vector<vector<int>>& ans) {
+    if (!root) {
       return;
     }
     path.push_back(root->val);
 
-    if(!root->left && !root->right && root->val == sum) {
+    if (!root->left && !root->right && root->val == sum) {
       ans.push_back(path);
     }
 

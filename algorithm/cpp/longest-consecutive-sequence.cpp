@@ -17,7 +17,7 @@ public:
   int longestConsecutive(vector<int>& nums) {
     unordered_set<int> numSet{nums.begin(), nums.end()};
 
-    int maxLength = 1;
+    int maxLength = 0;
     for (auto num : nums) {
       if (!numSet.count(num)) {
         continue;
@@ -26,12 +26,12 @@ public:
       numSet.erase(num);
       int lenth = 1;
 
-      for (int lessNum = num - 1; visited.count(lessNum); --lessNum) {
+      for (int lessNum = num - 1; numSet.count(lessNum); --lessNum) {
         numSet.erase(lessNum);
         ++length;
       }
 
-      for (int greaterNum = num + 1; visited.count(greaterNum); ++greaterNum) {
+      for (int greaterNum = num + 1; numSet.count(greaterNum); ++greaterNum) {
         numSet.erase(greaterNum);
         ++length;
       }

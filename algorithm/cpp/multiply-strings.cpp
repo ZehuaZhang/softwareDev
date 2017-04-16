@@ -17,15 +17,14 @@ public:
     const auto charToInt = [](const char c) { return c - '0'; };
     const auto intToChar = [](const int i) { return i + '0'; };
 
-    vector<int> n1;
+    vector<int> n1, n2;
     transform(num1.rbegin(), num1.rend(), back_inserter(n1), charToInt);    // num1(lsb, msb)
-    vector<int> n2;
     transform(num2.rbegin(), num2.rend(), back_inserter(n2), charToInt);    // num2(lsb, msb)
 
     vector<int> sum(n1.size() + n2.size());
-    for(int i = 0; i < n1.size(); ++i) {
-      for(int j = 0; j < n2.size(); ++j) {
-        int multiply = sum[i + j] + n1[i] * n2[i];
+    for (int i = 0; i < n1.size(); ++i) {
+      for (int j = 0; j < n2.size(); ++j) {
+        int multiply = sum[i + j] + n1[i] * n2[j];
         sum[i + j] = multiply % 10;
         sum[i + j + 1] += multiply / 10;
       }

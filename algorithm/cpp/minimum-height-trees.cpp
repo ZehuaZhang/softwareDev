@@ -62,13 +62,14 @@ public:
     }
     vector<int> outDegree(n, 0);
     vector<vector<int>> graph(n, vector<int>());
-    queue<int> q;
     for (auto edge : edges) {
       graph[edge.first].push_back(edge.second);
       ++outDegree[edge.first];
       graph[edge.second].push_back(edge.first);
       ++outDegree[edge.second];
     }
+    
+    queue<int> q;
     for (int i = 0; i < n; ++i) {
       if (outDegree[i] == 1) {
         q.push(i);

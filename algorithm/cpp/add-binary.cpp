@@ -15,8 +15,7 @@ class Solution {
 public:
   string addBinary(string a, string b) {
     string res;
-    const int m = a.length();
-    const int n = b.length();
+    const int m = a.length(), n = b.length();
 
     size_t carry = 0;
     for (int i = 0; i < max(m, n); ++i) {
