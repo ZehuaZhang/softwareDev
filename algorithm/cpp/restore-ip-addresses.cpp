@@ -8,8 +8,8 @@
 
 // return ["255.255.11.135", "255.255.111.35"]. (Order does not matter)
 
-// Time Complexity: O(n^m), where n is max length of number, m is count of segment
-// Space Complexity: O(nm)
+// Time : O(n^m), where n is max length of number, m is count of segment
+// Space: O(nm)
 
 class Solution {
 public:

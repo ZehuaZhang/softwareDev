@@ -1,5 +1,6 @@
 // 137. Single Number II
 // Difficulty: Medium
+
 // Given an array of integers, every element appears three times except for one. Find that single one.
 
 // Note:
@@ -20,7 +21,6 @@ public:
 			one &= three;
 			two &= three;
 		}
-
 		return one;
 	}
 };

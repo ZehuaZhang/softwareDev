@@ -1,5 +1,6 @@
 // 260. Single Number III
 // Difficulty: Medium
+
 // Given an array of numbers nums, in which exactly two elements appear only once 
 // and all the other elements appear exactly twice. Find the two elements that appear only once.
 
@@ -21,16 +22,14 @@ public:
     for (const auto& num : nums) {
       xXorY ^= num;
     }
-
     const auto bit = xXorY & (-xXorY);
-    
+
     int x = 0;
     for (const auto& num : nums) {
       if (num & bit) {
         x ^= num;
       }
     }
-
     return {x, xXorY ^ x};
   }
 };

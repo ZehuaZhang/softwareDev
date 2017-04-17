@@ -38,10 +38,6 @@
 class NumMatrix {
 public:
   NumMatrix(vector<vector<int>> &matrix) {
-    if (matrix.empty()) {
-      return;
-    }
-
     const auto m = matrix.size(), n = matrix[0].size();
     _sums = vector<int>(m + 1, vector<int>(n + 1, 0));
     for (int i = 1; i <= m; ++i) {

@@ -29,7 +29,7 @@
 // Time:  O(nlogc), c is the count of unique characters.
 // Space: O(c)
 
-class Solution2 {
+class Solution {
 public:
   string rearrangeString(string str, int k) {
     if (k == 0) {
@@ -49,8 +49,7 @@ public:
     string result;
     while (!heap.empty()) {
       vector<pair<int, char>> used;
-      int cnt = min(k, static_cast<int>(str.length() - result.length()));
-      for (int i = 0; i < cnt; ++i) {
+      for (int i = 0; i < min(k, static_cast<int>(str.length() - result.length())); ++i) {
         if (heap.empty()) {
           return "";
         }

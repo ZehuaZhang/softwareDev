@@ -19,13 +19,12 @@
 class Solution {
 public:
   string removeDuplicateLetters(string s) {
-    const int k = 26;
-    vector<int> remaining(k);
+    vector<int> remaining(26);
     for (const auto& c : s) {
       ++remaining[c - 'a'];
     }
 
-    vector<bool> inStack(k);
+    vector<bool> inStack(26);
     string stk;
     for (const auto& c : s) {
       if (!inStack[c - 'a']) {

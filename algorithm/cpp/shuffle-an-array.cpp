@@ -31,7 +31,6 @@
 class Solution {
 public:
   Solution(vector<int> nums) : _nums(nums) {
-
   }
 
   /** Resets the array to its original configuration and return it. */

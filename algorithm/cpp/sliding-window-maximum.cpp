@@ -50,7 +50,6 @@ public:
         max.emplace_back(nums[dq.front()]);
       }
     }
-
     return max;
   }
 };

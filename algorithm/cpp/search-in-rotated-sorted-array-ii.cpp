@@ -13,7 +13,7 @@
 
 class Solution {
 public:
-  bool search(vector<int> &nums, int target) {
+  bool search(vector<int>& nums, int target) {
     for (int left = 0, right = nums.size() - 1; left <= right;) {
       int mid = left + (right - left) / 2;
       if (nums[mid] == target) {
@@ -27,7 +27,6 @@ public:
         left = mid + 1;
       }
     }
-
     return false;
   }
 };

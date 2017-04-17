@@ -32,24 +32,28 @@
   ListNode* reverseKGroup(ListNode* head, int k) {
     ListNode dummy{0};
     dummy.next = head;
-    ListNode* currDummy = &dummy;
     int len = 0;
 
-    for (ListNode* curr = head, *nextCurr = curr->next; curr; curr = nextCurr, nextCurr = curr->next) {
+    for (ListNode* prev = &dummy, *curr = head; curr;) {
+      ListNode* next = curr->next;
       len = (len + 1) % k;
 
       if (len == 0) {
-        ListNode* nextDummy = currDummy->next;
-
-        for (ListNode* first = currDummy->next, *nextFirst = first->next; nextFirst != curr->next;) {
-          first->next = nextFirst->next;
-          nextFirst->next = currDummy->next;
-          currDummy->next = nextFirst;
-          nextFirst = first->next;
-        }
-        currDummy = nextDummy;
+        ListNode* nextPrev = prev->next;
+        reverse(prev, curr->next);
+        prev = nextPrev;
       }
+      curr = next;
     }
     return dummy.next;
+  }
+
+  void reverse(ListNode* begin, const ListNode* end) {
+    for (ListNode* curr = begin->next; curr->next != end;) {
+      ListNode* next = curr->next;
+      curr->next = next->next;
+      next->next = begin->next;
+      begin->next = next;
+    }
   }
 }

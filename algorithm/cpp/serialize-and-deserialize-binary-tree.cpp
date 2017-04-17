@@ -55,7 +55,7 @@
   }
 
 private:
-  void serialize(const TreeNode *root, ostringstream& out) {
+  void serialize(const TreeNode* root, ostringstream& out) {
     if (!root)  {   // every nullptr child becomes "#"
       out << "# ";
     } else {

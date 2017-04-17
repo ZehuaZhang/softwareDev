@@ -13,17 +13,18 @@
 class Solution {
 public:
   ListNode* removeElements(ListNode* head, int val) {
-    ListNode dummy{0, head};
+    ListNode dummy{0};
+    dummy.next = head;
 
-    for (ListNode* prev = &dummy, *cur = head; cur;) {
-      if (cur->val == val) {
-        ListNode* toDelete = cur;
-        cur = cur->next;
-        prev->next = cur;
+    for (ListNode* prev = &dummy; head;) {
+      if (head->val == val) {
+        ListNode* toDelete = head;
+        head = head->next;
+        prev->next = head;
         delete toDelete;
       } else {
-        prev = cur;
-        cur = cur->next;
+        prev = head;
+        head = head->next;
       }
     }
     return dummy.next;

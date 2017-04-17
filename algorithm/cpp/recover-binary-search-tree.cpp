@@ -13,12 +13,12 @@
 
 class Solution {
 public:
-  void recoverTree(TreeNode *root) {
+  void recoverTree(TreeNode* root) {
     morrisInorderTraversal(root);
   }
 
 private:
-  void morrisInorderTraversal(TreeNode *root) {
+  void morrisInorderTraversal(TreeNode* root) {
     if (!root) {
       return;
     }

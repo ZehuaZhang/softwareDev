@@ -27,12 +27,7 @@
 class Solution {
 public:
   bool searchMatrix(vector<vector<int>>& matrix, int target) {
-    if (matrix.empty() || matrix[0].empty()) {
-      return false;
-    }
-    const int m = matrix.size();
-    const int n = matrix[0].size();
-    int count = 0;
+    const int m = matrix.size(), n = matrix[0].size();
 
     for (int i = 0, j = n - 1; i < m && j >= 0;) {
       if (matrix[i][j] == target) {
@@ -43,7 +38,6 @@ public:
         ++i;
       }
     }
-
     return false;
   }
 };

@@ -15,10 +15,6 @@
 class Solution {
 public:
   void setZeroes(vector<vector<int>>& matrix) {
-    if (matrix.empty()) {
-      return;
-    }
-
     bool hasZero = false;
     int firstRowZero = -1, firstColZero = -1;
 

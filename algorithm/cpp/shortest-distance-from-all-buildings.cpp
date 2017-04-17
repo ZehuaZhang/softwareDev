@@ -52,8 +52,7 @@ public:
     return shortest != INT_MAX ? shortest : -1;
   }
 
-  void BFS(const vector<vector<int>>& grid, int x, int y,
-    vector<vector<int>>& dists, vector<vector<int>>& cnts) {
+  void BFS(const vector<vector<int>>& grid, int x, int y, vector<vector<int>>& dists, vector<vector<int>>& cnts) {
     int dist = 0, m = grid.size(), n = grid[0].size();
     vector<vector<bool>> visited(m, vector<bool>(n));
 
@@ -63,11 +62,10 @@ public:
       ++dist;
       int size = q.size();
       while (size--) {
-        int i, j;
-        tie(i, j) = q.front(); q.pop();
+        pair<int, int> point = q.front(); q.pop();
 
-        for (auto dir : vector<pair<int, int>>{ {i + 1, j}, {i - 1, j}, {i, j + 1}, {i, j - 1} }) {
-          const int I = dir.first, J = dir.second;
+        for (auto dir : vector<pair<int, int>>{ {1, 0}, {-1, 0}, {0, 1}, {0, -1} }) {
+          const int I = point.first + dir.first, J = point.second + dir.second;
           if (0 <= I && I < m && 0 <= J && J < n && grid[I][J] == 0 && !visited[I][J]) {
             dists[I][J] += dist;
             ++cnts[I][J];

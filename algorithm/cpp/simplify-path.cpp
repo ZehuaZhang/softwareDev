@@ -44,11 +44,8 @@ private:
 
   string join(const vector<string>& names, const char delim) {
     ostringstream ss;
-    if (!names.empty()) {
-      const string delimStr(1, delim);
-      copy(names.cbegin(), prev(names.cend()), ostream_iterator<string>(ss, delimStr.c_str()));
-      ss << names.back();
-    }
+    copy(names.cbegin(), prev(names.cend()), ostream_iterator<string>(ss, string(1, delim).c_str()));
+    ss << *prev(names.cend());
     return ss.str();
   }
 };
@@ -61,7 +58,6 @@ public:
   string simplifyPath(const string& path) {
     vector<string> dirs;
     for (auto i = path.begin(); i != path.end();) {
-      ++i;
       auto j = find(i, path.end(), '/');
       auto dir = string(i, j);
       if (dir == ".." && !dirs.empty()) {
@@ -69,7 +65,7 @@ public:
       } else if (!dir.empty() && dir != "." && dir != "..") {
         dirs.push_back(dir);
       }
-      i = j;
+      i = j + 1;
     }
     stringstream out;
     if (dirs.empty()) {

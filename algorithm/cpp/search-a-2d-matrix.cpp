@@ -22,11 +22,7 @@
 class Solution {
 public:
   bool searchMatrix(vector<vector<int>>& matrix, int target) {
-    if (matrix.empty()) {
-      return false;
-    }
-    const size_t m = matrix.size();
-    const size_t n = matrix.front().size();
+    const size_t m = matrix.size(), n = matrix.front().size();
 
     for (int left = 0, right = m * n; left < right;) {
       int mid = left + (right - left) / 2;

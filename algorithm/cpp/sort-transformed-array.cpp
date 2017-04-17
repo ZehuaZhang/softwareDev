@@ -27,10 +27,7 @@ public:
     };
 
     vector<int> result;
-    if (nums.empty()) {
-      return result;
-    }
-
+   
     int d = a > 0 ? -1 : 1; // a > 0 concave, decrease then increase; a < 0 convex, increase then decrease
     for (int left = 0, right = nums.size() - 1; left <= right;) {
       int yLeft = f(nums[left], a, b, c);
@@ -47,7 +44,6 @@ public:
     if (d == -1) {
       reverse(result.begin(), result.end());
     }
-
     return result;
   }
 };

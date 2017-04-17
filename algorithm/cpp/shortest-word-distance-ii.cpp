@@ -23,13 +23,13 @@ class WordDistance {
 public:
   WordDistance(vector<string> words) {
     for (int i = 0; i < words.size(); ++i) {
-      index[words[i]].emplace_back(i);
+      idx[words[i]].emplace_back(i);
     }
   }
 
   int shortest(string word1, string word2) {
-    const vector<int>& idx1 = index[word1];
-    const vector<int>& idx2 = index[word2];
+    const vector<int>& idx1 = idx[word1];
+    const vector<int>& idx2 = idx[word2];
 
     int dist = INT_MAX;
     for (int i = 0, j = 0; i < idx1.size() && j < idx2.size();) {
@@ -40,5 +40,5 @@ public:
   }
 
 private:
-  unordered_map<string, vector<int>> index;
+  unordered_map<string, vector<int>> idx;
 };

@@ -25,7 +25,7 @@ public:
       ++cnt[c];
     }
     for (const auto& c : magazine) {
-      if (--cnt[c] == 0) {
+      if (cnt.count(c) && --cnt[c] == 0) {
         cnt.erase(c);
       }
     }

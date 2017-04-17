@@ -39,7 +39,7 @@ public:
     // C8 = A1 + A2 + A3 + A4 + A5 + A6 + A7 + A8
     // in BIT, you can consider "+" is relation with two nodes
 
-  NumArray(vector<int>& snums) : {
+  NumArray(vector<int>& nums) : {
     _nums.resize(nums.size() + 1);
     _bits.resize(nums.size() + 1);
     for (int i = 0; i < nums.size(); ++i) {
@@ -49,7 +49,7 @@ public:
 
   void update(int i, int val) {
     int diff = val - _nums[i + 1];  // difference of new and previous value
-    for (int j = i + 1; j < _nums.size(); j += (j & -j)) {  // advance by lower bit set
+    for (int j = i + 1; j < _bits.size(); j += (j & -j)) {  // advance by lower bit set
       _bits[j] += diff;
     }
     _nums[i + 1] = val;

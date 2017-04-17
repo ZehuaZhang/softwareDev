@@ -13,7 +13,7 @@
 class Solution {
 public:
   ListNode* rotateRight(ListNode* head, int k) {
-    if (head == nullptr) {
+    if (!head) {
       return head;
     }
 

@@ -28,36 +28,34 @@
 
 class Solution {
 public:
-    vector<string> findItinerary(vector<pair<string, string>> tickets) {
-        unordered_map<string, map<string, int>> graph;
-        for (const auto& ticket : tickets) {
-            ++graph[ticket.first][ticket.second];
-        }
-        const string from{"JFK"};
-        vector<string> ans{from};
-        findItinerary(from, tickets.size(), graph, ans);
-        return ans;
+  vector<string> findItinerary(vector<pair<string, string>> tickets) {
+    unordered_map<string, map<string, int>> graph;
+    for (const auto& ticket : tickets) {
+      ++graph[ticket.first][ticket.second];
     }
+    const string from{"JFK"};
+    vector<string> ans{from};
+    findItinerary(from, tickets.size(), graph, ans);
+    return ans;
+  }
 
 private:
-    bool findItinerary(const string& from, const int ticketCnt,
-                     unordered_map<string, map<string, int>> &graph, vector<string> &ans) {
-
-        if (ticketCnt == 0) {
-            return true;
-        }
-
-        for (auto to : graph[from]) {
-            if (to.second > 0) {
-                --to.second;
-                ans.emplace_back(to.first);
-                if (findItinerary(to.first, ticketCnt - 1, graph, ans)) {
-                    return true;
-                }
-                ans.pop_back();
-                ++to.second;
-            }
-        }
-        return false;
+  bool findItinerary(const string& from, const int ticketCnt, unordered_map<string, map<string, int>>& graph, vector<string>& ans) {
+    if (ticketCnt == 0) {
+      return true;
     }
+
+    for (auto to : graph[from]) {
+      if (to.second > 0) {
+        --to.second;
+        ans.emplace_back(to.first);
+        if (findItinerary(to.first, ticketCnt - 1, graph, ans)) {
+          return true;
+        }
+        ans.pop_back();
+        ++to.second;
+      }
+    }
+    return false;
+  }
 };

@@ -49,13 +49,13 @@ public:
   }
 
 private:
-  bool isValid(string t) {
+  bool isValid(string s) {
     int cnt = 0;
-    for (int i = 0; i < t.size(); ++i) {
-      if (t[i] == '(') {
+    for (const auto& c : s) {
+      if (c == '(') {
         ++cnt;
       }
-      if (t[i] == ')' && cnt-- == 0) {
+      if (c == ')' && cnt-- == 0) {
         return false;
       }
     }

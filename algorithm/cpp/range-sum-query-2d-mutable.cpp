@@ -34,8 +34,7 @@
 // Segment Tree solution.
 class NumMatrix {
 public:
-  NumMatrix(vector<vector<int>> &matrix) : {
-    if (matrix.empty() || matrix[0].empty()) return;
+  NumMatrix(vector<vector<int>>& matrix) {
     _matrix.resize(matrix.size() + 1, vector<int>(matrix[0].size() + 1, 0));
     _bits.resize(matrix.size() + 1, vector<int>(matrix[0].size() + 1, 0));
     for (int i = 0; i < matrix.size(); ++i) {

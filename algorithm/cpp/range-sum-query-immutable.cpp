@@ -24,7 +24,7 @@
 
 class NumArray {
 public:
-  NumArray(vector<int> &nums) {
+  NumArray(vector<int>& nums) {
     accu.emplace_back(0);
     for (auto num : nums) {
       accu.emplace_back(accu.back() + num);
