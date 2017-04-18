@@ -39,24 +39,22 @@ public:
         for (char ch = 'a'; ch <= 'z'; ++ch) {
           newWord[i] = ch;
           if (newWord == endWord) {
-            if (pathLength[word] + 1 > minLevel) {
-              return result;
-            }
             minLevel = pathLength[word] + 1;
-          }
-          if (wordDict.count(newWord) && !pathLength.count(newWord)) {
+            nextWords[word].push_back(newWord);
+          } else if (wordDict.count(newWord) && !pathLength.count(newWord) && minLevel == INT_MAX) {
             nextWords[word].push_back(newWord);
             q.push(newWord);
             pathLength[newWord] = pathLength[word] + 1;
           }
-          if (newWord == endWord) {
-            vector<string> path;
-            gen_path(nextWords, beginWord, endWord, path, result);
-          }
         }
       }
     }
-    return 0;
+    if (minLevel == INT_MAX) {
+      return {};
+    }
+    vector<string> path;
+    gen_path(nextWords, beginWord, endWord, path, result);
+    return result;
   }
 
   void genPath(unordered_map<string, vector<string>>& nextWords, const string& curr, const string& end,  
@@ -64,7 +62,6 @@ public:
     path.push_back(curr);
     if (curr == end) {
       result.push_back(path);
-      return;
     }
     for (auto next : nextWords[curr]) {
       gen_path(nextWords, next, end, path, result);

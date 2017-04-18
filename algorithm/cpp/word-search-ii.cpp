@@ -36,27 +36,28 @@ public:
     string path;
     for (int i = 0; i < board.size(); ++i) {
       for (int j = 0; j < board[0].size(); ++j) {
-        findWordsDFS(board, visited, trie, i, j, path, result);
+        findWordsDFS(board, visited, trie, i, j, string(1, board[i][j]), result);
       }
     }
     return vector<string>(result.begin(), result.end());
   }
     
   void findWordsDFS(vector<vector<char>>& grid, vector<vector<bool>>& visited, TrieNode& trie,
-    int i, int j, string cur, unordered_set<string>& result) {
-    if (!trie || i < 0 || i >= grid.size() || j < 0 || j >= grid[0].size() ||
-      !trie.leaves[grid[i][j]] || visited[i][j]) {
+    int i, int j, string path, unordered_set<string>& result) {
+    if (i < 0 || i >= grid.size() || j < 0 || j >= grid[0].size() || !trie || visited[i][j]) {
       return;
     }
 
     if (trie.isString) {
       result.insert(path);
+    } else if (!trie.leaves.count(grid[i][j])) {
+      return;
     }
 
     visited[i][j] = true;
     for (const auto& d :  vector<pair<int, int>>{ {0, -1}, {0, 1}, {-1, 0}, {1, 0} }) {
       int I = i + d.first, J = j + d.second;
-      findWordsDFS(grid, visited, trie.leaves[grid[i][j]], I, J, path + grid[i][j], result);
+      findWordsDFS(grid, visited, trie.leaves[grid[i][j]], I, J, path + grid[I][J], result);
     }
     visited[i][j] = false;
   }
@@ -70,11 +71,10 @@ private:
       TrieNode* p = this;
       for (const auto& c : s) {
         if (!p->leaves.count(c)) {
-          p->leaves[c] = new TrieNode;
+          p->leaves[c] = new TrieNode();
         }
         p = p->leaves[c];
       }
-      
       p->isString = true;
     }
 

@@ -25,8 +25,7 @@
 class Solution {
 public:
   bool exist(vector<vector<char>>& board, string word) {
-    const int m = board.size();
-    const int n = board.front().size();
+    const int m = board.size(), n = board.front().size();
     vector<vector<bool>> visited(m, vector<bool>(n, false));
     for (int i = 0; i < m; ++i) {
       for (int j = 0; j < n; ++j) {

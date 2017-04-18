@@ -46,6 +46,7 @@ public:
     } else {
       for (int k = j; k < str.length(); ++k) {
         const string w = str.substr(j, k - j + 1);
+        const char p = pattern[i];
         if (!w2p.count(w)) {
           w2p[w] = p, p2w[p] = w;
           if (match(pattern, str, i + 1, k + 1, w2p, p2w)) {
