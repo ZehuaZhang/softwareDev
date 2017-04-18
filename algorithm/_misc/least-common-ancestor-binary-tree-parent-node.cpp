@@ -1,9 +1,9 @@
 // Least Common Ancestor Of A Binary Tree With Parent Node
 
-int getHeight(TreeNode *node) {
+int getHeight(TreeNode* node) {
   int height = 0;
   while (node) {
-    height++;
+    ++height;
     node = node->parent;
   }
   return height;
@@ -14,7 +14,7 @@ TreeNode* lca(TreeNode* node1, TreeNode* node2) {
   int h2 = getHeight(node2);
 
   if (h1 > h2) {
-    swap(node1, node2);
+    lca(node2, node1);
   }
 
   while (node2->parent) {

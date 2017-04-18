@@ -26,7 +26,7 @@ public:
     if (!idx.count(serverId)){
       return;
     }
-    servers.erase(idx(serverId))
+    servers.erase(idx[serverId])
     idx.erase(serverId);
   }
 
@@ -43,10 +43,10 @@ public:
     }
     int index = str_hash(username) % servers.size();
 
-    while (downed.contains(*(server.begin() + index))) {
+    while (downed.count(server[index])) {
       index = (index + 1) % servers.size();
     }
-    return *(server.begin() + index);
+    return server[index];
   } 
 private:
   list<int> servers;

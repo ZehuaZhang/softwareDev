@@ -9,11 +9,12 @@
 class Solution {
 public:
   vector<int> constuctLIS(vector<int>& nums) {
+    const int n = nums.size();
     vector<int> lis;
     vector<int> prevIdx(n, -1); // initialized with -1
     
-    for (int i = 1; i < n; ++i) {
-      auto it = lower_bound(lis.begin(), lis.end(), nums[i]);
+    for (int i = 0; i < n; ++i) {
+      auto it = lowerBound(lis.begin(), lis.end(), nums[i]);
 
       if (it == lis.end()) {
         lis.push_back(i);
@@ -29,6 +30,7 @@ public:
     for (int i = lis.back(); i >= 0; i = prevIdx[i]) {
       result.push_back(nums[i]);
     }
+    return result;
   }
 
 private:
@@ -37,7 +39,7 @@ private:
     IT left = lis.begin(), right = lis.end();
     while (left != right) {
       IT mid = left + (right - left) / 2;
-      if (nums[*mid] >= nums[*prev(right)]) {
+      if (nums[*mid] >= target) {
         right = mid;
       } else {
         left = mid + 1;

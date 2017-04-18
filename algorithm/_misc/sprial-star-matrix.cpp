@@ -1,3 +1,5 @@
+// Spiral Star Matrix
+
 // f(7) should write:
 
 // *******
@@ -29,34 +31,30 @@
 #include <stdlib.h>
 using namespace std;
 
-void f(const int m) {
+void f(const int n) {
 	int n = m;
 
-	int matrix[n][n];
-	
+	vector<vector<char> matrix(n, vector<char>(n, " "));
 	fill_n(&matrix[0][0], n * n, 0);
 	
 	for (int i = 0, j = -1; n > 0;) {
 		for (int a = n--; a > 0; a--) {
-			matrix[i][++j] = 1;
+			matrix[i][++j] = "*";
 		}
-		
 		for (int a = n--; a > 0; a--) {
-			matrix[++i][j] = 1;
+			matrix[++i][j] = "*";
 		}
-		
 		for (int a = n--; a > 0; a--) {
-			matrix[i][--j] = 1;
+			matrix[i][--j] = "*";
 		}
-		
 		for (int a = n--; a > 0; a--) {
-			matrix[--i][j] = 1;
+			matrix[--i][j] = "*";
 		}
 	}
 
 	for (int i = 0; i < m; i++) {
 		for (int j = 0; j < m; j++) {
-			cout << (matrix[i][j] == 1 ? "*" : " ");
+			cout << matrix[i][j];
 		}
 		cout << "\n";
 	}

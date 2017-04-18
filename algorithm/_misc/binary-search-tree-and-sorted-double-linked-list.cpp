@@ -42,17 +42,17 @@ private:
     if (!root) {
       return;
     }
-    BST2sortedDoubleList(root.left, head, prev);
+    BST2sortedDoubleList(root->left, head, prev);
 
     if (prev == nullptr) {
       head = root;
     } else {
-      root.left = prev;
-      prev.right = root;
+      root->left = prev;
+      prev->right = root;
     }
     prev = root;
 
-    BST2sortedDoubleList(root.right, head, prev);
+    BST2sortedDoubleList(root->right, head, prev);
   }
 };
   

@@ -13,10 +13,13 @@ public:
   vector<pair<int, int>> amaciblePair(int n) {
     vector<pair<int, int>> result;
     unordered_set<int> visited;
-    for (int i = 1; i <= n; i++) {
-      if (!visited.count(i) && int sumOfDiv = divisorSum(i)) {
-        result.emplace_back(i, sumOfDiv);
-        visited.insert(sumOfDiv);
+    for (int i = 1; i <= n; ++i) {
+      if (!visited.count(i)) {
+        int sumOfDiv = divisorSum(i);
+        if (sumOfDiv <= n) {
+          result.emplace_back(i, sumOfDiv);
+          visited.insert(sumOfDiv);
+        }
       }
     }
     return result;
@@ -25,7 +28,7 @@ public:
 private:
   int divisorSum(int num) {
     int sum = 0;
-    for (int i = 1; i <= sqrt(num); i++) {
+    for (int i = 1; i <= sqrt(num); ++i) {
       if (num % i == 0) {
         sum += i;
         if (i != num / i) {

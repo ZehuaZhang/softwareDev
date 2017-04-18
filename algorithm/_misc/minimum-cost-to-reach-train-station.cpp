@@ -1,5 +1,8 @@
 // Minimum Cost To Reach Train Station
-// There are N stations on route of a train. The train goes from station 0 to N-1. The ticket cost for all pair of stations (i, j) is given where j is greater than i. Find the minimum cost to reach the destination.
+
+// There are N stations on route of a train. The train goes from station 0 to N-1.
+// The ticket cost for all pair of stations (i, j) is given where j is greater than i.
+// Find the minimum cost to reach the destination.
 
 // Consider the following example:
 
@@ -21,10 +24,10 @@ int minCost(vector<vector<int>> cost) {
   vector<int> dist(n, INT_MAX);
   dist[0] = 0;
 
-  for (int i = 0; i < N; i++) {
-    for (int j=i+1; j<N; j++) {
+  for (int i = 0; i < N; ++i) {
+    for (int j = i + 1; j < N; ++j) {
        dist[j] = min(dist[j], dist[i] + cost[i][j]);
     }
   }
-  return dist[N-1];
+  return dist[N - 1];
 }
