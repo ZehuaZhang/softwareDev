@@ -22,17 +22,13 @@ public:
   vector<int> findSubstring(string s, vector<string>& words) {
     const auto wordLen = words[0].length();
     const auto catLen = wordLen * words.size();
-    vector<int> result;
-
-    if (s.length() < catLen) {
-      return result;
-    }
 
     unordered_map<string, int> wordCount;
     for (auto word : words) {
       ++wordCount[word];
     }
-
+    
+    vector<int> result;
     for (auto it = s.begin(); it <= prev(s.end(), catLen); ++it) {
       unordered_map<string, int> unused(wordCount);
       for (auto jt = it; jt != next(it, catLen); jt += wordLen) { 

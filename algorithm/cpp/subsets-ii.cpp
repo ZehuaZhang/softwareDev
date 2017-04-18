@@ -22,14 +22,13 @@
 
 class Solution {
 public:
-  vector<vector<int>> subsetsWithDup(vector<int> &nums) {
+  vector<vector<int>> subsetsWithDup(vector<int>& nums) {
     vector<vector<int>> result(1);
     sort(nums.begin(), nums.end());
     size_t prevSize = 0;
 
     for (size_t i = 0; i < nums.size(); ++i) {
       const size_t size = result.size();
-
       for (size_t j = 0; j < size; ++j) {
         if (i == 0 || nums[i] != nums[i - 1] || j >= prevSize) {
           result.emplace_back(result[j]);

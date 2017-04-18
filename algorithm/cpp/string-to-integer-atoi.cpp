@@ -35,14 +35,12 @@ public:
 
     int ans = 0;
     for (; i < str.length() && isdigit(str[i]); ++i) {
-      int digit = str[i] - '0';
       int prev = ans;
-      ans = ans * 10 + digit;
+      ans = ans * 10 + str[i] - '0';
       if (ans / 10 != prev) { 
         return sign > 0 ? INT_MAX : INT_MIN;
       }
     }
-
     return ans * sign;
   }
 };

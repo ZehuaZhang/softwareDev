@@ -72,7 +72,6 @@ public:
     if (!left || !right || left->val != right->val) {
       return false;
     }
-    return isSymmetricHelper(left->left, right->right) &&
-    isSymmetricHelper(left->right, right->left);
+    return isSymmetricHelper(left->left, right->right) && isSymmetricHelper(left->right, right->left);
   }
 };

@@ -19,10 +19,7 @@ class Solution {
 public:
   vector<int> spiralOrder(vector<vector<int>>& matrix) {
     vector<int> res;
-    if (matrix.empty()) {
-      return res;
-    }
-
+    
     for (int left = 0, right = matrix[0].size() - 1, top = 0, bottom = matrix.size() - 1;
           left <= right && top <= bottom;
           ++left, --right, ++top, --bottom) {
@@ -40,7 +37,6 @@ public:
         res.emplace_back(matrix[i][left]);
       }
     }
-
     return res;
   }
 };

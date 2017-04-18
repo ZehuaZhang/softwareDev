@@ -41,7 +41,6 @@ public:
     istringstream in(preorder);
     vector<string> tokens;
     string token;
-
     while (getline(in, token, ',')) {
       tokens.push_back(token);
     }
@@ -49,12 +48,10 @@ public:
     int parents = 0;
     for (int i = 0; i < tokens.size() - 1; ++i) {
       // for full tree, leaves are always one more than parent nodes
-      if (tokens[i] == "#") {
-        if (parents-- == 0) {   // preorder, root is before leaf
-          return false;
-        }
-      } else {
+      if (tokens[i] != "#") {
         ++parents;
+      } else if (parents-- == 0) {   // preorder, root is before leaf
+        return false;
       }
     }
     // by this point - one leaf left, parents should match to leaves

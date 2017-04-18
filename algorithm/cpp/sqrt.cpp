@@ -15,7 +15,6 @@ public:
 
     for (int left = 1, right = x; left <= right;) {
       int mid = left + (right - left) / 2;
-
       if (x / mid > mid) {
         left = mid + 1;
         prevMid = mid;
@@ -25,7 +24,6 @@ public:
         return mid;
       }
     }
-
     return prevMid;
   }
 };

@@ -26,7 +26,6 @@ public:
         return {left, right};
       }
     }
-
     return {-1, -1};
   }
 };

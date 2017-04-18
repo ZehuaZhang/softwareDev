@@ -20,12 +20,11 @@ class Solution {
 public:
   vector<string> wordBreak(string s, unordered_set<string>& wordDict) {
     const int n = s.length();
-
     vector<bool> canBreak(n + 1, false);
     vector<vector<bool>> valid(n, vector<bool>(n, false));
     canBreak[0] = true;
     for (int i = 1; i <= n; ++i) {
-      for (int j = 0; j < i; j++) {
+      for (int j = 0; j < i; ++j) {
         if (canBreak[j] && wordDict.count(s.substr(j, i - j))) {
           valid[j][i - 1] = true;
           canBreak[i] = true;
@@ -40,7 +39,7 @@ public:
     return result;
   }
 
-
+private:
   void wordBreakHelper(const string& s, const vector<vector<bool>>& valid,
     int start, vector<string>& path, vector<string>& result) {
     if (start == s.length()) {
@@ -52,9 +51,9 @@ public:
     }
     for (int i = start; i < s.length(); ++i) {
       if (valid[start][i]) {
-        path->emplace_back(s.substr(start, i + 1 - start));
+        path.emplace_back(s.substr(start, i - start + 1));
         wordBreakHelper(s, valid, i + 1, path, result);
-        path->pop_back();
+        path.pop_back();
       }
     }
   }

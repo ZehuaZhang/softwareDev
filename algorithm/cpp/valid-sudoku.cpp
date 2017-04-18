@@ -17,12 +17,12 @@ public:
   bool isValidSudoku(const vector<vector<char>>& board) {
     vector<bool> used(9, false);
     for (int k = 0; k < 9; ++k) {
+      fill(used, used + 9, false);
       for (int col = 0; col < 9; col++) {
         if (!isValid(board[k][col], used)) {
           return false;
         }
       }
-
       fill(used, used + 9, false);
       for (int row = 0; row < 9; row++) {
         if (!isValid(board[row][k], used)) {

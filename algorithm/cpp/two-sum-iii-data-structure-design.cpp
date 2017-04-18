@@ -23,14 +23,14 @@ class TwoSum {
 public:
   // Add the number to an internal data structure.
   void add(int number) {
-    ++_lookup[number];
+    ++_cnt[number];
   }
 
   // Find if there exists any pair of numbers which sum is equal to the value.
   bool find(int value) {
-    for (auto pair : _lookup) {
+    for (auto pair : _cnt) {
       int gap = value - pair.first;
-      if (_lookup.count(gap) && (gap != pair.first || pair.second > 1)) {
+      if (_cnt.count(gap) && (gap != pair.first || pair.second > 1)) {
         return true;
       }
     }
@@ -38,5 +38,5 @@ public:
   }
 
 private:
-  unordered_map<int, int> _lookup;
+  unordered_map<int, int> _cnt;
 };

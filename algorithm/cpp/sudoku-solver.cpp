@@ -7,8 +7,8 @@
 
 // You may assume that there will be only one unique solution.
 
-// Time Complexity: O((n!)^n)
-// Space Complexiy: O(n^2)
+// Time : O((n!)^n)
+// Space: O(n^2)
 
 class Solution {
 public:
@@ -58,7 +58,6 @@ private:
         }
       }
     }
-
     return true;
   }
 };

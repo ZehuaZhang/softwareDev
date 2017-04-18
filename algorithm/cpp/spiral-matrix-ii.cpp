@@ -37,7 +37,6 @@ public:
         matrix[i][left] = ++num;
       }
     }
-
     return matrix;
   }
 };

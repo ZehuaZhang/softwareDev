@@ -49,7 +49,7 @@ public:
 
   bool isUnique(string word) {
     string abbr = word.front() + to_string(word.length()) + word.back();
-    return _lookup[abbr].count(word) == _lookup[abbr].size(); // word not in dictionary, count = 0; while in, count = 1
+    return !_lookup.count(abbr) || _lookup[abbr].count(word) == _lookup[abbr].size();
   }
 
 private:

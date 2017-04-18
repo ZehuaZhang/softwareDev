@@ -24,7 +24,7 @@
 
 class Solution {
 public:
-  vector<vector<int> > subsets(vector<int> &nums) {
+  vector<vector<int>> subsets(vector<int>& nums) {
     vector<vector<int>> result(1);
     sort(nums.begin(), nums.end());
 

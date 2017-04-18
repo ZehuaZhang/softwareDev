@@ -20,16 +20,11 @@ public:
   int nthSuperUglyNumber(int n, vector<int>& primes) {
     vector<int> uglies(n), factors(primes), idx(primes.size());
     uglies[0] = 1;
-
     for (int i = 1; i < n; ++i) {
-      uglies[i] = *min_element(factors.begin(), factors.end());
-      for (int k = 0; k < primes.size(); ++k) {
-        if (uglies[i] == factors[k]) {
-          factors[k] = primes[k] * uglies[++idx[k]];
-        }
-      }
+      k = distance(factors.begin(), min_element(factors.begin(), factors.end()));
+      uglies[i] = factors[k];
+      factors[k] = primes[k] * uglies[++idx[k]];
     }
-    
     return uglies[n - 1]; 
   }
 };

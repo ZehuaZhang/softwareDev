@@ -23,10 +23,6 @@
 class Solution {
 public:
   void solve(vector<vector<char>>& board) {
-    if (board.empty()) {
-      return;
-    }
-
     queue<pair<int, int>> q;
     for (int i = 0; i < board.size(); ++i) {
       q.emplace(i, 0);
