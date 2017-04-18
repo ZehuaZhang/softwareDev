@@ -36,7 +36,7 @@ public:
         strs.emplace(curr);
         curr.clear();
       } else if (c == ']') {
-        while(nums.top()--) {
+        while (nums.top()--) {
           strs.top() += curr;
         }
         nums.pop();

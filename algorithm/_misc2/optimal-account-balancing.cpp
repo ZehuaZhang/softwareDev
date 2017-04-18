@@ -74,7 +74,7 @@ public:
     for (int i = 1; i < n; ++i) {
       int net = 0, number = 0;
       for (int j = 0; j < debt.size(); ++j) {
-        if (i & 1 << j) {
+        if (i & (1 << j)) {
           net += debt[j];
           ++number;
         }

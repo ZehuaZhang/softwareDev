@@ -39,12 +39,12 @@ public:
     if ((1 + maxChoosableInteger) * (maxChoosableInteger / 2) < desiredTotal) {
       return false;
     }
-    unordered_map<int, int> lookup;
+    unordered_map<int, bool> lookup;
     return canIWinHelper(maxChoosableInteger, desiredTotal, 0, lookup);
   }
 
 private:
-  int canIWinHelper(int maxChoosableInteger, int desiredTotal, int visited, unordered_map<int, int>& lookup) {
+  int canIWinHelper(int maxChoosableInteger, int desiredTotal, int visited, unordered_map<int, bool>& lookup) {
     if (lookup.count(visited)) {
       return lookup[visited];
     }

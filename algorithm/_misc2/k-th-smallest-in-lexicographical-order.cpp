@@ -25,7 +25,7 @@ public:
     int cur = 1;
     --k;
     while (k > 0) {
-      long long step = 0, first = cur, last = cur + 1;
+      long long step = 0;
       for (long long first = cur, last = cur + 1; first <= n; first *= 10, last *= 10) {
         step += min((long long)n + 1, last) - first;
       }

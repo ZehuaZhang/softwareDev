@@ -83,7 +83,6 @@ public:
       wordSquaresHelper(words, trie, curr, result);
       curr.pop_back();
     }
-
     return result;
   }
 

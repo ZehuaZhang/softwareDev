@@ -48,7 +48,6 @@ public:
         ++count;
       }
     }
-
     return count < 3 ? top[0] : top[2];
   }
 };
