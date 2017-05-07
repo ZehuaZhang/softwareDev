@@ -33,12 +33,8 @@ image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 self.imageView.image = image;
 self.imageView.frame = CGRectMake(10, 10, 260, 260);
 
-// Web View
-
-NSString *htmlFile = [[NSBundle mainBundle] pathForResource:@"BullsEye" ofType:@"html"];
-NSData *htmlData = [NSData dataWithContentsOfFile:htmlFile];
-NSURL *baseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
-[self.webView loadData:htmlData MIMEType:@"text/html" textEncodingName:@"UTF-8" baseURL:baseURL];
+//// resize to thumbnail
+UIImage *thumbImage = [fullImage imageByScalingAndCroppingForSize:CGSizeMake(44, 44)];
 
 // Spinner View
 

@@ -120,6 +120,7 @@ logoRotator.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTim
 
 //// Sound
 
+//// AudioService
 - (void)loadSoundEffect {
   NSString *path = [[NSBundle mainBundle] pathForResource:@"Sound.caf" ofType:nil];
 
@@ -143,4 +144,24 @@ logoRotator.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTim
 
 - (void)playSoundEffect {
   AudioServicesPlaySystemSound(_soundID);
+}
+
+//// AV
+bgm = [self setupAudioPlayerWithFile:@"HallOfTheMountainKing" type:@"mp3"];
+
+[bgm setVolume:0.3];
+[bgm play];
+
+- (AVAudioPlayer *)setupAudioPlayerWithFile:(NSString *)file type:(NSString *)type {
+  NSString* path = [[NSBundle mainBundle] pathForResource:file ofType:type];
+  NSURL* url = [NSURL fileURLWithPath:path];
+
+  NSError* error;
+  AVAudioPlayer* audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
+
+  if (!audioPlayer) {
+    NSLog(@"%@", [error description]);
+  }
+
+  return audioPlayer;
 }

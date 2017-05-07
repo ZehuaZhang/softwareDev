@@ -7,6 +7,9 @@ UIView *selectionView = [[UIView alloc] initWithFrame:CGRectZero];
 selectionView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.2f];
 cell.selectedBackgroundView = selectionView;
 
+//// select
+[self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+
 //// swipe to delete
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
   [self.checklist.items removeObjectAtIndex:indexPath.row];

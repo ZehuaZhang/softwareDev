@@ -28,6 +28,17 @@ static Singleton * _gInstance = nil;
   return _gInstance;
 }
 
++ (Singleton *)sharedInstance {
+  static Singleton *_gInstance = nil;
+  
+  static dispatch_once_t onceToken;
+  
+  dispatch_once(&onceToken, ^{
+      _gInstance = [[super alloc] init];
+  });
+  return _gInstance;
+}
+
 + (id)allocWithZone:(NSZone *)zone {
   return [self instance];
 }

@@ -53,3 +53,65 @@
   [self dismissViewControllerAnimated:YES completion:nil];
   _imagePicker = nil;
 }
+
+// async
+- (IBAction)addPictureTapped:(id)sender {
+  if (self.picker == nil) {
+
+        // 1) Show status
+    [SVProgressHUD showWithStatus:@"Loading picker..."];
+
+        // 2) Get a concurrent queue form the system
+    dispatch_queue_t concurrentQueue =
+    dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+
+        // 3) Load picker in background
+    dispatch_async(concurrentQueue, ^{
+
+      self.picker = [[UIImagePickerController alloc] init];
+      self.picker.delegate = self;
+      self.picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+      self.picker.allowsEditing = NO;
+
+            // 4) Present picker in main thread
+      dispatch_async(dispatch_get_main_queue(), ^{
+        [self presentViewController:_picker animated:YES completion:nil];
+        [SVProgressHUD dismiss];
+      });
+
+    });
+
+  }  else {
+    [self presentViewController:_picker animated:YES completion:nil];
+  }
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+  
+  UIImage *fullImage = (UIImage *) [info objectForKey:UIImagePickerControllerOriginalImage];
+  
+    // 1) Show status
+  [SVProgressHUD showWithStatus:@"Resizing image..."];
+  
+    // 2) Get a concurrent queue form the system
+  dispatch_queue_t concurrentQueue =
+  dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+  
+    // 3) Resize image in background
+  dispatch_async(concurrentQueue, ^{
+    
+    UIImage *thumbImage = [fullImage imageByScalingAndCroppingForSize:CGSizeMake(44, 44)];
+    
+        // 4) Present image in main thread
+    dispatch_async(dispatch_get_main_queue(), ^{
+      self.detailItem.fullImage = fullImage;
+      self.detailItem.thumbImage = thumbImage;
+      self.imageView.image = fullImage;
+      [SVProgressHUD dismiss];
+    });
+    
+  });
+  
+  [self dismissViewControllerAnimated:YES completion:nil];
+
+}

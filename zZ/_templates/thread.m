@@ -81,3 +81,10 @@ queue.maxConcurrentOperationCount = 1;
   return resultObject;
 }
 
+// add delay
+
+dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * delay), dispatch_get_current_queue(), block);
+
+// NSThread
+
+[NSThread sleepForTimeInterval: delay];
