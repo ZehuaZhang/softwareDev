@@ -14,7 +14,7 @@
 
 class Solution {
 public:
-  Solution() : gen_((random_device())()) {
+  Solution() : _gen((random_device())()) {
   }
 
   // Encodes a URL to a shortened URL.
