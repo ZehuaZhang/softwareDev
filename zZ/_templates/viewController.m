@@ -7,15 +7,47 @@ self.preferredContentSize = CGSizeMake(320, 202);
 UIColor *barTintColor = [UIColor colorWithRed:20/255.0f green:160/255.0f blue:160/255.0f alpha:1.0f];
 [[UISearchBar appearance] setBarTintColor:barTintColor];
 
-[[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
 
-[[UINavigationBar appearance] setTitleTextAttributes:@{
-  NSForegroundColorAttributeName : [UIColor whiteColor],
-  }];
+[[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
+[[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor],}];
+
+UIImage *gradientImage44 = [[UIImage imageNamed:@"surf_gradient_textured_44"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+UIImage *gradientImage32 = [[UIImage imageNamed:@"surf_gradient_textured_32"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+
+// Set the background image for *all* UINavigationBars
+[[UINavigationBar appearance] setBackgroundImage:gradientImage44 forBarMetrics:UIBarMetricsDefault];
+[[UINavigationBar appearance] setBackgroundImage:gradientImage32 forBarMetrics:UIBarMetricsLandscapePhone];
+[[UINavigationBar appearance] setShadowImage:[UIImage imageNamed:@"navBarShadow"]];
+
+[[UIBarButtonItem appearance] setBackgroundImage:button30 forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+[[UIBarButtonItem appearance] setBackgroundImage:button24 forState:UIControlStateNormal barMetrics:UIBarMetricsLandscapePhone];
+
+UIImage *buttonBack30 = [[UIImage imageNamed:@"button_back_textured_30"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 13, 0, 5)];
+UIImage *buttonBack24 = [[UIImage imageNamed:@"button_back_textured_24"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 12, 0, 5)];
+[[UIBarButtonItem appearance] setBackButtonBackgroundImage:buttonBack30 forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+[[UIBarButtonItem appearance] setBackButtonBackgroundImage:buttonBack24 forState:UIControlStateNormal barMetrics:UIBarMetricsLandscapePhone];
+
+// Customize the title text for *all* UINavigationBars
+[[UINavigationBar appearance] setTitleTextAttributes:
+ [NSDictionary dictionaryWithObjectsAndKeys:
+  [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0],
+  UITextAttributeTextColor,
+  [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8],
+  UITextAttributeTextShadowColor,
+  [NSValue valueWithUIOffset:UIOffsetMake(0, -1)],
+  UITextAttributeTextShadowOffset,
+  [UIFont fontWithName:@"Arial-Bold" size:0.0],
+  UITextAttributeFont,
+      nil]];
 
 - (UIBarPosition)positionForBar:(id <UIBarPositioning>)bar {
   return UIBarPositionTopAttached;
 }
+
+
+UIImage *tabBackground = [[UIImage imageNamed:@"tab_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+[[UITabBar appearance] setBackgroundImage:tabBackground];
+[[UITabBar appearance] setSelectionIndicatorImage: [UIImage imageNamed:@"tab_select_indicator"]];
 
 self.tabBarController.tabBar.translucent = NO;
 

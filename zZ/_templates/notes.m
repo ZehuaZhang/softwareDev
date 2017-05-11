@@ -3,6 +3,8 @@
 locationCell.photoImageView.layer.cornerRadius = locationCell.photoImageView.bounds.size.width / 2.0f;
 locationCell.photoImageView.clipsToBounds = YES;
 
+imageView.contentMode = UIViewContentModeScaleAspectFit;
+
 //// Pattern Color
 self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"LandscapeBackground"]];
 

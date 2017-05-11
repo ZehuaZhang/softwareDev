@@ -148,3 +148,47 @@
 }
 
 [self.detailViewController dismissFromParentViewControllerWithAnimationType:DetailViewControllerAnimationTypeFade];
+
+// style
+
+//// UISegmentedControl
+[[UISegmentedControl appearance] setDividerImage:segmentUnselectedUnselected
+    forLeftSegmentState:UIControlStateNormal
+    rightSegmentState:UIControlStateNormal
+    barMetrics:UIBarMetricsDefault];
+[[UISegmentedControl appearance] setDividerImage:segmentSelectedUnselected
+    forLeftSegmentState:UIControlStateSelected
+    rightSegmentState:UIControlStateNormal
+    barMetrics:UIBarMetricsDefault];
+[[UISegmentedControl appearance]
+    setDividerImage:segUnselectedSelected
+    forLeftSegmentState:UIControlStateNormal
+    rightSegmentState:UIControlStateSelected
+    barMetrics:UIBarMetricsDefault];
+
+//// UISwitch
+[[UISwitch appearance] setOnImage:[UIImage imageNamed:@"yesSwitch"]];
+[[UISwitch appearance] setOffImage:[UIImage imageNamed:@"noSwitch"]];
+
+[[UISwitch appearance] setOnTintColor:[UIColor colorWithRed:0 green:175.0/255.0 blue:176.0/255.0 alpha:1.0]];
+[[UISwitch appearance] setTintColor:[UIColor colorWithRed:1.000 green:0.989 blue:0.753 alpha:1.000]];
+[[UISwitch appearance] setThumbTintColor:[UIColor colorWithRed:0.211 green:0.550 blue:1.000 alpha:1.000]];
+
+//// UITextField
+- (void)drawRect:(CGRect)rect {
+    UIImage *textFieldBackground = [[UIImage imageNamed:@"text_field_teal.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(15.0, 5.0, 15.0, 5.0)];
+    [textFieldBackground drawInRect:[self bounds]];
+}
+
+//// UIStepper
+[[UIStepper appearance] setTintColor:[UIColor colorWithRed:0 green:175.0/255.0 blue:176.0/255.0 alpha:1.0]];
+[[UIStepper appearance] setIncrementImage:[UIImage imageNamed:@"up"] forState:UIControlStateNormal];
+[[UIStepper appearance] setDecrementImage:[UIImage imageNamed:@"down"] forState:UIControlStateNormal];
+
+//// UIProgressView
+[[UIProgressView appearance] setProgressTintColor:[UIColor colorWithRed:0 green:175.0/255.0 blue:176.0/255.0 alpha:1.0]];
+[[UIProgressView appearance] setTrackTintColor:[UIColor colorWithRed:0.996 green:0.788 blue:0.180 alpha:1.000]];
+
+//// UIPageControl
+[[UIPageControl appearance] setCurrentPageIndicatorTintColor:[UIColor colorWithRed:0 green:175.0/255.0 blue:176.0/255.0 alpha:1.0]];
+[[UIPageControl appearance] setPageIndicatorTintColor:[UIColor colorWithRed:0.996 green:0.788 blue:0.180 alpha:1.000]];

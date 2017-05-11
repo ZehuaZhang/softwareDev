@@ -81,6 +81,50 @@ queue.maxConcurrentOperationCount = 1;
   return resultObject;
 }
 
+// url
+
+//// deserialize
+dispatch_async(kBgQueue, ^{
+    NSData* data = [NSData dataWithContentsOfURL: [NSURL URLWithString:@"http://api.kivaws.org/v1/loans/search.json?status=fundraising"]];
+    [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
+});
+NSError* error;
+NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+
+//// serialzie
+//build an info object and convert to json
+NSDictionary* info = [NSDictionary dictionaryWithObjectsAndKeys:
+  [loan objectForKey:@"name"], @"who",
+  [(NSDictionary*)[loan objectForKey:@"location"] objectForKey:@"country"], @"where",
+  [NSNumber numberWithFloat: outstandingAmount], @"what", nil];
+
+NSData* jsonData = [NSJSONSerialization dataWithJSONObject:info options:NSJSONWritingPrettyPrinted error:&error];
+
+jsonSummary.text = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+
+//// dictionary helper
+@interface NSDictionary(JSONCategories)
++(NSDictionary*)dictionaryWithContentsOfJSONURLString:
+  (NSString*)urlAddress;
+-(NSData*)toJSON;
+@end
+
+@implementation NSDictionary(JSONCategories)
++(NSDictionary*)dictionaryWithContentsOfJSONURLString:
+  (NSString*)urlAddress {
+    NSData* data = [NSData dataWithContentsOfURL: [NSURL URLWithString: urlAddress] ];
+    NSError* error = nil;
+    id result = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    return error != nil ? nil : result;
+}
+
+-(NSData*)toJSON {
+    NSError* error = nil;
+    id result = [NSJSONSerialization dataWithJSONObject:self options:kNilOptions error:&error];
+    return error != nil ? nil : result;
+}
+@end
+
 // add delay
 
 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * delay), dispatch_get_current_queue(), block);
