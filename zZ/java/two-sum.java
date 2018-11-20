@@ -1,22 +1,31 @@
-/**
- * @see <a href="https://leetcode.com/problems/two-sum/">Two Sum</a>
- */
+// Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+
+// You may assume that each input would have exactly one solution, and you may not use the same element twice.
+
+// Example:
+
+// Given nums = [2, 7, 11, 15], target = 9,
+
+// Because nums[0] + nums[1] = 2 + 7 = 9,
+// return [0, 1].
+
 
 public class Solution {
     public int[] twoSum(int[] nums, int target) {
-        if (nums == null) throw new NullPointerException();
-        int res[] = new int[2];
-        Map<Integer, Integer> hm = new HashMap<Integer, Integer>();
-        hm.put(nums[0], 0);
-        for (int i = 1; i < nums.length; ++i) {
-            if (!hm.containsKey(target - nums[i])) {
-                hm.put(nums[i], i); 
-            } else {
-                res[0] = hm.get(target - nums[i]) + 1;
-                res[1] = i + 1;
+        if (nums == null) {
+            throw new NullPointerException();
+        }
+        int[] result = new int[2];
+        HashMap<Integer, Integer> candidates = new HashMap<Integer, Integer>();
+        for (int i = 0; i < nums.length; ++i) {
+            int difference = target - nums[i];
+            if (candidates.containsKey(difference)) {
+                result[0] = candidates.get(difference);
+                result[1] = i;
                 break;
             }
+            candidates.put(nums[i], i);
         }
-        return res;
+        return result;
     }
 }
