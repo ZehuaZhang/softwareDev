@@ -16,46 +16,53 @@
 
 public class Solution {
     public List<List<Integer>> fourSum(int[] nums, int target) {
-        if (nums == null) throw new NullPointerException();
+        if (nums == null) {
+            throw new NullPointerException();
+        }
+
         Arrays.sort(nums);
+
         int n = nums.length;
-        
-        List<List<Integer>> res = new ArrayList<>();
         for (int i = 0; i < n - 3; ++i) {
             if (i > 0 && nums[i] == nums[i - 1]) {
                 continue;
             }
+            
             for (int j = i + 1; j < n - 2; ++j) {
                 if (j > i + 1 && nums[j] == nums[j - 1]) {
                     continue;
                 }
-                int sum = nums[i] + nums[j];
-                for (int low = j + 1, high = n - 1; low < high;) {
-                    if (low > j + 1 && nums[low] == nums[low - 1]) {
-                        ++low;
+
+                for (int left = j + 1, right = n - 1; left < right;) {
+                    if (left > j + 1 && nums[left] == nums[left - 1]) {
+                        ++left;
                         continue;
                     }
-                    if (high < n - 1 && nums[high] == nums[high + 1]) {
-                        --high;
+                    if (right < n - 1 && nums[right] == nums[right + 1]) {
+                        --right;
                         continue;
                     }
-                    if (sum + nums[low] + nums[high] == target) {
-                        List<Integer> aRes = new ArrayList<>();
-                        aRes.add(nums[i]);
-                        aRes.add(nums[j]);
-                        aRes.add(nums[low]);
-                        aRes.add(nums[high]);
-                        res.add(aRes);
-                        ++low;
-                        --high;
-                    } else if (sum + nums[low] + nums[high] < target) {
-                        ++low;
+
+                    int sum = nums[i] + nums[j] + nums[left] + nums[right];
+                    if (sum == target) {
+                        List<Integer> entryOfResult = new ArrayList<>();
+                        entryOfResult.add(nums[i]);
+                        entryOfResult.add(nums[j]);
+                        entryOfResult.add(nums[left]);
+                        entryOfResult.add(nums[right]);
+                        result.add(entryOfResult);
+
+                        ++left;
+                        --right;
+                    } else if (sum < target) {
+                        ++left;
                     } else {
-                        --high;
+                        --right;
                     }
                 }
             }
         }
-        return res;
+
+        return result;
     }
 }

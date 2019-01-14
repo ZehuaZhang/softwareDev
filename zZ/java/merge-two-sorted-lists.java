@@ -1,5 +1,7 @@
 /**
- * @see <a href="https://leetcode.com/problems/merge-two-sorted-lists/">Merge Two Sorted Lists</a>
+ * Merge Two Sorted Lists
+ * 
+ * Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.
  */
 
 /**
@@ -10,21 +12,33 @@
  *     ListNode(int x) { val = x; }
  * }
  */
+
+public class ListNode {
+    int val;
+    ListNode next;
+    ListNode(int x) {
+        val = x;
+    }
+}
+
 public class Solution {
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-        ListNode dummy = new ListNode(0);
-        ListNode prev = dummy;
-        ListNode cur1 = l1, cur2 = l2;
-        while (cur1 != null || cur2 != null) {
-            if (cur1 == null || (cur2 != null && cur1.val > cur2.val)) {
-                prev.next = cur2;
-                cur2 = cur2.next;
+        ListNode precedingNewHeadPointer = new ListNode(0);
+        
+        ListNode curr = precedingNewHeadPointer;
+        while (l1 != null && l2 != null) {
+            if (l1.val < l2.val) {
+                curr.next = l1;
+                l1 = l1.next;
             } else {
-                prev.next = cur1;
-                cur1 = cur1.next;
+                curr.next = l2;
+                l2 = l2.next;
             }
-            prev = prev.next;
+            curr = curr.next;
         }
-        return dummy.next;
+        
+        curr.next = l1 != null ? l1 : l2;
+
+        return precedingNewHeadPointer.next;
     }
 }
