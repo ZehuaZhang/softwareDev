@@ -1,25 +1,44 @@
 /**
- * @see <a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/">Longest Substring Without Repeating Characters</a>
+ * Longest Substring Without Repeating Characters 最长无重复字符的子串
+ *  
+ * Given a string, find the length of the longest substring without repeating characters.
+ * 
+ * Example 1:
+ * 
+ * Input: "abcabcbb"
+ * Output: 3 
+ * Explanation: The answer is "abc", with the length of 3. 
+ * Example 2:
+ * 
+ * Input: "bbbbb"
+ * Output: 1
+ * Explanation: The answer is "b", with the length of 1.
+ * Example 3:
+ * 
+ * Input: "pwwkew"
+ * Output: 3
+ * Explanation: The answer is "wke", with the length of 3. 
+ *              Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
  */
 
-// two pointer solution
 public class Solution {
     public int lengthOfLongestSubstring(String s) {
-        if (s == null) throw new NullPointerException();
-        if (s.length() <= 1) return s.length();
-        Set<Character> set = new HashSet<>();
-        set.add(s.charAt(0));
-        int i = 0, j = 1, maxLen = 1;
-        while (j < s.length()) {
-            if (set.contains(s.charAt(j))) {
-                set.remove(s.charAt(i));
-                ++i;
-            } else {
-                set.add(s.charAt(j));
-                maxLen = Math.max(maxLen, j - i + 1);
-                ++j;
-            }
+        if (s == null) {
+            throw new NullPointerException();
         }
-        return maxLen;
+
+        HashSet<Integer, Integer> indexMap = new HashSet<>();
+        int result = 0, left = -1, length = s.lenght();
+
+        for (int i = 0; i < n; ++i) {
+            if (indexMap.containsKey(s.charAt(i)) && indexMap.get(s.charAt(i)) > left) {
+                left = indexMap.get(s.charAt(i));
+            }
+
+            indexMap.set(s.charAt(i), i);
+            result = Math.max(result, i - left);
+        }
+
+        return result;
     }
 }
