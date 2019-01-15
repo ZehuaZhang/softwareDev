@@ -1,63 +1,47 @@
 /**
- * @see <a href="https://leetcode.com/problems/multiply-strings/">Multiply Strings</a>
+ * Multiply Strings
+ *  
+ * Given two numbers represented as strings, return multiplication of the numbers as a string.
+ * 
+ * Note: The numbers can be arbitrarily large and are non-negative.
  */
 
 public class Solution {
     public String multiply(String num1, String num2) {
-        if (num1 == null || num2 == null) throw new NullPointerException();
-        if (num1.length() == 0 || num2.length() == 0 ||
-            num1.equals("0") || num2.equals("0")) return "0";
-        List<String> lists = new ArrayList<>();
-        int zeroCount = 0;
-        for (int i = num2.length() - 1; i >= 0; --i) {
-            if (num2.charAt(i) != '0') {
-                StringBuilder sb = multiply(num1, num2.charAt(i));
-                for (int j = 0; j < zeroCount; ++j) {
-                    sb.append(0);
-                }
-                lists.add(new String(sb));
+        if (num1 == null || num2 == null) {
+            throw new NullPointerException();
+        }
+
+        // multiply
+        int num1Length = num1.length();
+        int num2Length = num2.length();
+        int[] multiply = new int[num1Length + num2Length];
+        for (int i = 0; i < num1Length; ++i) {
+            for (int j = 0; j < num2Length; ++j) {
+                multiply[num1Length + num2Length - 2 - i - j] += (num1.charAt(i) - '0') * (num2.charAt(j) - '0');
             }
-            ++zeroCount;
         }
-        
-        String res = lists.get(0);
-        for (int i = 1; i < lists.size(); ++i) {
-            res = addTwoStrings(res, lists.get(i));
+
+        // carry
+        int carry = 0;
+        for (int i = 0; i < num1Length + num2Length; ++i) {
+            multiply[i] += carry;
+            carry = multiply[i] / 10;
+            multiply[i] %= 10;
         }
-        return res;
-    }
-    
-    private StringBuilder multiply(String num1, char c) {
-        // num1 is not "0".
-        StringBuilder sb = new StringBuilder();
-        int cDigit = c - '0';
-        if (cDigit == 0) {
-            sb.append(0); return sb;
+
+        // number is zero
+        int i = num1Length + num2Length - 1;
+        while (multiply[i--] == 0);
+        if (i < 0) {
+            return "0";
         }
-        int carryIn = 0;
-        for (int i = num1.length() - 1; i >= 0; --i) {
-            int product = carryIn + cDigit * (num1.charAt(i) - '0');
-            int digit = product % 10;
-            carryIn = product / 10;
-            sb.insert(0, digit);
+
+        // number to string
+        StringBuilder stringBuilder = new StringBuilder();
+        while (i >= 0) {
+            stringBuilder.append(multiply[i--] + '0');
         }
-        if (carryIn != 0) sb.insert(0, carryIn);
-        return sb;
-    }
-    
-    private String addTwoStrings(String s1, String s2) {
-        String res = new String();
-        int carryIn = 0;
-        for (int i = 0; i <= s1.length() - 1 || i <= s2.length() - 1; ++i) {
-            int digit1 = 0, digit2 = 0;
-            if (i <= s1.length() - 1) digit1 = s1.charAt(s1.length() - 1 - i) - '0';
-            if (i <= s2.length() - 1) digit2 = s2.charAt(s2.length() - 1 - i) - '0';
-            int sum = digit1 + digit2 + carryIn;
-            int digit = sum % 10;
-            res = digit + res;
-            carryIn = sum / 10;
-        }
-        if (carryIn != 0) res = carryIn + res;
-        return res;
+        return stringBuilder.toString();
     }
 }

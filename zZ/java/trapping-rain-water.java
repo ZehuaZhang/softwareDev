@@ -1,31 +1,22 @@
 /**
- * @see <a href="https://leetcode.com/problems/trapping-rain-water/">Trapping Rain Water</a>
+ * Trapping Rain Water
+ * 
+ * Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.
+ * 
+ * For example, 
+ * Given [0,1,0,2,1,0,1,3,2,1,2,1], return 6.
+ * 
+ * The above elevation map is represented by array [0,1,0,2,1,0,1,3,2,1,2,1]. In this case, 6 units of rain water (blue section) are being trapped. Thanks Marcos for contributing this image!
  */
 
 public class Solution {
     public int trap(int[] height) {
-        if (height == null) throw new NullPointerException();
-        if (height.length == 0) return 0;
-        int waters[] = new int[height.length];
-        waters[0] = 0;
-        // max should not be initialized as 0!
-        int max = height[0];
-        for (int i = 1; i < height.length; ++i) {
-            waters[i] = Math.max(max - height[i], 0);
-            if (height[i] > max) max = height[i];
+        int level = 0, result = 0;
+        for (int left = 0, right = height.length - 1; left < right;) {
+            int lowerHeight = height[height[left] < height[right] ? left++ : right--];
+            level = Math.max(level, lower);
+            result += level - lower;
         }
-        int waters2[] = new int[height.length];
-        waters2[height.length - 1] = 0;
-        // max should be initialized as height[height.length - 1]
-        max = height[height.length - 1];
-        for (int i = height.length - 2; i >= 0; --i) {
-            waters2[i] = Math.max(max - height[i], 0);
-            if (height[i] > max) max = height[i];
-        }
-        int total = 0;
-        for(int i = 0; i < height.length; ++i) {
-            total += Math.min(waters[i], waters2[i]);
-        }
-        return total;
+        return result;
     }
 }

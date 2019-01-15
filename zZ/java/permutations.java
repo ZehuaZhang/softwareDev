@@ -1,37 +1,41 @@
 /**
- * @see <a href="https://leetcode.com/problems/permutations/">Permutations</a>
+ * Permutations
+ * 
+ * Given a collection of numbers, return all possible permutations.
+ * 
+ * For example,
+ * [1,2,3] have the following permutations:
+ * [1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], and [3,2,1].
  */
 
 public class Solution {
-  public List<List<Integer>> permute(int[] nums) {
-    if (nums == null) {
-      throw new NullPointerException();
-    }
-    List<List<Integer>> results = new ArrayList<>();
-    dfsHelper(0, nums, results);
-    return results;
-  }
+    public List<List<Integer>> permute(int[] nums) {
+        if (nums == null) {
+            throw new NullPointerException();
+        }
 
-  private void dfsHelper(int start, int[] nums, List<List<Integer>> results) {
-    if (start == nums.length) {
-      List<Integer> aRes = new ArrayList<>();
-      for (int n : nums) {
-        aRes.add(n);
-      }
-      results.add(aRes);
-      return;
-    }
-    dfsHelper(start + 1, nums, results); // use number at start as the first
-    for (int i = start + 1; i < nums.length; ++i) {
-      swap(start, i, nums); // use number at i as the first
-      dfsHelper(start + 1, nums, results);
-      swap(start, i, nums); // restore the array
-    }
-  }
+        List<list<Integer>> result = new ArrayList<List<Integer>>();
+        List<Integer> path = new ArrayList<Integer>();
+        boolean[] visited = new int[nums.length];
 
-  private void swap(int i, int j, int[] nums) {
-    nums[i] = nums[i] ^ nums[j];
-    nums[j] = nums[i] ^ nums[j];
-    nums[i] = nums[i] ^ nums[j];
-  }
+        permuteHelper(nums, visited, 0, path, result);
+
+        return result;
+    }
+
+    public void permuteHelper(int[] nums, boolean[] visited, int start, List<Integer> path, List<List<Integer>> result) {
+        if (start == nums.length) {
+            result.add(path);
+        } else {
+            for (int i = start; i < nums.length; ++i) {
+                if (visited[i] == false) {
+                    visited[i] = true;
+                    path.add(nums[i]);
+                    permuteHelper(nums, visited, i + 1, path, result);
+                    path.remove(path.size() - 1);
+                    visited[i] = false;
+                }
+            }
+        }
+    }
 }

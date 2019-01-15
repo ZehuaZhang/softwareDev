@@ -1,26 +1,42 @@
 /**
- * @see <a href="https://leetcode.com/problems/count-and-say/">Count and Say</a>
+ * Count and Say
+ *  
+ * The count-and-say sequence is the sequence of integers beginning as follows:
+ * 1, 11, 21, 1211, 111221, ...
+ * 
+ * 1 is read off as "one 1" or 11.
+ * 11 is read off as "two 1s" or 21.
+ * 21 is read off as "one 2, then one 1" or 1211.
+ * 
+ * Given an integer n, generate the nth sequence.
+ * 
+ * Note: The sequence of integers will be represented as a string.
  */
 
 public class Solution {
     public String countAndSay(int n) {
-        if (n <= 0) return "";
-        String cur = "1";
-        for (int t = 2; t <= n; ++t) {
-            StringBuilder sbNext = new StringBuilder();
-            int i = 0;
-            while (i < cur.length()) {
+        if (n <= 0) {
+            return "";
+        }
+        
+        String result = "1";
+        for (int time = 2; time <= n; ++time) {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            for (int i = 0; i < result.length();) {
                 int count = 1;
                 int j = i + 1;
-                for (; j < cur.length() && cur.charAt(j) == cur.charAt(j - 1); ++j) {
+                for (; j < result.length() && result.charAt(j) == result.charAt(j - 1); ++j) {
                     ++count;
                 }
-                sbNext.append(count);
-                sbNext.append(cur.charAt(i));
+                stringBuilder
+                    .append(count)
+                    .append(result.charAt(i));
                 i = j;
             }
-            cur = new String(sbNext);
+            result = stringBuilder.toString(); 
         }
-        return cur;
+
+        return result;
     }
 }

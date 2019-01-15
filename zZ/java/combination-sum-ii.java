@@ -1,43 +1,48 @@
 /**
- * @see <a href="https://leetcode.com/problems/combination-sum-ii/">Combination Sum II</a>
+ * Combination Sum II
+ * 
+ * Given a collection of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.
+ * 
+ * Each number in C may only be used once in the combination.
+ * 
+ * Note:
+ * 
+ * All numbers (including target) will be positive integers.
+ * Elements in a combination (a1, a2, … , ak) must be in non-descending order. (ie, a1 ≤ a2 ≤ … ≤ ak).
+ * The solution set must not contain duplicate combinations.
+ *  
+ * 
+ * For example, given candidate set 10,1,2,7,6,1,5 and target 8, 
+ * A solution set is: 
+ * [1, 7] 
+ * [1, 2, 5] 
+ * [2, 6] 
+ * [1, 1, 6] 
  */
+
+import java.util.Arrays;
 
 public class Solution {
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
-        if (candidates == null) throw new NullPointerException();
-        int[] newCands = candidates.clone();
-        Arrays.sort(newCands);
-        Set<List<Integer>> set = combinationSum(newCands, target, 0);
-        List<List<Integer>> res = new ArrayList<>();
-        for (List<Integer> list : set) {
-            res.add(list);
-        }
-        return res;
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        List<Integer> path = new ArrayList<Integer>();
+        Arrays.sort(candidates);
+        combinationSumHelper(candidates, target, start, path, result);
+        return result;
     }
-    private Set<List<Integer>> combinationSum(int[] candidates, int target, int start) {
-        Set<List<Integer>> set = new HashSet<>();
-        // the smallest number is greater than target, no result will be found. 
-        if (start >= candidates.length || candidates[start] > target) return set; 
-        if (candidates[start] == target) {
-            List<Integer> list = new ArrayList<>();
-            list.add(candidates[start]);
-            set.add(list);
-            return set;
+
+    private void combinationSumHelper(int[] candidates, int target, int start, List<Integer> path, List<List<Integer>> result) {
+        if (target == 0) {
+            result.add(path);
+        } else if (target > 0) {
+            for (int i = start; i < candidates.length; ++i) {
+                if (i > start && candidates[i] == candidates[i - 1]) {
+                    continue;
+                }
+                path.add(candidates[i]);
+                combinationSumHelper(candidates, target - candidates[i], i + 1, path, result);
+                path.remove(path.size());
+            }
         }
-        // use candidates[start].
-        Set<List<Integer>> partial = combinationSum(candidates, target - candidates[start], start + 1);
-        for (List<Integer> list : partial) {
-            List<Integer> newList = new ArrayList<>();
-            newList.add(candidates[start]);
-            newList.addAll(list);
-            set.add(newList);
-        }
-        Set<List<Integer>> partial2 = combinationSum(candidates, target, start + 1);
-        for (List<Integer> list : partial2) {
-            List<Integer> newList = new ArrayList<>();
-            newList.addAll(list);
-            set.add(newList);
-        }
-        return set;
     }
 }

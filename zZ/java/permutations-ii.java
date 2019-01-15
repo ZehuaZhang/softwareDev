@@ -1,37 +1,46 @@
 /**
- * @see <a href="https://leetcode.com/problems/permutations-ii/">Permutations II</a>
+ * Permutations II
+ * 
+ * Given a collection of numbers that might contain duplicates, return all possible unique permutations.
+ * 
+ * For example,
+ * [1,1,2] have the following unique permutations:
+ * [1,1,2], [1,2,1], and [2,1,1].
  */
+
+ import java.util.Arrays;
 
 public class Solution {
     public List<List<Integer>> permuteUnique(int[] nums) {
-        List<List<Integer>> res = new ArrayList<>();
-        helper(0, nums, res);
-        return res;
-    }
-    
-    private void helper(int start, int[] nums, List<List<Integer>> res) {
-        if (start == nums.length) {
-            List<Integer> aRes = new ArrayList<>();
-            for (int n : nums) aRes.add(n);
-            res.add(aRes);
-            return;
+        if (nums == null) {
+            throw new NullPointerException();
         }
-        Set<Integer> frontSet = new HashSet<>();
-        for (int i = start; i < nums.length; ++i) {
-            // if we have done so for the same value, we will not consider it again in the future.
-            if (!frontSet.contains(nums[i])) {
-                frontSet.add(nums[i]);
-                swap(start, i, nums);
-                helper(start + 1, nums, res);
-                swap(start, i, nums); // restore the array.
+
+        List<list<Integer>> result = new ArrayList<List<Integer>>();
+        List<Integer> path = new ArrayList<Integer>();
+        boolean[] visited = new int[nums.length];
+
+        Arrays.sort(nums);
+        permuteHelper(nums, visited, 0, path, result);
+
+        return result;
+    }
+
+    public void permuteHelper(int[] nums, boolean[] visited, int start, List<Integer> path,
+            List<List<Integer>> result) {
+        if (start == nums.length) {
+            result.add(path);
+        } else {
+            for (int i = start; i < nums.length; ++i) {
+                if (visited[i] == false) {
+                    visited[i] = true;
+                    path.add(nums[i]);
+                    permuteHelper(nums, visited, i + 1, path, result);
+                    path.remove(path.size() - 1);
+                    visited[i] = false;
+                    for (; i < nums.length - 1 && nums[i] != nums[i + 1]; ++i);
+                }
             }
         }
-    }
-    
-    private void swap(int i, int j, int[] nums) {
-        if (i == j) return;
-        nums[i] = nums[i] ^ nums[j];
-        nums[j] = nums[i] ^ nums[j];
-        nums[i] = nums[i] ^ nums[j];
     }
 }
