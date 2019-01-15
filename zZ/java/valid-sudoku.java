@@ -1,28 +1,39 @@
 /**
- * @see <a href="https://leetcode.com/problems/valid-sudoku/">Valid Sudoku</a>
+ * Valid Sudoku
+ *  
+ * Determine if a Sudoku is valid, according to: Sudoku Puzzles - The Rules.
+ * 
+ * The Sudoku board could be partially filled, where empty cells are filled with the character '.'.
+ * 
+ * A partially filled sudoku which is valid.
+ * 
+ * Note:
+ * A valid Sudoku board (partially filled) is not necessarily solvable. Only the filled cells need to be validated.
  */
 
 public class Solution {
     public boolean isValidSudoku(char[][] board) {
-        if (board == null) throw new NullPointerException();
-        int len = board.length;
-        boolean[][][] status= new boolean[3][len][len];
-        // status[0][i]: the status of ith row.
-        // status[1][i]: the status of ith column.
-        // status[2][i]: the status of ith grid.
-        // status[i][j][k]: means whether the kth digit has already appeared.
-        for (int i = 0; i < len; ++i) {
-            for (int j = 0; j < len; ++j) {
-                if (board[i][j] != '.') {
-                    if (status[0][i][board[i][j] - '1'] || status[1][j][board[i][j] - '1']
-                            || status[2][(i/3)*3 + j/3][board[i][j] - '1']) {
-                        return false;                            
-                    } else {
-                        status[0][i][board[i][j] - '1'] = true;
-                        status[1][j][board[i][j] - '1'] = true;
-                        status[2][(i/3)*3 + j/3][board[i][j] - '1'] = true;
+        if (board == null) {
+            throw new NullPointerException();
+        }
+
+        int length = board.length;
+        boolean[][] row = new boolean[length][length];
+        boolean[][] col = new boolean[length][length];
+        boolean[][] grid = new boolean[length][length];
+        for (int i = 0; i < length; ++i) {
+            for (int j = 0; j < length; ++j) {
+                int character = board[i][j];
+                if (character != '.') {
+                    if (row[i][character] == true ||
+                        col[j][character] == true||
+                        grid[3 * (i / 3) + j / 3] == true) {
+                        return false;
                     }
                 }
+                row[i][character] = true;
+                col[j][character] = true;
+                grid[3 * (i / 3) + j / 3] = true;
             }
         }
         return true;

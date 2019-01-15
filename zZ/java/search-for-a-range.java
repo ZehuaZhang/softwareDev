@@ -1,61 +1,52 @@
 /**
- * @see <a href="https://leetcode.com/problems/search-for-a-range/">Search for a Range</a>
+ * Search for a Range
+ * 
+ * Given a sorted array of integers, find the starting and ending position of a
+ * given target value.
+ * 
+ * Your algorithm's runtime complexity must be in the order of O(log n).
+ * 
+ * If the target is not found in the array, return [-1, -1].
+ * 
+ * For example,
+ * Given [5, 7, 7, 8, 8, 10] and target value 8,
+ * return [3, 4].
  */
 
 public class Solution {
-  public int[] searchRange(int[] nums, int target) {
-    if (nums == null) {
-      throw new NullPointerException();
-    }
-    int low = 0, high = nums.length - 1;
-    int[] res = {-1, -1};
-    while (low <= high) {
-      if (target < nums[low] || target > nums[high]) {
-        break;
-      }
-      	int mid = low + ((high - low) >> 1);
-      if (target > nums[mid]) {
-        low = mid + 1;
-      } else if (target == nums[mid]) {
-        res[0] = getLeftBound(nums, target, mid);
-        res[1] = getRightBound(nums,target, mid);
-        break;
-      } else {
-        high = mid - 1; // target < nums[mid]
-      }
-    }
-    return res;
-  }
+    public int[] searchRange(int[] nums, int target) {
+        int left = lowerBound(nums, target);
+        int right = upperBound(nums, target);
 
-  private int getLeftBound(int[] nums, int target, int mid) {
-    int low = 0, high = mid;
-    while (low <= high) {
-      if (low == high) {
-        break;
-      }
-      mid = low + ((high - low) >> 1);
-      if (nums[mid] == target) {
-        high = mid;
-      } else if (nums[mid] < target) {
-        low = mid + 1;
-      }
-    }
-    return low;
-  }
+        if (left < nums.length && nums[left] == target) {
+            return new int[] {left, right - 1};
+        }
+        return new int[] {-1, -1};
+    } 
 
-  private int getRightBound(int[] nums, int target, int mid) {
-    int low = mid, high = nums.length - 1;
-    while (low <= high) {
-      if (low == high) {
-        break;
-      }
-      mid = low + ((high - low) >> 1) + 1;
-      if (nums[mid] == target) {
-        low = mid;
-      } else if (nums[mid] > target) {
-        high = mid - 1;
-      }
+    private int lowerBound(int[] nums, int target) {
+        int left = 0, right = nums.length - 1;
+        while (left <= right) {
+            int middle = left + (right - left) / 2;
+            if (nums[middle] >= target) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return left;
     }
-    return low;
-  }
-}
+
+    private int upperBound(int[] nums, int target) {
+        int left = 0, right = nums.length - 1;
+        while (left <= right) {
+            int middle = left + (right - left) / 2;
+            if (nums[middle] > target) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return left;
+    }
+} 
