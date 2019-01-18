@@ -1,38 +1,36 @@
 /**
- * @see <a href="https://leetcode.com/problems/simplify-path/">Simplify Path</a>
+ * Simplify Path
+ * 
+ * Given an absolute path for a file (Unix-style), simplify it.
+ * 
+ * For example, path = "/home/", => "/home" path = "/a/./b/../../c/", => "/c"
+ * 
+ * Corner Cases: Did you consider the case where path = "/../"? In this case,
+ * you should return "/". Another corner case is the path might contain multiple
+ * slashes '/' together, such as "/home//foo/". In this case, you should ignore
+ * redundant slashes and return "/home/foo".
  */
 
+import java.util.ArrayList;
+import java.util.Stack;
+
 public class Solution {
-  public String simplifyPath(String path) {
-    if (path == null) {
-      throw new NullPointerException();
-    }
-    List<String> stk = new ArrayList<>();
-    int idx = 0;
-    while (idx < path.length()) {
-      int start = idx;
-      while (idx < path.length() && path.charAt(idx) != '/') {
-        ++idx;
-      }
-      String token = path.substring(start, idx);
-      if (token.equals("") || token.equals(".")) {}
-      else if (token.equals("..")) {
-        if (stk.size() != 0) {
-          stk.remove(stk.size() - 1);
+    public String simplifyPath(String path) {
+        if (path == null) {
+            throw new NullPointerException();
         }
-      } else {
-        stk.add(token);
-      }
-      ++idx;
+
+        String[] pathList = path.split("/");
+        Stack<String> pathStack = new Stack<>();
+        for (String subpath : pathList) {
+            if (!pathStack.isEmpty() && subpath.equals("..")) {
+                pathStack.pop();
+            } else if (!subpath.equals(".") && !subpath.equals("") && !subpath.equals("..")) {
+                pathStack.push(subpath);
+            }
+        }
+
+        List<String> simplifiedPathList = new ArrayList<String>(pathStack);
+        return "/" + String.join("/", simplifiedPathList);
     }
-    if (stk.size() == 0) {
-      return "/";
-    }
-    StringBuilder sb = new StringBuilder();
-    for (int i = 0; i < stk.size(); ++i) {
-      sb.append("/");
-      sb.append(stk.get(i));
-    }
-    return new String(sb);
-  }
 }

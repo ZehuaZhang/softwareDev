@@ -1,48 +1,65 @@
 /**
- * @see <a href="https://leetcode.com/problems/minimum-window-substring/">Minimum Window Substring</a>
+ * Minimum Window Substring
+ * 
+ * Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).
+ * 
+ * Example:
+ * 
+ * Input: S = "ADOBECODEBANC", T = "ABC"
+ * Output: "BANC"
+ * Note:
+ * 
+ * If there is no such window in S that covers all characters in T, return the empty string "".
+ * If there is such window, you are guaranteed that there will always be only one unique minimum window in S.
  */
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Solution {
     public String minWindow(String s, String t) {
-        if (s == null || t == null) throw new NullPointerException();
-        if (s.length() < t.length()) return "";
-        Map<Character, Integer> hmt = getHashMap(t);
-        Map<Character, Integer> hms = getHashMap(s.substring(0, t.length()));
-        int i = 0;
-        int j = t.length() - 1;
-        String res = new String();
-        int minLen = s.length() + 1;
-        while (true) {
-            if (covers(hms, hmt)) {
-                if (j - i + 1 < minLen) {
-                    res = s.substring(i, j + 1);
-                    minLen = Math.min(minLen, j - i + 1);
-                }
-                if (hms.containsKey(s.charAt(i))) {
-                    hms.put(s.charAt(i), hms.get(s.charAt(i)) - 1);
-                }
-                ++i;
-            } else {
-                ++j;
-                if (j >= s.length()) break;
-                if (hmt.containsKey(s.charAt(j))) {
-                    hms.put(s.charAt(j), hms.containsKey(s.charAt(j)) ? hms.get(s.charAt(j)) + 1 : 1);
+        if (s == null || t == null) {
+            throw new NullPointerException();
+        }
+
+        Map<Character, Integer> letterCount = new HashMap<>();
+        for (int i = 0; i < t.length(); ++i) {
+            int count = letterCount.getOrDefault(t.charAt(i), 0) + 1;
+            letterCount.put(t.charAt(i), count);
+        }
+        
+        String result;
+        int left = 0, count = 0, minLength = Integer.MAX_VALUE;
+        for (int right = 0; right < s.length(); ++right) {
+            
+            // extend substring to the right by one character
+            if (letterCount.containsKey(s.charAt(right))) {
+                letterCount.put(s.charAt(right), letterCount.get(s.charAt(right)) - 1);
+
+                if (letterCount.get(s.charAt(right)) >= 0) {
+                    ++count;
                 }
             }
+
+            // update minimum window when characters in t are all in substring
+            while (count == t.length()) {
+                if (minLength > right - left + 1) {
+                    minLength = right - left + 1;
+                    result = s.substring(left, right + 1); 
+                }
+
+                // shrink substring from the left by one character
+                if (letterCount.containsKey(s.charAt(left))) {
+                    letterCount.put(s.charAt(left), letterCount.get(s.charAt(left) + 1));
+
+                    if (letterCount.get(s.charAt(left)) > 0) {
+                        --count;
+                    }
+                }
+                ++left;
+            }
         }
-        return res;
-    }
-    private Map<Character, Integer> getHashMap(String s) {
-        Map<Character, Integer> hm = new HashMap<>();
-        for (int i = 0; i < s.length(); ++i) {
-            hm.put(s.charAt(i), hm.containsKey(s.charAt(i)) ? hm.get(s.charAt(i)) + 1 : 1);
-        }
-        return hm;
-    }
-    private boolean covers(Map<Character, Integer> hms, Map<Character, Integer> hmt) {
-        for (char c : hmt.keySet()) {
-            if (!hms.containsKey(c) || hms.get(c) < hmt.get(c)) return false;
-        }
-        return true;
+
+        return result;
     }
 }

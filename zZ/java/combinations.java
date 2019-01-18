@@ -1,56 +1,41 @@
 /**
- * @see <a href="https://leetcode.com/problems/combinations/">Combinations</a>
+ * Combinations
+ * 
+ * Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.
+ * 
+ * For example,
+ * If n = 4 and k = 2, a solution is:
+ * 
+ * [
+ *   [2,4],
+ *   [3,4],
+ *   [2,3],
+ *   [1,2],
+ *   [1,3],
+ *   [1,4],
+ * ]
  */
 
-public class Solution {
-    // iterative backtrack solution
-    public List<List<Integer>> combine(int n, int k) {
-        List<List<Integer>> lists = new ArrayList<List<Integer>>();
-        Stack<Integer> stk = new Stack<Integer>();
+import java.awt.List;
+import java.util.ArrayList;
 
-        for (int i = 1; i <= k; ++i) {
-            stk.push(i);
-        }
-        if (stk.peek() > n) {
-            return lists;
-        }
-        while (true) {
-            if (stk.peek() > n) { // not valid: backtrack:
-                backtrack(stk, n, k);
-            } else { // valid: go forward (the next may or may not be valid)
-                // get a result
-                List<Integer> al = generateResultGivenStack(stk);
-                lists.add(al);
-                // go to next.
-                stk.push(stk.pop() + 1);
+public class Solution {
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        List<Integer> path = new ArrayList<>();
+        combineHelper(1, k, n, path, result);
+        return result;
+    }
+
+    private combineHelper(int start, int k, int n, List<Integer> path, List<List<Integer>> result) {
+        if (path.size() == k) {
+            result.add(path);
+        } else {
+            for (int i = start; i <= n; ++i) {
+                path.add(i);
+                combineHelper(i, k, n, path, result);
+                path.remove(path.size() - 1);
             }
-            if (stk.isEmpty()) break;
-        }
-        return lists;
-    }
-    
-    private List<Integer> generateResultGivenStack(Stack<Integer> stk) {
-        List<Integer> list = new ArrayList<Integer>();
-        while (!stk.isEmpty()) {
-            list.add(stk.pop());
-        }
-        for (int i = list.size() - 1; i >= 0; --i){
-            stk.push(list.get(i));
-        }
-        Collections.reverse(list);
-        return list;
-    }
-    
-    private void backtrack(Stack<Integer> stk, int n, int k) {
-        int popCount = 0;
-        while (!stk.isEmpty() && stk.peek() + (k - stk.size()) >= n) {
-            stk.pop();
-            ++popCount;
-        }
-        if (stk.isEmpty()) return;
-        stk.push(stk.pop() + 1);
-        for (int i = 0; i < popCount; ++i) {
-            stk.push(stk.peek() + 1);
         }
     }
 }

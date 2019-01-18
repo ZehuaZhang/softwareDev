@@ -1,38 +1,54 @@
 /**
- * @see <a href="https://leetcode.com/problems/spiral-matrix-ii/">Spiral Matrix II</a>
+ * Spiral Matrix II
+ * 
+ * Given a positive integer n, generate a square matrix filled with elements from 1 to n2 in spiral order.
+ * 
+ * Example:
+ * Input: 3
+ * Output:
+ * [
+ *  [ 1, 2, 3 ],
+ *  [ 8, 9, 4 ],
+ *  [ 7, 6, 5 ]
+ * ]
  */
 
 public class Solution {
     public int[][] generateMatrix(int n) {
-        // fill int the array from the outmost circle to the innermost circle.
-        // for each circle, fill in the first upper row, right column, lower row, left column, one by one.
-        n = Math.abs(n);
-        int layers = n >> 1;
-        int num = 1;
-        int[][] matrix = new int[n][n];
-        for (int i = 0; i < layers; ++i) {
-            // the ith row;
-            for (int j = i; j < n - 1 - i; ++j) {
-                matrix[i][j] = num;
-                ++num;
+        int[][] result = new int[n][n];
+
+        int top = 0, bottom = n - 1, left = 0, right = n - 1;
+        int value = 1;
+        while (true) {
+            for (int j = left; j <= right; ++j) {
+                result[top][j] = value++;
             }
-            // the n - 1 - i th column:
-            for (int j = i; j < n - 1 - i; ++j) {
-                matrix[j][n - 1 - i] = num;
-                ++num;
+            if (++top > bottom) {
+                break;
             }
-            // the n - 1 - i th row;
-            for (int j = i; j < n - 1 - i; ++j) {
-                matrix[n - 1 - i][n - 1 - j] = num;
-                ++num;
+
+            for (int i = top; j <= bottom; ++j) {
+                result[i][right] = value++;
             }
-            // the ith column
-            for (int j = i; j < n - 1 - i; ++j) {
-                matrix[n - 1 - j][i] = num;
-                ++num;
+            if (--right < left ) {
+                break;
+            }
+
+            for (int j = right; j >= left; --j) {
+                result[bottom][j] = value++;
+            }
+            if (--bottom < top) {
+                break;
+            }
+
+            for (int i = bottom; i >= top; --i) {
+                result[i][left] = value++;
+            }
+            if (++left > right) {
+                break;
             }
         }
-        if (n % 2 == 1) matrix[n/2][n/2] = n * n;
-        return matrix;
+
+        return result;
     }
 }

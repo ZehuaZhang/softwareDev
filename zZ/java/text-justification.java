@@ -1,87 +1,85 @@
+
 /**
- * @see <a href="https://leetcode.com/problems/text-justification/">Text Justification</a>
+ * Text Justification
+ * 
+ * Given an array of words and a length L, format the text such that each line has exactly L characters and is fully (left and right) justified.
+ * 
+ * You should pack your words in a greedy approach; that is, pack as many words as you can in each line. Pad extra spaces ' ' when necessary so that each line has exactly Lcharacters.
+ * 
+ * Extra spaces between words should be distributed as evenly as possible. If the number of spaces on a line do not divide evenly between words, the empty slots on the left will be assigned more spaces than the slots on the right.
+ * 
+ * For the last line of text, it should be left justified and no extra space is inserted between words.
+ * 
+ * For example,
+ * words: ["This", "is", "an", "example", "of", "text", "justification."]
+ * L: 16.
+ * 
+ * Return the formatted lines as:
+ * 
+ * [
+ *    "This    is    an",
+ *    "example  of text",
+ *    "justification.  "
+ * ]
+ *  
+ * Note: Each word is guaranteed not to exceed L in length.
+ * 
+ * Corner Cases:
+ * A line other than the last line might contain only one word. What should you do in this case?
+ * In this case, that line should be left-justified.
  */
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Solution {
     public List<String> fullJustify(String[] words, int maxWidth) {
-        if (words == null) throw new NullPointerException();
-        List<List<String>> lists = new ArrayList<>();
-        List<Integer> length = new ArrayList<>();
-        
-        List<String> first = new ArrayList<>();
-        lists.add(first);
-        length.add(0);
-        for (int i = 0; i < words.length; ++i) {
-            if (words[i].length() != 0) { // "" will not be considered.
-                int n = lists.get(lists.size() - 1).size();
-                if (length.get(lists.size() - 1) + words[i].length() + n > maxWidth) {
-                        List<String> newList = new ArrayList<>();
-                        lists.add(newList); 
-                        length.add(0);
-                        --i;
-                } else {
-                        lists.get(lists.size() - 1).add(words[i]);
-                        length.set(length.size() - 1, words[i].length() + length.get(lists.size() - 1));
-                }
-            }
-        }
-        List<String> res = new ArrayList<>();
-        if (lists.size() == 1 && lists.get(0).size() == 0) {
-            StringBuilder sb = new StringBuilder(); 
-            for (int i = 0; i < maxWidth; ++i) {
-                sb.append(" ");
-            }
-            res.add(new String(sb));
-            return res;
-        }
-        
-        for (int i = 0; i < lists.size() - 1; ++i) {
-            int n = lists.get(i).size();
-            int len = length.get(i);
-            int nSpace = maxWidth - len;
-            if (n == 1) {
-                StringBuilder sb = new StringBuilder();
-                sb.append(lists.get(i).get(0));
-                for (int k = 0; k < nSpace; ++k) {
-                    sb.append(" ");
-                }
-                res.add(new String(sb));
-            } else {
-                int num = n - 1;
-                int each = nSpace / num;
-                int remainder = nSpace % num;
-                StringBuilder sb = new StringBuilder();
-                for (int k = 0; k < remainder; ++k) {
-                    sb.append(lists.get(i).get(k));
-                    for (int j = 0; j < each + 1; ++j) {
-                        sb.append(" ");
-                    }
-                }
-                for (int k = remainder; k < n - 1; ++k) {
-                    sb.append(lists.get(i).get(k));
-                    for (int j = 0; j < each; ++j) {
-                    sb.append(" ");
-                    }
-                }
-                sb.append(lists.get(i).get(n - 1));
-                res.add(new String(sb));
-            }
-        }
-        
-        StringBuilder sbLast = new StringBuilder();
-        int n = lists.get(lists.size() - 1).size();
-        int len = length.get(length.size() - 1);
-        for (int i = 0; i < n - 1; ++i) {
-            sbLast.append(lists.get(lists.size() - 1).get(i));
-            sbLast.append(" ");
+        if (words == null) {
+            throw new NullPointerException();
         }
 
-        sbLast.append(lists.get(lists.size() - 1).get(n - 1));
-        int remain = maxWidth - len - (n - 1);
-        for (int i = 0; i < remain; ++i) {
-            sbLast.append(" ");
+        List<String> result = new ArrayList<>();
+        int begin = 0, length = 0;
+        for (int i = 0; i < words.length; ++i) {
+            if (length + words[i].length() + (i - begin) > maxWidth) {
+                result.add(connect(words, maxWidth, begin, i, length, false));
+                begin = i;
+                length = 0;
+            }
+            length += words[i].length();
         }
-        res.add(new String(sbLast));
-        return res;
+
+        result.add(connect(words, maxWidth, begin, words.length, length, true));
+
+        return result;
+    }
+
+    private String connect(String[] words, int maxWidth, int begin, int end, int length, boolean isLast) {
+        String s;
+        int n = end - begin;
+        for (int i = 0; i < n; ++i) {
+            s += words[begin + i];
+            addSpaces(s, i, n - 1, maxWidth - len, isLast);
+        }
+
+        if (s.length() < maxWidth) {
+            char[] spaces = new char[maxWidth - s.length()];
+            Arrays.fill(spaces, ' ');
+            s += new String(spaces);
+        }
+        return s;
+    }
+
+    private void addSpaces(String s, int i, int spaceCount, int spaceWidth, boolean isLast) {
+        if (i < spaceCount) {
+            int spaces = isLast ? 1 : spaceWidth / spaceCount + (i < spaceWidth % spaceCount ? 1 : 0);
+            s += getSpacesOfLength(spaces);
+        }
+    }
+
+    private String getSpacesOfLength(int length) {
+        char[] spaces = new char[length];
+        Arrays.fill(spaces, ' ');
+        return new String(spaces);
     }
 }

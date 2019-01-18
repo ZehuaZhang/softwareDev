@@ -1,28 +1,37 @@
 /**
- * @see <a href="https://leetcode.com/problems/minimum-path-sum/">Minimum Path Sum</a>
+ * Minimum Path Sum
+ * 
+ * Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes the sum of all numbers along its path.
+ * 
+ * Note: You can only move either down or right at any point in time.
  */
 
 public class Solution {
     public int minPathSum(int[][] grid) {
-        if (grid == null) throw new NullPointerException();
-        if (grid.length == 0 || grid[0].length == 0) return 0;
-        int[][] minPSum = new int[grid.length][grid[0].length];
-        // initialize the last element
-        minPSum[grid.length - 1][grid[0].length - 1] = grid[grid.length - 1][grid[0].length - 1];
-        // initialize the last column
-        for (int i = grid.length - 2; i >= 0; --i) {
-            minPSum[i][grid[0].length - 1] = minPSum[i + 1][grid[0].length -1] + grid[i][grid[0].length - 1];
+        if (grid == null) {
+            throw new NullPointerException();
         }
-        // initialize the last row
-        for (int j = grid[0].length - 2; j >= 0; --j) {
-            minPSum[grid.length - 1][j] = minPSum[grid.length - 1][j + 1] + grid[grid.length - 1][j];
+
+        if (grid.length == 0 || grid[0].length == 0) {
+            return 0;
         }
-        // dp.
-        for (int i = grid.length - 2; i >= 0; --i) {
-            for (int j = grid[0].length - 2; j >= 0; --j) {
-                minPSum[i][j] = Math.min(minPSum[i + 1][j], minPSum[i][j + 1]) + grid[i][j];
+
+        int m = grid.length, n = grid[0].length;
+
+        int[][] minPathSum = new int[m][n];
+        minPathSum[0][0] = grid[0][0];
+
+        for (int i = 1; i < m; ++i) {
+            minPathSum[i][0] += grid[i][0] + minPathSum[i - 1][0]; 
+        }
+        for (int j = 1; j < n; ++j) {
+            minPathSum[0][j] += grid[0][j] + minPathSum[0][j - 1];
+        }
+        for (int i = 1; i < m; ++i) {
+            for (int j = 1; j < n; ++j) {
+                minPathSum[i][j] += grid[i][j] + Math.min(minPathSum[i][j - 1], minPathSum[i - 1][j]);
             }
         }
-        return minPSum[0][0];
+        return minPathSum[m - 1][n - 1];
     }
 }

@@ -38,7 +38,7 @@ public class Solution {
                     permuteHelper(nums, visited, i + 1, path, result);
                     path.remove(path.size() - 1);
                     visited[i] = false;
-                    for (; i < nums.length - 1 && nums[i] != nums[i + 1]; ++i);
+                    for (; i < nums.length - 1 && nums[i] == nums[i + 1]; ++i);
                 }
             }
         }

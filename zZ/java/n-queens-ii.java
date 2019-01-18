@@ -1,58 +1,41 @@
 /**
- * @see <a href="https://leetcode.com/problems/n-queens-ii/">N-Queens II</a>
+ * N-Queens II
+ * 
+ * Follow up for N-Queens problem.
+ * 
+ * Now, instead outputting board configurations, return the total number of distinct solutions.
  */
 
 public class Solution {
 	public int totalNQueens(int n) {
-		int res = 0;
-		boolean backtrack = false;
-		int bValue = 0;
-		// though we use a stack to store things.
-		// we also need to access all elements in the stack conveniently.
-		// thus, we use an array to simulate a stack.
-		// the ith element of in the array is the column number in the ith row,
-		// for which a queen can be placed.
-		List<Integer> stkC = new ArrayList<>();
-		
-		int i = 0;
-		while (true) {
-			// we consider the ith row.
-			int cand = -1;
-			if (backtrack == false) cand = 0;
-			else cand = bValue + 1;
-			while (cand < n && !canPlace(stkC, cand)) ++cand;
-			if (cand >= n) {
-				// backtrack
-				if (stkC.size() == 0) break; // no way to backtrack.
-				backtrack = true;
-				bValue = stkC.remove(stkC.size() - 1);
-				i = i - 1;
-			} else {
-				// we can place a queen at i, cand.
-				stkC.add(cand);
-				i = i + 1;
-				backtrack = false;
-				bValue = 0;
-				if (stkC.size() == n) {
-					++res;
-					backtrack = true;
-					bValue = stkC.remove(stkC.size() - 1);
-					i = i - 1;
+		int[] result = new int[1];
+		int[] columnPositionInRow = new int[n];
+		Arrays.fill(columnPositionInRow, -1);
+		totalNQueensHelper(row, n, columnPositionInRow, result);
+		return result[0];
+	}
+
+	private totalNQueensHelper(int row, int n, int[] columnPositionInRow, int[] result) {
+		if (row == n) {
+			++result[0];
+		} else {
+			for (int col = 0; col < n; ++col) {
+				if (isValid(columnPositionInRow, row, col)) {
+					columnPositionInRow[row] = col;
+					totalNQueensHelper(row + 1, n, columnPositionInRow, result);
+					columnPositionInRow[row] = -1;
 				}
 			}
 		}
-		return res;
 	}
-	
-	private boolean canPlace(List<Integer> stkC, int cand) {
-		// we are placing the stkC.size() th row, and the cand th column.
-		int ti = stkC.size();
-		int tj = cand;
-		for (int i = 0; i < stkC.size(); ++i) {
-			int ci = i;
-			int cj = stkC.get(i);
-			if (Math.abs(ci - ti) == Math.abs(cj - tj)
-					|| ci == ti || cj == tj) return false;
+
+	private bool isValid(int[] columnPositionInRow, int row, int col) {
+		for (int i = 0; i < columnPositionInRow.length; ++i) {
+			if (columnPositionInRow[i] != -1) {
+				if (columnPositionInRow[i] == col || row - i == col - columnPositionInRow[i]) {
+					return false;
+				}
+			}
 		}
 		return true;
 	}

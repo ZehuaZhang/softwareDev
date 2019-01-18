@@ -19,10 +19,6 @@ public class Solution {
             throw new NullPointerException();
         }
 
-        if (nums.length == 0 || nums.length == 1) {
-            return;
-        }
-
         int i = nums.length - 1;
         while (i - 1 >= 0 && nums[i - 1] >= nums[i]) {
             --i;

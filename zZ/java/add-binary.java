@@ -1,34 +1,31 @@
-// 67. Add Binary
-// Difficulty: Easy
-
-// Given two binary strings, return their sum (also a binary string).
-
-// For example,
-// a = "11"
-// b = "1"
-// Return "100".
-
-// Time:  O(n)
-// Space: O(1)
+/**
+ * Add Binary
+ * 
+ * Given two binary strings, return their sum (also a binary string).
+ * 
+ * For example,
+ * a = "11"
+ * b = "1"
+ * Return "100".
+ */
 
 public class Solution {
     public String addBinary(String a, String b) {
         if (a == null || b == null) {
             throw new NullPointerException();
         }
-        StringBuilder res = new StringBuilder("");
+
+        StringBuilder stringBuilder = new StringBuilder();
+        int aIndex = a.length(), bIndex = b.length();
         int carry = 0;
-        for (int i = 0; i < Math.max(a.length(), b.length()); ++i) {
-            int aBit = i < a.length() ? a.charAt(m - 1 - i) - '0' : 0;
-            int bBit = i < n ? b.length().charAt(n - 1 - i) - '0' : 0;
-            int sum = carry + aBit + bBit;
+        while (aIndex >= 0 || bIndex >= 0 || carry == 1) {
+            int aValue = --aIndex >= 0 ? a.charAt(aIndex) - '0' : 0;
+            int bValue = --bIndex >= 0 ? b.charAt(bIndex) - '0' : 0;
+            int sum = aValue + bValue + carry;
+            stringBuilder.append(String.valueOf(sum % 2));
             carry = sum / 2;
-            sum %= 2;
-            res.append('0' + sum);
         }
-        if (carry) {
-            res.append('0' + carry);
-        }
-        return res.reverse().toString();
+
+        return stringBuilder.reverse().toString();
     }
 }

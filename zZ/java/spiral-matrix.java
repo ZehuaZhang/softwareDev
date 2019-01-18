@@ -1,54 +1,70 @@
 /**
- * @see <a href="https://leetcode.com/problems/spiral-matrix/">Spiral Matrix</a>
+ * Spiral Matrix
+ * 
+ * Given a matrix of m x n elements (m rows, ncolumns), return all elements of the matrix in spiral order.
+ * 
+ * Example 1:
+ * 
+ * Input:
+ * [
+ *  [ 1, 2, 3 ],
+ *  [ 4, 5, 6 ],
+ *  [ 7, 8, 9 ]
+ * ]
+ * Output: [1,2,3,6,9,8,7,4,5]
+ * Example 2:
+ * 
+ * Input:
+ * [
+ *   [1, 2, 3, 4],
+ *   [5, 6, 7, 8],
+ *   [9,10,11,12]
+ * ]
+ * Output: [1,2,3,4,8,12,11,10,9,5,6,7]
  */
 
 public class Solution {
     public List<Integer> spiralOrder(int[][] matrix) {
-        if (matrix == null) throw new NullPointerException();
-        List<Integer> list = new ArrayList<Integer>();
-        if (matrix.length == 0 || matrix[0].length == 0) return list; 
+        if (matrix == null) {
+            throw new NullPointerException();
+        }
 
-        boolean goRight = true, goDown = false, goLeft = false, goUp = false;
-        int  rightBound = matrix[0].length - 1, lowerBound = matrix.length - 1, leftBound = 0, upperBound = 1;
-        int count = 0;
-        int i = 0, j = 0;
-        if (matrix[0].length  == 1) {
-            goRight = false;
-            goDown = true;
+        List<Integer> result = new List<Integer>();
+        if (matrix.length == 0 || matrix[0].length == 0) {
+            return result;
         }
-        while (count / matrix[0].length < matrix.length) {
-            list.add(matrix[i][j]);
-            if (goRight) {
-                ++j;
-                if (j == rightBound) {
-                    goRight = false;
-                    goDown = true;
-                    --rightBound;
-                }
-            } else if (goDown) {
-                ++i;
-                if (i == lowerBound) {
-                    goDown = false;
-                    goLeft = true;
-                    --lowerBound;
-                }
-            } else if (goLeft) {
-                --j;
-                if (j == leftBound) {
-                    goLeft = false;
-                    goUp = true;
-                    ++leftBound; // don't forget semicolon.
-                }
-            } else { // goUp
-                --i;
-                if (i == upperBound) {
-                    goUp = false;
-                    goRight = true;
-                    ++upperBound;
-                }
+
+        int top = 0, bottom = m - 1, left = 0, right = n - 1;
+        while (true) {
+            for (int j = left; j <= right; ++j) {
+                result.add(matrix[top][j]);
             }
-            ++count;
+            if (++top > bottom) {
+                break;
+            }
+
+            for (int i = top; i <= bottom; ++i) {
+                result.add(matrix[i][right]);
+            }
+            if (--right < left) {
+                break;
+            }
+
+            for (int j = right; j >= left; --j) {
+                result.add(matrix[bottom][j]);
+            }
+            if (--down < up) {
+                break;
+            }
+
+            for (int i = down; i >= up; --i) {
+                result.add(matrix[i][left]);
+            }
+            if (++left > right) {
+                break;
+            }
         }
-        return list;
+
+        return result;
     }
 }
