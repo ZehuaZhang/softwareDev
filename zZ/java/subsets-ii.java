@@ -1,28 +1,53 @@
 /**
- * @see <a href="https://leetcode.com/problems/subsets-ii/">Subsets II</a>
+ * Subsets II
+ * 
+ * Given a collection of integers that might contain duplicates, S, return all possible subsets.
+ * 
+ * Note:
+ * 
+ * Elements in a subset must be in non-descending order.
+ * The solution set must not contain duplicate subsets.
+ *  
+ * 
+ * For example,
+ * If S = [1,2,2], a solution is:
+ * 
+ * [
+ *   [2],
+ *   [1],
+ *   [1,2,2],
+ *   [2,2],
+ *   [1,2],
+ *   []
+ * ]
  */
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Solution {
     public List<List<Integer>> subsetsWithDup(int[] nums) {
-        if (nums == null) throw new NullPointerException();
-        List<List<Integer>> res = new ArrayList<>();
-        if (nums.length == 0) {
-            res.add(new ArrayList<>()); // using anonymous object to simplify coding.
-            return res;
+        if (nums == null) {
+            throw new NullPointerException();
         }
+
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        List<Integer> path = new ArrayList<>();
         Arrays.sort(nums);
-        Set<List<Integer>> curSet = new HashSet<>();
-        curSet.add(new ArrayList<>());
-        for (int i = 0; i < nums.length; ++i) {
-            // using helpful constructors to simplify coding.
-            Set<List<Integer>> nextSet = new HashSet<>(curSet);
-            for (List<Integer> aRes : curSet) {
-                List<Integer> newRes = new ArrayList<>(aRes);
-                newRes.add(nums[i]);
-                nextSet.add(newRes);
+        subsetWithDupHelper(nums, 0, path, result);
+        return result;
+    }
+
+    private void subsetWithDupHelper(int[] nums, int start, List<Integer> path, List<List<Integer>> result) {
+        result.add(new ArrayList<Integer>(path));
+        for (int i = start; i < nums.length; ++i) {
+            path.add(nums[i]);
+            subsetWithDupHelper(nums, i + 1, path, result);
+            path.remove(path.size() - 1);
+            while (i + 1 < nums.length && nums[i] == nums[i + 1]) {
+                ++i;
             }
-            curSet = nextSet;
         }
-        return new ArrayList<List<Integer>>(curSet);
     }
 }

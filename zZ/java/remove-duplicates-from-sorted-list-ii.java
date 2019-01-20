@@ -1,34 +1,44 @@
 /**
- * @see <a href="https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/">Remove Duplicates from Sorted List II</a>
+ * Remove Duplicates from Sorted List II
+ * 
+ * Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list.
+ * 
+ * Example 1:
+ * 
+ * Input: 1->2->3->3->4->4->5
+ * Output: 1->2->5
+ * Example 2:
+ * 
+ * Input: 1->1->1->2->3
+ * Output: 2->3
  */
 
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
- * }
- */
 public class Solution {
     public ListNode deleteDuplicates(ListNode head) {
         ListNode dummy = new ListNode(0);
-        dummy.next = head;
-        ListNode prev = dummy;
-        ListNode cur = prev.next;
-        while (cur != null) {
-            if (cur.next == null || cur.next.val != cur.val) {
-                prev = prev.next;
-                cur = cur.next;
-            } else {
-                int dup = cur.val;
-                while (cur.next != null && cur.next.val == dup) {
-                    cur = cur.next;
+        
+        for (ListNode prev = dummy; head != null;) {
+            if (head.next != null && head.val == head.next.val) {
+                int value = head.val;
+                while (head != null && head.val == value) {
+                    head = head.next;
                 }
-                prev.next = cur.next;
-                cur = cur.next;
+                prev.next = head;
+            } else {
+                prev.next = head;
+                prev = head;
+                head = head.next;
             }
         }
+
         return dummy.next;
+    }
+
+    private class ListNode {
+        int val;
+        ListNode next;
+        ListNode(int x) {
+            val = x;
+        }
     }
 }

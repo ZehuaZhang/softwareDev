@@ -1,24 +1,41 @@
 /**
- * @see <a href="https://leetcode.com/problems/search-in-rotated-sorted-array-ii/">Search in Rotated Sorted Array II</a>
+ * Search in Rotated Sorted Array II 
+ * 
+ * Follow up for "Search in Rotated Sorted Array":
+ * What if duplicates are allowed?
+ * 
+ * Would this affect the run-time complexity? How and why?
+ * 
+ * Write a function to determine if a given target is in the array.
  */
 
 public class Solution {
     public boolean search(int[] nums, int target) {
-        if (nums == null) throw new NullPointerException();
-        int low = 0, high = nums.length - 1;
-        while (true) {
-            if (low > high) return false;
-            int mid = low + ((high - low) >> 1);
-            if (target == nums[low] || target == nums[mid] || target == nums[high]) return true;
+        if (nums == null) {
+            throw new NullPointerException();
+        }
 
-            if (nums[mid] > nums[high] && target > nums[mid]) {
-                low = mid + 1;
-            } else if (nums[mid] < nums[low] && target < nums[mid]) {
-                high = mid - 1;
+        for (int left = 0, right = nums.length - 1; left <= right;) {
+            int middle = left + (right - left) / 2;
+            if (nums[middle] == target) {
+                return true;
+            } else if (nums[middle] < nums[right]) {
+                if (nums[middle] < target && target <= nums[right]) {
+                    left = middle + 1;
+                } else {
+                    right = middle - 1;
+                }
+            } else if (nums[middle] > nums[right]) {
+                if (nums[left] <= target && target < nums[middle]) {
+                    right = middle - 1;
+                } else {
+                    left = middle + 1;
+                }
             } else {
-                ++low;
-                --high;
+                --right;
             }
         }
+        
+        return false;
     }
 }

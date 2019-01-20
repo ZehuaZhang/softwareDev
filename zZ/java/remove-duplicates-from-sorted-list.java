@@ -1,29 +1,36 @@
 /**
- * @see <a href="https://leetcode.com/problems/remove-duplicates-from-sorted-list/">Remove Duplicates from Sorted List</a>
+ * Remove Duplicates from Sorted List
+ * 
+ * Given a sorted linked list, delete all duplicates such that each element appear only once.
+ * 
+ * Example 1:
+ * 
+ * Input: 1->1->2
+ * Output: 1->2
+ * Example 2:
+ * 
+ * Input: 1->1->2->3->3
+ * Output: 1->2->3
  */
 
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
- * }
- */
 public class Solution {
     public ListNode deleteDuplicates(ListNode head) {
-        if (head == null || head.next == null) return head;
-        ListNode prev = head;
-        ListNode cur = prev.next;
-        while (cur != null) {
-            while (cur != null && cur.val == prev.val) {
-                cur = cur.next;
+        for (ListNode curr = head; curr != null && curr.next != null;) {
+            if (curr.val == curr.next.val) {
+                curr.next = curr.next.next;
+            } else {
+                curr = curr.next;
             }
-            prev.next = cur;
-            if (cur == null) break;
-            cur = cur.next;
-            prev = prev.next;
         }
+
         return head;
     }
+
+    public class ListNode {
+        int val;
+        ListNode next;
+        ListNode(int x) {
+            val = x;
+        }
+    }    
 }

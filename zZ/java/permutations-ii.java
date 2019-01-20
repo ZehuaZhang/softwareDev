@@ -26,8 +26,7 @@ public class Solution {
         return result;
     }
 
-    public void permuteHelper(int[] nums, boolean[] visited, int start, List<Integer> path,
-            List<List<Integer>> result) {
+    public void permuteHelper(int[] nums, boolean[] visited, int start, List<Integer> path, List<List<Integer>> result) {
         if (start == nums.length) {
             result.add(path);
         } else {
