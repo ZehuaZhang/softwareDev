@@ -1,32 +1,47 @@
 /**
- * @see <a href="https://leetcode.com/problems/decode-ways/">Decode Ways</a>
+ * Decode Ways 
+ * 
+ * A message containing letters from A-Z is being encoded to numbers using the following mapping:
+ * 
+ * 'A' -> 1
+ * 'B' -> 2
+ * ...
+ * 'Z' -> 26
+ * Given an encoded message containing digits, determine the total number of ways to decode it.
+ * 
+ * For example,
+ * Given encoded message "12", it could be decoded as "AB" (1 2) or "L" (12).
+ * 
+ * The number of ways decoding "12" is 2.
  */
 
 public class Solution {
     public int numDecodings(String s) {
-        if (s.length() == 0) return 0;
-        if (s.equals("0")) return 0;
-        int[] ways = new int[s.length() + 1];
-        
-        
-        ways[s.length()] = 1;
-        if (s.charAt(s.length() - 1) == '0') {
-            ways[s.length() - 1] = 0;
-        } else {
-            ways[s.length() - 1] = 1;
-        }        
-        for (int i = s.length() - 2; i >= 0; --i) {
-            if (s.charAt(i) == '0') {
-                ways[i] = 0;
-            } else {
-                int num = Integer.parseInt(s.substring(i, i + 2));
-                if (num > 26) {
-                    ways[i] = ways[i + 1];
-                } else {
-                    ways[i] = ways[i + 1] + ways[i + 2];
-                }
-            }
+        if (s == null) {
+            throw new NullPointerException();
         }
-        return ways[0];
+
+        if (s.length() == 0) {
+            return 0;
+        }
+
+        int prevPrev = 0;
+        int prev = 0;
+        int curr = 1;
+        for (int i = 0; i < s.length(); ++i) {
+            if (s.charAt(i) == '0') {
+                curr = 0;
+            }
+
+            if (i == 0 || !(s.charAt(i - 1) == '1' || (s.charAt(i - 1) == '2' && s.charAt(i) <= '6'))) {
+                prev = 0;
+            }
+
+            prevPrev = prev;
+            prev = curr;
+            curr = prevPrev + prev;
+        }
+
+        return curr;
     }
 }

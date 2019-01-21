@@ -1,31 +1,50 @@
 /**
- * @see <a href="https://leetcode.com/problems/binary-tree-inorder-traversal/">Binary Tree Inorder Traversal</a>
+ * Binary Tree Inorder Traversal
+ * 
+ * Given a binary tree, return the inorder traversal of its nodes' values.
+ * 
+ * Example:
+ * 
+ * Input: [1,null,2,3]
+ *    1
+ *     \
+ *      2
+ *     /
+ *    3
+ * 
+ * Output: [1,3,2]
+ * Follow up: Recursive solution is trivial, could you do it iteratively?
  */
 
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
+import java.util.ArrayList;
+import java.util.Stack;
+
 public class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
-        List<Integer> list = new ArrayList<Integer>();
-        Stack<TreeNode> stk = new Stack<TreeNode>();
-        TreeNode cur = root;
-        while (true) {
-            while (cur != null) {
-                stk.push(cur);
-                cur = cur.left;
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode curr = root;
+        List<Integer> result = new ArrayList<>();
+
+        while (!stack.isEmpty() && curr != null) {
+            if (curr != null) {
+                stack.push(curr);
+                curr = curr.left;
+            } else {
+                curr = stack.pop();
+                result.add(curr.val);
+                curr = curr.right;
             }
-            if (stk.isEmpty()) break;
-            cur = stk.pop();
-            list.add(cur.val);
-            cur = cur.right;
         }
-        return list;
+
+        return result;
+    }
+}
+
+private class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) {
+        val = x;
     }
 }
