@@ -1,39 +1,52 @@
 /**
- * @see <a href="https://leetcode.com/problems/binary-tree-level-order-traversal/">Binary Tree Level Order Traversal</a>
+ * Binary Tree Level Order Traversal 
+ * 
+ * Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level).
+ * 
+ * For example:
+ * Given binary tree {3,9,20,#,#,15,7},
+ * 
+ *     3
+ *    / \
+ *   9  20
+ *     /  \
+ *    15   7
+ *  
+ * 
+ * return its level order traversal as:
+ * 
+ * [
+ *   [3],
+ *   [9,20],
+ *   [15,7]
+ * ]
  */
 
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
+import java.util.ArrayList;
+
 public class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
-        List<List<Integer>> lli = new ArrayList<List<Integer>>();
-        if (root == null) return lli;
-        Queue<TreeNode> q = new LinkedList<TreeNode>();
-        q.add(root);
-        q.add(null); // indicate the end of a level
-        List<Integer> first = new ArrayList<Integer>();
-        lli.add(first);
-        while (!q.isEmpty()) {
-            TreeNode cur = q.remove();
-            if (cur != null) {
-                lli.get(lli.size() - 1).add(cur.val);
-                if (cur.left != null) q.add(cur.left);
-                if (cur.right != null) q.add(cur.right);
-            } else { // cur == null
-                if (!q.isEmpty()) {
-                    List<Integer> next = new ArrayList<Integer>();
-                    lli.add(next);
-                    q.add(null); // use the null to separate the levels.
-                }
-            }
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        levelOrderHelper(root, 0, result);
+        return result;
+    }
+
+    private void levelOrderHelper(TreeNode node, int level, List<List<Integer>> result) {
+        if (node == null) {
+            return;
         }
-        return lli;
+
+        if (result.size() == level) {
+            result.add(new ArrayList<Integer>());
+        }
+
+        result.get(level).add(node.val);
+        
+        if (node.left != null) {
+            levelOrderHelper(node.left, level + 1, result);
+        }
+        if (node.right != null) {
+            levelOrderHelper(node.right, level + 1, result);
+        }
     }
 }
