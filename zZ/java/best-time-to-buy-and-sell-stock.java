@@ -1,20 +1,23 @@
 /**
- * @see <a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock/">Best Time to Buy and Sell Stock</a>
+ * Best Time to Buy and Sell Stock
+ * 
+ * Say you have an array for which the ith element is the price of a given stock on day i.
+ * 
+ * If you were only permitted to complete at most one transaction (ie, buy one and sell one share of the stock), design an algorithm to find the maximum profit.
  */
 
 public class Solution {
     public int maxProfit(int[] prices) {
-        if (prices == null) throw new NullPointerException();
-        if (prices.length == 0 || prices.length == 1) return 0;
-        int low = prices[0];
-        int maxProfit = 0;
-        for (int i = 0; i < prices.length; ++i) {
-            if (prices[i] >= low) {
-                maxProfit = Math.max(maxProfit, prices[i] - low);
-            } else { // prices[i] < low
-                low = prices[i];
-            }
+        if (prices == null) {
+            throw new NullPointerException();
         }
-        return maxProfit;
+
+        int result = 0, minStock = Integer.MAX_VALUE;
+        for (int price : prices) {
+            minStock = Math.min(minStock, price);
+            result = Math.max(result, price - minStock);
+        }
+
+        return result;
     }
 }

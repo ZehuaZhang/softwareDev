@@ -1,52 +1,67 @@
 /**
- * @see <a href="https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/">Populating Next Right Pointers in Each Node II</a>
+ * Populating Next Right Pointers in Each Node II
+ * 
+ * Given a binary tree
+ * 
+ * struct TreeLinkNode {
+ *   TreeLinkNode *left;
+ *   TreeLinkNode *right;
+ *   TreeLinkNode *next;
+ * }
+ * Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
+ * 
+ * Initially, all next pointers are set to NULL.
+ * 
+ * Note:
+ * 
+ * You may only use constant extra space.
+ * Recursive approach is fine, implicit stack space does not count as extra space for this problem.
+ * Example:
+ * 
+ * Given the following binary tree,
+ * 
+ *      1
+ *    /  \
+ *   2    3
+ *  / \    \
+ * 4   5    7
+ * After calling your function, the tree should look like:
+ * 
+ *      1 -> NULL
+ *    /  \
+ *   2 -> 3 -> NULL
+ *  / \    \
+ * 4-> 5 -> 7 -> NULL
  */
 
-/**
- * Definition for binary tree with next pointer.
- * public class TreeLinkNode {
- *     int val;
- *     TreeLinkNode left, right, next;
- *     TreeLinkNode(int x) { val = x; }
- * }
- */
 public class Solution {
     public void connect(TreeLinkNode root) {
-        TreeLinkNode layerHead = root;
-        while (layerHead != null) {
-            TreeLinkNode nextLayerHead = null;
-            TreeLinkNode layerCur = layerHead; // traverse in the current layer
-            TreeLinkNode nextLayerPrev = null; // modify in the next layer
-            while (layerCur != null) {
-                if (layerCur.left == null && layerCur.right == null) {}
-                else {
-                    if (layerCur.left != null && layerCur.right == null) { // left not null
-                        if (nextLayerHead == null) {
-                            nextLayerHead = layerCur.left;
-                        } else {
-                            nextLayerPrev.next = layerCur.left;
-                        }
-                        nextLayerPrev = layerCur.left;
-                    } else if (layerCur.left == null && layerCur.right != null)  { // right not null
-                        if (nextLayerHead == null) {
-                            nextLayerHead = layerCur.right;
-                        } else {
-                            nextLayerPrev.next = layerCur.right;
-                        }
-                        nextLayerPrev = layerCur.right;
-                    } else {// layerCur.left != null and layerCur.right != null
-                        if (nextLayerHead == null) {
-                            nextLayerHead = layerCur.left;
-                        } else {
-                            nextLayerPrev.next = layerCur.left;
-                        }
-                        layerCur.left.next = layerCur.right;
-                        nextLayerPrev = layerCur.right;
-                    }
+        for (TreeLinkNode next = null; root != null; root = next) {
+            for (TreeLinkNode curr = null; root = root.next; root = root.next) {
+                if (next == null) {
+                    next = root.left ? root.left : root.right;
                 }
-                layerCur = layerCur.next;
+
+                if (root.left != null) {
+                    if (curr != null) {
+                        curr.next = root.left;
+                    }
+                    curr = root.left;
+                }
+
+                if (root.right != null) {
+                    if (curr != null) {
+                        curr.next = root.right;
+                    }
+                    curr = root.right;
+                }
             }
-            layerHead = nextLayerHead; // may or may not be null.
-        }        
+        }
     }
+}
+
+public class TreeLinkNode {
+    int val;
+    TreeLinkNode left, right, next;
+    TreeLinkNode(int x) { val = x; }
 }

@@ -21,7 +21,7 @@ public class Solution {
         for (int i = 0; i < s.length(); ++i) {
             for (int j = 0; j < i; ++j) {
                 isPalindrome[j][i] = 
-                    s[i] == s[j] ||
+                    s.charAt(i) == s.charAt(j) ||
                     (i - j < 2 || dp[j + 1][i - 1]);
                 
                 if (isPalindrome[j][i] && length < i - j + 1) {

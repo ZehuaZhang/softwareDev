@@ -1,93 +1,111 @@
 /**
- *  https://leetcode.com/problems/word-ladder-ii/
+ * Word Ladder II
+ * 
+ * Given two words (beginWord and endWord), and a dictionary's word list, find all shortest transformation sequence(s) from beginWord to endWord, such that:
+ * 
+ * Only one letter can be changed at a time
+ * Each transformed word must exist in the word list. Note that beginWord is not a transformed word.
+ * Note:
+ * 
+ * Return an empty list if there is no such transformation sequence.
+ * All words have the same length.
+ * All words contain only lowercase alphabetic characters.
+ * You may assume no duplicates in the word list.
+ * You may assume beginWord and endWord are non-empty and are not the same.
+ * Example 1:
+ * 
+ * Input:
+ * beginWord = "hit",
+ * endWord = "cog",
+ * wordList = ["hot","dot","dog","lot","log","cog"]
+ * 
+ * Output:
+ * [
+ *   ["hit","hot","dot","dog","cog"],
+ *   ["hit","hot","lot","log","cog"]
+ * ]
+ * Example 2:
+ * 
+ * Input:
+ * beginWord = "hit"
+ * endWord = "cog"
+ * wordList = ["hot","dot","dog","lot","log"]
+ * 
+ * Output: []
+ * 
+ * Explanation: The endWord "cog" is not in wordList, therefore no possible transformation.
  */
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
 
 public class Solution {
     public List<List<String>> findLadders(String beginWord, String endWord, Set<String> wordList) {
-        List<List<String>> res = new ArrayList<>();
-        if (beginWord.equals(endWord)) {
-            List<String> aL = new ArrayList<>();
-            aL.add(beginWord);
-            res.add(aL);
-            return res;
+        Set<String> wordSet = new HashSet<>(wordList);
+        List<List<String>> result = new ArrayList<List<String>>();
+        if (!wordSet.contains(endWord)) {
+            return result;
         }
-        Set<String> dict = new HashSet<>();
-        dict.addAll(wordList);
-        dict.add(endWord);
-        int dist = getLadderLength(beginWord, endWord, dict);
+
+        Map<String, List<String>> nextWords = new HashMap<String, List<String>>();
+        Queue<String> queue = new LinkedList<>();
+        queue.offer(beginWord);
+        int level = 0;
+        boolean hasFoundLadder = false;
         
-        for (String k : hm.keySet()) {
-            hm.put(k, dist - 1 - hm.get(k));
-        }
-        Set<String> visited = new HashSet<>();
-        getLadders(dist - 1, beginWord, endWord, dict, visited);
-        return ladders;
-    }
-    
-    private Map<String, Integer> hm = new HashMap<String, Integer>();
-    private int getLadderLength(String beginWord, String endWord, Set<String> wordList) {
-        int length = 0;
-        Set<String> visited = new HashSet<>();
-        Queue<String> q = new LinkedList<>();
-        Queue<Integer> qDist = new LinkedList<>();
-        q.add(beginWord);
-        qDist.add(0);
-        visited.add(beginWord);
-        
-        while (!q.isEmpty()) {
-            String w = q.remove();
-            int len = qDist.remove();
-            hm.put(w, len);
-            if (w.equals(endWord)) {
-                length = len + 1;
-                break;
-            }
-            // get all neighbors of w, and add them to the queue, if they have not been visited.
-            for (int i = 0; i < w.length(); ++i) {
-                for (int c = 'a'; c <= 'z'; ++c) {
-                    char[] cArr = w.toCharArray();
-                    if (c != cArr[i]) {
-                        cArr[i] = (char) c; // don't forget type conversion.
-                        String nW = new String(cArr);
-                        if (wordList.contains(nW) && !visited.contains(nW)) {
-                            q.add(nW);
-                            qDist.add(len + 1);
-                            visited.add(nW);
+        while (!queue.isEmpty() && !hasFoundLadder) {
+            for (int k = queue.size(); k > 0; ++k) {
+                String word = queue.poll();
+
+                if (word.equals(endWord)) {
+                    hasFoundLadder = true;
+                    break;
+                } else {
+                    for (int i = 0; i < word.length(); ++i) {
+                        char[] characterArray = word.toString();
+                        for (characterArray[i] = 'a'; characterArray[i] <= 'z'; ++characterArray[i]) {
+                            String newWord = characterArray.toString();
+                            if (wordSet.contains(newWord) && !newWord.equals(word)) {
+                                queue.offer(newWord);
+                                wordSet.remove(newWord);
+
+                                nextWords.getOrDefault(word, new ArrayList<String>());
+                                nextWords.get(word).add(newWord);
+                            }
                         }
                     }
                 }
             }
+            ++level;
         }
-        return length;
+
+        List<String> path = new ArrayList<>();
+        generateLadder(beginWord, endWord, nextWords, level, path, result);
+        return result;
     }
-    
-    private List<String> stk = new ArrayList<>();
-    private List<List<String>> ladders = new ArrayList<>();
-    private void getLadders(int dist, String word, String endWord, Set<String> dict, Set<String> visited) {
-    	visited.add(word);
-    	stk.add(word);
-    	if (word.equals(endWord)) {
-    		List<String> list = new ArrayList<String>();
-    		list.addAll(stk);
-    		ladders.add(list);
-    	} else if (dist == 0 || hm.get(word) > dist) {}
-    	else {
-			char[] cArr = word.toCharArray();
-    		for (int i = 0; i < word.length(); ++i) {
-    			char ci = cArr[i];
-    			for (int c = 'a'; c <= 'z'; ++c) {
-    				if (c != word.charAt(i)) {
-    					cArr[i] = (char) c;
-    					String nW = new String (cArr);
-    					if (dict.contains(nW) && !visited.contains(nW)) {
-    						getLadders(dist - 1, nW, endWord, dict, visited);
-    					}
-    				}
-    			}
-    			cArr[i] = ci; // restore.
-    		}
-    	}
-    	visited.remove(word);
-    	stk.remove(stk.size() - 1);
+
+    private void generateLadder(String currWord, String endWord, Map<String, List<String>> nextWords, int level, List<String> path, List<List<String>> result) {
+        path.add(currWord);
+        
+        if (currWord == endWord) {
+            result.add(new ArrayList<>(path));
+            return;
+        }
+
+        if (path.size() >= level) {
+            return;
+        }
+
+        for (String nextWord: nextWords.getOrDefault(currWord, new ArrayList<String>())) {
+            generateLadder(nextWord, endWord, nextWords, level, path, result);
+        }
+        
+        path.remove(path.size() - 1);
     }
 }

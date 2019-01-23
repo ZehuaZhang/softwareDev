@@ -1,29 +1,32 @@
 /**
- * @see <a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/">Best Time to Buy and Sell Stock III</a>
+ * Best Time to Buy and Sell Stock III 
+ * 
+ * Say you have an array for which the ith element is the price of a given stock on day i.
+ * 
+ * Design an algorithm to find the maximum profit. You may complete at most two transactions.
+ * 
+ * Note:
+ * You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
  */
 
 public class Solution {
     public int maxProfit(int[] prices) {
-        if (prices == null) throw new NullPointerException();
-        if (prices.length <= 1) return 0;
-        // forward, get max profit from day 0 up to day i.
-        int maxP1[] = new int[prices.length];
-        int min = prices[0];
-        for (int i = 1; i < prices.length; ++i) {
-            if (prices[i] < min) min = prices[i];
-            maxP1[i] = Math.max(maxP1[i - 1], prices[i] - min);
+        if (prices == null) {
+            throw new NullPointerException();
         }
-        // backward, get max profit from day prices.length - 1 down to day i
-        int maxP2[] = new int[prices.length];
-        int max = prices[prices.length - 1];
-        for (int i = prices.length - 2; i >= 0; --i) {
-            if (prices[i] > max) max = prices[i];
-            maxP2[i] = Math.max(maxP2[i + 1], max - prices[i]);
+
+        int transactionCount = 2;
+        int[] currMax = new int[transactionCount + 1];
+        int[] max = new int[transactionCount + 1];
+
+        for (int i = 0; i < prices.length - 1; ++i) {
+            int diff = prices[i + 1] - prices[i];
+            for (int j = transactionCount; j > 0; --j) {
+                currMax[j] = Math.max(currMax[j - 1] + Math.max(diff, 0), currMax[j] + diff);
+                max[j] = Math.max(currMax[j], max[j]);
+            }
         }
-        int result = 0;
-        for (int i = 0; i < prices.length; ++i) {
-            if (result < maxP1[i] + maxP2[i]) result = maxP1[i] + maxP2[i];
-        }
-        return result;
+
+        return max[transactionCount];
     }
 }

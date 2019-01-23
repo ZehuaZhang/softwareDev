@@ -1,31 +1,37 @@
 /**
- * @see <a href="https://leetcode.com/problems/valid-palindrome/">Valid Palindrome</a>
+ * Valid Palindrome 
+ * 
+ * Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
+ * 
+ * For example,
+ * "A man, a plan, a canal: Panama" is a palindrome.
+ * "race a car" is not a palindrome.
+ * 
+ * Note:
+ * Have you consider that the string might be empty? This is a good question to ask during an interview.
+ * 
+ * For the purpose of this problem, we define empty string as valid palindrome.
  */
 
 public class Solution {
     public boolean isPalindrome(String s) {
-        if (s == null) throw new NullPointerException();
-        int i = 0, j = s.length() - 1;
-        while (i < j) {
-            if (!Character.isAlphabetic(s.charAt(i)) && !Character.isDigit(s.charAt(i))) {
-                ++i;
-            } else if  (!Character.isAlphabetic(s.charAt(j)) && !Character.isDigit(s.charAt(j))) {
-                --j;
+        if (s == null) {
+            throw new NullPointerException();
+        }
+
+        for (int left = 0, right = s.length() - 1; left < right;) {
+            if (!Character.isAlphabetic(s.charAt(left)) && !Character.isDigit(s.charAt(left))) {
+                ++left;
+            } else if (!Character.isAlphabetic(s.charAt(right)) && !Character.isDigit(s.charAt(right))) {
+                --right;
+            } else if (Character.toLowerCase(s.charAt(left)) != Character.toLowerCase(s.charAt(right))) {
+                return false;
             } else {
-                if (Character.isDigit(s.charAt(i)) || Character.isDigit(s.charAt(j))) {
-                    // at least one is digit.
-                    if (s.charAt(i) != s.charAt(j)) {
-                        return false;
-                    }
-                } else { // both are alphabetic
-                    if (Character.toLowerCase(s.charAt(i)) != Character.toLowerCase(s.charAt(j))) {
-                        return false;
-                    }
-                }
-                ++i;
-                --j;
+                ++left;
+                --right;
             }
         }
+
         return true;
     }
 }

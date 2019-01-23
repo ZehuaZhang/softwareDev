@@ -1,41 +1,31 @@
 /**
- * @see <a href="https://leetcode.com/problems/path-sum/">Path Sum</a>
+ * Path Sum
+ * 
+ * Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.
+ * 
+ * For example:
+ * Given the below binary tree and sum = 22,
+ * 
+ *               5
+ *              / \
+ *             4   8
+ *            /   / \
+ *           11  13  4
+ *          /  \      \
+ *         7    2      1
+ * return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
  */
 
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
 public class Solution {
     public boolean hasPathSum(TreeNode root, int sum) {
-        // method 1: recursive solution: hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
-        // method 2: do a preorder traversal, when a leaf is encountered, calcuate the the sum, and if equal, return true;
-        // after traversaling, return false.
-        TreeNode cur = root;
-        Stack<TreeNode> stk = new Stack<TreeNode>();
-        int s = 0;
-        while (true) {
-            while (cur != null) {
-                stk.push(cur);
-                s += cur.val;
-                // check here.
-                if (cur.left == null && cur.right == null && sum == s) {
-                    return true;
-                }
-                cur = cur.left;
-            }
-            while (!stk.isEmpty() && (stk.peek().right == null || stk.peek().right == cur)) {
-                cur = stk.pop();
-                s -= cur.val;
-            }
-            if (stk.isEmpty()) break;
-            else cur = stk.peek().right;
+        if (root == null) {
+            return false;
         }
-        return false;
+
+        if (root.left == null && root.right == null && root.val == sum) {
+            return true;
+        }
+
+        return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
     }
 }

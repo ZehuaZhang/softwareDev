@@ -39,7 +39,7 @@ public class Solution {
         }
 
         if (result.size() == level) {
-            result.add(new ArrayList<Ingeger>());
+            result.add(new ArrayList<Integer>());
         }
         result.get(level).add(root.val);
 

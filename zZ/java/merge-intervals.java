@@ -18,19 +18,6 @@
  * }
  */
 
-public class Interval {
-    int start;
-    int end;
-    Interval() {
-        start = 0;
-        end = 0;
-    }
-    Interval(int start, int end) {
-        this.start = start;
-        this.end = end;
-    }
-}
-
 public class Solution {
     private static class MyComparator implements Comparator<Interval> {
         @Override
@@ -65,5 +52,18 @@ public class Solution {
         }
         
         return result;
+    }
+}
+
+public class Interval {
+    int start;
+    int end;
+    Interval() {
+        start = 0;
+        end = 0;
+    }
+    Interval(int start, int end) {
+        this.start = start;
+        this.end = end;
     }
 }

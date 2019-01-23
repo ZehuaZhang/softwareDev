@@ -1,33 +1,68 @@
 /**
- * @see <a href="https://leetcode.com/problems/flatten-binary-tree-to-linked-list/">Flatten Binary Tree to Linked List</a>
+ * Flatten Binary Tree to Linked List
+ * 
+ * Given a binary tree, flatten it to a linked list in-place.
+ * 
+ * For example,
+ * Given
+ * 
+ *          1
+ *         / \
+ *        2   5
+ *       / \   \
+ *      3   4   6
+ *  
+ * 
+ * The flattened tree should look like:
+ * 
+ *    1
+ *     \
+ *      2
+ *       \
+ *        3
+ *         \
+ *          4
+ *           \
+ *            5
+ *             \
+ *              6
+ * click to show hints.
+ * 
+ * Hints:
+ * If you notice carefully in the flattened tree, each node's right child points to the next node of a pre-order traversal
  */
 
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
+import java.util.Stack;
+
 public class Solution {
     public void flatten(TreeNode root) {
-        if (root == null || (root.left == null && root.right == null)) return;
-        if (root.left == null) {
-            flatten(root.right);
-        } else {
-            flatten(root.left);
-            TreeNode cur = root.left;
-            while (cur.right != null) {
-                cur = cur.right;
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+
+        if (root == null) {
+            stack.push(root);
+        }
+
+        while (!stack.isEmpty()) {
+            TreeNode curr = stack.pop();
+            if (curr.left != null) {
+                TreeNode leftTree = curr.left;
+                while (leftTree.right) {
+                    leftTree = leftTree.right;
+                }
+                leftTree.right = curr.right;
+                curr.right = curr.left;
+                curr.left = null;
             }
-            flatten(root.right);
-            TreeNode temp = root.right;
-            root.right = root.left;
-            // need to set root.left to null.
-            root.left = null;
-            cur.right = temp;
+            if (curr.right != null) {
+                stack.push(curr.right);
+            }
         }
     }
+}
+
+public class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) { val = x; }
 }

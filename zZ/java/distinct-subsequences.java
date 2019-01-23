@@ -1,25 +1,26 @@
 /**
- * @see <a href="https://leetcode.com/problems/distinct-subsequences/">Distinct Subsequences</a>
+ * Distinct Subsequences
+ * 
+ * Given a string S and a string T, count the number of distinct subsequences of T in S.
+ * 
+ * A subsequence of a string is a new string which is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters.
+ * (ie, "ACE" is a subsequence of "ABCDE" while "AEC" is not).
+ * 
+ * Here is an example:
+ * S = "rabbbit", T = "rabbit"
+ * 
+ * Return 3.
  */
 
 public class Solution {
     public int numDistinct(String s, String t) {
-        int sLen = s.length();
-        int tLen = t.length();
-        int[][] nums = new int[sLen + 1][tLen + 1];
-        // let nums[i][j] be the number of t.substring(0,j) in s.substring(0, i)
-        for (int i = 0; i < sLen; ++i) nums[i][0] = 1;
-        for (int j = 1; j < tLen + 1; ++j) {
-            int i = 1;            
-            while (i < sLen + 1) {
-                if (s.charAt(i - 1) != t.charAt(j - 1)) { // cannot use this char.
-                    nums[i][j] = nums[i - 1][j];
-                } else { // equals; we can either use this char, or not.
-                    nums[i][j] = nums[i - 1][j] + nums[i - 1][j - 1];
-                }
-                ++i;
+        int[] distinctSubsequenceCount = new int[T.length()];
+        distinctSubsequenceCount[0] = 1;
+        for (int i = 1; i <= s.length(); ++i) {
+            for (int j = t.length(); j > 0; --j) {
+                distinctSubsequenceCount[j] += s.charAt(i - 1) == t.charAt(j - 1) ? distinctSubsequenceCount[j - 1] : 0;
             }
         }
-        return nums[sLen][tLen];
+        return distinctSubsequenceCount[t.length()];
     }
 }
