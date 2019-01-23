@@ -53,7 +53,7 @@ public:
       return {};
     }
     vector<string> path;
-    gen_path(nextWords, beginWord, endWord, path, result);
+    genPath(nextWords, beginWord, endWord, path, result);
     return result;
   }
 
@@ -64,7 +64,7 @@ public:
       result.push_back(path);
     }
     for (auto next : nextWords[curr]) {
-      gen_path(nextWords, next, end, path, result);
+      genPath(nextWords, next, end, path, result);
     }
     path.pop_back();
   }
