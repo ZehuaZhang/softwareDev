@@ -1,38 +1,36 @@
 /**
- * @see <a href="https://leetcode.com/problems/copy-list-with-random-pointer/">Copy List with Random Pointer</a>
+ * Copy List with Random Pointer
+ *  
+ * A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.
+ * 
+ * Return a deep copy of the list.
  */
 
-/**
- * Definition for singly-linked list with a random pointer.
- * class RandomListNode {
- *     int label;
- *     RandomListNode next, random;
- *     RandomListNode(int x) { this.label = x; }
- * };
- */
 public class Solution {
     public RandomListNode copyRandomList(RandomListNode head) {
-        if (head == null) return null;
-        RandomListNode cur = head;
-        Map<RandomListNode, RandomListNode> hm = new HashMap<>();
-        // a map from original node to copied node
-        while (cur != null) {
-            if (!hm.containsKey(cur)) {
-                RandomListNode newCur = new RandomListNode(cur.label);
-                hm.put(cur, newCur);
-            }
-            if (cur.next != null && !hm.containsKey(cur.next)) {
-                RandomListNode newNext = new RandomListNode(cur.next.label);
-                hm.put(cur.next, newNext);
-            }
-            if (cur.random != null && !hm.containsKey(cur.random)) {
-                RandomListNode newRand = new RandomListNode(cur.random.label);
-                hm.put(cur.random, newRand);
-            }
-            if (cur.next != null) hm.get(cur).next = hm.get(cur.next);
-            if (cur.random != null) hm.get(cur).random = hm.get(cur.random);
-            cur = cur.next;
+        for (RandomListNode curr = head; curr != null; curr = curr.next.next) {
+            RandomListNode node = new RandomListNode(curr.label);
+            node.next = curr.next;
+            curr.next = node;
         }
-        return hm.get(head);
+
+        for (RandomListNode curr = head; curr != null; curr = curr.next.next) {
+            if (curr.random) {
+                curr.next.random = curr.random.next;
+            }
+        }
+
+        RandomListNode dummy = new RandomListNode(0);
+        for (RandomListNode curr = head, copiedCurr = dummy; curr != null; curr = curr.next, copiedCurr = copiedCurr.next) {
+            copiedCurr.next = curr.next;
+            curr.next = curr.next.next;
+        }
+        return dummy.next;
     }
 }
+
+class RandomListNode {
+    int label;
+    RandomListNode next, random;
+    RandomListNode(int x) { this.label = x; }
+};

@@ -1,64 +1,80 @@
 /**
- * @see <a href="https://leetcode.com/problems/word-break-ii/">Word Break II</a>
+ * Word Break II 
+ * 
+ * Given a non-empty string s and a dictionary wordDict containing a list of non-empty words, add spaces in s to construct a sentence where each word is a valid dictionary word. Return all such possible sentences.
+ * 
+ * Note:
+ * 
+ * The same word in the dictionary may be reused multiple times in the segmentation.
+ * You may assume the dictionary does not contain duplicate words.
+ * Example 1:
+ * 
+ * Input:
+ * s = "catsanddog"
+ * wordDict = ["cat", "cats", "and", "sand", "dog"]
+ * Output:
+ * [
+ *   "cats and dog",
+ *   "cat sand dog"
+ * ]
+ * Example 2:
+ * 
+ * Input:
+ * s = "pineapplepenapple"
+ * wordDict = ["apple", "pen", "applepen", "pine", "pineapple"]
+ * Output:
+ * [
+ *   "pine apple pen apple",
+ *   "pineapple pen apple",
+ *   "pine applepen apple"
+ * ]
+ * Explanation: Note that you are allowed to reuse a dictionary word.
+ * Example 3:
+ * 
+ * Input:
+ * s = "catsandog"
+ * wordDict = ["cats", "dog", "sand", "and", "cat"]
+ * Output:
+ * []
  */
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Solution {
     public List<String> wordBreak(String s, Set<String> wordDict) {
-        // dynamic programming
-        // let list.get(i) be the list of strings for s.substring(i);
-        // i from 0, to s.length() - 1.
-        List<String> res = new ArrayList<>();
-        
-        Set<Character> charSet = new HashSet<>();
-        for (String str : wordDict) {
-            for (int i = 0; i < str.length(); ++i) {
-                charSet.add(str.charAt(i));
-            }
-        }
-        for (int i = 0; i < s.length(); ++i) {
-            if (!charSet.contains(s.charAt(i))) return res;
-        }
-        List<List<List<String>>> table = new ArrayList<>();
-        for (int i = 0; i < s.length(); ++i) {
-            List<List<String>> strings = new ArrayList<>();
-            table.add(strings);
-        }
-        if (wordDict.contains(s.substring(s.length() - 1))) {
-            List<List<String>> last = new ArrayList<>();
-            List<String> newList = new LinkedList<>();
-            newList.add(s.substring(s.length() - 1));
-            last.add(newList);
-            table.set(s.length() - 1, last);
-        }
-        for (int i = s.length() - 2; i >= 0; --i) {
-            List<List<String>> prev = new ArrayList<>();
-            if (wordDict.contains(s.substring(i))) {
-                List<String> list = new LinkedList<>();
-                list.add(s.substring(i));
-                prev.add(list);
-            }
-            for (int j = i; j < s.length() - 1; ++j) {
-                if (wordDict.contains(s.substring(i, j + 1))) {
-                    for (List<String> next : table.get(j + 1)) {
-                        List<String> newList = new LinkedList<>();
-                        newList.add(s.substring(i, j + 1));
-                        newList.addAll(next);
-                        prev.add(newList);
-                    }
+        boolean[] canBreak = new boolean[s.length() + 1];
+        boolean[][] isWord = new boolean[s.length()][s.length()];
+
+        canBreak[0] = true;
+        for (int i = 0; i <= s.length(); ++i) {
+            for (int j = 0; j < i; ++j) {
+                if (canBreak[j] && wordDict.contains(s.substring(j, i))) {
+                    canBreak[i] = true;
+                    isWord[j][i - 1] = true;
                 }
             }
-            table.set(i, prev);
         }
 
-        for (List<String> intermediate : table.get(0)) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(intermediate.get(0));
-            for (int i = 1; i < intermediate.size(); ++i) {
-                sb.append(" ");
-                sb.append(intermediate.get(i));
-            }
-            res.add(new String(sb));
+        List<String> result = new ArrayList<String>();
+        if (canBreak[s.length()]) {
+            List<String> path = new ArrayList<String>();
+            generateWordBreak(s, 0, isWord, path, result);
         }
-        return res;
+        return result;
+    }
+
+    private void generateWordBreak(String s, int start, boolean[][] isWord, List<String> path, List<String> result) {
+        if (start == s.length()) {
+            result.add(String.join(" ", path));
+        } else {
+            for (int i = start; i < s.length(); ++i) {
+                if (isWord[start][i]) {
+                    path.add(s.substring(start, i + 1));
+                    generateWordBreak(s, i + 1, isWord, path, result);
+                    path.remove(path.size() - 1);
+                }
+            }
+        }
     }
 }
