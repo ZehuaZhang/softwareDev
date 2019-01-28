@@ -1,30 +1,53 @@
 /**
- * @see <a href="https://leetcode.com/problems/binary-tree-preorder-traversal/">Binary Tree Preorder Traversal</a>
+ * Binary Tree Preorder Traversal
+ * 
+ * Given a binary tree, return the preorder traversal of its nodes' values.
+ * 
+ * For example:
+ * Given binary tree {1,#,2,3},
+ * 
+ *    1
+ *     \
+ *      2
+ *     /
+ *    3
+ *  
+ * 
+ * return [1,2,3].
+ * 
+ * Note: Recursive solution is trivial, could you do it iteratively?
  */
 
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
+import java.util.ArrayList;
+import java.util.Stack;
+
 public class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
-        List<Integer> list = new ArrayList<Integer>();
-        Stack<TreeNode> stk = new Stack<TreeNode>();
-        TreeNode cur = root;
-        while (true) {
-            while (cur != null) {
-                stk.push(cur);
-                list.add(cur.val);
-                cur = cur.left;
-            }
-            if (stk.isEmpty()) break;
-            cur = stk.pop().right;
+        List<Integer> result = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        
+        if (root != null) {
+            stack.push(root);
         }
-        return list;
+
+        while (!stack.isEmpty()) {
+            TreeNode curr = stack.pop();
+            result.add(curr.val);
+
+            if (curr.right) {
+                stack.push(curr.right);
+            }
+
+            if (curr.left) {
+                stack.push(curr.left);
+            }
+        }
     }
+}
+
+public class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) { val = x; }
 }

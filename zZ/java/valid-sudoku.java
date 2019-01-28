@@ -27,13 +27,13 @@ public class Solution {
                 if (character != '.') {
                     if (row[i][character] == true ||
                         col[j][character] == true||
-                        grid[3 * (i / 3) + j / 3] == true) {
+                        grid[3 * (i / 3) + j / 3][character] == true) {
                         return false;
                     }
                 }
                 row[i][character] = true;
                 col[j][character] = true;
-                grid[3 * (i / 3) + j / 3] = true;
+                grid[3 * (i / 3) + j / 3][character] = true;
             }
         }
         return true;

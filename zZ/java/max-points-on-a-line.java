@@ -1,58 +1,53 @@
 /**
- * @see <a href="https://leetcode.com/problems/max-points-on-a-line/">Max Points on a Line</a>
+ * Max Points on a Line
+ * 
+ * Given n points on a 2D plane, find the maximum number of points that lie on the same straight line.
  */
 
-/**
- * Definition for a point.
- * class Point {
- *     int x;
- *     int y;
- *     Point() { x = 0; y = 0; }
- *     Point(int a, int b) { x = a; y = b; }
- * }
- */
+import java.util.HashMap;
+import java.util.Map;
+
 public class Solution {
     public int maxPoints(Point[] points) {
-        if (points == null || points.length == 0) return 0;
-        // key is the point, and value is the count of the point.
-        Map<List<Integer>, Integer> hm = new HashMap<>();
+        if (points == null) {
+            throw new NullPointerException();
+        }
+
+        int result = 0;
         for (int i = 0; i < points.length; ++i) {
-            List<Integer> myPoint = new ArrayList<>();
-            myPoint.add(points[i].x);
-            myPoint.add(points[i].y);
-            if (hm.containsKey(myPoint)) {
-                hm.put(myPoint, hm.get(myPoint) + 1);
-            } else {
-                hm.put(myPoint, 1);
-            }
-        }
-        if (hm.size() == 1) {
-            for (List<Integer> p : hm.keySet()) {
-                return hm.get(p);
-            }
-        }
-        int max = 1;
-        for(List<Integer> p1 : hm.keySet()) {
-            for (List<Integer> p2 : hm.keySet()) {
-                if (p2 != p1) {
-                    int x1 = p1.get(0);
-                    int y1 = p1.get(1);
-                    int x2 = p2.get(0);
-                    int y2 = p2.get(1);
-                    int maxPoints = hm.get(p1) + hm.get(p2);
-                    for (List<Integer> p3 : hm.keySet()) {
-                        if (p3 != p2 && p3 != p1) {
-                            int x = p3.get(0);
-                            int y = p3.get(1);
-                            if ((x - x1) * (y2 - y1) == (y - y1) * (x2 - x1)) {
-                                maxPoints += hm.get(p3);
-                            }
-                        }
-                    }
-                    max = Math.max(max, maxPoints);
+            int duplicate = 1;
+            Map<Double, Integer> slopePointCount = new HashMap<>();
+            for (int j = i + 1; j < points.length; ++j) {
+                if (points[i].x == points[j].x && points[i].y == points[j].y) {
+                    ++duplicate;
+                } else if (points[i].x == points[j].x) {
+                    slopePointCount.put(Double.MAX_VALUE, slopePointCount.getOrDefault(Double.MAX_VALUE, 0) + 1);
+                } else {
+                    double slope = (double)(points[i].y - points[j].y) / (points[i].x - points[j].x);
+                    slopePointCount.put(slope, slopePointCount.getOrDefault(slope, 0) + 1);
                 }
             }
+            result = Math.max(result, duplicate);
+            for (Map.Entry<Double, Integer> entry : slopePointCount.entrySet()) {
+                result = Math.max(result, entry.getValue() + duplicate);
+            }
         }
-        return max;
+
+        return result;
+    }
+}
+
+public class Point {
+    int x;
+    int y;
+    
+    Point() {
+        x = 0;
+        y = 0;
+    }
+
+    Point(int a, int b) {
+        x = a;
+        y = b;
     }
 }
