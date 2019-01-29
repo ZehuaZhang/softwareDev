@@ -35,7 +35,7 @@ public class Solution {
         Collections.sort(intervals, new MyComparator());
 
         Iterator<Interval> iterator = intervals.iterator();
-        Inteval prev;
+        Interval prev;
         if (iterator.hasNext()) {
             prev = iterator.next();
             result.add(prev);

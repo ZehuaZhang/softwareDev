@@ -1,75 +1,55 @@
 /**
- * @see <a href="https://leetcode.com/problems/fraction-to-recurring-decimal/">Fraction to Recurring Decimal</a>
+ * Fraction to Recurring Decimal
+ * 
+ * Given two integers representing the numerator and denominator of a fraction, return the fraction in string format.
+ * 
+ * If the fractional part is repeating, enclose the repeating part in parentheses.
+ * 
+ * For example,
+ * 
+ * Given numerator = 1, denominator = 2, return "0.5".
+ * Given numerator = 2, denominator = 1, return "2".
+ * Given numerator = 2, denominator = 3, return "0.(6)".
+ * 
+ * Credits:
+ * Special thanks to @Shangrila for adding this problem and creating all test cases.
  */
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Solution {
     public String fractionToDecimal(int numerator, int denominator) {
         if (denominator == 0) {
-            throw new IllegalArgumentException(" denominator can not be zero");
+            throw new IllegalArgumentException();
         }
-        // use long type to avoid integer overflow
-        return myFractionToDecimal((long) numerator, (long) denominator);
-    }
-    private String myFractionToDecimal(long numerator, long denominator) {
-        if (numerator == 0) return "0";
-        if (numerator < 0 && denominator > 0) {
-            return new String("-" + myFractionToDecimal(-1 * numerator, denominator));
-        }
-        if (numerator > 0 && denominator < 0) {
-            return new String("-" + myFractionToDecimal(numerator, -1 * denominator));
-        }
-        if (numerator < 0 && denominator < 0) {
-            return myFractionToDecimal(-1 * numerator, -1 * denominator);
-        }
-        
-        long iPart = numerator / denominator;
-        long remainder = numerator % denominator;
-        StringBuilder sb = new StringBuilder();
-        sb.append(iPart);
-        if (remainder == 0) return new String(sb);
 
-        sb.append(".");
-        // if a remainder starts repeating once. the fraction will re-occur from now on.
-        List<Long> fraction = new ArrayList<Long>(); // arraylist stores long
-        Map<Long, Integer> hm = new HashMap<Long, Integer>(); // map stores long and integer.
-        int repeatIndex = -1; // where the recurring starts
-        while (remainder != 0) {
-            if (hm.containsKey(remainder)) {
-                repeatIndex = hm.get(remainder);
-                break;
-            } else {
-                hm.put(remainder, fraction.size()); // the digits for this remainder starts here.
-                while (remainder * 10 < denominator) {
-                    remainder *= 10;
-                    fraction.add(0l);
-                    if (!hm.containsKey(remainder)) {
-                        hm.put(remainder, fraction.size());
-                    } else {
-                        repeatIndex = hm.get(remainder);
-                        break; // recurring starts here, jump out
-                    }
-                }
-                if (repeatIndex != -1) break; // recurring detected, jump out.
-                long digit = remainder * 10 / denominator;
-                fraction.add(digit);
-                remainder = remainder * 10 % denominator;
-            }
+        String result = "";
+
+        if ((numerator ^ denominator) >> 31 == 1 && numerator != 0) {
+            result += "-";
         }
-        
-        if (repeatIndex == -1) { // no reccurring tails.
-            for (int i = 0; i < fraction.size(); ++i) {
-                sb.append(fraction.get(i));
-            }
-        } else { // with recurring tails, need to add parentheses
-            for (int i = 0; i < repeatIndex; ++i) {
-                sb.append(fraction.get(i));
-            }
-            sb.append("(");
-            for (int i = repeatIndex; i < fraction.size(); ++i) {
-                sb.append(fraction.get(i));
-            }
-            sb.append(")");
+
+        long a = Math.abs(numerator);
+        long b = Math.abs(denominator);
+        result += Long.toString(a / b);
+
+        if (a % b != 0) {
+            result += ".";
         }
-        return new String(sb);
+
+        Map<Long, Integer> index = new HashMap<>();
+        for (a %= b; a != 0 && !index.containsKey(a); a %= b) {
+            index.put(a, result.length());
+            a *= 10;
+            result += Long.toString(a / b);
+        }
+
+        if (index.containsKey(a)) {
+            int position = index.get(a);
+            result = result.substring(0, position) + "(" + result.substring(position) + ")";
+        }
+
+        return result;
     }
 }

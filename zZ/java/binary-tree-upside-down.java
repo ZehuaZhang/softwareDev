@@ -1,33 +1,56 @@
 /**
- * @see <a href="https://leetcode.com/problems/binary-tree-upside-down/">Binary Tree Upside Down</a>
+ * Binary Tree Upside Down
+ * 
+ * Given a binary tree where all the right nodes are either leaf nodes with a sibling (a left node that shares the same parent node) or empty,
+ * flip it upside down and turn it into a tree where the original right nodes turned into left leaf nodes. Return the new root.
+ * 
+ * For example:
+ * 
+ * Given a binary tree {1,2,3,4,5},
+ * 
+ *     1
+ * 
+ *    / \
+ * 
+ *   2   3
+ * 
+ *  / \
+ * 
+ * 4   5
+ * 
+ * return the root of the binary tree [4,5,2,#,#,3,1].
+ * 
+ *    4
+ * 
+ *   / \
+ * 
+ *  5   2
+ * 
+ *     / \
+ * 
+ *    3   1  
  */
 
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
 public class Solution {
     public TreeNode upsideDownBinaryTree(TreeNode root) {
-        if (null == root) return null;
-        TreeNode cur = root;
-        Stack<TreeNode> stk = new Stack<TreeNode>();
-        while (cur != null) {
-            stk.push(cur);
-            cur = cur.left;
+        TreeNode curr = root;
+        TreeNode prev = null;
+        TreeNode prevRight = null;
+        while (curr != null) {
+            TreeNode next = curr.left;
+            curr.left = prevRight;
+            prevRight = curr.right;
+            curr.right = prev;
+
+            prev = curr;
+            curr = next;
         }
-        TreeNode newRoot = stk.peek();
-        while (stk.size() > 1) {
-            TreeNode n = stk.pop();
-            n.left = stk.peek().right;
-            n.right = stk.peek();
-        }
-        stk.peek().left = null;
-        stk.peek().right = null;
-        return newRoot;
     }
+}
+
+public class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) { val = x; }
 }
