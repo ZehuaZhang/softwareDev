@@ -1,28 +1,28 @@
 /**
- * @see <a href="https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/">Find Minimum in Rotated Sorted Array</a>
+ * Find Minimum in Rotated Sorted Array
+ * 
+ * Suppose a sorted array is rotated at some pivot unknown to you beforehand.
+ * 
+ * (i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).
+ * 
+ * Find the minimum element.
+ * 
+ * You may assume no duplicate exists in the array.
  */
 
 public class Solution {
     public int findMin(int[] nums) {
-        if (nums == null || nums.length == 0) return Integer.MIN_VALUE;
-        // an iterative binary search is better, be aware of the stack memory usage for recursive methods.
-        return findMin(nums, 0, nums.length - 1); 
-    }
-    private int findMin(int[] nums, int low, int high) {
-        if (low == high) return nums[low];
-        int mid = low + ((high - low) >> 1);
-        if (nums[mid] > nums[high]) {
-            return findMin(nums, mid + 1, high);
-        } else if (nums[mid] < nums[high]) {
-            return findMin(nums, low, mid);
+        int left = 0, right = nums.length - 1;
+
+        while (left < right && nums[left] >= nums[right]) {
+            int middle = left + (right - left) / 2;
+            if (nums[middle] < nums[left]) {
+                right = middle;
+            } else {
+                left = middle + 1;
+            }
         }
-        return Integer.MIN_VALUE;
+
+        return nums[left];
     }
 }
-// test cases: 
-// []
-// [0]
-// [0, 1]
-// [1, 0]
-// [0, 1, 2, 3, 4]
-// [3, 4, 0, 1, 2]

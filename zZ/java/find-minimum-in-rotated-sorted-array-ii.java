@@ -1,22 +1,35 @@
 /**
- * @see <a href="https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii/">Find Minimum in Rotated Sorted Array II</a>
+ * Find Minimum in Rotated Sorted Array II
+ * 
+ * Follow up for "Find Minimum in Rotated Sorted Array":
+ * What if duplicates are allowed?
+ * 
+ * Would this affect the run-time complexity? How and why?
+ * 
+ * Suppose a sorted array is rotated at some pivot unknown to you beforehand.
+ * 
+ * (i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).
+ * 
+ * Find the minimum element.
+ * 
+ * The array may contain duplicates.
  */
 
 public class Solution {
     public int findMin(int[] nums) {
-        int low = 0;
-        int high = nums.length - 1;
-        while (low <= high) {
-            if (low == high) return nums[low];
-            int mid = low + ((high - low)>>1);
-            if (nums[mid] > nums[high]) {
-                low = mid + 1;
-            } else if (nums[mid] < nums[high]) {
-                high = mid;
-            } else { // nums[mid] = nums[high]
-                high = high - 1; // sometimes, we do not have enough conditions for binary search.
+        int left = 0, right = nums.length - 1;
+
+        while (left < right && nums[left] >= nums[right]) {
+            int middle = left + (right - left) / 2;
+            if (nums[middle] == nums[left]) {
+                ++left;
+            } else if (nums[middle] < nums[left]) {
+                right = middle;
+            } else {
+                left = middle + 1;
             }
         }
-        return -1;
+
+        return nums[left];
     }
 }

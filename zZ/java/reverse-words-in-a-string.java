@@ -1,26 +1,34 @@
 /**
- * @see <a href="https://leetcode.com/problems/reverse-words-in-a-string/">Reverse Words in a String</a>
+ * Reverse Words in a String
+ * 
+ * Given an input string, reverse the string word by word.
+ * 
+ * For example,
+ * Given s = "the sky is blue",
+ * return "blue is sky the".
+ * 
+ * Update (2015-02-12):
+ * For C programmers: Try to solve it in-place in O(1) space.
+ * 
+ * click to show clarification.
+ * 
+ * Clarification:
+ * 
+ * What constitutes a word?
+ * A sequence of non-space characters constitutes a word.
+ * Could the input string contain leading or trailing spaces?
+ * Yes. However, your reversed string should not contain leading or trailing spaces.
+ * How about multiple spaces between two words?
+ * Reduce them to a single space in the reversed string.
  */
+
+import java.util.Arrays;
+import java.util.Collections;
 
 public class Solution {
     public String reverseWords(String s) {
-        List<String> list = new ArrayList<String>();
-        int i = 0;
-        while (i < s.length()) {
-            int start = i;
-            while (i < s.length() && s.charAt(i) != ' ') ++i;
-            int end = i;
-            // the case of s = "     ";
-            if (start != end) list.add(s.substring(start, end));
-            while (i < s.length() && s.charAt(i) == ' ') ++i;
-        }
-        StringBuilder sb = new StringBuilder();
-        // consider the case of s = "", or s = "     ";
-        if (list.size() != 0) sb.append(list.get(list.size() - 1));
-        for (int j = list.size() - 2; j >= 0; --j) {
-            sb.append(" ");
-            sb.append(list.get(j));
-        }
-        return new String(sb);
+        String[] words = s.trim().split("\\s+");
+        Collections.reverse(Arrays.asList(words));
+        return String.join(" ", words);
     }
 }
