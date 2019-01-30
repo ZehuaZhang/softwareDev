@@ -1,29 +1,33 @@
 /**
- * @see <a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/">Two Sum II - Input array is sorted</a>
+ * Two Sum II - Input array is sorted
+ * 
+ * Given an array of integers that is already sorted in ascending order, find two numbers such that they add up to a specific target number.
+ * The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2. Please note that your returned answers (both index1 and index2) are not zero-based.
+ * You may assume that each input would have exactly one solution.
+ * Input: numbers={2, 7, 11, 15}, target=9
+ * Output: index1=1, index2=2
  */
 
 public class Solution {
-    
-    // method 1: binary search
-    
     public int[] twoSum(int[] numbers, int target) {
-        int[] res = new int[2];
-        for (int i = 0; i < numbers.length - 1; i ++) {
-            int index2 = find(numbers, i + 1, numbers.length - 1, target - numbers[i]);
-            if (index2 != -1) {
-                res[0] = i + 1;
-                res[1] = index2 + 1;
-                break;
+        if (nums == null) {
+            throw new NullPointerException();
+        }
+
+        int[] result = new int[2];
+        for (int left = 0, right = numbers.length - 1; left < right;) {
+            int sum = numbers[left] + numbers[right];
+            if (sum == target) {
+                result[0] = left + 1;
+                result[1] = right + 1;
+                return result;
+            } else if (sum < target) {
+                ++left;
+            } else {
+                --right;
             }
         }
-        return res;
+
+        return result;
     }
-    public int find(int[] numbers, int low, int high, int target) {
-        if (target < numbers[low] || target > numbers[high]) return -1;
-        int mid = low + ((high - low)>>1);
-        if (target == numbers[mid]) return mid;
-        else if (target < numbers[mid]) return find(numbers, low, mid - 1, target);
-        else return find(numbers, mid + 1, high, target);
-    }
-    
 }

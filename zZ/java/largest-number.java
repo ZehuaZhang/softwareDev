@@ -1,47 +1,44 @@
 /**
- * @see <a href="https://leetcode.com/problems/largest-number/">Largest Number</a>
+ * Largest Number 
+ * 
+ * Given a list of non negative integers, arrange them such that they form the largest number.
+ * 
+ * For example, given [3, 30, 34, 5, 9], the largest formed number is 9534330.
+ * 
+ * Note: The result may be very large, so you need to return a string instead of an integer.
  */
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class Solution {
-    class MyNumber implements Comparable<MyNumber> {
-        public int val;
-        public MyNumber(int v) {
-            val = v;
-        }
-        public int compareTo(MyNumber m) {
-            String s1 = new Integer(val).toString();
-            String s2 = new Integer(m.val).toString();
-            String s1s2 = s1 + s2;
-            String s2s1 = s2 + s1;
-            for (int i = 0; i < s1s2.length(); ++i) {
-                if (s1s2.charAt(i) > s2s1.charAt(i)) return -1;
-                else if (s1s2.charAt(i) < s2s1.charAt(i)) return 1;
-            }
-            return 0;
+    private static class MyComparator implements Comparator<Integer> {
+        @Override
+        public int compare(Integer number1, Integer number2) {
+            String string1 = String.valueOf(number1) + String.valueOf(number2);
+            String string2 = String.valueOf(number2) + String.valueOf(number1);
+
+            return string2.compareTo(string1);
         }
     }
-    
+
     public String largestNumber(int[] nums) {
-        List<MyNumber> list = new ArrayList<>();
-        for (int i = 0; i < nums.length; ++i) {
-            MyNumber newNum = new MyNumber(nums[i]);
-            list.add(newNum);
+        List<Integer> numbers = new ArrayList<Integer>();
+        for (int num : nums) {
+            numbers.add(num);
         }
-        Collections.sort(list);
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < list.size(); ++i) {
-            sb.append(list.get(i).val);
-        }
+
+        Collections.sort(numbers, new MyComparator());
         
-        String res = new String(sb);
-        boolean allZero = true;
-        for (int i = 0; i < res.length(); ++i) {
-            if (res.charAt(i) != '0') {
-                allZero = false;
-                break;
-            }
+        String result = new String();
+        for (int number : numbers) {
+            result += String.valueOf(number);
         }
-        if (allZero) return "0";
-        return res;
+
+        if (result.charAt(0) == '0') {
+            return "0";
+        }
+        return result;
     }
 }

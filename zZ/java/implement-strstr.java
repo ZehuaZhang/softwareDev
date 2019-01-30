@@ -1,5 +1,5 @@
 /**
- * Implement strStr() 实现strStr()函数
+ * Implement strStr()
  *  
  * Implement strStr().
  * 

@@ -1,46 +1,56 @@
 /**
- * @see <a href="https://leetcode.com/problems/binary-tree-right-side-view/">Binary Tree Right Side View</a>
+ * Binary Tree Right Side View 
+ * 
+ * Given a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.
+ * 
+ * For example:
+ * Given the following binary tree,
+ * 
+ *    1            <---
+ *  /   \
+ * 2     3         <---
+ *  \     \
+ *   5     4       <---
+ *  
+ * 
+ * You should return [1, 3, 4].
  */
 
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
+import java.util.ArrayList;
+import java.util.Queue;
+
 public class Solution {
     public List<Integer> rightSideView(TreeNode root) {
-        List<Integer> res = new ArrayList<Integer>();
-        if (root == null) return res;
-        
-        Queue<TreeNode> q = new LinkedList<TreeNode>();
-        q.add(root);
-        q.add(null);
-        while (!q.isEmpty()) {
-            TreeNode node = q.remove();
-            if (node != null) {
-                if (node.left != null) q.add(node.left);
-                if (node.right != null) q.add(node.right);
-                if (q.peek() == null) res.add(node.val); // it is the last one in this level.
-            } else { // the removed node is null, we are finishing the traversal of the current level
-                if (q.isEmpty()) break;
-                else q.add(null);
+        Queue<TreeNode> queue = new Queue<>();
+        if (root != null) {
+            queue.offer(root);
+        }
+
+        List<Integer> result = new ArrayList<>();
+        while (!queue.isEmpty()) {
+            for (int size = queue.size(); size != 0; --size) {
+                TreeNode node = queue.poll();
+                if (size == 1) {
+                    result.add(node.val);
+                }
+                if (node.left) {
+                    queue.offer(node.left);
+                }
+                if (node.right) {
+                    queue.offer(node.right);
+                }
             }
         }
-        return res;
+
+        return result;
     }
 }
 
-// testcases: how can you forget the most special test case ???  root == null ???
-// 1. single node.
-// 2. root and only left child.
-// 3. root and only right child.
-// 4.
-//        0
-//       /
-//      0
-//     /
-//    0
+public class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) {
+        val = x;
+    }
+}

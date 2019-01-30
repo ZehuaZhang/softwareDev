@@ -1,49 +1,65 @@
 /**
- * @see <a href="https://leetcode.com/problems/repeated-dna-sequences/">Repeated DNA Sequences</a>
+ * Repeated DNA Sequences
+ * 
+ * All DNA is composed of a series of nucleotides abbreviated as A, C, G, and T, for example: "ACGAATTCCG". When studying DNA, it is sometimes useful to identify repeated sequences within the DNA.
+ * 
+ * Write a function to find all the 10-letter-long sequences (substrings) that occur more than once in a DNA molecule.
+ * 
+ * Example:
+ * 
+ * Input: s = "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT"
+ * 
+ * Output: ["AAAAACCCCC", "CCCCCAAAAA"]
  */
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Solution {
     public List<String> findRepeatedDnaSequences(String s) {
-        List<String> res = new ArrayList<>();
-        if (s == null || s.length() <= 10) return res;
-        Map<Integer, Boolean> hm = new HashMap<>();
-        for (int i = 0; i <= s.length() - 10; ++i) {
-            String sub = s.substring(i, i + 10);
-            int num = toNumber(sub);
-            if (hm.containsKey(num)) {
-                if (hm.get(num) == false) {
-                    res.add(sub);
-                    hm.put(num, true);
-                }
-            } else {
-                hm.put(num, false); // appear before but not added to res yet.
-            }
+        if (s == null) {
+            throw new NullPointerException();
         }
-        return res;
+
+        if (s.length() <= 10) {
+            throw new IllegalArgumentException();
+        }
+
+        List<String> result = new ArrayList<>();
+        Map<Integer, Integer> sequenceCount = new HashMap<>();
+        for (int i = 0; i <= s.length() - 10; ++i) {
+            String subString = s.substring(i, i + 10);
+            Integer sequence = toSequence(subString);
+            if (sequenceCount.getOrDefault(sequence, 0) == 1) {
+                result.add(subString);
+            }
+            sequenceCount.put(sequence, sequenceCount.getOrDefault(sequence, 0) + 1);
+        }
+
+        return result;
     }
-    
-    private int toNumber(String s) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < s.length(); ++i) {
-            char c = s.charAt(i);
-            int n = 0;
-            switch (c) {
+
+    private Integer toSequence(String string) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < string.length(); ++i) {
+            switch (string.charAt(i)) {
                 case 'A':
-                    n = 0;
+                    stringBuilder.append(0);
                     break;
                 case 'C':
-                    n = 1;
+                    stringBuilder.append(1);
                     break;
                 case 'G':
-                    n = 2;
+                    stringBuilder.append(2);
                     break;
                 case 'T':
-                    n = 3;
+                    stringBuilder.append(3);
                     break;
             }
-            sb.append(n);
         }
-        String str = new String(sb);
-        return Integer.parseInt(str, 4);
+
+        return Integer.parseInt(stringBuilder.toString(), 4);
     }
 }

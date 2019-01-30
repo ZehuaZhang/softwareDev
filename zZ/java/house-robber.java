@@ -1,21 +1,43 @@
 /**
- * @see <a href="https://leetcode.com/problems/house-robber/">House Robber</a>
+ * House Robber 
+ * 
+ * You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed,
+ * the only constraint stopping you from robbing each of them is that adjacent houses have security system connected and
+ * it will automatically contact the police if two adjacent houses were broken into on the same night.
+ * 
+ * Given a list of non-negative integers representing the amount of money of each house, determine the maximum amount of money you can rob tonight without alerting the police.
+ * 
+ * Example 1:
+ * 
+ * Input: [1,2,3,1]
+ * Output: 4
+ * Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3).
+ *              Total amount you can rob = 1 + 3 = 4.
+ * Example 2:
+ * 
+ * Input: [2,7,9,3,1]
+ * Output: 12
+ * Explanation: Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (money = 1).
+ *              Total amount you can rob = 2 + 9 + 1 = 12.
  */
 
 public class Solution {
     public int rob(int[] nums) {
-        if (nums == null || nums.length == 0) return 0;
-        if (nums.length == 1) return nums[0];
-        if (nums.length == 2) return Math.max(nums[0], nums[1]);
-        // in the following cases, we have nums.length >= 3
-        int max1 = nums[0];
-        int max2 = Math.max(nums[0], nums[1]);
-        int maxCur = 0;
-        for (int i = 2; i < nums.length; i ++) {
-            maxCur = Math.max(max1 + nums[i], max2);
-            max1 = max2;
-            max2 = maxCur;
+        if (nums == null) {
+            throw new NullPointerException();
         }
-        return maxCur;
+
+        if (nums.length == 0) {
+            return 0;
+        }
+
+        int curr = nums[0], prev = 0, prevPrev = 0;
+        for (int i = 1; i < nums.length; ++i) {
+            prevPrev = prev;
+            prev = curr;
+            curr = Math.max(nums[i] + prevPrev, prev);
+        }
+
+        return curr;
     }
 }

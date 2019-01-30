@@ -20,8 +20,6 @@
  * 
  * Input: version1 = "7.5.2.4", version2 = "7.5.3"
  * Output: -1
- * Credits:
- * Special thanks to @ts for adding this problem and creating all test cases.
  */
 
 public class Solution {

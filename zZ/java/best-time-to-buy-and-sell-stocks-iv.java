@@ -1,26 +1,32 @@
+/**
+ * Best Time to Buy and Sell Stock IV
+ * 
+ * Say you have an array for which the ith element is the price of a given stock on day i.
+ * 
+ * Design an algorithm to find the maximum profit. You may complete at most k transactions.
+ * 
+ * Note:
+ * You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+ */
+
 public class Solution {
     public int maxProfit(int k, int[] prices) {
-        if (prices == null) throw new NullPointerException();
-        if (prices.length <= 1) return 0;
-        int n = prices.length;
-        if (k >= n / 2) {
-            int maxProfit = 0;
-            for (int i = 1; i < n; ++i) {
-                if (prices[i] > prices[i - 1]) maxProfit += prices[i] - prices[i - 1];
-            }
-            return maxProfit;
+        if (prices == null) {
+            throw new NullPointerException();
         }
-        
-        int[][] profit = new int[k + 1][prices.length];
-        // profit i, j is the maxprofit can be obtained by conducting i transactions up to prices[j];
-        // profit[0][j] = 0; profit[i][0] = 0;
-        for (int i = 1; i <= k; ++i) {
-            int locMax = profit[i - 1][0] - prices[0];
-            for (int j = 1; j < n; ++j) {
-                profit[i][j] = Math.max(profit[i][j - 1], prices[j] + locMax);
-                locMax = Math.max(locMax, profit[i - 1][j] - prices[j]);
+
+        int transactionCount = k;
+        int[] currMax = new int[transactionCount + 1];
+        int[] max = new int[transactionCount + 1];
+
+        for (int i = 0; i < prices.length - 1; ++i) {
+            int diff = prices[i + 1] - prices[i];
+            for (int j = transactionCount; j > 0; --j) {
+                currMax[j] = Math.max(currMax[j - 1] + Math.max(diff, 0), currMax[j] + diff);
+                max[j] = Math.max(currMax[j], max[j]);
             }
         }
-        return profit[k][n - 1];
+
+        return max[transactionCount];
     }
 }
