@@ -1,49 +1,47 @@
 /**
- * @see <a href="https://leetcode.com/problems/find-median-from-data-stream/">Find Median from Data Stream</a>
+ * Find Median from Data Stream
+ * 
+ * Median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value. So the median is the mean of the two middle value.
+ * 
+ * Examples:
+ * 
+ * [2,3,4] , the median is 3
+ * 
+ * [2,3], the median is (2 + 3) / 2 = 2.5
+ * 
+ * Design a data structure that supports the following two operations:
+ * 
+ * void addNum(int num) - Add a integer number from the data stream to the data structure.
+ * double findMedian() - Return the median of all elements so far.
+ * For example:
+ * 
+ * add(1)
+ * add(2)
+ * findMedian() -> 1.5
+ * add(3) 
+ * findMedian() -> 2
  */
 
+import java.util.Collections;
+import java.util.PriorityQueue;
+
 class MedianFinder {
-    // using a minHeap and a maxHeap, numbers in the minHeap will be less than numbers in the maxHeap.
-    // each heap will have roughly the same number of elements, and we can easily calculate the median using these two heaps
-    private PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
-    private PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+    public void addNum(int num) {
+        maxHeap.offer(num);
+        minHeap.offer(maxHeap.poll());
 
-    public void addNum(int num) { // Adds a number into the data structure.
-        if (maxHeap.size() == 0) {
-            maxHeap.add(num);
-        } else {
-            if (maxHeap.size() == minHeap.size()) {
-                if (num <= minHeap.peek()) {
-                    maxHeap.add(num);
-                } else { // we always have maxHeap.size() >= minHeap.size()
-                    maxHeap.add(minHeap.remove());
-                    minHeap.add(num);
-
-                }
-            } else { // maxheap.size() == minHeap.size() + 1
-                if (num >= maxHeap.peek()) {
-                    minHeap.add(num);
-                } else { // num < maxHeap.peek()
-                    minHeap.add(maxHeap.remove());
-                    maxHeap.add(num);
-                }
-            }
+        if (maxHeap.size() < minHeap.size()) {
+            maxHeap.offer(minHeap.poll());
         }
     }
 
-    // Returns the median of current data stream
     public double findMedian() {
         if (minHeap.size() == maxHeap.size()) {
-            double low = (double) maxHeap.peek();
-            double high = (double) minHeap.peek();
-            return (low + high) / 2.0;
-        } else {
-            return (double) maxHeap.peek();
+            return (double)(0.5 * (maxHeap.peek() + minHeap.peek());
         }
+        return (double)maxHeap.peek();
     }
-}
 
-// Your MedianFinder object will be instantiated and called as such:
-// MedianFinder mf = new MedianFinder();
-// mf.addNum(1);
-// mf.findMedian();
+    PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
+    PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+}
