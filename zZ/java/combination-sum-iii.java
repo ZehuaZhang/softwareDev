@@ -1,61 +1,52 @@
 /**
- * @see <a href="https://leetcode.com/problems/combination-sum-iii/">Combination Sum III</a>
+ * Combination Sum III
+ * 
+ * Find all possible combinations of k numbers that add up to a number n, given that only numbers from 1 to 9 can be used and each combination should be a unique set of numbers.
+ * 
+ * Ensure that numbers within the set are sorted in ascending order.
+ * 
+ * 
+ * Example 1:
+ * 
+ * Input: k = 3, n = 7
+ * 
+ * Output:
+ * 
+ * [[1,2,4]]
+ * 
+ * Example 2:
+ * 
+ * Input: k = 3, n = 9
+ * 
+ * Output:
+ * 
+ * [[1,2,6], [1,3,5], [2,3,4]]
  */
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Solution {
-    // explicit iterative backtracking solution using stack.
-    private Stack<Integer> stk;
-    private int sum, n, k;
     public List<List<Integer>> combinationSum3(int k, int n) {
-        List<List<Integer>> res = new ArrayList<List<Integer>>();
-        stk = new Stack<Integer>();
-        this.n = n;
-        this.k = k;
-        if (k > 9) return res;
-        sum = 0;
-        for (int i = 1; i < k; ++i) {
-            stk.push(i);
-            sum += i;
-        }
-        // we use a stack that has k - 1 values, to represent a solution, the last number will be n - sum
-        while (true) {
-            int last = n - sum;
-            if (last > 9) {
-                stk.push(stk.pop() + 1);
-                ++sum;
-            } else if (last <= stk.peek()) {
-                backtrack(); // backtrack, and go to next availabe state if possible; set stk to empty if not possible.
-            } else { // we have a solution here; thus, we find the solution and go to next state.
-                List<Integer> aRes = new ArrayList<>(stk);
-                aRes.add(n - sum);
-                res.add(aRes);
-                stk.push(stk.pop() + 1);
-                ++sum;
-            }
-            if (stk.isEmpty()) break;            
-        }
-        return res;
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> path = new ArrayList<>();
+        combinationSum3Helper(k, n, 1, path, result);
+        return result;
     }
-    
-    private void backtrack() {
-        int popCount = 0, minN = 0;
-        do {
-            int top = stk.pop();
-            ++popCount;
-            sum = sum - top;
-            if (stk.isEmpty()) return; // cannot backtrack
-            
-            stk.push(stk.pop() + 1);
-            ++sum;
-            minN = sum;
-            for (int i = 0; i < k - stk.size(); ++i) {
-                minN += stk.peek() + 1 + i;
-            }
-        } while (!stk.isEmpty() && (stk.peek() >= 9 || minN > n));
-        
-        for (int i = 0; i < popCount; ++i) {
-            sum += stk.peek() + 1;
-            stk.push(stk.peek() + 1);
+
+    private void combinationSum3Helper(int k, int n, int level, List<Integer> path, List<List<Integer>> result) {
+        if (path.size == k && n == 0) {
+            result.add(path);
+        } else {
+            for (int i = level; i <= 9; ++i) {
+                if (n - i < 0) {
+                    break;
+                }
+
+                path.add(i);
+                combinationSum3Helper(k, n - i, i + 1, path, result);
+                path.remove(path.size() - 1);
+            } 
         }
     }
 }

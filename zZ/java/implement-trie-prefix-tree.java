@@ -1,66 +1,70 @@
 /**
- * @see <a href="https://leetcode.com/problems/implement-trie-prefix-tree/">Implement Trie (Prefix Tree)</a>
+ * Implement Trie (Prefix Tree)
+ * 
+ * Implement a trie with insert, search, and startsWith methods.
+ * 
+ * Note:
+ * You may assume that all inputs are consist of lowercase letters a-z.
  */
 
-class TrieNode {
-    // Initialize your data structure here.
-    public boolean isWord;
-    public char c;
-    public Map<Character, TrieNode> hm;
-    public TrieNode() {
-        isWord = false;
-        hm = new HashMap<>();
-    }
-}
+import java.util.HashMap;
+import java.util.Map;
 
 public class Trie {
-    private TrieNode root;
-
     public Trie() {
         root = new TrieNode();
     }
 
-    // Inserts a word into the trie.
     public void insert(String word) {
-        if (word.equals("")) root.isWord = true;
-        TrieNode cur = root;
-        for (int i = 0; i < word.length(); ++i) {
-            if (!cur.hm.containsKey(word.charAt(i))) {
-                TrieNode node = new TrieNode();
-                node.c = word.charAt(i);
-                cur.hm.put(word.charAt(i), node);
+        TrieNode node = root;
+
+        for (char letter : word.toCharArray()) {
+            if (!node.leaves.containsKey(letter)) {
+                node.leaves.put(letter, new TrieNode());
             }
-            cur = cur.hm.get(word.charAt(i));
-            if (i == word.length() - 1) cur.isWord = true;
+
+            node = node.leaves.get(letter);
         }
+
+        node.isWord = true;
     }
 
-    // Returns if the word is in the trie.
     public boolean search(String word) {
-        if (word.length() == 0) return root.isWord;
-        TrieNode cur = root;
-        for (int i = 0; i < word.length(); ++i) {
-            if (!cur.hm.containsKey(word.charAt(i))) return false;
-            cur = cur.hm.get(word.charAt(i));
-            if (i == word.length() - 1) return cur.isWord;
+        TrieNode node = root;
+
+        for (char letter : word.toCharArray()) {
+            if (!node.leaves.containsKey(letter)) {
+                return false;
+            }
+            node = node.leaves.get(letter);
         }
+
+        return node.isWord;
+    }
+
+    public boolean startsWith(String prefix) {
+        TrieNode node = root;
+
+        for (char letter : prefix.toCharArray()) {
+            if (!node.leaves.containsKey(letter)) {
+                return false;
+            }
+
+            node = node.leaves.get(letter);
+        }
+
         return true;
     }
 
-    // Returns if there is any word in the trie
-    // that starts with the given prefix.
-    public boolean startsWith(String prefix) {
-        if (prefix.length() == 0) return true;
-        TrieNode cur = root;
-        for (int i = 0; i < prefix.length(); ++i) {
-            if (!cur.hm.containsKey(prefix.charAt(i))) return false;
-            cur = cur.hm.get(prefix.charAt(i));
-        }
-        return true;
-    }
+    private TrieNode root;
 }
 
-// Your Trie object will be instantiated and called as such:
-// Trie trie = new Trie();
-// trie.insert("somestring");
-// trie.search("key");
+class TrieNode {
+    Map<Character, TrieNode> leaves;
+    boolean isWord;
+
+    TrieNode() {
+        leaves = new HashMap<>();
+        isWord = false;
+    }
+}

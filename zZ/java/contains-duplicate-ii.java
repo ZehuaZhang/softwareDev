@@ -1,19 +1,22 @@
 /**
- * @see <a href="https://leetcode.com/problems/contains-duplicate-ii/">Contains Duplicate II</a>
+ * Contains Duplicate II
+ * 
+ * Given an array of integers and an integer k, find out whether there are two distinct indices i and j in the array such that nums[i] = nums[j] and the difference between i and j is at most k.
  */
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Solution {
     public boolean containsNearbyDuplicate(int[] nums, int k) {
-        // a hashMap stores the last index of the number.
-        Map<Integer, Integer> hm = new HashMap<>();
-        if (nums == null || nums.length == 0) return false;
-        if (k <= 0) return false;
+        Map<Integer, Integer> indexMap = new HashMap<>();
         for (int i = 0; i < nums.length; ++i) {
-            if (hm.containsKey(nums[i])) {
-                if (i - hm.get(nums[i]) <= k) return true;
+            if (indexMap.containsKey(nums[i]) && i - indexMap.get(nums[i]) <= k) {
+                return true;
             }
-            hm.put(nums[i], i); // add new or update
+            indexMap.put(nums[i], i);
         }
+
         return false;
     }
 }
