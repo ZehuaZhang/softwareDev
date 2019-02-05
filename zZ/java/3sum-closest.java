@@ -16,39 +16,6 @@ public class Solution {
             throw new NullPointerException();
         }
 
-        int minDistance = Integer.MAX_VALUE;
-        int result = 0;
-        Arrays.sort(nums);
-        for (int i = 0; i < nums.length - 2; ++i) {
-            int j = i + 1;
-            int k = nums.length - 1;
-            while (j < k) {
-                int sum = nums[i] + nums[j] + nums[k];
-                if (Math.abs(sum - target) < minDistance) {
-                    minDistance = Math.abs(sum - target);
-                    result = sum;
-                    if (minDistance == 0)
-                        break;
-                }
-                if (sum > target) {
-                    --k;
-                } else if (sum < target) { // Should increase sum.
-                    ++j;
-                } else {
-                    return target;
-                }
-            }
-        }
-        return result;
-    }
-}
-
-public class Solution {
-    public int threeSumClosest(int[] nums, int target) {
-        if (nums == null) {
-            throw new NullPointerException();
-        }
-
         int minDistance = Interger.MIN_VALUE;
         int result = 0;
 

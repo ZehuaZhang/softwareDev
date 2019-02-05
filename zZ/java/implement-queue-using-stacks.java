@@ -1,34 +1,51 @@
 /**
- * @see <a href="https://leetcode.com/problems/implement-queue-using-stacks/">Implement Queue using Stacks</a>
+ * Implement Queue using Stacks 
+ * 
+ * Implement the following operations of a queue using stacks.
+ * 
+ * push(x) -- Push element x to the back of queue.
+ * pop() -- Removes the element from in front of queue.
+ * peek() -- Get the front element.
+ * empty() -- Return whether the queue is empty.
+ * 
+ * Notes:
+ * 
+ * You must use only standard operations of a stack -- which means only push to top, peek/pop from top, size, and is empty operations are valid.
+ * Depending on your language, stack may not be supported natively. You may simulate a stack by using a list or deque (double-ended queue), as long as you use only standard operations of a stack.
+ * You may assume that all operations are valid (for example, no pop or peek operations will be called on an empty queue).
  */
 
-// by using two stacks, we can implement all the operations for the queue in amortized O(1)
+import java.util.Stack;
+
 class MyQueue {
-    private Stack<Integer> pushStk = new Stack<>();
-    private Stack<Integer> popStk = new Stack<>();
-    // Push element x to the back of queue.
-    public void push(int x) { // this specifies the content to be stored are integers
-        pushStk.push(x);
+    public void push(int x) {
+        buffer.push(x);
     }
 
-    // Removes the element from in front of queue.
     public void pop() {
-        if (popStk.isEmpty()) {
-            while (!pushStk.isEmpty()) popStk.push(pushStk.pop());
-        }
-        popStk.pop();
+        transferBufferToOutput();
+        output.pop();
     }
 
-    // Get the front element.
     public int peek() {
-        if (popStk.isEmpty()) {
-            while (!pushStk.isEmpty()) popStk.push(pushStk.pop());
-        }
-        return popStk.peek();
+        transferBufferToOutput();
+        return output.top();
     }
 
-    // Return whether the queue is empty.
     public boolean empty() {
-        return pushStk.isEmpty() && popStk.isEmpty();
+       return output.isEmpty() && buffer.isEmpty();
     }
+
+    private transferBufferToOutput() {
+        if (!output.isEmpty()) {
+            return;
+        }
+
+        while (!buffer.isEmpty()) {
+            output.push(buffer.pop());
+        }
+    }
+
+    private Stack<Integer> buffer = new Stack<>();
+    private Stack<Integer> output = new Stack<>();
 }

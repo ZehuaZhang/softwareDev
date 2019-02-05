@@ -1,99 +1,73 @@
 /**
- * @see <a href="https://leetcode.com/problems/serialize-and-deserialize-binary-tree/">Serialize and Deserialize Binary Tree</a>
+ * Serialize and Deserialize Binary Tree
+ * 
+ * Serialization is the process of converting a data structure or object into a sequence of bits so that it can be stored in a file or memory buffer,
+ * or transmitted across a network connection link to be reconstructed later in the same or another computer environment.
+ * 
+ * Design an algorithm to serialize and deserialize a binary tree. There is no restriction on how your serialization/deserialization algorithm should work.
+ * You just need to ensure that a binary tree can be serialized to a string and this string can be deserialized to the original tree structure.
+ * 
+ * For example, you may serialize the following tree
+ * 
+ *     1
+ *    / \
+ *   2   3
+ *      / \
+ *     4   5
+ * as "[1,2,3,null,null,4,5]", just the same as how LeetCode OJ serializes a binary tree. You do not necessarily need to follow this format, so please be creative and come up with different approaches yourself.
+ * 
+ * Note: Do not use class member/global/static variables to store states. Your serialize and deserialize algorithms should be stateless.
  */
 
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
- 
-// use an array to store a tree node;
-// array[0] = value;
-// array[1] = li, // left child index, if null, -1
-// array[2] = ri, // right child index, if null, -1
 public class Codec {
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
-        // nodes will be added to an arrayList of arrays; then, convert the arraylist to a string.
-        if (root == null) return new String();
-        List<int[]> list = new ArrayList<int[]>();
-        Stack<TreeNode> stk = new Stack<TreeNode>();
-        Stack<Integer> iStk = new Stack<Integer>();
-        TreeNode cur = root;
-        int ci = 0;
-        while (true) { // preorder traversal to construct the arraylist
-            while (cur != null) {
-                if (!stk.isEmpty()) { // get the parent, and set the left and right of the parent.
-                    int pi = iStk.peek(); // ci is the current index
-                    if (cur == stk.peek().left) { // cur is left child of the parent
-                        list.get(pi)[1] = ci;
-                    } else { // cur is the right child of the parent
-                        list.get(pi)[2] = ci;
-                    }
-                }
-                list.add(new int[]{cur.val, -1, -1});
-                stk.push(cur);
-                iStk.push(ci);
-                cur = cur.left;
-                ++ci;
-            }
-            while (!stk.isEmpty() && (stk.peek().right == null || stk.peek().right == cur)) {
-                cur = stk.pop();
-                iStk.pop();
-            }
-            if (stk.isEmpty()) break;
-            else cur = stk.peek().right;
-        }
-        
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < list.size(); ++i) {
-            for (int j = 0; j < 3; ++j) {
-                sb.append(list.get(i)[j]);
-                sb.append(' ');
-            }
-        }
-        return new String(sb);
+        StringBuilder stringBuilder = new StringBuilder();
+        serializeHelper(root, stringBuiler);
+        return stringBuilder.toString().trim();
     }
 
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
-        // convert the string into an arrayList; then, reconstruct the tree using the arraylist.
-        if (data.length() == 0) return null;
-        List<Integer> li = new ArrayList<Integer>();
-        int i = 0;
-        while (i < data.length()) {
-            int si = i;
-            while (data.charAt(i) != ' ') ++i;
-            int ei = i;
-            li.add(Integer.parseInt(data.substring(si, ei)));
-            ++i;
-        }
-        List<int[]> list = new ArrayList<int[]>();
-        for (int k = 0; k < li.size()/3; ++k) {
-            int[] node = new int[3];
-            for (int j = 0; j < 3; ++j) {
-                node[j] = li.get(k * 3 + j);
-            }
-            list.add(node);
-        }
-        // reconstruct the tree using the list of arrays.
-        TreeNode root = generateTree(list, 0);
-        return root;
+        int[] index = new int[0];
+        return deserializeHelper(data.replace(" ", "").toCharArray(), index);
     }
     
-    private TreeNode generateTree(List<int[]> list, int index) {
-        TreeNode node = new TreeNode(list.get(index)[0]);
-        node.left = list.get(index)[1] == -1 ? null : generateTree(list, list.get(index)[1]);
-        node.right = list.get(index)[2] == -1 ? null: generateTree(list, list.get(index)[2]);
+    private void serializeHelper(TreeNode root, StringBuilder stringBuilder) {
+        if (root == null) {
+            stringBuilder.append("# ");
+        } else {
+            stringBuilder.append(root.val)
+                .append(" ");
+            serializeHelper(root.left, stringBuilder);
+            serializeHelper(root.right, stringBuilder);
+        }
+    }
+
+    private TreeNode deserializeHelper(char[] dataCharArray, int[] index) {
+        if (dataCharArray[index[0]] == '#') {
+            return null;
+        }
+        TreeNode node = new TreeNode();
+        node.val = Integer.parseInt(new String(dataCharArray[index[0]]));
+
+        index[0] += 1;
+        node.left = deserializeHelper(dataCharArray, index);
+        index[0] += 1;
+        node.right = deserializeHelper(dataCharArray, index);
+
         return node;
     }
 }
 
-// Your Codec object will be instantiated and called as such:
-// Codec codec = new Codec();
-// codec.deserialize(codec.serialize(root));
+public class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+
+    TreeNode() {
+        val = 0;
+        left = null;
+        right = null;
+    }
+}

@@ -27,7 +27,7 @@
 import java.util.Map;
 
 public class LRUCache {
-    private setHead(DoublyListNode node) {
+    private setHead(DoubleListNode node) {
         node.prev = null;
         node.next = head;
 
@@ -42,7 +42,7 @@ public class LRUCache {
         }
     }
 
-    private remove(DoublyListNode node) {
+    private remove(DoubleListNode node) {
         if (node.next != null) {
             node.next.prev = node.prev;
         } else {
@@ -57,19 +57,19 @@ public class LRUCache {
     }
 
     private int capacity;
-    DoublyListNode head;
-    DoublyListNode tail;
-    Map<Integer, DoublyListNode> keyToNodeMap; 
+    DoubleListNode head;
+    DoubleListNode tail;
+    Map<Integer, DoubleListNode> keyToNodeMap; 
 
     LRUCache(int capacity) {
         this.capacity = capacity;
         head = tail = null;
-        keyToNodeMap = new HashMap<Integer, DoublyListNode>(); 
+        keyToNodeMap = new HashMap<Integer, DoubleListNode>(); 
     }
 
     public get(int key) {
         if (keyToNodeMap.containsKey(key)) {
-            DoublyListNode node = keyToNodeMap.get(key);
+            DoubleListNode node = keyToNodeMap.get(key);
             this.remove(node);
             this.setHead(node);
             return node.value;
@@ -80,7 +80,7 @@ public class LRUCache {
 
     public set(int key, int value) {
         if (keyToNodeMap.containsKey(key)) {
-            DoublyListNode node = keyToNodeMap.get(key);
+            DoubleListNode node = keyToNodeMap.get(key);
             node.value = value;
             this.remove(node);
             this.setHead(node);
@@ -89,20 +89,20 @@ public class LRUCache {
                 this.remove(tail);
                 keyToNodeMap.remove(tail.key);
             }
-            DoublyListNode node = new DoublyListNode(key, value);
+            DoubleListNode node = new DoubleListNode(key, value);
             this.setHead(node);
             keyToNodeMap.put(key, node);
         }
     }
 }
 
-public class DoublyListNode {
+public class DoubleListNode {
     int key;
     int value;
-    DoublyListNode prev;
-    DoublyListNode next;
+    DoubleListNode prev;
+    DoubleListNode next;
     
-    DoublyListNode(int key, int value) {
+    DoubleListNode(int key, int value) {
         this.key = key;
         this.value = value;
         this.prev = null;
