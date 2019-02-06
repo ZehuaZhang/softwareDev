@@ -16,8 +16,48 @@
  * By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,4,6].
  */
 
-public class NestedIterator  {
-    NestedIterator () {
-        
+import java.util.List;
+import java.util.Stack;
+import java.util.ArrayList;
+
+public class NestedIterator {
+    NestedIterator (List<NestedInteger> nestedList) {
+        stack = new Stack<NestedInteger>();
+
+        for (int i = nestedList.size() - 1; i >= 0; --i) {
+            stack.push(nestedList.get(i));
+        }
+    }
+
+    public int next() {
+        return stack.pop().getInteger();
+    }
+
+    public boolean hasNext() {
+        while (!stack.isEmpty()) {
+            NestedInteger top = stack.peek();
+            if (top.isInteger()) {
+                return true;
+            }
+            stack.pop();
+
+            for (int i = top.getList().size() - 1; i >= 0; --i) {
+                stack.push(top.getList().get(i));
+            }
+        }
+        return false;
+    }
+
+    private Stack<NestedInteger> stack;
+}
+
+public class NestedInteger {
+    public List<NestedInteger> getList() {
+    }
+
+    public boolean isInteger() {
+    }
+
+    public int getInteger() {
     }
 }
