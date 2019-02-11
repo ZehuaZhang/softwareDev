@@ -40,6 +40,7 @@
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Deque;
 import java.util.HashSet;
@@ -52,43 +53,35 @@ public class Twitter {
     Twitter() {
         time = 0;
         following = new Map<Integer,Set<Integer>>();
-        tweets = new Map<Integer, List<Integer[]>>();
+        tweets = new Map<Integer, List<Pair>>();
         maxRecentTweetsCount = 10;
     }
 
     public void postTweets(int userId, int tweetId) {
         follow(userId, userId);
-        List<Integer[]> tweetLists = tweets.getOrDefault(userId, new ArrayList<>());
-        tweetLists.add(new Integer[] {time++, tweetId});
+        List<Pair> tweetLists = tweets.getOrDefault(userId, new ArrayList<>());
+        tweetLists.add(new Pair(time++, tweetId));
         tweets.put(userId, tweetLists);
     }
 
     public List<Integer> getRecentTweets(int userId) {
-        PriorityQueue<Integer[]> priorityQueue = new PriorityQueue<>(new Comparator<Integer[]>() {
-            public int compare(Integer[] tweet1, Integer[] tweet2) {
-                int userId1 = tweet1[0];
-                int index1 = tweet1[1];
-                int userId2 = tweet2[0];
-                int index2 = tweet2[1];
-                return  tweets.get(userId2).get(index2)[0] - tweets.get(userId1).get(index1)[0];
+        PriorityQueue<Pair> priorityQueue = new PriorityQueue<>(new Comparator<Pair>() {
+            public int compare(Pair tweet1, Pair tweet2) {
+                return  tweet1.timestamp - tweet2.timestamp;
             }
         });
 
         for (Integer followee : following.getOrDefault(userId, new Set<Integer>())) {
-            for (Integer[] tweet : tweets.getOrDefault(followee, new ArrayList<>())) {
-                priorityQueue.offer(new Integer[]{followee, i});
+            for (Pair tweet : tweets.getOrDefault(followee, new ArrayList<>())) {
+                priorityQueue.offer(tweet);
                 if (priorityQueue.size() > maxRecentTweetsCount) {
                     priorityQueue.poll();
                 }
             }
         }
 
-        List<Integer> result = new ArrayList<>();
-        for (Integer[] entry : priorityQueue) {
-            int entryUserId = entry[0];
-            int entryIndex = entry[1];
-            result.add(tweets.get(entryUserId).get(entryIndex)[1]);
-        }
+        List<Integer> result = new ArrayList<>(priorityQueue);
+        Collections.sort(result, Collections.reverseOrder());
         return result;
     }
 
@@ -107,6 +100,16 @@ public class Twitter {
     private final int maxRecentTweetsCount;
     private int time;
     private Map<Integer, Set<Integer>> following;
-    private Map<Integer, List<Integer[]>> tweets;
+    private Map<Integer, List<Pair>> tweets;
+
+    private class Pair {
+        int timestamp;
+        int tweetId;
+
+        Pair(int timestamp, int tweetId) {
+            this.timestamp = timestamp;
+            this.tweetId = tweetId;
+        }
+    }
 }
     

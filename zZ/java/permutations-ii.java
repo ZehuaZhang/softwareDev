@@ -8,7 +8,7 @@
  * [1,1,2], [1,2,1], and [2,1,1].
  */
 
- import java.util.Arrays;
+import java.util.Arrays;
 
 public class Solution {
     public List<List<Integer>> permuteUnique(int[] nums) {
