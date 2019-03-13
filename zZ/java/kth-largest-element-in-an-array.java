@@ -1,5 +1,3 @@
-import java.util.Random;
-
 /**
  * Kth Largest Element in an Array
  * 
@@ -16,6 +14,8 @@ import java.util.Random;
  * Note: 
  * You may assume k is always valid, 1 ≤ k ≤ array's length.
  */
+
+import java.util.Random;
 
 public class Solution {
     public int findKthLargest(int[] nums, int k) {

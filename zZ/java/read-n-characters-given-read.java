@@ -13,7 +13,7 @@ public class Solution extends Reader4 {
     public int read(char[] buf, int n) {
         int bytes = 0;
         boolean eof = false;
-        while (!eof && readBytes < n) {
+        while (!eof && bytes < n) {
             char[] buf4 = new char[4];
             int currBytes = read4(buf4);
 
