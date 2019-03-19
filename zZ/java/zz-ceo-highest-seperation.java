@@ -42,8 +42,8 @@ public class Solution {
         
         Stack<Integer> stack = new Stack<>();
         
-        boolean visited = new boolean[employeeCount];
-        f
+        boolean[] visited = new boolean[employeeCount];
+
         for (int employeeID = 0; employeeID < employeeCount; ++employeeID) {
             if (!visited[employeeID]) {
                 topologySortHelper(employeeID, visited, stack);
@@ -62,8 +62,6 @@ public class Solution {
         while (!stack.isEmpty()) {
             int currEmployeeId = stack.pop();
             
-            // [0, 1, 2, 3]
-            
             if (distance[currEmployeeId] != Integer.MIN_VALUE) {
                 for (int directReportEmployeeId : directReportsIDList.get(currEmployeeId)) {
                     if (distance[directReportEmployeeId] < distance[currEmployeeId] + 1) {
@@ -73,7 +71,7 @@ public class Solution {
             }
         }
         
-        int fresult = 0;
+        int result = 0;
         for (int distanceEntry : distance) {
             result = Math.max(result, distanceEntry);
         }

@@ -23,15 +23,15 @@ public class Solution {
         return result;
     }
 
-    public void permuteHelper(int[] nums, boolean[] visited, int start, List<Integer> path, List<List<Integer>> result) {
+    public void permuteHelper(int[] nums, boolean[] visited, List<Integer> path, List<List<Integer>> result) {
         if (start == nums.length) {
             result.add(path);
         } else {
-            for (int i = start; i < nums.length; ++i) {
+            for (int i = 0; i < nums.length; ++i) {
                 if (visited[i] == false) {
                     visited[i] = true;
                     path.add(nums[i]);
-                    permuteHelper(nums, visited, i + 1, path, result);
+                    permuteHelper(nums, visited, path, result);
                     path.remove(path.size() - 1);
                     visited[i] = false;
                 }
