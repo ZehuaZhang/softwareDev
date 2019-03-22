@@ -1,20 +1,6 @@
 
 const client = require('./client');
 
-/**
- * create maze
- * 
- * @return: return metedata {id, height, width}, if status is 201
- */
-async function createMaze() {
-    const response = await client.getNewMazeInfo();
-
-    const data = JSON.parse(response.text);
-    console.log(`Solving maze with id: ${JSON.stringify(data, null, 2)}`);
-
-    return data;
-}
-
 async function trySolveMaze(data) {
 
     // constant
@@ -55,7 +41,6 @@ async function trySolveMaze(data) {
     }
 
     // bfs
-
     const visited = new Set();
     const queue = [];
 

@@ -1,0 +1,7 @@
+C:\Users\oDaniel\source\repos\In-Memory-KVStore-With-Transaction\In-Memory-KVStore-With-Transaction\bin\Debug\In-Memory-KVStore-With-Transaction.exe.config
+C:\Users\oDaniel\source\repos\In-Memory-KVStore-With-Transaction\In-Memory-KVStore-With-Transaction\bin\Debug\In-Memory-KVStore-With-Transaction.exe
+C:\Users\oDaniel\source\repos\In-Memory-KVStore-With-Transaction\In-Memory-KVStore-With-Transaction\bin\Debug\In-Memory-KVStore-With-Transaction.pdb
+C:\Users\oDaniel\source\repos\In-Memory-KVStore-With-Transaction\In-Memory-KVStore-With-Transaction\obj\Debug\In-Memory-KVStore-With-Transaction.csprojAssemblyReference.cache
+C:\Users\oDaniel\source\repos\In-Memory-KVStore-With-Transaction\In-Memory-KVStore-With-Transaction\obj\Debug\In-Memory-KVStore-With-Transaction.csproj.CoreCompileInputs.cache
+C:\Users\oDaniel\source\repos\In-Memory-KVStore-With-Transaction\In-Memory-KVStore-With-Transaction\obj\Debug\In-Memory-KVStore-With-Transaction.exe
+C:\Users\oDaniel\source\repos\In-Memory-KVStore-With-Transaction\In-Memory-KVStore-With-Transaction\obj\Debug\In-Memory-KVStore-With-Transaction.pdb
