@@ -1,0 +1,10 @@
+C:\Users\oDaniel\source\repos\RoverOnMars\RoverOnMars\bin\Debug\RoverOnMars.exe.config
+C:\Users\oDaniel\source\repos\RoverOnMars\RoverOnMars\bin\Debug\RoverOnMars.exe
+C:\Users\oDaniel\source\repos\RoverOnMars\RoverOnMars\bin\Debug\RoverOnMars.pdb
+C:\Users\oDaniel\source\repos\RoverOnMars\RoverOnMars\bin\Debug\nunit.framework.dll
+C:\Users\oDaniel\source\repos\RoverOnMars\RoverOnMars\bin\Debug\nunit.framework.pdb
+C:\Users\oDaniel\source\repos\RoverOnMars\RoverOnMars\bin\Debug\nunit.framework.xml
+C:\Users\oDaniel\source\repos\RoverOnMars\RoverOnMars\obj\Debug\RoverOnMars.csproj.CoreCompileInputs.cache
+C:\Users\oDaniel\source\repos\RoverOnMars\RoverOnMars\obj\Debug\RoverOnMars.csproj.CopyComplete
+C:\Users\oDaniel\source\repos\RoverOnMars\RoverOnMars\obj\Debug\RoverOnMars.exe
+C:\Users\oDaniel\source\repos\RoverOnMars\RoverOnMars\obj\Debug\RoverOnMars.pdb

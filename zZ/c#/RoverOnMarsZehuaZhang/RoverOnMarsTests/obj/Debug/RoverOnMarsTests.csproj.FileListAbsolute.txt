@@ -1,0 +1,16 @@
+C:\Users\oDaniel\source\repos\RoverOnMars\RoverOnMarsTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\oDaniel\source\repos\RoverOnMars\RoverOnMarsTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\oDaniel\source\repos\RoverOnMars\RoverOnMarsTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\oDaniel\source\repos\RoverOnMars\RoverOnMarsTests\bin\Debug\RoverOnMarsTests.dll
+C:\Users\oDaniel\source\repos\RoverOnMars\RoverOnMarsTests\bin\Debug\RoverOnMarsTests.pdb
+C:\Users\oDaniel\source\repos\RoverOnMars\RoverOnMarsTests\bin\Debug\nunit.framework.dll
+C:\Users\oDaniel\source\repos\RoverOnMars\RoverOnMarsTests\bin\Debug\RoverOnMars.exe
+C:\Users\oDaniel\source\repos\RoverOnMars\RoverOnMarsTests\bin\Debug\RoverOnMars.pdb
+C:\Users\oDaniel\source\repos\RoverOnMars\RoverOnMarsTests\bin\Debug\RoverOnMars.exe.config
+C:\Users\oDaniel\source\repos\RoverOnMars\RoverOnMarsTests\bin\Debug\nunit.framework.pdb
+C:\Users\oDaniel\source\repos\RoverOnMars\RoverOnMarsTests\bin\Debug\nunit.framework.xml
+C:\Users\oDaniel\source\repos\RoverOnMars\RoverOnMarsTests\obj\Debug\RoverOnMarsTests.csprojAssemblyReference.cache
+C:\Users\oDaniel\source\repos\RoverOnMars\RoverOnMarsTests\obj\Debug\RoverOnMarsTests.csproj.CoreCompileInputs.cache
+C:\Users\oDaniel\source\repos\RoverOnMars\RoverOnMarsTests\obj\Debug\RoverOnMarsTests.csproj.CopyComplete
+C:\Users\oDaniel\source\repos\RoverOnMars\RoverOnMarsTests\obj\Debug\RoverOnMarsTests.dll
+C:\Users\oDaniel\source\repos\RoverOnMars\RoverOnMarsTests\obj\Debug\RoverOnMarsTests.pdb

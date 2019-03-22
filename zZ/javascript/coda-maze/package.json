@@ -1,0 +1,14 @@
+{
+  "name": "zehua-coda-maze",
+  "version": "1.0.0",
+  "description": "zehua solving coda maze problem",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Zehua Zhang",
+  "license": "MIT",
+  "dependencies": {
+    "superagent": "^4.1.0"
+  }
+}
