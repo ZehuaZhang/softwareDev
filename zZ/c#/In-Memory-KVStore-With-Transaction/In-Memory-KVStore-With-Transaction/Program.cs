@@ -12,41 +12,75 @@ namespace In_Memory_KVStore_With_Transaction
         {
             string commandStream = string.Empty;
 
-            Console.WriteLine("");
-
             bool shouldExit = false;
 
             DB db = new DB();
 
             do
             {
-                commandStream = Console.ReadLine().ToUpper().Trim();
+                List<string> commanList = new List<string>();
+                
+                do
+                {
+                    Console.Write("> ");
+                    commandStream = Console.ReadLine().ToUpper().Trim();
 
-                string[] commanList = commandStream.Split(new char[] { ' ' });
+                    commanList = commandStream
+                        .Split(new char[] { ' ' })
+                        .ToList()
+                        .Where(command => !String.IsNullOrEmpty(command.Trim()))
+                        .ToList();
+                } while (commanList.Count == 0);
 
                 switch (commanList[0])
                 {
                     case "SET":
+                        if (commanList.Count != 3)
+                        {
+                            goto default;
+                        }
                         db.Set(commanList[1], commanList[2]);
                         break;
                     case "GET":
+                        if (commanList.Count != 2)
+                        {
+                            goto default;
+                        }
                         string value = db.Get(commanList[1]);
                         if (value == null)
                         {
                             Console.WriteLine(commanList[1] + " NOT SET");
                         }
-                        Console.WriteLine(value);
+                        else {
+                            Console.WriteLine(commanList[1] + " = " + value);
+                        }
                         break;
                     case "COUNT":
+                        if (commanList.Count != 2)
+                        {
+                            goto default;
+                        }
                         Console.WriteLine(db.Count(commanList[1]));
                         break;
                     case "DELETE":
+                        if (commanList.Count != 2)
+                        {
+                            goto default;
+                        }
                         db.Delete(commanList[1]);
                         break;
                     case "BEGIN":
+                        if (commanList.Count != 1)
+                        {
+                            goto default;
+                        }
                         db.BeginTransaction();
                         break;
                     case "COMMIT":
+                        if (commanList.Count != 1)
+                        {
+                            goto default;
+                        }
                         bool status = db.EndTransaction();
                         if (!status)
                         {
@@ -54,12 +88,21 @@ namespace In_Memory_KVStore_With_Transaction
                         }
                         break;
                     case "ROLLBACK":
+                        if (commanList.Count != 1)
+                        {
+                            goto default;
+                        }
                         db.Rollback();
                         break;
                     case "EXIT":
+                        if (commanList.Count != 1)
+                        {
+                            goto default;
+                        }
                         shouldExit = true;
                         break;
                     default:
+                        Console.WriteLine("INVALID COMMAND, PLEASE TRY AGAIN");
                         break;
                 }
             } while (!shouldExit);

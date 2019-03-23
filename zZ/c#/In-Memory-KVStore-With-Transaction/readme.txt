@@ -1,6 +1,9 @@
-I had a bug on "value count" which will stays for values created between begin transaction and rollback
-To Fix this, I should have two dictionaries on to the stack
-key-value (exsiting), value-count(should have added)
+Run:
+1. You could open binary .exe in the root folder to run
 
-All other cases and other commands are correct, like normal queries, (nested) transaction & rollback
-(I did fix another bug after video has ended)
+Bug Fixed:
+1. value count is corrected when ROLLBACK is issued
+
+Improvement:
+1. Input validity check
+2. Refactor of code

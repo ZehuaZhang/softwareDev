@@ -32,28 +32,6 @@ namespace In_Memory_KVStore_With_Transaction
             IncreaseValueCount(store[key]);
         }
 
-        private void storePreviousStateHistory(string key, string value)
-        {
-            Pair<Dictionary<string, string>, Dictionary<string, int>> stackDB = stack.Peek();
-            Dictionary<string, string> stackStore = stackDB.getFirstChild();
-            Dictionary<string, int> stackValueCount = stackDB.getSecondChild();
-
-            if (!stackStore.ContainsKey(key))
-            {
-                stackStore[key] = Get(key);
-            }
-
-            if (Get(key) != null && !stackValueCount.ContainsKey(Get(key)))
-            {
-                stackValueCount[Get(key)] = Count(Get(key));
-            }
-
-            if (value != null && !stackValueCount.ContainsKey(value))
-            {
-                stackValueCount[value] = Count(value);
-            }
-        }
-
         public string Get(string key)
         {
             if (!store.ContainsKey(key))
@@ -93,7 +71,7 @@ namespace In_Memory_KVStore_With_Transaction
 
         public void BeginTransaction()
         {
-            stack.Push(new Pair<Dictionary<string, string>, Dictionary<string, int>>(new Dictionary<string, string>(), new Dictionary<string, int>()));
+            stack.Push(new Pair<Dictionary<string, string>, Dictionary<string, int>>());
             
             isTransaction = true;
         }
@@ -111,30 +89,6 @@ namespace In_Memory_KVStore_With_Transaction
                 isTransaction = false;
             }
             return true;
-        }
-
-        private void UpdateValueCount(string value, int count)
-        {
-            valueCount[value] = count;
-
-            if (valueCount[value] == 0)
-            {
-                valueCount.Remove(value);
-            }
-        }
-
-        private void IncreaseValueCount(string value)
-        {
-            int count = Count(value);
-
-            UpdateValueCount(value, count + 1);
-        }
-
-        private void DecreaseValueCount(string value)
-        {
-            int count = Count(value);
-
-            UpdateValueCount(value, count - 1);
         }
 
         public void Rollback()
@@ -171,6 +125,52 @@ namespace In_Memory_KVStore_With_Transaction
             }
 
             EndTransaction();
+        }
+
+        private void storePreviousStateHistory(string key, string value)
+        {
+            Pair<Dictionary<string, string>, Dictionary<string, int>> stackDB = stack.Peek();
+            Dictionary<string, string> stackStore = stackDB.getFirstChild();
+            Dictionary<string, int> stackValueCount = stackDB.getSecondChild();
+
+            if (!stackStore.ContainsKey(key))
+            {
+                stackStore[key] = Get(key);
+            }
+
+            if (Get(key) != null && !stackValueCount.ContainsKey(Get(key)))
+            {
+                stackValueCount[Get(key)] = Count(Get(key));
+            }
+
+            if (value != null && !stackValueCount.ContainsKey(value))
+            {
+                stackValueCount[value] = Count(value);
+            }
+        }
+
+        private void UpdateValueCount(string value, int count)
+        {
+            valueCount[value] = count;
+
+            if (valueCount[value] == 0)
+            {
+                valueCount.Remove(value);
+            }
+        }
+
+        private void IncreaseValueCount(string value)
+        {
+            int count = Count(value);
+
+            UpdateValueCount(value, count + 1);
+        }
+
+        private void DecreaseValueCount(string value)
+        {
+            int count = Count(value);
+
+            UpdateValueCount(value, count - 1);
         }
     }
 }

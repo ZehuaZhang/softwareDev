@@ -21,6 +21,8 @@ namespace In_Memory_KVStore_With_Transaction
 
         public Pair()
         {
+            data1 = Activator.CreateInstance(typeof(T1)) as T1;
+            data2 = Activator.CreateInstance(typeof(T2)) as T2;
         }
 
         public T1 getFirstChild()
