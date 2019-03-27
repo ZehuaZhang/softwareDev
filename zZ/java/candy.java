@@ -22,7 +22,7 @@ public class Solution {
         }
 
         for (int i = 1; i < ratings.length; ++i) {
-            if (ratings[i] < ratings[i - 1]) {
+            if (ratings[i] > ratings[i - 1]) {
                 candies[i] = candies[i - 1] + 1;
             }
         }

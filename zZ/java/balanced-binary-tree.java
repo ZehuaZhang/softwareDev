@@ -38,7 +38,7 @@ public class Solution {
             return true;
         }
 
-        int diff = Math.abs(getDepth(root.left) - getDepth(root.right));
+        int diff = Math.abs(getHeight(root.left) - getHeight(root.right));
         if (diff > 1) {
             return false;
         }
@@ -46,12 +46,12 @@ public class Solution {
         return isBalanced(root.left) && isBalanced(root.right);
     }
 
-    private int getDepth(TreeNode node) {
+    private int getHeight(TreeNode node) {
         if (node == null) {
             return 0;
         }
 
-        return 1 + Math.max(getDepth(node.left), getDepth(node.right));
+        return 1 + Math.max(getHeight(node.left), getHeight(node.right));
     }
 }
 

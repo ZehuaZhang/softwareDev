@@ -44,7 +44,7 @@ public class Solution {
         Collections.sort(heights, new Comparator<Integer[]>() {
             public int compare(Integer[] height1, Integer[] height2) {
                 if (height1[0] != height2[0]) {
-                    return height1[0]- height2[0];
+                    return height1[0] - height2[0];
                 }
 
                 return height1[1] - height2[1];

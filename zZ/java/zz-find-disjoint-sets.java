@@ -86,7 +86,7 @@ public class Solution {
                 return false;
             }
 
-            if (obj == this) {
+            if (object == this) {
                 return true;
             }
 
