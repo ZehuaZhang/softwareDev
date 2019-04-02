@@ -28,7 +28,7 @@ public class Solution {
             leftArray[i] = arr[left + i];
         }
         for (int i = 0; i < rightArrayLength; ++i) {
-            rightArray[j] = arr[middle + 1 + j];
+            rightArray[j] = arr[middle + 1 + i];
         }
 
         // merge
