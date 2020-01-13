@@ -31,15 +31,15 @@ var lengthOfLongestSubstring = function(s) {
     const indexMap = {}
     
     let result = 0
-    let startIndex = 0
+    let leftIndex = 0
     s.split("").forEach((character, index) => {
         if (indexMap.hasOwnProperty(character) && 
-            indexMap[character] >= startIndex) {
+            indexMap[character] >= leftIndex) {
             
-            startIndex = indexMap[character] + 1
+            leftIndex = indexMap[character] + 1
         }
         indexMap[character] = index
-        result = Math.max(result, index - startIndex + 1)
+        result = Math.max(result, index - leftIndex + 1)
     })
 
     return result
