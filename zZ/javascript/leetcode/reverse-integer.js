@@ -22,21 +22,21 @@
  * @param {number} x
  * @return {number}
  */
-var reverse = function(x) {    
+var reverse = function(x) {
     let result = 0
     
-    const INT_MAX = Math.pow(2, 31) - 1
-    const INT_MIN = -1 * Math.pow(2, 31)
+    const maxInteger = Math.pow(2, 31) - 1
+    const minInteger = -1 * Math.pow(2, 31)
     
     while (x) {
-        if (result > INT_MAX / 10 ||
-            (result === INT_MAX / 10 && result > parseInt(INT_MAX.toString()[1]))) {
+        if (result > Math.trunc(maxInteger / 10) ||
+            (result === maxInteger / 10 && x % 10 > maxInteger % 10)) {
             
             return 0
             }
         
-        if (result < INT_MIN / 10 ||
-           (result === INT_MIN / 10 && result < parseInt(INT_MIN.toString()[2]))) {
+        if (result < Math.trunc(minInteger / 10) ||
+           (result === minInteger / 10 && x % 10 < minInteger % 10)) {
             return 0
         }
         result = result * 10 + x % 10
