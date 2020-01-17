@@ -55,7 +55,7 @@ public class Solution {
 
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < numberList.length; ++i) {
-            while (num > numberList[i]) {
+            while (num >= numberList[i]) {
                 num -= numberList[i];
                 stringBuilder.append(romanList[i]);
             }
