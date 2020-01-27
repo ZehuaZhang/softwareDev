@@ -114,7 +114,7 @@ function heapSort(array) {
     }
 
     // build heap
-    for (let i = array.length / 2 - 1; i >= 0; --i) {
+    for (let i = Math.trunc(array.length / 2) - 1; i >= 0; --i) {
         heapify(array, array.length, i)
     }
 
