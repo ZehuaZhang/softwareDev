@@ -1,0 +1,122 @@
+import { LinkedListNode } from './LinkedListNode';
+
+export class LinkedList {
+    constructor(...dataList) {
+        this.head = null;
+        this.tail = null;
+        this.length = 0;
+        if (dataList) {
+            this.fromArray(dataList);
+        }
+    }
+
+    fromArray(dataList) {
+        dataList.forEach(data => {
+            this.append(data);
+        })
+        return this;
+    }
+
+    toArray() {
+        const dataList = [];
+        for (let node = this.head; node; node = node.next) {
+            dataList.push(node.value);
+        }
+    }
+
+    prepend(data) {
+        const node = new LinkedListNode(data, this.head);
+        this.head = node;
+        if (!this.tail) {
+            this.tail = node; 
+        }
+        ++this.length;
+        return this;
+    }
+
+    append(data) {
+        const node = new LinkedListNode(data);
+        if (!this.head) {
+            this.head = this.tail = node;
+        } else {
+            this.tail.next = node;
+            this.tail = node;
+        }
+        ++this.length;
+        return this;
+    }
+
+    reverse() {
+        let curr = this.head;
+        let prev = null;
+        let next = null;
+
+        while (curr) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        this.tail = this.head;
+        this.head = prev;
+        
+        return this;
+    }
+
+    print() {
+        const output = this.toArray().join(" -> ");
+        console.log(output);
+    }
+
+    get(index) {
+        if (index < 0 || index >= this.length) {
+            return null;
+        }
+
+        let current = this.head;
+        for (let i = 0; i < index; ++i) {
+            current = current.next;
+        }
+        return current;
+    }
+
+    insert(index, data) {
+        if (index < 0 || index >= this.length) {
+            throw("Exception: insert - out of bounds");
+        }
+
+        const prev = this.get(index - 1);
+        if (prev) {
+            const node = new LinkedListNode(data, prev.next)
+            prev.next = node;
+            if (index === this.length - 1) {
+                this.tail = node;
+            }
+        } else {
+            this.append(data);
+        }
+        ++length;
+        return this;
+    }
+
+    remove(index) {
+        if (index < 0 || index >= this.length) {
+            throw("Exception: remove - out of bounds");
+        }
+
+        const prev = this.get(index - 1);
+        if (prev) {
+            prev.next = prev.next.next;
+            if (index === this.length - 1) {
+                this.tail = prev;
+            }
+        } else {
+            this.head = this.head.next;
+            if (this.length === 1) {
+                this.tail = this.head;
+            }
+        }
+        --this.length;
+        return this;
+    }
+}
