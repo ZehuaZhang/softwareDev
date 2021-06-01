@@ -1,6 +1,4 @@
-import { LinkedListNode } from './LinkedListNode';
-
-export class LinkedList {
+class LinkedList {
     constructor(...dataList) {
         this.head = null;
         this.tail = null;
@@ -118,5 +116,12 @@ export class LinkedList {
         }
         --this.length;
         return this;
+    }
+}
+
+export class LinkedListNode {
+    constructor(value, next = null) {
+        this.value = value;
+        this.next = next;
     }
 }
