@@ -8,20 +8,6 @@ class LinkedList {
         }
     }
 
-    fromArray(dataList) {
-        dataList.forEach(data => {
-            this.append(data);
-        })
-        return this;
-    }
-
-    toArray() {
-        const dataList = [];
-        for (let node = this.head; node; node = node.next) {
-            dataList.push(node.value);
-        }
-    }
-
     prepend(data) {
         const node = new LinkedListNode(data, this.head);
         this.head = node;
@@ -61,11 +47,6 @@ class LinkedList {
         return this;
     }
 
-    print() {
-        const output = this.toArray().join(" -> ");
-        console.log(output);
-    }
-
     get(index) {
         if (index < 0 || index >= this.length) {
             return null;
@@ -79,16 +60,17 @@ class LinkedList {
     }
 
     insert(index, data) {
-        if (index < 0 || index >= this.length) {
-            throw("Exception: insert - out of bounds");
+        if (index < 0 || (index >= this.length && this.length !==0)) {
+            throw new Error("insert: out of bounds");
         }
 
         const prev = this.get(index - 1);
         if (prev) {
-            const node = new LinkedListNode(data, prev.next)
-            prev.next = node;
             if (index === this.length - 1) {
                 this.tail = node;
+            } else {
+                const node = new LinkedListNode(data, prev.next)
+                prev.next = node;
             }
         } else {
             this.append(data);
@@ -99,9 +81,9 @@ class LinkedList {
 
     remove(index) {
         if (index < 0 || index >= this.length) {
-            throw("Exception: remove - out of bounds");
+            throw new Error("remove: out of bounds");
         }
-
+        
         const prev = this.get(index - 1);
         if (prev) {
             prev.next = prev.next.next;
@@ -116,6 +98,25 @@ class LinkedList {
         }
         --this.length;
         return this;
+    }
+
+    fromArray(dataList) {
+        dataList.forEach(data => {
+            this.append(data);
+        })
+        return this;
+    }
+
+    toArray() {
+        const dataList = [];
+        for (let node = this.head; node; node = node.next) {
+            dataList.push(node.value);
+        }
+    }
+
+    print() {
+        const output = this.toArray().join(" -> ");
+        console.log(output);
     }
 }
 
