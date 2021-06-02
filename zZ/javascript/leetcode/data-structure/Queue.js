@@ -1,7 +1,7 @@
 class Queue {
-    constructor(size) {
+    constructor(capacity) {
         this.dataLinkedList = new LinkedList();
-        this.size = size;
+        this.capacity = capacity;
     }
 
     count() {
@@ -13,7 +13,7 @@ class Queue {
     }
 
     isFull() {
-        return this.count() === this.size;
+        return this.count() === this.capacity;
     }
 
     enQueue(data) {

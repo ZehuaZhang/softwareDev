@@ -1,7 +1,7 @@
 class Stack {
-    constructor(size = Number.MAX_SAFE_INTEGER) {
+    constructor(capacity = Number.MAX_SAFE_INTEGER) {
         this.dataList = [];
-        this.size = size;
+        this.capacity = capacity;
     }
 
     count() {
@@ -13,7 +13,7 @@ class Stack {
     }
 
     isFull() {
-        return this.count() === this.size;
+        return this.count() === this.capacity;
     }
 
     push(data) {

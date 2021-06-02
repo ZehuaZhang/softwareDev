@@ -1,9 +1,9 @@
 class Heap{
-    constructor(size, compare) {
+    constructor(capacity, compare) {
         this.dataList = [];
         this.compare = compare;
         this.indexMap = {}
-        this.size = size;
+        this.capacity = capacity;
     }
       
     count() {
@@ -15,7 +15,7 @@ class Heap{
     }
 
     isFull() {
-        return this.count() === this.size;
+        return this.count() === this.capacity;
     }
 
     swap(index1, index2) {
@@ -112,7 +112,7 @@ class Heap{
     }
 
     fromArray(...dataList) {
-        if (dataList.length > this.size) {
+        if (dataList.length > this.capacity) {
             throw new Error("fromArray: heap overflow");
         }
         this.dataList = [...dataList];
