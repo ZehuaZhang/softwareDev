@@ -1,14 +1,22 @@
-## iOS code
+## web apps
 
-* Source code and demos of iOS applications written in Objective C, Swift
+### web src
+* \app\web\src
 
-## iOS demo
+### web demo
+* \app\web\demo
+* [MGRS - Military Grid Reference System](https://mgrs.herokuapp.com/)
+* [CONVOY - Freight Truckers' Offers & Applications](https://interview-convoy.herokuapp.com/)
+* [Epic Games Customer Management System - Server](https://interview-epicgames-backend.herokuapp.com/)
+* [Epic Games Customer Management System - Client](https://interview-epicgames-frontend.herokuapp.com/)
 
-* Demos of iOS applications
+## ios apps
 
-## Web demo
+### ios src
+* \app\ios\src
 
-* Demos of web applications written in AngularJS, ReactJS, NodeJS
+### ios demo
+* \app\ios\demo
 
 ## About
 * [Linkedin](https://www.linkedin.com/in/zehuazhang/) 
