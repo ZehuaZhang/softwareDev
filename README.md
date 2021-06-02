@@ -1,9 +1,9 @@
 ## web apps
 
-### web src
+### source code
 * \app\web\src
 
-### web demo
+### demo
 * \app\web\demo
 * [MGRS - Military Grid Reference System](https://mgrs.herokuapp.com/)
 * [CONVOY - Freight Truckers' Offers & Applications](https://interview-convoy.herokuapp.com/)
@@ -12,10 +12,10 @@
 
 ## ios apps
 
-### ios src
+### source code
 * \app\ios\src
 
-### ios demo
+### demo
 * \app\ios\demo
 
 ## About
