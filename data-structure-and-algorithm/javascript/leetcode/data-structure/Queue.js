@@ -16,17 +16,17 @@ class Queue {
         return this.count() === this.capacity;
     }
 
-    enQueue(data) {
+    push(data) {
         if (this.isFull()) {
-            throw new Error("enQueue: queue overflow");
+            throw new Error("push: queue overflow");
         }
         this.dataLinkedList.append(data);
         return this;
     }
 
-    deQueue() {
+    pop() {
         if (this.isEmpty()) {
-            throw new Error("deQueue: queue underflow");
+            throw new Error("pop: queue underflow");
         }
         const index = this.count() - 1
         const data = this.dataLinkedList.get(index);

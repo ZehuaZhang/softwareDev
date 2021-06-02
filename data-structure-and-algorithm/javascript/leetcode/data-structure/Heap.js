@@ -18,27 +18,6 @@ class Heap{
         return this.count() === this.capacity;
     }
 
-    swap(index1, index2) {
-        const temp = this.dataList[index1];
-        this.dataList[index1] = this.dataList[index2];
-        this.dataList[index2] = temp;
-        this.updateIndexMap(index1, this.dataList[index1]);
-        this.updateIndexMap(index2, this.dataList[index2]);
-        return this;
-    }
-    
-    parent(index) {
-        return Math.trunc((index - 1) / 2);
-    }
-
-    left(index) {
-        return index * 2 + 1;
-    }
-
-    right(index) {
-        return index * 2 + 2;
-    }
-
     push(data) {
         if (this.isFull()) {
             throw new Error("insert: heap overflow");
@@ -76,16 +55,59 @@ class Heap{
         return data;
     }
 
-    change(data) {
-        let index = this.getIndexFromIndexMap(data);
+    change(prev, curr) {
+        let index = this.getIndexFromIndexMap(prev);
         while (index !== 0) {
             this.swap(index, parent(index));
             index = parent(index);
         }
-        this.dataList[0] = data;
+        this.dataList[0] = curr;
         this.updateIndexMap(0, this.dataList[0]);
         this.heapify(0);
         return this;
+    }
+
+    has(data) {
+        return this.indexMap.hasOwnProperty(this.uid(data))
+    }
+
+    fromArray(...dataList) {
+        if (dataList.length > this.capacity) {
+            throw new Error("fromArray: heap overflow");
+        }
+        this.dataList = [...dataList];
+        this.dataList.forEach((data, index) => {
+            this.updateIndexMap(index, data);
+        });
+        for (let i = Math.trunc(dataList.length / 2) - 1; i >= 0; --i) {
+            this.heapify(i);
+        }
+        return this;
+    }
+
+    swap(index1, index2) {
+        const temp = this.dataList[index1];
+        this.dataList[index1] = this.dataList[index2];
+        this.dataList[index2] = temp;
+        this.updateIndexMap(index1, this.dataList[index1]);
+        this.updateIndexMap(index2, this.dataList[index2]);
+        return this;
+    }
+
+    shouldSwap(index1, index2) {
+        return this.compare(this.dataList[index1], this.dataList[index2]) < 0;
+    }
+    
+    parent(index) {
+        return Math.trunc((index - 1) / 2);
+    }
+
+    left(index) {
+        return index * 2 + 1;
+    }
+
+    right(index) {
+        return index * 2 + 2;
     }
       
     heapify(index) {
@@ -105,25 +127,7 @@ class Heap{
             this.swap(index, swapIndex);
             this.heapify(swapIndex);
         }
-    }
-
-    shouldSwap(index1, index2) {
-        return this.compare(this.dataList[index1], this.dataList[index2]) < 0;
-    }
-
-    fromArray(...dataList) {
-        if (dataList.length > this.capacity) {
-            throw new Error("fromArray: heap overflow");
-        }
-        this.dataList = [...dataList];
-        this.dataList.forEach((data, index) => {
-            this.updateIndexMap(index, data);
-        });
-        for (let i = Math.trunc(dataList.length / 2) - 1; i >= 0; --i) {
-            this.heapify(i);
-        }
-        return this;
-    }
+    }   
 
     uid(data) {
         return JSON.stringify(data, null, 2)

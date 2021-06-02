@@ -1,6 +1,6 @@
 class Graph {
     constructor(edges, isDirected = false) {
-        this.vertices = new Set();
+        this.nodes = new Set();
         this.adjacentMap = new Map();
         this.isDirected = isDirected;
         edges.forEach(edge => {
@@ -10,22 +10,24 @@ class Graph {
 
     addEdge(edge) {
         const { source, destination, weight } = edge;
-        this.vertices.add(source);
-        this.vertices.add(destination);
+        
+        this.nodes.add(source);
+        this.nodes.add(destination);
         if (!this.adjacentMap.has(source)) {
             this.adjacentMap.set(source, new Map()); 
         }
+        if (!this.adjacentMap.has(destination)) {
+            this.adjacentMap.set(destination, new Map()); 
+        }
+
         this.adjacentMap.get(source).set(destination, weight);
         if (!this.isDirected) {
-            if (!this.adjacentMap.has(destination)) {
-                this.adjacentMap.set(destination, new Map());
-            }
             this.adjacentMap.get(destination).set(source, weight);
         }
     }
 
     nodeCount() {
-        return this.vertices.size;
+        return this.nodes.size;
     }
 }
 
