@@ -13,10 +13,10 @@ and people who report to the CEO-direct-reports have separation of 2
 // [[manager, directReport]]
 
 //               0
-//             /    \
-//          1          2
-//          /
-//         3
+//             /   \
+//           1       2
+//         /
+//        3
 
 public class Solution {
     int employeeCount;
