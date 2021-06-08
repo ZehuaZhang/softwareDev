@@ -9,63 +9,34 @@
 // The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
 
 /**
- * @param {number[]} nums
- * @param {number} target
- * @return {number}
+ * @param { number[] } nums
+ * @param { number } target
+ * @return { number } 
  */
-var threeSumClosest = function(nums, target) {
-    if (!isArray(nums) || !isNumber(target)) {
-        throw "invalid input error"
-    }
-    
-    nums.sort((a, b) => a - b)
-    
-    const maxInteger = Math.pow(2, 31) - 1
-    let difference = maxInteger
-    let result
-    
-    for (let i = 0; i < nums.length - 2; ++i) {
-        if (i > 0 && nums[i] === nums[i - 1]) {
-            continue
-        }
-        
-        for (j = i + 1, k = nums.length - 1; j < k;) {
-            if (j > i + 1 && nums[j] === nums[j - 1]) {
-                ++j
-                continue
-            }    
-            
-            if (k < nums.length - 1 && nums[k] === nums[k + 1]) {
-                --k
-                continue
-            }
-            
-            const sum = nums[i] + nums[j] + nums[k]
-            const currDifference = Math.abs(sum - target)
-            
-            if (currDifference < difference) {
-                difference = currDifference
-                result = sum
-            }
-            
-            if (sum > target) {
-                --k
-            } else if (sum < target) {
-                ++j
-            } else {
-                --k
-                ++j
-            }
-        }
-    }
-    
-    return result
-}
-    
-function isNumber(item) {
-    return typeof item === 'number'
-}
 
-function isArray(item) {
-    return Array.isArray(item)
+function threeSumClosest(nums, target) {
+    let result = NaN;
+    const diff = Number.MIN_VALUE;
+
+    nums.sort((a, b) => a - b);
+
+    for (const i = 0; i < nums.length - 2; ++i) {
+        for (const left = i + 1, right = nums.length - 1; left < right;) {
+            const sum = nums[i] + nums[left] + nums[right];
+            const currDiff = Math.abs(sum - target);
+            if (currDiff < diff) {
+                diff = currDiff;
+                result = sum;
+            }
+            if (sum < target) {
+                ++left;
+            } else if (sum > target) {
+                --right;
+            } else {
+                return result;
+            }
+        }
+    }
+
+    return result;
 }

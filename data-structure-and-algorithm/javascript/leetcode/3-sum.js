@@ -17,50 +17,38 @@
 // ]
 
 /**
- * @param {number[]} nums
- * @return {number[][]}
+ * 
+ * @param { number[] } nums 
+ * @returns { number[][] }
  */
-var threeSum = function(nums) {
-    if (!isArray(nums)) {
-        throw "invalid input array"
-    }
-    
-    nums.sort((a, b) => a - b)
-    
-    const result = []
-    for (let i = 0; i < nums.length - 2; ++i) {
+function threeSum(nums) {
+    const result = [];
+    const target = 0;
+    nums.sort((a, b) => a - b);
+    for (const i = 0; i < nums.length - 2; ++i) {
         if (i > 0 && nums[i] === nums[i - 1]) {
-            continue
+            continue;
         }
-        
-        for (let j = i + 1, k = nums.length - 1; j < k;) {
-            if (j > i + 1 && nums[j] === nums[j - 1]) {
-                ++j
-                continue
+        for (const left = i + 1, right = nums.length - 1; left < right;) {
+            if (left > i + 1 && nums[left] === nums[left - 1]) {
+                ++left;
+                continue;
             }
-            
-            if (k < nums.length - 1 && nums[k] === nums[k + 1]) {
-                --k
-                continue
+            if (right < nums.length - 1 && nums[right] === nums[right + 1]) {
+                --right;
+                continue;
             }
-            
-            const sum = nums[i] + nums[j] + nums[k]
-            
-            if (sum === 0) {
-                result.push([nums[i], nums[j], nums[k]])
-                ++j
-                --k
-            } else if (sum > 0) {
-                --k
+            const sum = nums[i] + nums[left] + nums[right];
+            if (target === sum) {
+                result.push([nums[i], nums[left], nums[right]]);
+                ++left;
+                --right;
+            } else if (target < sum) {
+                --right;
             } else {
-                ++j
+                ++left;
             }
         }
     }
-    
-    return result
-};
-
-function isArray(item) {
-    return Array.isArray(item)
+    return result;
 }
