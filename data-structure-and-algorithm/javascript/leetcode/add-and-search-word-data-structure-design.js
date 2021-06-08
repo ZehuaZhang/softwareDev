@@ -20,51 +20,63 @@
 
 class TrieNode {
     constructor() {
-        this.leaves = {}
-        this.isWord = false
-    }   
+        this.leaves = {};
+        this.isWord = false;
+    }
 }
 
 class WordDictionary {
     constructor() {
-        this.root = new TrieNode()
+        this.root = new TrieNode();
     }
-    
+
+    /**
+     * @param { string } word 
+     */
     addWord(word) {
-        let node = this.root
-        
-        for (const character of word) {
-            if (!node.leaves.hasOwnProperty(character)) {
-                node.leaves[character] = new TrieNode()
+        let curr = root;
+        for (const char of word) {
+            if (curr.leaves.hasOwnProperty(char)) {
+                curr.leaves[char] = new TrieNode(); 
             }
-            node = node.leaves[character]
+            curr = curr.leaves[char];
         }
-        
-        node.isWord = true
+        curr.isWord = true;
     }
-    
+
+    /**
+     * @param { string } word
+     * @returns { boolean } 
+     */
     search(word) {
-        return this.searchHelper(word, 0, this.root)
+        return this.searchWord(word, this.root, 0);
     }
-    
-    searchHelper(word, index, node) {
-        if (!node) {
-            return false
-        }
-        
+
+    /**
+     * @param { string } word
+     * @param { TrieNode } node
+     * @param { number } index
+     * @returns { boolean }
+     */
+    searchWord(word, node, index) {
         if (index === word.length) {
-            return node.isWord
+            return node.isWord;
         }
-        
-        if (word[index] === '.') {
-            return Object.keys(node.leaves).filter(character => node.leaves.hasOwnProperty(character))
-                .some(character => this.searchHelper(word, index + 1, node.leaves[character]))
+
+        const char = word[index];
+        if (char !== '.') {
+            if (!node.hasOwnProperty(char)) {
+                return false;
+            }
+            return this.searchWord(word, node.leaves[char], index + 1);
         }
-        
-        if (!node.leaves.hasOwnProperty(word[index])) {
-            return false
+
+        for (const leaf of Object.keys(node.leaves)) {
+            if (this.searchWord(word, leaf, index + 1)) {
+                return true;
+            }
         }
-        
-        return this.searchHelper(word, index + 1, node.leaves[word[index]])
+
+        return false;
     }
 }
