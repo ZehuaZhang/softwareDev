@@ -59,7 +59,21 @@ class LinkedList {
         return current;
     }
 
-    insert(index, data) {
+    insert(node, data) {
+        if (node === null) {
+            this.prepend(data);
+            return this;
+        }
+
+        const next = node.next;
+        node.next = new LinkedListNode(data, next);
+        if (node === tail) {
+            tail = node.next;
+        }
+        return this;
+    }
+
+    insertAt(index, data) {
         if (index < 0 || (index >= this.length && this.length !==0)) {
             throw new Error("insert: out of bounds");
         }
@@ -79,7 +93,7 @@ class LinkedList {
         return this;
     }
 
-    remove(index) {
+    removeAt(index) {
         if (index < 0 || index >= this.length) {
             throw new Error("remove: out of bounds");
         }

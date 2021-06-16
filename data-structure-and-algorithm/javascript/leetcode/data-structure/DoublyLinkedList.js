@@ -65,7 +65,37 @@ class DoublyLinkedList {
         return curr;
     }
 
-    insert(index, data) {
+    insert(node, data) {
+        if (node === null) {
+            this.prepend(data);
+        }
+
+        const curr = new DoublyLinkedListNode(data, node.next, node);
+        node.next = curr;
+        if (node === this.tail) {
+            this.tail = curr;
+        } else {
+            node.next.prev = curr;
+        }
+    }
+
+    remove(node) {
+        const prev = node.prev;
+        const next = node.next;
+        if (prev !== null) {
+            prev.next = next;
+        } else {
+            this.head = next;
+        }
+        if (next !== null) {
+            node.next = prev;
+        } else {
+            this.tail = prev;
+        }
+        return this;
+    }
+
+    insertAt(index, data) {
         if (index < 0 || (index >= this.length && this.length !== 0)) {
             throw new Error('insert - out of bound')
         } 
@@ -85,7 +115,7 @@ class DoublyLinkedList {
         return this;
     }
 
-    remove(index) {
+    removeAt(index) {
         if (index < 0 || index >= this.length) {
             throw new Error('remove - out of bound')
         }
