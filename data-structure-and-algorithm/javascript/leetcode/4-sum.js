@@ -1,23 +1,32 @@
-// 18. 4Sum
+/**
+Given an array nums of n integers, return an array of all the unique quadruplets [nums[a], nums[b], nums[c], nums[d]] such that:
 
-// Given an array nums of n integers and an integer target, are there elements a, b, c, and d in nums such that a + b + c + d = target? Find all unique quadruplets in the array which gives the sum of target.
+0 <= a, b, c, d < n
+a, b, c, and d are distinct.
+nums[a] + nums[b] + nums[c] + nums[d] == target
+You may return the answer in any order.
 
-// Note:
+ 
 
-// The solution set must not contain duplicate quadruplets.
+Example 1:
 
-// Example:
+Input: nums = [1,0,-1,0,-2,2], target = 0
+Output: [[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]
+Example 2:
 
-// Given array nums = [1, 0, -1, 0, -2, 2], and target = 0.
+Input: nums = [2,2,2,2,2], target = 8
+Output: [[2,2,2,2]]
+ 
 
-// A solution set is:
-// [
-//   [-1,  0, 0, 1],
-//   [-2, -1, 1, 2],
-//   [-2,  0, 0, 2]
-// ]
+Constraints:
+
+1 <= nums.length <= 200
+-109 <= nums[i] <= 109
+-109 <= target <= 109
+*/
 
 /**
+ * 
  * @param { number[] } nums
  * @param { number } target
  * @return { number[][] }
