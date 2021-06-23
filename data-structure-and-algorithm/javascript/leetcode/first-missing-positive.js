@@ -26,15 +26,21 @@ Constraints:
 */
 
 function firstMissingPositive(nums) {
-    const k = 1;
-    let left = 0, right = nums.length;
-    while (left < right) {
-        const mid = Math.trunc((left + right) / 2);
-        if (nums[mid] - (mid + 1) >= k) {
-            right = mid;
-        } else {
-            left = mid + 1;
+    for (let i = 0; i < nums.length; ++i) {
+        while (nums[i] > 0 && nums[i] <= nums.length && nums[nums[i] - 1] !== nums[i]) {
+            swap(nums, nums[i] - 1, i);
         }
     }
-    return left + k;
+    for (let i = 0; i < nums.length; ++i) {
+        if (i !== nums[i] - 1) {
+            return i + 1;
+        }
+    }
+    return nums.length + 1;
+}
+
+function swap(nums, i, j) {
+    const temp = nums[i];
+    nums[i] = nums[j];
+    nums[j] = temp;
 }
