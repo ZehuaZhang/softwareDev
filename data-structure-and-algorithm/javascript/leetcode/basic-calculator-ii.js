@@ -31,27 +31,24 @@ The answer is guaranteed to fit in a 32-bit integer.
 */
 
 function calculate(s) {
-    let curr = 0, result = 0, num = 0;
+    const sum = [];
     let op = '+';
-    for (let i = 0; i < s.length; ++i) {
-        let char = s[i]
+    let num = 0;
+    for (let i = 0; i < s.length;) {
+        const char = s[i++];
         if (char >= '0' && char <= '9') {
             num = num * 10 + (char - '0');
         }
-        if (['+', '-', '*', '/'].find(c => c === char) || i === s.length - 1) {
+        if (i === s.length || ['+', '-', '*', '/'].find(c => c === char)) {
             switch (op) {
-                case '+': curr += num; break;
-                case '-': curr -= num; break;
-                case '*': curr *= num; break;
-                case '/': curr = Math.trunc(curr / num); break;
-            }
-            if (['+', '-'].find(c => c === char) || i === s.length - 1) {
-                result += curr;
-                curr = 0;
+                case '+': sum.push(num); break;
+                case '-': sum.push(-num); break;
+                case '*': sum.push(sum.pop() * num); break;
+                case '/': sum.push(Math.trunc(sum.pop() / num)); break;
             }
             op = char;
             num = 0;
         }
     }
-    return result;
+    return sum.reduce((a, b) => a + b, 0);
 }

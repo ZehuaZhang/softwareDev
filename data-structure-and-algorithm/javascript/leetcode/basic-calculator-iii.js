@@ -19,26 +19,113 @@ Note: Do not use the eval built-in library function.
 */
 
 function calculate(s) {
-    let result = 0, curr = 0, num = 0;
-    let op = '+';
-    for (let i = 0; i < n; ++i) {
-        let char = s[i];
-        if (char >= '0' && char <= '9') {
-            num = num * 10 + (char - '0');
-        } else if (char === '(') {
-            let j = i;
-            let count = 0;
-            for (; i < s.length; ++i) {
-                if (s[i] === '(') {
-                    ++count;
-                } else if (s[i] === '}') {
-                    --count;
+    function calculateDFS(s) {
+        if (i === s.length) {
+            return 0;
+        }
+        const sum = [];
+        let op = '+';
+        let num = 0;
+        for (; i < s.length;) {
+            const char = s[i++];
+            if (char >= '0' && char <= '9') {
+                num = num * 10 + (char - '0');
+            }
+            if (char === '(') {
+                num = calculateDFS(s);
+            }
+            if (i === s.length || ['+', '-', '*', '/', ')'].find(c => c === char)) {
+                switch (op) {
+                    case '+': sum.push(num); break;
+                    case '-': sum.push(-num); break;
+                    case '*': sum.push(sum.pop() * num); break;
+                    case '/': sum.push(Math.trunc(sum.pop() / num)); break;
                 }
-                if (count === 0) {
+                op = char;
+                num = 0;
+                if (op === ')') {
                     break;
                 }
             }
-            num = calculate(s.substring(j + 1, i - 1));
+        }
+        return sum.reduce((a, b) => a + b, 0);
+    }
+
+    let i = 0;
+    return calculateDFS(s);
+}
+
+function calculateIterative(s) {
+    const [operands, operators] = [[], []];
+    let num = 0;
+    for (let i = 0; i < s.length; ++i) {
+        const char = s[i];
+        if (isDigit(char)) {
+            num = num * 10 + (char - '0');
+            if (i === s.length - 1 || !isDigit(s[i + 1])) {
+                operands.push(num);
+                num = 0;
+            }
+        } else if (isOp(char)) {
+            while (operators.length !== 0 && getPrecendence(char) <= getPrecendence(operators[operators.length - 1])) {
+                compute(operands, operators);
+            }
+            operators.push(char);
+        } else if (char === '(') {
+            operators.push(char);
+        } else if (char === ')') {
+            while (operators[operators.length - 1] !== '(') {
+                compute(operands, operators);
+            }
+            operators.pop();
+        }
+    }
+    while (operators.length !== 0) {
+        compute(operands, operators);
+    }
+    return operands.pop();
+}
+
+function isDigit(char) {
+    return char >= '0' && char <= '9';
+}
+
+function isOp(char) {
+    return Boolean(['+', '-', '*', '/'].find(c => c === char));
+}
+
+function getPrecendence(char) {
+    switch(char) {
+        case '+': return 1;
+        case '-': return 1;
+        case '*': return 2;
+        case '/': return 2;
+    }
+    return 0;
+}
+
+function compute(operands, operators) {
+    const x = operands.pop();
+    const y = operands.pop();
+    const op = operators.pop();
+
+    switch(op) {
+        case '+': operands.push(x + y); break;
+        case '-': operands.push(x - y); break;
+        case '*': operands.push(x * y); break;
+        case '/': operands.push(x / y); break;
+    }
+}
+
+function calculateDFS(s) {
+    let result = 0, curr = 0, num = 0;
+    let op = '+';
+    for (let i = 0; i < s.length; ++i) {
+        const char = s[i];
+        if (char >= '0' && char <= '9') {
+            num = num * 10 + (char - '0');
+        } else if (char === '(') {
+            num = calculateDFS(s.substring(j + 1));
         }
         if (['+','-','*','/'].find(c => c === char) || i === s.length - 1) {
             switch (op) {
@@ -53,6 +140,9 @@ function calculate(s) {
             }
             op = char;
             num = 0;
+        }
+        if (char === ')') {
+            return result;
         }
     }
     return result;
