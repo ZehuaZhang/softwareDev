@@ -1,73 +1,81 @@
-// 23. Merge k Sorted Lists
+/*
+You are given an array of k linked-lists lists, each linked-list is sorted in ascending order.
 
-// Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
+Merge all the linked-lists into one sorted linked-list and return it.
 
-// Example:
+ 
 
-// Input:
-// [
-//   1->4->5,
-//   1->3->4,
-//   2->6
-// ]
-// Output: 1->1->2->3->4->4->5->6
+Example 1:
+
+Input: lists = [[1,4,5],[1,3,4],[2,6]]
+Output: [1,1,2,3,4,4,5,6]
+Explanation: The linked-lists are:
+[
+  1->4->5,
+  1->3->4,
+  2->6
+]
+merging them into one sorted list:
+1->1->2->3->4->4->5->6
+Example 2:
+
+Input: lists = []
+Output: []
+Example 3:
+
+Input: lists = [[]]
+Output: []
+ 
+
+Constraints:
+
+k == lists.length
+0 <= k <= 10^4
+0 <= lists[i].length <= 500
+-10^4 <= lists[i][j] <= 10^4
+lists[i] is sorted in ascending order.
+The sum of lists[i].length won't exceed 10^4.
+*/
 
 /**
- * Definition for singly-linked list.
- * function ListNode(val) {
- *     this.val = val;
- *     this.next = null;
- * }
+ * @param { ListNode[] } lists
+ * @return { ListNode }
  */
-/**
- * @param {ListNode[]} lists
- * @return {ListNode}
- */
-var mergeKLists = function(lists) {
-    if (!isArray(lists)) {
-        throw "invalid input types"
-    }
-    
-    return mergeKListsHelper(lists, 0, lists.length - 1)
-};
-
-function isArray(item) {
-    return Array.isArray(item)
+function mergeKList(lists) {
+    return mergeKListsDFS(lists, 0, lists.length - 1);
 }
 
-function mergeKListsHelper(lists, leftIndex, rightIndex) {
-    if (leftIndex > rightIndex) {
-        return null
+function mergeKListDFS(lists, left, right) {
+    if (left > right) {
+        return null;
     }
-    
-    if (leftIndex === rightIndex) {
-        return lists[leftIndex]
+
+    if (left === right) {
+        return lists[left];
     }
-    
-    const middleIndex = leftIndex + Math.trunc((rightIndex - leftIndex) / 2)
-    
-    return mergeTwoLists(
-        mergeKListsHelper(lists, leftIndex, middleIndex),
-        mergeKListsHelper(lists, middleIndex + 1, rightIndex)
-    )
+
+    const mid = Math.trunc((left + right) / 2);
+    const lList = mergeKListDFS(lists, left, mid);
+    const rList = mergeKListDFS(lists, mid + 1, right);
+
+    return merge2List(lList, rList);
 }
 
-function mergeTwoLists(list1, list2) {
-    const dummy = new ListNode(-1)
-    let curr = dummy
-    
-    while (list1 && list2) {
-        if (list1.val <= list2.val) {
-            curr.next = list1
-            list1 = list1.next
+function merge2List(l, r) {
+    const dummy = new ListNode(-1);
+    let curr = dummy;
+
+    while (l && r) {
+        if (l.val <= r.val) {
+            curr.next = l;
+            l = l.next;
         } else {
-            curr.next = list2
-            list2 = list2.next
+            curr.next = r;
+            r = r.next;
         }
-        
-        curr = curr.next
+        curr = curr.next;
     }
-    
-    curr.next = list1 ? list1 : list2
-    return dummy.next
+
+    curr.next = l ? l : r;
+    return dummy.next;
 }
