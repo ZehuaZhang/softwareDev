@@ -34,6 +34,20 @@ s contains only lowercase English letters.
 
 function minDeletions(s) {
     const freq = Array(26).fill(0);
-    const list = a.split("");
-    
+    for (const c of s) {
+        ++freq[c.charCodeAt(0) - 'a'.charCodeAt(0)];
+    }
+    freq.sort((a, b) => b - a);
+    let result = 0;
+    for (let i = 1; i < 26; ++i) {
+       if (freq[i] === 0) {
+           break;
+       }
+       if (freq[i] >= freq[i - 1]) {
+           const val = Math.max(freq[i - 1] - 1, 0);
+           total += freq[i] - val;
+           freq[i] = val;
+       }
+    }
+    return result;
 }
