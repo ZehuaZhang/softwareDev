@@ -47,55 +47,6 @@ The right boundary are node 1,3,6,10. (10 is the right-most node).
 So order them in anti-clockwise without duplicate nodes we have [1,2,4,7,8,9,10,6,3].
 */
 
-class Tree {
-    static toArray(root) {
-        const list = [];
-        toArrayDFS(root, list);
-        return list;
-
-        function toArrayDFS(node, list) {
-            if (node === null) {
-                list.push("#");
-                return;
-            }
-
-            list.push(node.val);
-            toArrayDFS(node.left, list);
-            toArrayDFS(node.right, list);
-        }
-    }
-
-    static fromArray(list) {
-        const iter = list.values();
-        return fromArrayDFS(iter);
-
-        function fromArrayDFS(iter) {
-            const { value, done } = iter.next();
-            if (done || value === "#") {
-                return null;
-            }
-            const node = new TreeNode(value);
-            node.left = fromArrayDFS(iter);
-            node.right = fromArrayDFS(iter);
-            return node;
-        }
-    }
-
-    static print(node) {
-        const list = [];
-        console.log(printDFS(node, list));
-
-        function printDFS(node, list) {
-            if (node === null) {
-                return;
-            }
-            list.push(node.val);
-            printDFS(node.left, list);
-            printDFS(node.right, list);
-        }
-    }
-}
-
 class TreeNode {
     constructor(val) {
         this.val = val;
@@ -136,8 +87,9 @@ function dfs(node, isLeft, isRight, result) {
     }
 }
 
-const list = [1, 2, 4, "#", 5, 7, "#", "#", 8, "#", "#", 3, 6, 9, "#", "#", 10, "#", "#", '#'];
+const list = [1, 2, 4, "#", "#", 5, 7, "#", "#", 8, "#", "#", 3, 6, 9, "#", "#", 10, "#", "#", '#'];
 const root = Tree.fromArray(list);
 Tree.print(root);
+Tree.printLevel(root);
 console.log(boundaryOfBinaryTree(root))
 
