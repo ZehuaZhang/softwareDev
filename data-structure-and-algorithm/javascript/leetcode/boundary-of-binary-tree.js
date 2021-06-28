@@ -87,9 +87,3 @@ function dfs(node, isLeft, isRight, result) {
     }
 }
 
-const list = [1, 2, 4, "#", "#", 5, 7, "#", "#", 8, "#", "#", 3, 6, 9, "#", "#", 10, "#", "#", '#'];
-const root = Tree.fromArray(list);
-Tree.print(root);
-Tree.printLevel(root);
-console.log(boundaryOfBinaryTree(root))
-

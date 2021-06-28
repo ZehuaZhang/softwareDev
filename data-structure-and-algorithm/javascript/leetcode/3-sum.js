@@ -34,11 +34,11 @@ function threeSum(nums) {
     const result = [];
     const target = 0;
     nums.sort((a, b) => a - b);
-    for (const i = 0; i < nums.length - 2; ++i) {
+    for (let i = 0; i < nums.length - 2; ++i) {
         if (i > 0 && nums[i] === nums[i - 1]) {
             continue;
         }
-        for (const left = i + 1, right = nums.length - 1; left < right;) {
+        for (let left = i + 1, right = nums.length - 1; left < right;) {
             if (left > i + 1 && nums[left] === nums[left - 1]) {
                 ++left;
                 continue;

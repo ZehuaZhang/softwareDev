@@ -1,65 +1,61 @@
-// 20. Valid Parentheses
+/*
+Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
 
-// Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+An input string is valid if:
 
-// An input string is valid if:
+Open brackets must be closed by the same type of brackets.
+Open brackets must be closed in the correct order.
+ 
 
-// Open brackets must be closed by the same type of brackets.
-// Open brackets must be closed in the correct order.
-// Note that an empty string is also considered valid.
+Example 1:
 
-// Example 1:
+Input: s = "()"
+Output: true
+Example 2:
 
-// Input: "()"
-// Output: true
-// Example 2:
+Input: s = "()[]{}"
+Output: true
+Example 3:
 
-// Input: "()[]{}"
-// Output: true
-// Example 3:
+Input: s = "(]"
+Output: false
+Example 4:
 
-// Input: "(]"
-// Output: false
-// Example 4:
+Input: s = "([)]"
+Output: false
+Example 5:
 
-// Input: "([)]"
-// Output: false
-// Example 5:
+Input: s = "{[]}"
+Output: true
+ 
 
-// Input: "{[]}"
-// Output: true
+Constraints:
+
+1 <= s.length <= 104
+s consists of parentheses only '()[]{}'.
+*/
 
 /**
- * @param {string} s
- * @return {boolean}
+ * @param { string } s
+ * @return { boolean }
  */
 var isValid = function(s) {
-    if (!isString(s)) {
-        throw "invalid input string"
-    }
-    
-    const rightToLeftParantheseMap = new Map([
+    const left = "([{";
+    const map = new Map([
         [')', '('],
         ['}', '{'],
         [']', '[']
     ])
-    
-    const leftParentheseList = "({["
-    
     const stack = []
-    for (const character of s) {
-        if (leftParentheseList.includes(character)) {
-            stack.push(character)
-        } else if (rightToLeftParantheseMap.get(character) !== stack[stack.length - 1]) {
-            return false
+    for (const c of s) {
+        if (left.includes(c)) {
+            stack.push(c)
+        } else if (map.get(c) !== stack[stack.length - 1]) {
+            return false;
         } else {
-            stack.splice(stack.length - 1, 1)
+            stack.pop();
         }
     }
         
     return stack.length === 0
 };
-
-function isString(item) {
-    return typeof item === 'string'
-}
