@@ -66,7 +66,7 @@ class MedianFinder {
     }
 }
 
-class Heap{
+class Heap {
     constructor(capacity, compare) {
         this.dataList = [];
         this.compare = compare;

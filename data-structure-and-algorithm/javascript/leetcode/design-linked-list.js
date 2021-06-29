@@ -1,3 +1,37 @@
+class MyLinkedList {
+    constructor() {
+        this.list = new List();
+    }
+
+    get(index) {
+        const node = this.list.get(index);
+        if (node) {
+            return node.value;
+        }
+        return -1;
+    }
+
+    addAtHead(value) {
+        this.list.prepend(value);
+    }
+
+    addAtTail(value) {
+        this.list.append(value);
+    }
+
+    addAtIndex(index, value) {
+        if (index >= 0 && index <= this.list.length) {
+            this.list.insertAt(index);
+        }
+    }
+
+    deleteAtIndex(index) {
+        if (index >= 0 && index < this.list.length) {
+            this.list.removeAt(index);
+        }
+    }
+}
+
 class List {
     constructor(...dataList) {
         this.head = null;

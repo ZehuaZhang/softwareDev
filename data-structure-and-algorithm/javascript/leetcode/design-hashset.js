@@ -35,7 +35,62 @@ At most 104 calls will be made to add, remove, and contains.
 */
 
 class MyHashSet {
+    constructor() {
+        this.chunkSize = 1;
+        this.loadFactor = 0.7;
+        this.size = 0;
+        this.nodes = Array(this.chunkSize).fill(null);
+    }
 
+    hash(key) {
+        return key % this.nodes.length;
+    }
+
+    add(key) {
+        const h = this.hash(key);
+        const node = new BinarySearchTreeNode(key);
+        if (!this.nodes[h]) {
+            this.nodes[h] = node;
+        } else {
+            this.nodes[h].add(node);
+        }
+        ++this.size;
+        if (this.size > this.loadFactor * this.nodes.length) {
+            this.rehash();
+        }
+    }
+
+    remove(key) {
+        const h = this.hash(key);
+        if (this.nodes[h]) {
+            this.nodes[h] = this.nodes[h].remove(key);
+            --this.size;
+        }
+    }
+
+    contains(key) {
+        return this.has(key);
+    }
+
+    has(key) {
+        const h = this.hash(key);
+        if (this.nodes[h]) {
+            return this.nodes[h].has(key);
+        }
+        return false;
+    }
+
+    rehash() {
+        const prev = this.nodes;
+        this.nodes = Array(this.nodes.length * 2);
+        for (const root of prev) {
+            if (root) {
+                for (const node of root.toArray()) {
+                    this.add(node.data);
+                }
+            }
+        }
+    }
 }
 
 class BinarySearchTreeNode {
@@ -76,23 +131,37 @@ class BinarySearchTreeNode {
         }
     }
 
-    contains(data) {
+    has(data) {
         if (this.data === data) {
             return true;
-        } else if (this.data > data) {
-            return this.left ? this.left.contains(data) : false;
-        } else {
-            return this.right ? this.right.contains(data) : false;
-        }
+        } 
+        if (this.data > data) {
+            return this.left ? this.left.has(data) : false;
+        } 
+        return this.right ? this.right.has(data) : false;
     }
 
     remove(data) {
         if (this.data === data) {
-            
+            if (!this.right && !this.left) {
+                return null;
+            }
+            if (!this.right || !this.left) {
+                return this.left ? this.left : this.right;
+            }
+            this.data = this.left.max().data;
+            this.left.remove(this.data);
+        } else if (this.data > data) {
+            this.left = this.left ? this.left.remove(data) : null;
+        } else {
+            this.right = this.right ? this.right.remove(data) : null;
         }
+        return this;
     }
-}
 
-class Queue {
-
+    max() {
+        let curr = this;
+        for (; curr.right; curr = curr.right);
+        return curr; 
+    }
 }
