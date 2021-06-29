@@ -19,22 +19,17 @@
  * @param {ListNode} head
  * @return {ListNode}
  */
-var swapPairs = function(head) {
-    if (!head || !head.next) {
-        return head
-    }
-    
-    const dummy = new ListNode(-1)
-    let prev = dummy, curr = head
-    while (curr && curr.next) {
+function swapPairs(head) {
+    const dummy = new ListNode()
+    dummy.next = head;
+    for (let prev = dummy, curr = head;
+        curr && curr.next;
+        prev = curr, curr = curr.next) {
+        
         const next = curr.next
         prev.next = curr.next
         curr.next = next.next
         next.next = curr
-        
-        prev = curr
-        curr = curr.next
-    }
-    
+    }    
     return dummy.next
 };

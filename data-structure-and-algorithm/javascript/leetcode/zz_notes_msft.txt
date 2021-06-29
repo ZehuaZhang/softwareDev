@@ -1,8 +1,4 @@
-Binary Tree Zigzag Level Order Traversal (10 times): https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/
-Maximum Length of a Concatenated String with Unique Characters (10 times): https://leetcode.com/problems/maximum-length-of-a-concatenated-string-with-unique-characters/
-Minimum Deletion Cost to Avoid Repeating Letters (10 times): https://leetcode.com/problems/minimum-deletion-cost-to-avoid-repeating-letters/
-Reverse Nodes in k-Group (10 times): https://leetcode.com/problems/reverse-nodes-in-k-group/
-Word Break (10 times): https://leetcode.com/problems/word-break/
+https://leetcode.com/problems/design-hashset/discuss/249424/A-complete-Java-Solution-using-load-factor-BST-Rehashing!-Faster-than-90
 Design HashMap (9 times): https://leetcode.com/problems/design-hashmap/
 Rotate Image (9 times): https://leetcode.com/problems/rotate-image/
 Find the Duplicate Number (9 times): https://leetcode.com/problems/find-the-duplicate-number/
@@ -12,7 +8,6 @@ Populating Next Right Pointers in Each Node (9 times): https://leetcode.com/prob
 Populating Next Right Pointers in Each Node II (9 times): https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/
 Valid Palindrome (9 times): https://leetcode.com/problems/valid-palindrome/
 Replace All ?'s to Avoid Consecutive Repeating Characters (8 times): https://leetcode.com/problems/replace-all-s-to-avoid-consecutive-repeating-characters/
-Binary Tree Level Order Traversal (8 times): https://leetcode.com/problems/binary-tree-level-order-traversal/
 Move Zeroes (8 times): https://leetcode.com/problems/move-zeroes/
 Palindrome Linked List (8 times): https://leetcode.com/problems/palindrome-linked-list/
 Trapping Rain Water (8 times): https://leetcode.com/problems/trapping-rain-water/

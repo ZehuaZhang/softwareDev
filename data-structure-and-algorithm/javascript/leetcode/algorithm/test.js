@@ -85,3 +85,9 @@ class List {
         return arr;
     }
 }
+
+class Bit {
+    static bitCount(n) {
+        return n.toString(2).match(/1/g).length
+    }
+}
