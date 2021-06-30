@@ -24,7 +24,7 @@ function upperBound(nums, target) {
     return leftIndex;
 }
 
-function findKthLargest(nums, k) {
+function findKthLargest(nums, k, compare) {
     let leftIndex = 0, rightIndex = nums.length - 1
     while (leftIndex <= rightIndex) {
         const randomIndex = leftIndex + Math.trunc(Math.random() * (rightIndex - leftIndex + 1))
@@ -43,11 +43,11 @@ function findKthLargest(nums, k) {
 
     function partition(items, leftIndex, rightIndex, pivotIndex) {
         swap(items, rightIndex, pivotIndex)
-        const pivot = items[rightIndex]
+        // right is the pivot
 
         let nextPivotIndex = leftIndex
         for (let index = leftIndex; index < rightIndex; ++index) {
-            if (items[index] > pivot) {
+            if (compare(items, right, index) < 0) {
                 swap(items, nextPivotIndex++, index)
             }
         }
