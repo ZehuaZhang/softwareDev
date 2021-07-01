@@ -1,9 +1,3 @@
-Remove Invalid Parentheses (22 times): https://leetcode.com/problems/remove-invalid-parentheses/
-Merge k Sorted Lists (21 times): https://leetcode.com/problems/merge-k-sorted-lists/
-Task Scheduler (21 times): https://leetcode.com/problems/task-scheduler/
-Interval List Intersections (21 times): https://leetcode.com/problems/interval-list-intersections/
-Squares of a Sorted Array (21 times): https://leetcode.com/problems/squares-of-a-sorted-array/
-
 Clone Graph (20 times): https://leetcode.com/problems/clone-graph/
 Kth Missing Positive Number (20 times): https://leetcode.com/problems/kth-missing-positive-number/
 Exclusive Time of Functions (20 times): https://leetcode.com/problems/exclusive-time-of-functions/
