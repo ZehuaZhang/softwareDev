@@ -57,17 +57,16 @@ function cloneGraph(node) {
     }
 
     const map = new Map();
-    const q = new Queue();
+    const q = [node];
     map.set(node, new Node(node.val));
-    q.push(node);
-    while (!q.isEmpty()) {
-        const curr = q.pop();
-        for (const n of curr.neighbours) {
+    while (q.length) {
+        const curr = q.shift();
+        for (const n of curr.neighbors) {
             if (!map.has(n)) {
                 map.set(n, new Node(n.val));
                 q.push(n)
             }
-            map.get(curr).push(map.get(n));
+            map.get(curr).neighbors.push(map.get(n));
         }
     }
     return map.get(node);
