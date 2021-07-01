@@ -24,7 +24,7 @@ function preorderTraversal(root) {
 function inorderTraversal(root) {
     const stack = []
     const result = []
-    const node = node
+    const node = root
 
     while (stack.length || node) {
         if (node) {
@@ -43,29 +43,92 @@ function inorderTraversal(root) {
 function postorderTraversal(root) {
     const stack = []
     const result = []
-    const node = root
+    let node = root
 
-    do {
-        while (node) {
-            stack.push(node)
-            node = node.left
+    while (stack.length || node) {
+        if (node) {
+            stack.push(node);
+            result.push(node.val);
+            node = node.right;
+        } else {
+            node = stack.pop().left;
         }
+    }
+    return result.reverse();
+}
 
-        let prev
-        while(stack.length) {
-            const curr = stack.pop()
-
-            if (curr.right == prev) {
-                result.push(curr.val)
-                prev = curr
+function inorderMorris(root) {
+    const result = []
+    if (!root) {
+        return result;
+    }
+    
+    for (let curr = root; curr;) {
+        if (curr.left) {
+            let node = curr.left;
+            for (; node.right && node.right != curr; node = node.right);
+            if (node.right) {
+                node.right = null;
+                result.push(curr.val);
+                curr = curr.right;
             } else {
-                result.push(curr)
-                curr = curr.right
-                break
+                node.right = curr;
+                curr = curr.left;
             }
+        } else {
+            result.push(curr.val);
+            curr = curr.right;
         }
+    }
+    return result;
+}
 
-    } while (stack.length)
+function preorderMorris(root) {
+    const result = [];
+    if (!root) {
+        return result;
+    }
+    for (let curr = root; curr;) {
+        if (curr.left) {
+            let node = curr.left;
+            for (; node.right != null && node.right != curr; node = node.right);
+            if (node.right) {
+                node.right = null;
+                curr = curr.right;
+            } else {
+                node.right = curr;
+                result.add(curr.val);
+                curr = curr.left;
+            }
+        } else {
+            result.add(curr.val);
+            curr = curr.right;
+        }
+    }
+    return result;
+}
 
-    return result
+function postorderMorris(root) {
+    const result = [];
+    if (!root) {
+        return result;
+    }
+    for (let curr = root; curr;) {
+        if (curr.right) {
+            let node = curr.right;
+            for (; node.left && node.left != curr; node = node.left);
+            if (node.left) {
+                node.left = null;
+                curr = curr.left;  
+            } else {
+                node.left = curr;
+                result.addFirst(curr.val);
+                curr = curr.right;
+            }
+        } else {
+            result.push(curr.val);
+            curr = curr.left;
+        }
+    }
+    return result.reverse();
 }

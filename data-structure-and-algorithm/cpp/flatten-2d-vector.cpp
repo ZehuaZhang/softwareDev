@@ -48,7 +48,7 @@ public:
   }
 
   bool hasNext() {
-    return x != vec.end() || y != x->end();
+    return x != vec.end();
   }
   
   void adjustNextIter() {

@@ -1,58 +1,84 @@
-function lowerBound(nums, target) {
-    let leftIndex = 0, rightIndex = nums.length - 1;
-    while (leftIndex <= rightIndex) {
-        const middleIndex = leftIndex + (rightIndex - leftIndex) / 2;
-        if (nums[middleIndex] >= target) {
-            rightIndex = middleIndex - 1;
+function lowerBoundExclusive(nums, target) {
+    let left = 0, right = nums.length - 1;
+    while (left <= right) {
+        const mid = left + Math.trunc((right - left) / 2);
+        if (nums[mid] >= target) {
+            right = mid - 1;
         } else {
-            leftIndex = middleIndex + 1;
+            left = mid + 1;
         }
     }
-    return leftIndex;
+    return right;
 }
 
-function upperBound(nums, target) {
-    let leftIndex = 0, rightIndex = nums.length - 1;
-    while (leftIndex <= rightIndex) {
-        const middleIndex = leftIndex + (rightIndex - leftIndex) / 2;
-        if (nums[middleIndex] > target) {
-            rightIndex = middleIndex - 1;
+function lowerBoundInclusive(nums, target) {
+    let left = 0, right = nums.length - 1;
+    while (left <= right) {
+        const mid = left + Math.trunc((right - left) / 2);
+        if (nums[mid] > target) {
+            right = mid - 1;
         } else {
-            leftIndex = middleIndex + 1;
+            left = mid + 1;
         }
     }
-    return leftIndex;
+    return right;
 }
 
-function findKthLargest(nums, k, compare) {
-    let leftIndex = 0, rightIndex = nums.length - 1
-    while (leftIndex <= rightIndex) {
-        const randomIndex = leftIndex + Math.trunc(Math.random() * (rightIndex - leftIndex + 1))
-        const partitionIndex = partition(nums, leftIndex, rightIndex, randomIndex)
+function upperBoundExclusive(nums, target) {
+    let left = 0, right = nums.length - 1;
+    while (left <= right) {
+        const mid = left + Math.trunc((right - left) / 2);
+        if (nums[mid] > target) {
+            right = mid - 1;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return left;
+}
+
+function upperBoundInclusive(nums, target) {
+    let left = 0, right = nums.length - 1;
+    while (left <= right) {
+        const mid = left + Math.trunc((right - left) / 2);
+        if (nums[mid] > target) {
+            right = mid - 1;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return left;
+}
+
+function findKth(nums, k, compare) {
+    let left = 0, right = nums.length - 1
+    while (left <= right) {
+        const randomIndex = left + Math.trunc(Math.random() * (right - left + 1))
+        const partitionIndex = partition(nums, left, right, randomIndex)
 
         if (partitionIndex === k - 1) {
             return nums[k - 1]
         } else if (partitionIndex > k - 1) {
-            rightIndex = partitionIndex - 1
+            right = partitionIndex - 1
         } else {
-            leftIndex = partitionIndex + 1
+            left = partitionIndex + 1
         }
     }
 
-    return nums[leftIndex]
+    return nums[left]
 
-    function partition(items, leftIndex, rightIndex, pivotIndex) {
-        swap(items, rightIndex, pivotIndex)
+    function partition(items, left, right, pivotIndex) {
+        swap(items, right, pivotIndex)
         // right is the pivot
 
-        let nextPivotIndex = leftIndex
-        for (let index = leftIndex; index < rightIndex; ++index) {
-            if (compare(items, right, index) < 0) {
+        let nextPivotIndex = left
+        for (let index = left; index < right; ++index) {
+            if (compare(items, index, right) < 0) {
                 swap(items, nextPivotIndex++, index)
             }
         }
 
-        swap(items, nextPivotIndex, rightIndex)        
+        swap(items, nextPivotIndex, right)        
         return nextPivotIndex
     }
 
@@ -62,4 +88,3 @@ function findKthLargest(nums, k, compare) {
         items[j] = temp
     }
 }
-

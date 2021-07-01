@@ -44,34 +44,26 @@ Follow up:
 Could you implement next() and hasNext() to run in average O(1) time and use O(h) memory, where h is the height of the tree?
 */
 
-var BSTIterator = function(root) {
-    this.stack = []
-    while (root) {
-        this.stack.push(root)
-        root = root.left
+class BSTIterator {
+    constructor(root) {
+        this.stack = []
+        while (root) {
+            this.stack.push(root)
+            root = root.left
+        }
     }
-};
 
-/**
- * @return the next smallest number
- * @return {number}
- */
-BSTIterator.prototype.next = function() {
-    const curr = this.stack.pop()
-    let node = curr.right
-    
-    while (node) {
-        this.stack.push(node)
-        node = node.left
+    next() {
+        const curr = this.stack.pop()
+        let node = curr.right
+        while (node) {
+            this.stack.push(node)
+            node = node.left
+        }
+        return curr.val
+    };
+
+    hasNext() {
+        return this.stack.length
     }
-    
-    return curr.val
-};
-
-/**
- * @return whether we have a next smallest number
- * @return {boolean}
- */
-BSTIterator.prototype.hasNext = function() {
-    return this.stack.length
 };
