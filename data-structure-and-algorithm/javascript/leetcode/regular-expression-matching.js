@@ -1,86 +1,80 @@
-// 10. Regular Expression Matching
+/*
+Given an input string (s) and a pattern (p), implement regular expression matching with support for '.' and '*' where: 
 
-// Given an input string (s) and a pattern (p), implement regular expression matching with support for '.' and '*'.
+'.' Matches any single character.​​​​
+'*' Matches zero or more of the preceding element.
+The matching should cover the entire input string (not partial).
 
-// '.' Matches any single character.
-// '*' Matches zero or more of the preceding element.
-// The matching should cover the entire input string (not partial).
+ 
 
-// Note:
+Example 1:
 
-// s could be empty and contains only lowercase letters a-z.
-// p could be empty and contains only lowercase letters a-z, and characters like . or *.
-// Example 1:
+Input: s = "aa", p = "a"
+Output: false
+Explanation: "a" does not match the entire string "aa".
+Example 2:
 
-// Input:
-// s = "aa"
-// p = "a"
-// Output: false
-// Explanation: "a" does not match the entire string "aa".
-// Example 2:
+Input: s = "aa", p = "a*"
+Output: true
+Explanation: '*' means zero or more of the preceding element, 'a'. Therefore, by repeating 'a' once, it becomes "aa".
+Example 3:
 
-// Input:
-// s = "aa"
-// p = "a*"
-// Output: true
-// Explanation: '*' means zero or more of the preceding element, 'a'. Therefore, by repeating 'a' once, it becomes "aa".
-// Example 3:
+Input: s = "ab", p = ".*"
+Output: true
+Explanation: ".*" means "zero or more (*) of any character (.)".
+Example 4:
 
-// Input:
-// s = "ab"
-// p = ".*"
-// Output: true
-// Explanation: ".*" means "zero or more (*) of any character (.)".
-// Example 4:
+Input: s = "aab", p = "c*a*b"
+Output: true
+Explanation: c can be repeated 0 times, a can be repeated 1 time. Therefore, it matches "aab".
+Example 5:
 
-// Input:
-// s = "aab"
-// p = "c*a*b"
-// Output: true
-// Explanation: c can be repeated 0 times, a can be repeated 1 time. Therefore, it matches "aab".
-// Example 5:
+Input: s = "mississippi", p = "mis*is*p*."
+Output: false
+ 
 
-// Input:
-// s = "mississippi"
-// p = "mis*is*p*."
-// Output: false
+Constraints:
+
+0 <= s.length <= 20
+0 <= p.length <= 30
+s contains only lowercase English letters.
+p contains only lowercase English letters, '.', and '*'.
+It is guaranteed for each appearance of the character '*', there will be a previous valid character to match.
+*/
 
 /**
- * @param {string} s
- * @param {string} p
- * @return {boolean}
+ * @param { string } s
+ * @param { string } p
+ * @return { boolean }
  */
-let memory
-
-var isMatch = function(s, p) {
-    if (!isString(s) || !isString(p)) {
-        throw "invalid input value"
+function isMatch (s, p) {
+    if (!p.length) {
+        return !s.length;
     }
-    
-    return isMatchHelper(s, p, 0, 0)
+
+    if (p[1] === "*") {
+        return (isMatch(s, p.substring(2)) || 
+            s.length && (s[0] == p[0] || '.' == p[0]) && isMatch(s.substring(1), p));
+    }
+    return s.length && (s[0] == p[0] || '.' == p[0]) && isMatch(s.substring(1), p.substring(1));
 }
 
-function isString(item) {
-    return typeof item === 'string'
-}
-
-
-function isMatchHelper(s, p, i, j) {
+function dfs(s, p, i, j) {
     if (j === p.length) {
         return i === s.length
     }
     
     if (p[j + 1] !== '*') {
         if (s[i] === p[j] || (p[j] === '.' && i !== s.length)) {
-            return isMatchHelper(s, p, i + 1, j + 1)
+            return dfs(s, p, i + 1, j + 1)
         }
         return false
     }
     while (s[i] === p[j] || (p[j] === '.' && i !== s.length)) {
-        if (isMatchHelper(s, p, i, j + 2)) {
+        if (dfs(s, p, i, j + 2)) {
             return true
         }
         ++i
     }
-    return isMatchHelper(s, p, i, j + 2)
+    return dfs(s, p, i, j + 2)
 }

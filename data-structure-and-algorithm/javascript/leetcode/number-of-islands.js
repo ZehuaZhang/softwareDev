@@ -35,7 +35,7 @@ grid[i][j] is '0' or '1'.
 
 function numIslands(grid) {
     const [m, n] = [grid.length, grid[0].length];
-    const visited = Array(length).fill(0).map(() => Array(width).fill(false));
+    const visited = Array(m).fill(0).map(() => Array(n).fill(false));
     let count = 0;
     for (let i = 0; i < m; ++i) {
         for (let j = 0; j < n; ++j) {
