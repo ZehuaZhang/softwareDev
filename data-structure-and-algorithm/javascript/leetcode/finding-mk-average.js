@@ -1,3 +1,74 @@
+class MKAverage {
+    constructor(m, k) {
+        this.m = m;
+        this.k = k;
+        this.sum = 0;
+        this.left = new Heap((a, b) => a > b);
+        this.mid = new Heap((a, b) => a < b)
+        this.right = new Heap((a, b) => a < b)
+        this.q = [];
+    }
+    
+    addElement(num) {
+
+        // add new num
+        if (this.q.length < this.m) {
+            this.mid.push(num);
+        }
+        this.q.push(num);
+        if (this.q.length === this.m) {
+            for (let i = 0; i < this.k; ++i) {
+                this.left.push(this.mid.pop());
+            }
+            for (let i = 0; i < this.k; ++i) {
+                this.right.push(this.mid.popMax());
+            }
+            this.sum += this.mid.sum
+        } else if (this.q.length > this.m) {
+            if (num < this.left.top()) {
+                this.left.push(num);
+                const value = this.left.pop();
+                this.mid.push(value);
+                this.sum += value; 
+            } else if (num > this.right.top()) {
+                this.right.push(num);
+                const value = this.right.pop();
+                this.mid.push(value);
+                this.sum += value;
+            } else {
+                this.mid.push(num)
+                this.sum += num;
+            }
+            
+            // remove old num
+            const value = this.q.shift();
+            if (this.mid.has(value)) {
+                this.mid.remove(value);
+                this.sum -= value;
+            } else if (this.right.has(value)) {
+                this.right.remove(value)
+            } else {
+                this.left.remove(value)
+            }
+
+            // balance three heaps
+            if (this.left.size < this.k) {
+                const value = this.mid.pop();
+                this.left.push(value);
+                this.sum -= value;
+            } else if (this.right.size < this.k) {
+                const value = this.mid.popMax();
+                this.right.push(value);
+                this.sum -= value;
+            }
+        }
+    }
+    
+    calculateMKAverage() {
+        return this.q.length === this.m ? Math.trunc(this.sum / (this.m - 2 * this.k)) : -1;
+    }
+};
+
 class Heap {
     constructor(compare) {
         this.store = [];

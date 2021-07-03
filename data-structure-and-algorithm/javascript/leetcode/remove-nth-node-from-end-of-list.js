@@ -1,68 +1,51 @@
-// 19. Remove Nth Node From End of List
+/*
+Given the head of a linked list, remove the nth node from the end of the list and return its head.
 
-// Given a linked list, remove the n-th node from the end of list and return its head.
+ 
 
-// Example:
+Example 1:
 
-// Given linked list: 1->2->3->4->5, and n = 2.
 
-// After removing the second node from the end, the linked list becomes 1->2->3->5.
-// Note:
+Input: head = [1,2,3,4,5], n = 2
+Output: [1,2,3,5]
+Example 2:
 
-// Given n will always be valid.
+Input: head = [1], n = 1
+Output: []
+Example 3:
 
-// Follow up:
+Input: head = [1,2], n = 1
+Output: [1]
+ 
 
-// Could you do this in one pass?
+Constraints:
+
+The number of nodes in the list is sz.
+1 <= sz <= 30
+0 <= Node.val <= 100
+1 <= n <= sz
+ 
+
+Follow up: Could you do this in one pass?
+*/
 
 /**
- * Definition for singly-linked list.
- * function ListNode(val) {
- *     this.val = val;
- *     this.next = null;
- * }
+ * @param { ListNode } head
+ * @param { number } n
+ * @return { ListNode }
  */
-/**
- * @param {ListNode} head
- * @param {number} n
- * @return {ListNode}
- */
-var removeNthFromEnd = function(head, n) {
-    if (!isListNode(head) || !isNumber(n)) {
-        throw "invalid input value"
-    }
-    
-    const dummy = new ListNode(0)
+function removeNthFromEnd(head, n) {
+    const dummy = new ListNode()
     dummy.next = head
     
     let fast = dummy
-    while (n >= 0) {
+    for (; n >= 0; --n) {
         fast = fast.next
-        --n
     }
     
-    let prev = dummy
-    while (!isNullOrUndefined(fast)) {
-        fast = fast.next
-        prev = prev.next
-    }
+    let slow = dummy
+    for (; fast; slow = slow.next, fast = fast.next);
     
-    prev.next= prev.next.next
-    
+    slow.next= slow.next.next
     return dummy.next
-};
-
-function isNullOrUndefined(item) {
-    return (
-        item === undefined ||
-        item === null
-    )
-}
-
-function isListNode(item) {
-    return item instanceof ListNode
-}
-
-function isNumber(item) {
-    return typeof item === 'number'
 }

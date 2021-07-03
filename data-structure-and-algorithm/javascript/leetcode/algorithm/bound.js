@@ -50,12 +50,11 @@ function upperBoundInclusive(nums, target) {
     return left;
 }
 
-function findKth(nums, k, compare) {
+findKth(nums, k, compare) {
     let left = 0, right = nums.length - 1
     while (left <= right) {
         const randomIndex = left + Math.trunc(Math.random() * (right - left + 1))
         const partitionIndex = partition(nums, left, right, randomIndex)
-
         if (partitionIndex === k - 1) {
             return nums[k - 1]
         } else if (partitionIndex > k - 1) {
@@ -64,21 +63,19 @@ function findKth(nums, k, compare) {
             left = partitionIndex + 1
         }
     }
-
     return nums[left]
 
     function partition(items, left, right, pivotIndex) {
         swap(items, right, pivotIndex)
-        // right is the pivot
 
         let nextPivotIndex = left
         for (let index = left; index < right; ++index) {
-            if (compare(items, index, right) < 0) {
+            if (compare(nums[index], nums[right])) {
                 swap(items, nextPivotIndex++, index)
             }
         }
 
-        swap(items, nextPivotIndex, right)        
+        swap(items, nextPivotIndex, right)
         return nextPivotIndex
     }
 
