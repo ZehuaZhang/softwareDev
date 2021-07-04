@@ -43,7 +43,6 @@ class NumArray {
         if (i == 0) {
             return this.nums[j];
         }
-        
         return this.nums[j] - this.nums[i - 1];
     }
 }

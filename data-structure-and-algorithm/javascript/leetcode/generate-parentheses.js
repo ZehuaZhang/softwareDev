@@ -22,11 +22,9 @@ function generateParenthesis(n) {
     if (n === 0) {
         return [""];
     }
-
     if (n === 1) {
         return ["()"];
     }
-
     const result = [];
     for (let i = 0; i < n; ++i) {
         for (const inner of generateParenthesis(i)) {

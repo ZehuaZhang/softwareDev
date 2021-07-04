@@ -37,52 +37,27 @@ function bubbleSort(array) {
 }
 
 function mergeSort(array) {
+    return sort(array, 0, array.length)
 
-    function mergeSortHelper(array, leftIndex, rightIndex) {
-        if (leftIndex > rightIndex) {
-            return
+    function sort(array, left, right) {
+        if (right - left <= 1) {
+            return;
         }
-    
-        const middleIndex = leftIndex + (rightIndex - leftIndex) / 2
-    
-        mergeSort(array, leftIndex, middleIndex)
-        mergeSort(array, middleIndex + 1, rightIndex)
-    
-        merge(array, leftIndex, middleIndex, rightIndex)
-    }
-    
-    function merge(array, leftIndex, middleIndex, rightIndex) {
-        const leftArrayLength = middleIndex - leftIndex + 1
-        const rightArrayLength = rightIndex - middleIndex + 1
-    
-        const leftArray = []
-        const rightArray = []
-    
-        for (let i = 0; i < leftArrayLength; ++i) {
-            leftArray[i] = array[leftIndex + i]
-        }
-        for (let i = 0; i < rightArrayLength; ++i) {
-            rightArray[j] = array[middleIndex + 1 + i]
-        }
-    
-        let mergeIndex = left, i = 0, j = 0
-        while (i < leftArrayLength && j < rightArrayLength) {
-            if (leftArray[i] <= rightArray[j]) {
-                array[mergeIndex++] = leftArray[i++]
-            } else {
-                array[mergeIndex++] = rightArray[j++]
+        const mid = (left + right) >> 1;
+        sort(array, left, mid);
+        sort(array, mid, right);
+        
+        let low = mid, high = mid, i2 = mid;
+        const temp = Array(right - left).fill(0);
+        for (let i1 = left, r = 0; i1 < mid; ++i1, ++r) {
+            while (i2 < right && array[i2] < array[i1]) {
+                temp[r++] = array[i2++];
             }
+            temp[r] = array[i1];
         }
-    
-        while (i < leftArrayLength) {
-            arr[mergeIndex++] = leftArray[i++]
-        }
-        while (j < rightArrayLength) {
-            arr[mergeIndex++] = rightArray[j++]
-        }
+        array.splice(left, i2 - left, ...temp.slice(0, i2 - left))
+        return array;
     }
-
-    mergeSortHelper(array, 0, array.length - 1)
 }
 
 function heapSort(array) {
