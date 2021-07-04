@@ -34,6 +34,3 @@ function maxSubArrayLen(nums, k) {
     }
     return result;
 }
-
-console.log(maxSubArrayLen([1, -1, 5, -2, 3], 3))
-console.log(maxSubArrayLen([-2, -1, 2, 1], 1))

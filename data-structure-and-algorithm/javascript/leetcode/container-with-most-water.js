@@ -36,7 +36,7 @@ n == height.length
  * @param { number[] } height
  * @return { number }
  */
-var maxArea = function(height) {
+function maxArea(height) {
     let result = 0;
     for (let left = 0, right = height.length - 1; left < right;) {
         result = Math.max(result, Math.min(height[left], height[right]) * (right - left));

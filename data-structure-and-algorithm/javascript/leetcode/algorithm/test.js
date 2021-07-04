@@ -91,3 +91,16 @@ class Bit {
         return n.toString(2).match(/1/g).length
     }
 }
+
+class Array {
+    static createArray(value, ...dimensions) {
+        if (dimensions.length === 1) {
+            return Array(dimensions[0]).fill(value)
+        }
+    
+        return Array.from(
+            {length: dimensions[0]},
+            () => createArray(value, ...dimensions.slice(1))
+        )
+    }
+}
