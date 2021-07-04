@@ -38,7 +38,7 @@ function addTwoNumbers(l1, l2) {
     const dummy = new ListNode(0);
 
     let carry = 0;
-    for (const curr = dummy; l1 || l2 || carry; curr = curr.next) {
+    for (let curr = dummy; l1 || l2 || carry; curr = curr.next) {
         const a = l1 ? l1.value : 0;
         const b = l2 ? l2.value : 0;
         const sum = a + b + carry;

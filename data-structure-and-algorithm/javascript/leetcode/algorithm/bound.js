@@ -24,11 +24,11 @@ function lowerBoundInclusive(nums, target) {
     return right;
 }
 
-function upperBoundExclusive(nums, target) {
+function firstElementGreaterOrEqual(nums, target) {
     let left = 0, right = nums.length - 1;
     while (left <= right) {
         const mid = left + Math.trunc((right - left) / 2);
-        if (nums[mid] > target) {
+        if (nums[mid] >= target) {
             right = mid - 1;
         } else {
             left = mid + 1;
@@ -37,7 +37,7 @@ function upperBoundExclusive(nums, target) {
     return left;
 }
 
-function upperBoundInclusive(nums, target) {
+function firstElementGreater(nums, target) {
     let left = 0, right = nums.length - 1;
     while (left <= right) {
         const mid = left + Math.trunc((right - left) / 2);

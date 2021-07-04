@@ -25,16 +25,16 @@ Constraints:
  */
 function threeSumClosest(nums, target) {
     let result = NaN;
-    const diff = Number.MIN_VALUE;
+    let diff = Infinity;
 
     nums.sort((a, b) => a - b);
 
-    for (const i = 0; i < nums.length - 2; ++i) {
-        for (const left = i + 1, right = nums.length - 1; left < right;) {
+    for (let i = 0; i < nums.length - 2; ++i) {
+        for (let left = i + 1, right = nums.length - 1; left < right;) {
             const sum = nums[i] + nums[left] + nums[right];
-            const currDiff = Math.abs(sum - target);
-            if (currDiff < diff) {
-                diff = currDiff;
+            const curr = Math.abs(sum - target);
+            if (curr < diff) {
+                diff = curr;
                 result = sum;
             }
             if (sum < target) {
