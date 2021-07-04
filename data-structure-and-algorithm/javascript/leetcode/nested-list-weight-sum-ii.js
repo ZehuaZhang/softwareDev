@@ -16,3 +16,28 @@ Input: [1,[4,[6]]]
 Output: 17 
 Explanation: One 1 at depth 3, one 4 at depth 2, and one 6 at depth 1; 1*3 + 4*2 + 6*1 = 17.
 */
+
+function depthSumInverse(list) {
+    const path = [];
+    dfs(list, 0, path);
+
+    let result = 0;
+    for (let i = list.length - 1; i >= 0; --i) {
+        result += path[i] * (list.length - i);
+    }
+    return result;
+}
+
+function dfs(list, depth, path) {
+    if (path.length === depth) {
+        path.push(0);
+    }
+    for (const l of list) {
+        if (l.isInteger()) {
+            path[depth] += l.getInteger();
+        } else {
+            dfs(l.getList(), depth + 1, path);
+        }
+    }
+}
+

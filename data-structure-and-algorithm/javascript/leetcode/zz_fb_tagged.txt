@@ -1,9 +1,3 @@
-Permutations (8 times): https://leetcode.com/problems/permutations/
-Course Schedule (8 times): https://leetcode.com/problems/course-schedule/
-Reverse Linked List (8 times): https://leetcode.com/problems/reverse-linked-list/
-Palindrome Linked List (8 times): https://leetcode.com/problems/palindrome-linked-list/
-Strobogrammatic Number (8 times): https://leetcode.com/problems/strobogrammatic-number/
-
 First Missing Positive (8 times): https://leetcode.com/problems/first-missing-positive/
 Construct Binary Tree from String (8 times): https://leetcode.com/problems/construct-binary-tree-from-string/
 Generate Parentheses (8 times): https://leetcode.com/problems/generate-parentheses/

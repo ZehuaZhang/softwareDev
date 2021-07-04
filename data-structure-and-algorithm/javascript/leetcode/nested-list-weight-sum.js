@@ -14,3 +14,19 @@ Input: [1,[4,[6]]]
 Output: 27 
 Explanation: One 1 at depth 1, one 4 at depth 2, and one 6 at depth 3; 1 + 4*2 + 6*3 = 27.
 */
+
+function depthSum(list) {
+    return dfs(list, 1);
+}
+
+function dfs(list, depth) {
+    let sum = 0;
+    for (const l of list) {
+        if (l.isInteger()) {
+            sum += l.getInteger() * depth;
+        } else {
+            sum += dfs(l.getList(), depth + 1);
+        }
+    }
+    return sum;
+}
