@@ -15,30 +15,26 @@
 
 function lengthOfLIS(nums) {
     const result = []
-    
     for (const num of nums) {
-        const index = lowerBound(result, num)
-        
-        if (index === result.length) {
+        const i = firstElementGreaterOrEqual(result, num)
+        if (i === result.length) {
             result.push(num)
         } else {
-            result[index] = num
+            result[i] = num
         }
     }
-    
     return result.length
 }
 
-function lowerBound(items, target) {
-    let leftIndex = 0, rightIndex = items.length - 1
-    while (leftIndex <= rightIndex) {
-        const middleIndex = leftIndex + Math.trunc((rightIndex - leftIndex) / 2)
-        if (items[middleIndex] >= target) {
-            rightIndex = middleIndex - 1
+function firstElementGreaterOrEqual(nums, target) {
+    let left = 0, right = nums.length - 1;
+    while (left <= right) {
+        const mid = left + Math.trunc((right - left) / 2);
+        if (nums[mid] >= target) {
+            right = mid - 1;
         } else {
-            leftIndex = middleIndex + 1
+            left = mid + 1;
         }
     }
-    
-    return leftIndex
-} 
+    return left;
+}

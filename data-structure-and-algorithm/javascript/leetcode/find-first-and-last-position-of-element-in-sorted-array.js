@@ -30,18 +30,16 @@ nums is a non-decreasing array.
 */
 
 function searchRange(nums, target) {
-    const left = lowerBoundExclusive(nums, target) + 1;
-    const right = upperBoundExclusive(nums, target) - 1;
-
-    console.log(left, right)
+    const left = firstElementGreaterOrEqual(nums, target);
+    const right = firstElementGreater(nums, target) - 1;
     
     return [
-        left >= 0 && left < nums.length && nums[left] === target ? left : -1,
-        right >= 0 && right < nums.length && nums[right] === target ? right : -1
+        left < nums.length && nums[left] === target ? left : -1,
+        right < nums.length && nums[right] === target ? right : -1
     ]
 }
 
-function lowerBoundExclusive(nums, target) {
+function firstElementGreaterOrEqual(nums, target) {
     let left = 0, right = nums.length - 1;
     while (left <= right) {
         const mid = left + Math.trunc((right - left) / 2);
@@ -51,10 +49,10 @@ function lowerBoundExclusive(nums, target) {
             left = mid + 1;
         }
     }
-    return right;
+    return left;
 }
 
-function upperBoundExclusive(nums, target) {
+function firstElementGreater(nums, target) {
     let left = 0, right = nums.length - 1;
     while (left <= right) {
         const mid = left + Math.trunc((right - left) / 2);

@@ -37,26 +37,23 @@ function bubbleSort(array) {
 }
 
 function mergeSort(array) {
-    return sort(array, 0, array.length)
+    return sort(array, 0, array.length - 1)
 
     function sort(array, left, right) {
-        if (right - left <= 1) {
+        if (left >= right) {
             return;
         }
         const mid = (left + right) >> 1;
-        sort(array, left, mid);
-        sort(array, mid, right);
-        
-        let low = mid, high = mid, i2 = mid;
-        const temp = Array(right - left).fill(0);
-        for (let i1 = left, r = 0; i1 < mid; ++i1, ++r) {
-            while (i2 < right && array[i2] < array[i1]) {
-                temp[r++] = array[i2++];
+        sort(array, left, mid)
+        sort(array, mid + 1, right);
+        const temp = [];
+        for (let i = left, j = mid + 1; i <= mid; ++i) {
+            for (; j <= right && array[j] < array[i]; ++j) {
+                temp.push(array[j])
             }
-            temp[r] = array[i1];
+            temp.push(array[i])
         }
-        array.splice(left, i2 - left, ...temp.slice(0, i2 - left))
-        return array;
+        array.splice(left, temp.length, ...temp)
     }
 }
 
