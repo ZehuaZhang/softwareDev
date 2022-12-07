@@ -45,8 +45,8 @@ function fourSumCount(
       sumCountMap.set(sum, sumCountMap.get(sum) + 1);
     });
   });
-  let result = 0,
-    target = 0;
+  let result = 0;
+  const target = 0;
   numList3.forEach(num3 => {
     numList4.forEach(num4 => {
       const sum = num3 + num4;

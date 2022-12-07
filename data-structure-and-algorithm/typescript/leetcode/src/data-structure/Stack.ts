@@ -1,63 +1,64 @@
+type Data = any;
+
 export class Stack {
-    private dataList: any[];
-    private capacity: number;
+  private dataList: Data[];
+  private capacity: number;
 
-    constructor(capacity = Number.MAX_SAFE_INTEGER) {
-        this.dataList = [];
-        this.capacity = capacity;
-    }
+  constructor(capacity = Number.MAX_SAFE_INTEGER) {
+    this.dataList = [];
+    this.capacity = capacity;
+  }
 
-    get size() {
-        return this.dataList.length;
-    }
+  get size(): number {
+    return this.dataList.length;
+  }
 
-    isEmpty() {
-        return this.size === 0;
-    }
+  isEmpty(): boolean {
+    return this.size === 0;
+  }
 
-    isFull() {
-        return this.size === this.capacity;
-    }
+  isFull(): boolean {
+    return this.size === this.capacity;
+  }
 
-    push(data: any) {
-        if (this.isFull()) {
-            throw new Error("push: stack overflow");
-        }
-        this.dataList.push(data);
+  push(data: Data): void {
+    if (this.isFull()) {
+      throw new Error('push: stack overflow');
     }
+    this.dataList.push(data);
+  }
 
-    pop() {
-        if (this.isEmpty()) {
-            throw new Error("pop: stack underflow");
-        }
-        return this.dataList.pop();
+  pop(): Data {
+    if (this.isEmpty()) {
+      throw new Error('pop: stack underflow');
     }
+    return this.dataList.pop();
+  }
 
-    peek() {
-        if (this.isEmpty()) {
-            throw new Error("peek: stack underflow");
-        }
-        return this.dataList[this.size - 1];
+  peek(): Data {
+    if (this.isEmpty()) {
+      throw new Error('peek: stack underflow');
     }
+    return this.dataList[this.size - 1];
+  }
 
-    clear() {
-        this.dataList = [];
-    }
+  clear(): void {
+    this.dataList = [];
+  }
 
-    fromArray(list: any[]) {
-        list.forEach(element => {
-            this.push(element);
-        });
-        return this;
-    }
+  fromArray(list: Data[]): Stack {
+    list.forEach(element => {
+      this.push(element);
+    });
+    return this;
+  }
 
-    toArray() {
-        return [...this.dataList];
-    }
+  toArray(): Data[] {
+    return [...this.dataList];
+  }
 
-    print() {
-        const output = this.dataList.join(" -> ");
-        console.log(output);
-        return this;
-    }
+  print(): void {
+    const output = this.dataList.join(' -> ');
+    console.log(output);
+  }
 }

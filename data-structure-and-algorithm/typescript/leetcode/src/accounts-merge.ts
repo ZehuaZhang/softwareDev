@@ -74,7 +74,7 @@ function find(x: number, set: number[]): number {
   return x;
 }
 
-function union(x: number, y: number, set: number[]) {
+function union(x: number, y: number, set: number[]): void {
   const root1 = find(x, set);
   const root2 = find(y, set);
   set[Math.min(root1, root2)] = Math.max(root1, root2);
