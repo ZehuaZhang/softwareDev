@@ -3,7 +3,7 @@ Given four integer arrays nums1, nums2, nums3, and nums4 all of length n, return
 
 0 <= i, j, k, l < n
 nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0
- 
+
 
 Example 1:
 
@@ -17,7 +17,7 @@ Example 2:
 
 Input: nums1 = [0], nums2 = [0], nums3 = [0], nums4 = [0]
 Output: 1
- 
+
 
 Constraints:
 
@@ -29,26 +29,32 @@ n == nums4.length
 -228 <= nums1[i], nums2[i], nums3[i], nums4[i] <= 228
 */
 
-function fourSumCount(numList1: number[], numList2: number[], numList3: number[], numList4: number[]): number {
-    const sumCountMap = new Map();
-    numList1.forEach(num1 => {
-        numList2.forEach(num2 => {
-            const sum = num1 + num2;
-            if (!sumCountMap.has(sum)) {
-                sumCountMap.set(sum, 0);
-            }
-            sumCountMap.set(sum, sumCountMap.get(sum) + 1);
-        });
+function fourSumCount(
+  numList1: number[],
+  numList2: number[],
+  numList3: number[],
+  numList4: number[]
+): number {
+  const sumCountMap = new Map();
+  numList1.forEach(num1 => {
+    numList2.forEach(num2 => {
+      const sum = num1 + num2;
+      if (!sumCountMap.has(sum)) {
+        sumCountMap.set(sum, 0);
+      }
+      sumCountMap.set(sum, sumCountMap.get(sum) + 1);
     });
-    let result = 0, target = 0;
-    numList3.forEach(num3 => {
-        numList4.forEach(num4 => {
-            const sum = num3 + num4;
-            const diff = target - sum;
-            if (sumCountMap.has(diff)) {
-                result += sumCountMap.get(diff);
-            }
-        });
+  });
+  let result = 0,
+    target = 0;
+  numList3.forEach(num3 => {
+    numList4.forEach(num4 => {
+      const sum = num3 + num4;
+      const diff = target - sum;
+      if (sumCountMap.has(diff)) {
+        result += sumCountMap.get(diff);
+      }
     });
-    return result;
+  });
+  return result;
 }

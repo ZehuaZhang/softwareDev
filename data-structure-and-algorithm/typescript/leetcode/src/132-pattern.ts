@@ -3,7 +3,7 @@ Given an array of n integers nums, a 132 pattern is a subsequence of three integ
 
 Return true if there is a 132 pattern in nums, otherwise, return false.
 
- 
+
 
 Example 1:
 
@@ -20,7 +20,7 @@ Example 3:
 Input: nums = [-1,3,2,0]
 Output: true
 Explanation: There are three 132 patterns in the sequence: [-1, 3, 2], [-1, 3, 0] and [-1, 2, 0].
- 
+
 
 Constraints:
 
@@ -29,40 +29,37 @@ n == nums.length
 -109 <= nums[i] <= 109
 */
 
-import { Stack } from "./data-structure/Stack";
-import { runTestCaseList } from './util/test';
+import {Stack} from './data-structure/Stack';
+import {runTestCaseList} from './util/test';
 
 function find132pattern(nums: number[]): boolean {
-    if (nums.length < 3) {
-        return false;
-    }
-    let medium = -Infinity;
-    const stack = new Stack();
-    for (let i = nums.length - 1; i >= 0; --i) {
-        if (nums[i] < medium) {
-            return true;
-        } else {
-            while (!stack.isEmpty() && nums[i] > stack.peek()) {
-                medium = stack.pop();
-            }
-        }
-        stack.push(nums[i]);
-    }
+  if (nums.length < 3) {
     return false;
+  }
+  let medium = -Infinity;
+  const stack = new Stack();
+  for (let i = nums.length - 1; i >= 0; --i) {
+    if (nums[i] < medium) {
+      return true;
+    } else {
+      while (!stack.isEmpty() && nums[i] > stack.peek()) {
+        medium = stack.pop();
+      }
+    }
+    stack.push(nums[i]);
+  }
+  return false;
 }
 
+// tests
+
 const testInputListCollection = [
-    [[1, 2, 3, 4]],
-    [[3, 1, 4, 2]],
-    [[-1, 3, 2, 0]],
-    [[1, 0, 1, -4, -3]]
+  [[1, 2, 3, 4]],
+  [[3, 1, 4, 2]],
+  [[-1, 3, 2, 0]],
+  [[1, 0, 1, -4, -3]],
 ];
 
-const expectedResultList = [
-    false,
-    true,
-    true,
-    false
-];
+const expectedResultList = [false, true, true, false];
 
 runTestCaseList(testInputListCollection, expectedResultList, find132pattern);
