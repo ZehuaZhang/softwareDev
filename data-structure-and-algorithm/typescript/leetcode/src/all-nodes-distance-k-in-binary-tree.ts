@@ -29,44 +29,61 @@ The target node is a node in the tree.
 0 <= k <= 1000.
 */
 
-function distanceK(root, target, k) {
-  const map = new Map();
-  const result = [];
-  find(root, target, map);
-  search(root, k, map, 0, result);
+import {TreeNode} from './data-structure/BinaryTree';
+import {Nullable} from './util/object';
+
+function distanceK(
+  node: Nullable<TreeNode>,
+  target: Nullable<TreeNode>,
+  k: number
+): number[] {
+  const nodeDistMap = new Map();
+  const result: number[] = [];
+  find(node, target, nodeDistMap);
+  search(node, k, nodeDistMap, 0, result);
   return result;
 }
 
-function find(node, target, map) {
+function find(
+  node: Nullable<TreeNode>,
+  target: Nullable<TreeNode>,
+  nodeDistMap: Map<TreeNode, number>
+): void {
   if (!node) {
     return;
   }
   if (node === target) {
-    map.set(node, 0);
+    nodeDistMap.set(node, 0);
     return;
   }
-  find(node.left, target, map);
-  if (map.has(node.left)) {
-    map.set(node, map.get(node.left) + 1);
+  find(node.left, target, nodeDistMap);
+  if (nodeDistMap.has(node.left!)) {
+    nodeDistMap.set(node, nodeDistMap.get(node.left!)! + 1);
     return;
   }
-  find(node.right, target, map);
-  if (map.has(node.right)) {
-    map.set(node, map.get(node.right) + 1);
+  find(node.right, target, nodeDistMap);
+  if (nodeDistMap.has(node.right!)) {
+    nodeDistMap.set(node, nodeDistMap.get(node.right!)! + 1);
     return;
   }
 }
 
-function search(node, k, map, curr, result) {
+function search(
+  node: Nullable<TreeNode>,
+  k: number,
+  nodeDistMap: Map<TreeNode, number>,
+  dist: number,
+  result: number[]
+) {
   if (!node) {
     return;
   }
-  if (map.has(node)) {
-    curr = map.get(node);
+  if (nodeDistMap.has(node)) {
+    dist = nodeDistMap.get(node)!;
   }
-  if (curr === k) {
-    result.push(node.val);
+  if (dist === k) {
+    result.push(node.data);
   }
-  search(node.left, k, map, curr + 1, result);
-  search(node.right, k, map, curr + 1, result);
+  search(node.left, k, nodeDistMap, dist + 1, result);
+  search(node.right, k, nodeDistMap, dist + 1, result);
 }

@@ -6,8 +6,8 @@ Implement the AllOne class:
 AllOne() Initializes the object of the data structure.
 inc(String key) Increments the count of the string key by 1. If key does not exist in the data structure, insert it with count 1.
 dec(String key) Decrements the count of the string key by 1. If the count of key is 0 after the decrement, remove it from the data structure. It is guaranteed that key exists in the data structure before the decrement.
-getMaxKey() Returns one of the keys with the maximal count. If no element exists, return an empty string "".
-getMinKey() Returns one of the keys with the minimum count. If no element exists, return an empty string "".
+getMaxKey() Returns one of the keySet with the maximal count. If no element exists, return an empty string "".
+getMinKey() Returns one of the keySet with the minimum count. If no element exists, return an empty string "".
 
 
 Example 1:
@@ -37,86 +37,107 @@ It is guaranteed that for each call to dec, key is existing in the data structur
 At most 5 * 104 calls will be made to inc, dec, getMaxKey, and getMinKey.
 */
 
+import {Data} from './util/object';
+import {
+  DoublyLinkedList,
+  DoublyLinkedListNode,
+} from './data-structure/DoublyLinkedList';
+
 class AllOne {
+  bucketList: DoublyLinkedList;
+  keyBucketMap: Map<string, DoublyLinkedListNode>;
   constructor() {
-    this.head = new Bucket(-Infinity);
-    this.tail = new Bucket(Infinity);
-    this.head.next = this.tail;
-    this.head.prev = this.head;
-    this.keyBucket = new Map();
+    this.bucketList = new DoublyLinkedList();
+    this.keyBucketMap = new Map<string, DoublyLinkedListNode>();
   }
 
-  inc(key) {
-    if (!this.keyBucket.has(key)) {
+  inc(key: string): void {
+    console.log('\n', 'inc', key);
+    if (!this.keyBucketMap.has(key)) {
       const bucket = new Bucket(0, key);
-      this.insert(bucket, this.head);
-      this.keyBucket.set(key, bucket);
+      const node = this.bucketList.prepend(bucket)!;
+      this.keyBucketMap.set(key, node);
     }
 
-    const curr = this.keyBucket.get(key);
+    const curr = this.keyBucketMap.get(key)!;
     let next = curr.next;
-    if (next === null || next.value > curr.value + 1) {
-      next = new Bucket(curr.value + 1);
-      this.insert(curr, next);
+    if (next === null || next.data.data > curr.data.data + 1) {
+      const bucket = new Bucket(curr.data.data + 1);
+      next = this.bucketList.insert(curr, bucket)!;
     }
-    next.keys.add(key);
-    this.keyBucket.set(key, next);
+    console.log('after insert');
+    this.bucketList.printLog();
+
+    next.data.keySet.add(key);
+    this.keyBucketMap.set(key, next);
 
     this.remove(key, curr);
+
+    console.log('after remove');
+    this.bucketList.printLog();
   }
 
-  dec(key) {
-    if (!this.keyBucket.has(key)) {
+  dec(key: string): void {
+    console.log('\n', 'dec', key);
+    if (!this.keyBucketMap.has(key)) {
       return;
     }
 
-    const curr = this.keyBucket.get(key);
+    const curr = this.keyBucketMap.get(key)!;
     let prev = curr.prev;
-    if (curr.value > 1) {
-      if (prev === null || prev.value < curr.value - 1) {
-        prev = new Bucket(curr.value - 1);
-        this.insert(curr.prev, prev);
+    if (curr.data.data > 1) {
+      if (prev === null || prev.data.data < curr.data.data - 1) {
+        const bucket = new Bucket(curr.data.data - 1);
+        console.log('hi', curr.prev?.data);
+        prev = this.bucketList.insert(prev, bucket)!;
       }
-      prev.keys.add(key);
-      this.keyBucket.set(key, prev);
+      console.log('after insert');
+      this.bucketList.printLog();
+      prev.data.keySet.add(key);
+      this.keyBucketMap.set(key, prev);
     }
-
+    console.log('after remove');
+    this.bucketList.printLog();
     this.remove(key, curr);
   }
 
   getMaxKey() {
-    return this.tail.prev === this.head
-      ? ''
-      : this.tail.keys[Symbol.iterator]().next().value;
+    return this.bucketList.length
+      ? this.bucketList.tail!.data.keySet[Symbol.iterator]().next().value
+      : '';
   }
 
   getMinKey() {
-    return this.head.next === this.tail
-      ? ''
-      : this.head.keys[Symbol.iterator]().next().value;
+    return this.bucketList.length
+      ? this.bucketList.head!.data.keySet[Symbol.iterator]().next().value
+      : '';
   }
 
-  insert(prev, curr) {
-    curr.next = prev.next;
-    curr.prev = prev;
-    prev.next.prev = curr;
-    prev.next = curr;
-  }
-
-  remove(key, curr) {
-    curr.keys.delete(key);
-    if (curr.keys.size === 0) {
-      curr.prev.next = curr.next;
-      curr.next.prev = curr.prev;
+  remove(key: string, node: DoublyLinkedListNode) {
+    node.data.keySet.delete(key);
+    console.log(JSON.stringify(node.data));
+    if (node.data.keySet.size === 0) {
+      this.bucketList.remove(node);
     }
   }
 }
 
 class Bucket {
-  constructor(value, ...keyList) {
-    this.value = value;
-    this.keys = new Set([...keyList]);
-    this.prev = null;
-    this.next = null;
+  data: Data;
+  keySet: Set<string>;
+  constructor(data: Data, ...keyList: string[]) {
+    this.data = data;
+    this.keySet = new Set([...keyList]);
   }
 }
+
+const allOne = new AllOne();
+allOne.inc('a');
+allOne.inc('b');
+allOne.inc('b');
+allOne.inc('b');
+allOne.inc('b');
+allOne.dec('b');
+allOne.dec('b');
+console.log(allOne.getMaxKey());
+console.log(allOne.getMinKey());
