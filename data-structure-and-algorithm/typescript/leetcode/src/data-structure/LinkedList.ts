@@ -14,7 +14,7 @@ export class LinkedList {
     }
   }
 
-  prepend(data: Data): List {
+  prepend(data: Data): LinkedList {
     const node = new ListNode(data, this.head);
     this.head = node;
     if (!this.tail) {
@@ -24,7 +24,7 @@ export class LinkedList {
     return this;
   }
 
-  append(data: Data): List {
+  append(data: Data): LinkedList {
     const node = new ListNode(data);
     if (!this.head) {
       this.head = this.tail = node;
@@ -36,7 +36,7 @@ export class LinkedList {
     return this;
   }
 
-  reverse(): List {
+  reverse(): LinkedList {
     let curr = this.head;
     let prev = null;
     let next = null;
@@ -65,7 +65,7 @@ export class LinkedList {
     return current;
   }
 
-  insert(node: Nullable<ListNode>, data: Data): List {
+  insert(node: Nullable<ListNode>, data: Data): LinkedList {
     if (node === null) {
       this.prepend(data);
       return this;
@@ -79,7 +79,7 @@ export class LinkedList {
     return this;
   }
 
-  insertAt(index: number, data: Data): List {
+  insertAt(index: number, data: Data): LinkedList {
     if (index < 0 || index > this.length) {
       throw new Error('insertAt: out of bounds');
     }
@@ -98,7 +98,7 @@ export class LinkedList {
     return this;
   }
 
-  removeAt(index: number): List {
+  removeAt(index: number): LinkedList {
     if (index < 0 || index >= this.length) {
       throw new Error('remove: out of bounds');
     }
@@ -119,7 +119,7 @@ export class LinkedList {
     return this;
   }
 
-  fromArray(dataList: Data[]): List {
+  fromArray(dataList: Data[]): LinkedList {
     dataList.forEach(data => {
       this.append(data);
     });
@@ -135,7 +135,8 @@ export class LinkedList {
   }
 
   print(): void {
-    const output = this.toArray().join(' -> ');
+    const output =
+      this.length === 0 ? 'LinkedList is empty' : this.toArray().join(' -> ');
     console.log(output);
   }
 }

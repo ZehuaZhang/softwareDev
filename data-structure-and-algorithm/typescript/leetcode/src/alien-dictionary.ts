@@ -42,18 +42,21 @@ If the order is invalid, return an empty string.
 There may be multiple valid order of letters, return any one of them is fine.
 */
 
+import {runTestCaseList} from './util/test';
+import {Queue} from './data-structure/Queue';
+
 function alienOrder(words: string[]): string {
   const baseCode = 'a'.charCodeAt(0);
-  const set = new Set();
+  const uniqCharSet = new Set<string>();
   words.forEach(word => {
     for (const char of word) {
-      set.add(char);
+      uniqCharSet.add(char);
     }
   });
   const inDegree = Array(26).fill(0);
-  const graph = [...Array(26)].map(() => new Set());
-  for (const i = 0; i < words.length - 1; ++i) {
-    for (const j = 0; j < Math.min(words[i].length, words[i + 1].length); ++j) {
+  const graph = [...Array(26)].map(() => new Set<number>());
+  for (let i = 0; i < words.length - 1; ++i) {
+    for (let j = 0; j < Math.min(words[i].length, words[i + 1].length); ++j) {
       const prev = words[i][j].charCodeAt(0) - baseCode;
       const curr = words[i + 1][j].charCodeAt(0) - baseCode;
       if (prev !== curr) {
@@ -65,22 +68,37 @@ function alienOrder(words: string[]): string {
   }
 
   const queue = new Queue();
-  inDegree.forEach((degree, index) => {
-    if (degree === 0) {
-      queue.push(index);
+  inDegree.forEach((degree, offset) => {
+    if (
+      degree === 0 &&
+      uniqCharSet.has(String.fromCharCode(baseCode + offset))
+    ) {
+      queue.push(offset);
     }
   });
 
   const result = [];
   while (!queue.isEmpty()) {
-    const code = queue.pop();
-    result.push(String.fromCharCode(code + baseCode));
-    for (const next of graph[char].values()) {
+    const offset = queue.pop();
+    result.push(String.fromCharCode(offset + baseCode));
+    for (const next of graph[offset].values()) {
       if (--inDegree[next] === 0) {
         queue.push(next);
       }
     }
   }
 
-  return set.length === result.length ? result.join('') : '';
+  return uniqCharSet.size === result.length ? result.join('') : '';
 }
+
+// tests
+
+const testInputListCollection = [
+  [['wrt', 'wrf', 'er', 'ett', 'rftt']],
+  [['z', 'x']],
+  [['z', 'x', 'z']],
+];
+
+const expectedResultList = ['wertf', 'zx', ''];
+
+runTestCaseList(testInputListCollection, expectedResultList, alienOrder);

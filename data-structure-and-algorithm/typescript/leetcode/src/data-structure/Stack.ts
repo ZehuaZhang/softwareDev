@@ -1,4 +1,4 @@
-type Data = any;
+import {Data} from '../util/object';
 
 export class Stack {
   private dataList: Data[];
@@ -58,7 +58,9 @@ export class Stack {
   }
 
   print(): void {
-    const output = this.dataList.join(' -> ');
+    const output = this.isEmpty()
+      ? 'stack is empty'
+      : this.dataList.join(' -> ');
     console.log(output);
   }
 }
