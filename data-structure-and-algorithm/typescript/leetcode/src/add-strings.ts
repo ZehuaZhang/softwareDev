@@ -26,23 +26,17 @@ num1 and num2 consist of only digits.
 num1 and num2 don't have any leading zeros except for the zero itself.
 */
 
-/**
- *
- * @param { string } num1
- * @param { string } num2
- * @returns { string }
- */
-function addStrings(num1, num2) {
+function addStrings(num1: string, num2: string): string {
   const result = [];
   for (
-    let i = num1.length - 1, j = num2.length - 1, c = 0;
-    i >= 0 || j >= 0 || c;
+    let i = num1.length - 1, j = num2.length - 1, carry = 0;
+    i >= 0 || j >= 0 || carry;
 
   ) {
-    const a = i >= 0 ? num1[i--] - '0' : 0;
-    const b = j >= 0 ? num2[j--] - '0' : 0;
-    const sum = a + b + c;
-    c = Math.trunc(sum / 10);
+    const a = i >= 0 ? Number(num1[i--]) : 0;
+    const b = j >= 0 ? Number(num2[j--]) : 0;
+    const sum = a + b + carry;
+    carry = Math.trunc(sum / 10);
     result.push(sum % 10);
   }
   return result.reverse().join('');

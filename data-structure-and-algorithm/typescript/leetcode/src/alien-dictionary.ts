@@ -42,12 +42,7 @@ If the order is invalid, return an empty string.
 There may be multiple valid order of letters, return any one of them is fine.
 */
 
-/**
- *
- * @param { string[] } words
- * @returns { string }
- */
-function alienOrder(words) {
+function alienOrder(words: string[]): string {
   const baseCode = 'a'.charCodeAt(0);
   const set = new Set();
   words.forEach(word => {
@@ -56,9 +51,7 @@ function alienOrder(words) {
     }
   });
   const inDegree = Array(26).fill(0);
-  const graph = Array(26)
-    .fill(0)
-    .map(() => Set());
+  const graph = [...Array(26)].map(() => new Set());
   for (const i = 0; i < words.length - 1; ++i) {
     for (const j = 0; j < Math.min(words[i].length, words[i + 1].length); ++j) {
       const prev = words[i][j].charCodeAt(0) - baseCode;

@@ -30,26 +30,27 @@ It is guaranteed that the list represents a number that does not have leading ze
 Follow up: Could you solve it without reversing the input lists?
 */
 
-/**
- *
- * @param { ListNode } l1
- * @param { ListNode } l2
- * @returns
- */
-function addTwoNumbers(l1, l2) {
-  const s1 = new Stack(),
-    s2 = new Stack();
-  for (const curr = l1; curr; curr = curr.next) {
-    s1.push(curr);
+import {ListNode} from './data-structure/LinkedList';
+import {Stack} from './data-structure/Stack';
+import {Nullable} from './util/object';
+
+function addTwoNumbers(
+  l1: Nullable<ListNode>,
+  l2: Nullable<ListNode>
+): Nullable<ListNode> {
+  const s1 = new Stack();
+  const s2 = new Stack();
+  for (let curr = l1; curr; curr = curr.next) {
+    s1.push(curr.data);
   }
-  for (const curr = l2; curr; curr = curr.next) {
-    s2.push(curr);
+  for (let curr = l2; curr; curr = curr.next) {
+    s2.push(curr.data);
   }
 
   let carry = 0;
-  let prev = null,
-    head = null;
-  while (!s1.isEmpty() || !s2.isEmpty()) {
+  let prev = null;
+  let head = null;
+  while (!s1.isEmpty() || !s2.isEmpty() || carry) {
     const a = s1.isEmpty() ? 0 : s1.pop();
     const b = s2.isEmpty() ? 0 : s2.pop();
     const sum = a + b + carry;
@@ -58,15 +59,5 @@ function addTwoNumbers(l1, l2) {
     prev = head;
   }
 
-  if (carry === 1) {
-    head = new ListNode(carry, prev);
-  }
   return head;
-}
-
-class ListNode {
-  constructor(value, next = null) {
-    this.value = value;
-    this.next = next;
-  }
 }

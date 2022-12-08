@@ -20,21 +20,15 @@ a and b consist only of '0' or '1' characters.
 Each string does not contain leading zeros except for the zero itself.
 */
 
-/**
- *
- * @param { string } a
- * @param { string } b
- * @returns { string }
- */
-function addBinary(a, b) {
+function addBinary(a: string, b: string): string {
   const result = [];
   for (
     let i = a.length - 1, j = b.length - 1, carry = 0;
     i >= 0 || j >= 0 || carry;
 
   ) {
-    const bit1 = i >= 0 ? a[i--] - '0' : 0;
-    const bit2 = j >= 0 ? b[j--] - '0' : 0;
+    const bit1 = i >= 0 ? Number(a[i--]) : 0;
+    const bit2 = j >= 0 ? Number(b[j--]) : 0;
     const sum = bit1 + bit2 + carry;
     carry = Math.trunc(sum / 2);
     result.push(sum % 2);

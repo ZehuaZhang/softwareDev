@@ -25,11 +25,6 @@ Constraints:
 Follow up: Could you do it without any loop/recursion in O(1) runtime?
 */
 
-/**
- *
- * @param { number } num
- * @returns
- */
-function addDigit(num) {
+function addDigits(num: number): number {
   return ((num - 1) % 9) + 1;
 }

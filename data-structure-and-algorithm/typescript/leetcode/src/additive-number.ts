@@ -31,59 +31,52 @@ Follow up:
 How would you handle overflow for very large input integers?
 */
 
-/**
- *
- * @param { string } num
- * @returns { boolean }
- */
-function isAdditiveNumber(num) {
-  for (const i = 1; i < num.length; ++i) {
-    for (const j = i + 1; j < num.length; ++j) {
+import {runTestCaseList} from './util/test';
+
+function isAdditiveNumber(num: string): boolean {
+  for (let i = 1; i < num.length; ++i) {
+    for (let j = i + 1; j < num.length; ++j) {
       for (
-        const s1 = num.substring(0, i),
+        let s1 = num.substring(0, i),
           s2 = num.substring(i, j),
           s3 = add(s1, s2),
           curr = s1 + s2 + s3;
-        isValid(s1) && isValid(s2) && curr.length < num.length;
+        isValid(s1) && isValid(s2) && curr.length <= num.length;
         s1 = s2, s2 = s3, s3 = add(s1, s2), curr += s3
-      );
-      if (curr === num) {
-        return true;
+      ) {
+        if (curr === num) {
+          return true;
+        }
       }
     }
   }
   return false;
 }
 
-/**
- *
- * @param { string } s
- * @returns { boolean }
- */
-function isValid(s) {
-  return s.length === 1 || s[0] !== '0';
+function isValid(num: string): boolean {
+  return num.length === 1 || num[0] !== '0';
 }
 
-/**
- *
- * @param { string } s1
- * @param { string } s2
- * @returns { string }
- */
-function add(s1, s2) {
+function add(s1: string, s2: string): string {
   let carry = 0;
-  let result = '';
-  for (const i = 0; i < Math.max(s1.length, s2.length); ++i) {
-    const a = i < s1.length ? s1[i] - '0' : 0;
-    const b = j < s2.length ? s2[j] - '0' : 0;
+  const result = [];
+  for (let i = 1; i <= Math.max(s1.length, s2.length) || carry; ++i) {
+    const a = i <= s1.length ? Number(s1[s1.length - i]) : 0;
+    const b = i <= s2.length ? Number(s2[s2.length - i]) : 0;
     const sum = a + b + carry;
     carry = Math.trunc(sum / 10);
-    result += sum % 10;
-  }
-
-  if (carry === 1) {
-    result += carry;
+    result.push(sum % 10);
   }
 
   return [...result].reverse().join('');
 }
+
+// tests
+
+const testInputListCollection = [['112358'], ['199100199'], ['199001200']];
+
+const expectedResultList = [true, true, false];
+
+runTestCaseList(testInputListCollection, expectedResultList, isAdditiveNumber);
+
+export {};

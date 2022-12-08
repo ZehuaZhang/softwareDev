@@ -39,7 +39,7 @@ s consists of parentheses only '()[]{}'.
  * @param { string } s
  * @return { boolean }
  */
-const isValid = function (s) {
+function isValid(s) {
   const left = '([{';
   const map = new Map([
     [')', '('],
@@ -58,4 +58,4 @@ const isValid = function (s) {
   }
 
   return stack.length === 0;
-};
+}

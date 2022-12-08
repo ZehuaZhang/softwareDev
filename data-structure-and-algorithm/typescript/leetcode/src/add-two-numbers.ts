@@ -28,19 +28,16 @@ The number of nodes in each linked list is in the range [1, 100].
 It is guaranteed that the list represents a number that does not have leading zeros.
 */
 
-/**
- *
- * @param { ListNode } l1
- * @param { ListNode } l2
- * @returns { ListNode }
- */
-function addTwoNumbers(l1, l2) {
+import {ListNode} from './data-structure/LinkedList';
+import {Nullable} from './util/object';
+
+function addTwoNumbers(l1: Nullable<ListNode>, l2: Nullable<ListNode>) {
   const dummy = new ListNode(0);
 
   let carry = 0;
   for (let curr = dummy; l1 || l2 || carry; curr = curr.next) {
-    const a = l1 ? l1.value : 0;
-    const b = l2 ? l2.value : 0;
+    const a = l1 ? l1.data : 0;
+    const b = l2 ? l2.data : 0;
     const sum = a + b + carry;
     carry = Math.trunc(sum / 10);
     curr.next = new ListNode(sum % 10);
@@ -50,11 +47,4 @@ function addTwoNumbers(l1, l2) {
   }
 
   return dummy.next;
-}
-
-class ListNode {
-  constructor(value, next = null) {
-    this.value = value;
-    this.next = next;
-  }
 }
