@@ -14,17 +14,17 @@ export class LinkedList {
     }
   }
 
-  prepend(data: Data): LinkedList {
+  prepend(data: Data): ListNode {
     const node = new ListNode(data, this.head);
     this.head = node;
     if (!this.tail) {
       this.tail = node;
     }
     ++this.length;
-    return this;
+    return node;
   }
 
-  append(data: Data): LinkedList {
+  append(data: Data): ListNode {
     const node = new ListNode(data);
     if (!this.head) {
       this.head = this.tail = node;
@@ -33,7 +33,7 @@ export class LinkedList {
       this.tail = node;
     }
     ++this.length;
-    return this;
+    return node;
   }
 
   reverse(): LinkedList {
@@ -65,37 +65,28 @@ export class LinkedList {
     return current;
   }
 
-  insert(node: Nullable<ListNode>, data: Data): LinkedList {
-    if (node === null) {
-      this.prepend(data);
-      return this;
+  insert(prev: Nullable<ListNode>, data: Data): ListNode {
+    let node: Nullable<ListNode> = null;
+    if (prev === null) {
+      node = this.prepend(data)!;
+    } else if (prev === this.tail) {
+      node = this.append(data);
+    } else {
+      node = new ListNode(data, prev.next);
+      prev.next = node;
+      ++this.length;
     }
-
-    const next = node.next;
-    node.next = new ListNode(data, next);
-    if (node === this.tail) {
-      this.tail = node.next;
-    }
-    return this;
+    return node;
   }
 
-  insertAt(index: number, data: Data): LinkedList {
+  insertAt(index: number, data: Data): ListNode {
     if (index < 0 || index > this.length) {
       throw new Error('insertAt: out of bounds');
     }
 
-    const prev = this.get(index - 1);
-    if (prev) {
-      const node = new ListNode(data, prev.next);
-      prev.next = node;
-      if (prev === this.tail) {
-        this.tail = node;
-      }
-    } else {
-      this.prepend(data);
-    }
-    ++this.length;
-    return this;
+    const prev = index ? this.get(index - 1) : null;
+    const node = this.insert(prev, data);
+    return node;
   }
 
   removeAt(index: number): LinkedList {

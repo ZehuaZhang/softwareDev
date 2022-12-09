@@ -13,7 +13,7 @@ export class DoublyLinkedList {
     }
   }
 
-  append(data: Data): Nullable<DoublyLinkedListNode> {
+  append(data: Data): DoublyLinkedListNode {
     const node = new DoublyLinkedListNode(data);
     if (!this.head) {
       this.head = this.tail = node;
@@ -26,7 +26,7 @@ export class DoublyLinkedList {
     return this.tail;
   }
 
-  prepend(data: Data): Nullable<DoublyLinkedListNode> {
+  prepend(data: Data): DoublyLinkedListNode {
     const node = new DoublyLinkedListNode(data, this.head);
 
     if (this.head) {
@@ -74,22 +74,34 @@ export class DoublyLinkedList {
   }
 
   insert(
-    node: Nullable<DoublyLinkedListNode>,
+    prev: Nullable<DoublyLinkedListNode>,
     data: Data
-  ): Nullable<DoublyLinkedListNode> {
-    if (node === null) {
-      this.prepend(data);
-    }
-
-    const curr = new DoublyLinkedListNode(data, node!.next, node);
-    node!.next = curr;
-    if (node === this.tail) {
-      this.tail = curr;
+  ): DoublyLinkedListNode {
+    let node: Nullable<DoublyLinkedListNode> = null;
+    if (prev === null) {
+      node = this.prepend(data);
+    } else if (prev === this.tail) {
+      node = this.append(data);
     } else {
-      node!.next.prev = curr;
+      node = new DoublyLinkedListNode(data, prev!.next, prev);
+      prev!.next = node;
+      node.next!.prev = node;
+      ++this.length;
     }
-    ++this.length;
-    return curr;
+    return node;
+  }
+
+  insertAt(index: number, data: Data): DoublyLinkedListNode {
+    if (index < 0 || index > this.length) {
+      throw new Error('insert - out of bound');
+    }
+    let prev: Nullable<DoublyLinkedListNode> = null;
+    if (index === this.length) {
+      prev = this.tail;
+    } else {
+      prev = this.get(index)!.prev;
+    }
+    return this.insert(prev, data);
   }
 
   remove(node: DoublyLinkedListNode): void {
@@ -110,20 +122,8 @@ export class DoublyLinkedList {
         this.tail = this.head;
       }
     }
-    --this.length;
-  }
 
-  insertAt(index: number, data: Data): Nullable<DoublyLinkedListNode> {
-    if (index < 0 || index > this.length) {
-      throw new Error('insert - out of bound');
-    }
-    let prev: Nullable<DoublyLinkedListNode> = null;
-    if (index === this.length) {
-      prev = this.tail;
-    } else {
-      prev = this.get(index)!.prev;
-    }
-    return this.insert(prev, data);
+    --this.length;
   }
 
   removeAt(index: number): void {
@@ -154,13 +154,15 @@ export class DoublyLinkedList {
       : 'Doubly LinkedList is empty';
     console.log(output);
   }
+
   printLog(): void {
     const array = this.toArray();
-    for (const bucket of array) {
-      console.log('bucketlist', bucket.data, bucket.keySet);
+    for (const data of array) {
+      console.log(data);
     }
-    console.log('this.head', this.head!.data.data, this.head!.data.keySet);
-    console.log('this.tail', this.tail!.data.data, this.tail!.data.keySet);
+    console.log('head', this.head?.data);
+    console.log('tail', this.tail?.data);
+    console.log('length', this.length);
   }
 }
 

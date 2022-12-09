@@ -42,6 +42,7 @@ import {
   DoublyLinkedList,
   DoublyLinkedListNode,
 } from './data-structure/DoublyLinkedList';
+import {timingSafeEqual} from 'crypto';
 
 class AllOne {
   bucketList: DoublyLinkedList;
@@ -52,7 +53,7 @@ class AllOne {
   }
 
   inc(key: string): void {
-    console.log('\n', 'inc', key);
+    console.log('\ninc');
     if (!this.keyBucketMap.has(key)) {
       const bucket = new Bucket(0, key);
       const node = this.bucketList.prepend(bucket)!;
@@ -65,20 +66,21 @@ class AllOne {
       const bucket = new Bucket(curr.data.data + 1);
       next = this.bucketList.insert(curr, bucket)!;
     }
-    console.log('after insert');
-    this.bucketList.printLog();
 
     next.data.keySet.add(key);
     this.keyBucketMap.set(key, next);
 
+    console.log('insert');
+    this.bucketList.printLog();
+
     this.remove(key, curr);
 
-    console.log('after remove');
+    console.log('remove');
     this.bucketList.printLog();
   }
 
   dec(key: string): void {
-    console.log('\n', 'dec', key);
+    console.log('\ndec');
     if (!this.keyBucketMap.has(key)) {
       return;
     }
@@ -88,17 +90,22 @@ class AllOne {
     if (curr.data.data > 1) {
       if (prev === null || prev.data.data < curr.data.data - 1) {
         const bucket = new Bucket(curr.data.data - 1);
-        console.log('hi', curr.prev?.data);
         prev = this.bucketList.insert(prev, bucket)!;
       }
-      console.log('after insert');
-      this.bucketList.printLog();
+
       prev.data.keySet.add(key);
       this.keyBucketMap.set(key, prev);
+
+      console.log('insert');
+      this.bucketList.printLog();
+    } else {
+      this.keyBucketMap.delete(key);
     }
-    console.log('after remove');
-    this.bucketList.printLog();
+
     this.remove(key, curr);
+
+    console.log('remove');
+    this.bucketList.printLog();
   }
 
   getMaxKey() {
@@ -115,7 +122,6 @@ class AllOne {
 
   remove(key: string, node: DoublyLinkedListNode) {
     node.data.keySet.delete(key);
-    console.log(JSON.stringify(node.data));
     if (node.data.keySet.size === 0) {
       this.bucketList.remove(node);
     }
@@ -133,11 +139,11 @@ class Bucket {
 
 const allOne = new AllOne();
 allOne.inc('a');
-allOne.inc('b');
-allOne.inc('b');
-allOne.inc('b');
+allOne.inc('a');
+allOne.inc('a');
 allOne.inc('b');
 allOne.dec('b');
+allOne.inc('b');
 allOne.dec('b');
 console.log(allOne.getMaxKey());
 console.log(allOne.getMinKey());
