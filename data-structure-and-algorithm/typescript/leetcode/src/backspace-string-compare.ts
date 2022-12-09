@@ -36,23 +36,23 @@ s and t only contain lowercase letters and '#' characters.
 Follow up: Can you solve it in O(n) time and O(1) space?
 */
 
-function backspaceCompare(s, t) {
-  for (let i = s.length - 1, j = t.length - 1; i >= 0 || j >= 0; --i, --j) {
-    for (let count = 0; i >= 0 && (count > 0 || s[i] === '#'); --i) {
-      if (s[i] === '#') {
+function backspaceCompare(s1: string, s2: string): boolean {
+  for (let i = s1.length - 1, j = s2.length - 1; i >= 0 || j >= 0; --i, --j) {
+    for (let count = 0; i >= 0 && (count > 0 || s1[i] === '#'); --i) {
+      if (s1[i] === '#') {
         ++count;
       } else {
         --count;
       }
     }
-    for (let count = 0; j >= 0 && (count > 0 || t[j] === '#'); --j) {
-      if (t[j] === '#') {
+    for (let count = 0; j >= 0 && (count > 0 || s2[j] === '#'); --j) {
+      if (s2[j] === '#') {
         ++count;
       } else {
         --count;
       }
     }
-    if (i < 0 || j < 0 || s[i] !== t[j]) {
+    if (i < 0 || j < 0 || s1[i] !== s2[j]) {
       return i === -1 && j === -1;
     }
   }

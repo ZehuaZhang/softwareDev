@@ -29,11 +29,14 @@ The number of nodes in the tree is in the range [0, 5000].
 -104 <= Node.val <= 104
 */
 
-function isBalanced(root) {
+import {Nullable} from './util/object';
+import {TreeNode} from './data-structure/BinaryTree';
+
+function isBalanced(root: Nullable<TreeNode>): boolean {
   return isBalancedDFS(root) >= 0;
 }
 
-function isBalancedDFS(root) {
+function isBalancedDFS(root: Nullable<TreeNode>): number {
   if (root === null) {
     return 0;
   }

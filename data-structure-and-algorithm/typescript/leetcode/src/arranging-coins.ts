@@ -24,14 +24,9 @@ Constraints:
 1 <= n <= 231 - 1
 */
 
-/**
- *
- * @param { number } n
- * @returns { number }
- */
-function arrangeCoins(n) {
-  let left = 1,
-    right = n;
+function arrangeCoins(n: number): number {
+  let left = 1;
+  let right = n;
   while (left <= right) {
     const mid = left + Math.trunc((right - left) / 2);
     if ((mid * (mid + 1)) / 2 > n) {

@@ -40,32 +40,21 @@ Input: m = 1, n = 1
 Output: 9
 */
 
-/**
- *
- * @param { number } m
- * @param { number } n
- * @returns { number }
- */
-function numberOfPatterns(m, n) {
-  const skipover = Array(10)
-    .fill(0)
-    .map(() => Array(10).fill(0));
+import {runTestCaseList} from './util/test';
+
+function numberOfPatterns(minKeyCount: number, maxKeyCount: number): number {
+  const skipover = [...Array(10)].map(() => Array(10).fill(0));
   skipover[1][3] = skipover[3][1] = 2;
   skipover[1][7] = skipover[7][1] = 4;
   skipover[3][9] = skipover[9][3] = 6;
   skipover[7][9] = skipover[9][7] = 8;
-  skipover[1][9] =
-    skipover[9][1] =
-    skipover[2][8] =
-    skipover[8][2] =
-    skipover[3][7] =
-    skipover[7][3] =
-    skipover[4][6] =
-    skipover[6][4] =
-      5;
-  const visited = Array(10).fill(false);
+  skipover[1][9] = skipover[9][1] = 5;
+  skipover[2][8] = skipover[8][2] = 5;
+  skipover[3][7] = skipover[7][3] = 5;
+  skipover[4][6] = skipover[6][4] = 5;
+  const visited: boolean[] = Array(10).fill(false);
   let result = 0;
-  for (const i = m; i <= n; ++i) {
+  for (let i = minKeyCount; i <= maxKeyCount; ++i) {
     result += numberOfPatternsDFS(visited, skipover, i - 1, 1) * 4;
     result += numberOfPatternsDFS(visited, skipover, i - 1, 2) * 4;
     result += numberOfPatternsDFS(visited, skipover, i - 1, 5);
@@ -73,23 +62,36 @@ function numberOfPatterns(m, n) {
   return result;
 }
 
-function numberOfPatternsDFS(visited, skipover, remains, curr) {
-  if (remains === 0) {
+function numberOfPatternsDFS(
+  visited: boolean[],
+  skipover: number[][],
+  keyCount: number,
+  currKey: number
+): number {
+  if (keyCount === 0) {
     return 1;
-  } else if (remains < 0) {
+  } else if (keyCount < 0) {
     return 0;
   }
 
-  visited[curr] = true;
+  visited[currKey] = true;
   let result = 0;
-  for (const next = 1; next <= 9; ++next) {
+  for (let nextKey = 1; nextKey <= 9; ++nextKey) {
     if (
-      !visited[i] &&
-      (!skipover[curr][next] || visited[skipover[curr][next]])
+      !visited[nextKey] &&
+      (!skipover[currKey][nextKey] || visited[skipover[currKey][nextKey]])
     ) {
-      result += numberOfPatternsDFS(visited, skipover, remains - 1, next);
+      result += numberOfPatternsDFS(visited, skipover, keyCount - 1, nextKey);
     }
   }
-  visited[curr] = false;
+  visited[currKey] = false;
   return result;
 }
+
+// tests
+
+const testInputListCollection = [[1, 1]];
+
+const expectedResultList = [9];
+
+runTestCaseList(testInputListCollection, expectedResultList, numberOfPatterns);

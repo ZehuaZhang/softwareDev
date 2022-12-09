@@ -27,14 +27,9 @@ Constraints:
 
 */
 
-/**
- *
- * @param { number[] } nums
- * @returns { number }
- */
-function numberOfArithmeticSlices(nums) {
-  let result = 0,
-    curr = 0;
+function numberOfArithmeticSlices(nums: number[]): number {
+  let result = 0;
+  let curr = 0;
   for (let i = 2; i < nums.length; ++i) {
     if (nums[i] - nums[i - 1] === nums[i - 1] - nums[i - 2]) {
       result += ++curr;

@@ -32,23 +32,26 @@ s represents a valid expression.
 Every number and running calculation will fit in a signed 32-bit integer.
 */
 
-function calculate(s) {
-  function calculateDFS(s) {
-    if (i === s.length) {
+function calculateI(input: string): number {
+  let i = 0;
+  return calculateDFS(input);
+
+  function calculateDFS(input: string): number {
+    if (i === input.length) {
       return 0;
     }
     const sum = [];
     let op = '+';
     let num = 0;
-    for (; i < s.length; ) {
-      const char = s[i++];
+    for (; i < input.length; ) {
+      const char = input[i++];
       if (char >= '0' && char <= '9') {
-        num = num * 10 + (char - '0');
+        num = num * 10 + Number(char);
       }
       if (char === '(') {
-        num = calculateDFS(s);
+        num = calculateDFS(input);
       }
-      if (i === s.length || ['+', '-', ')'].find(c => c === char)) {
+      if (i === input.length || ['+', '-', ')'].find(c => c === char)) {
         switch (op) {
           case '+':
             sum.push(num);
@@ -66,7 +69,4 @@ function calculate(s) {
     }
     return sum.reduce((a, b) => a + b, 0);
   }
-
-  let i = 0;
-  return calculateDFS(s);
 }

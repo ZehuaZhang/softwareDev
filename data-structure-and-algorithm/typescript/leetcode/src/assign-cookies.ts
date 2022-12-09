@@ -28,18 +28,12 @@ Constraints:
 1 <= g[i], s[j] <= 231 - 1
 */
 
-/**
- *
- * @param { number[] } g
- * @param { number } s
- * @returns { number }
- */
-function findContentChildren(g, s) {
-  g.sort((a, b) => a - b);
-  s.sort((a, b) => a - b);
+function findContentChildren(greed: number[], cookie: number[]): number {
+  greed.sort((a, b) => a - b);
+  cookie.sort((a, b) => a - b);
   let j = 0;
-  for (let i = 0; i < s.length && j < g.length; ++i) {
-    if (s[i] >= g[j]) {
+  for (let i = 0; i < cookie.length && j < greed.length; ++i) {
+    if (cookie[i] >= greed[j]) {
       ++j;
     }
   }

@@ -42,7 +42,6 @@ import {
   DoublyLinkedList,
   DoublyLinkedListNode,
 } from './data-structure/DoublyLinkedList';
-import {timingSafeEqual} from 'crypto';
 
 class AllOne {
   bucketList: DoublyLinkedList;
@@ -136,14 +135,3 @@ class Bucket {
     this.keySet = new Set([...keyList]);
   }
 }
-
-const allOne = new AllOne();
-allOne.inc('a');
-allOne.inc('a');
-allOne.inc('a');
-allOne.inc('b');
-allOne.dec('b');
-allOne.inc('b');
-allOne.dec('b');
-console.log(allOne.getMaxKey());
-console.log(allOne.getMinKey());

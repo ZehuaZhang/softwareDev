@@ -21,14 +21,16 @@ Constraints:
 The number of nodes in the tree is between 1 and 10^4.
 The tree nodes will have distinct values between 1 and 10^5.
 */
+import {Nullable} from './util/object';
+import {TreeNode} from './data-structure/BinaryTree';
 
-function balanceBST(root) {
-  const array = [];
+function balanceBST(root: Nullable<TreeNode>): Nullable<TreeNode> {
+  const array: TreeNode[] = [];
   toArray(root, array);
   return toTree(0, array.length - 1, array);
 }
 
-function toArray(node, array) {
+function toArray(node: Nullable<TreeNode>, array: TreeNode[]) {
   if (!node) {
     return;
   }
@@ -37,7 +39,7 @@ function toArray(node, array) {
   toArray(node.right, array);
 }
 
-function toTree(left, right, array) {
+function toTree(left: number, right: number, array: TreeNode[]) {
   if (left > right) {
     return null;
   }

@@ -18,23 +18,32 @@ Some examples:
 Note: Do not use the eval built-in library function.
 */
 
-function calculate(s) {
-  function calculateDFS(s) {
-    if (i === s.length) {
+import {runTestCaseList} from './util/test';
+
+// method - dfs
+function calculateIII_Dfs(input: string): number {
+  let i = 0;
+  return calculateDfs(input);
+
+  function calculateDfs(input: string): number {
+    if (i === input.length) {
       return 0;
     }
-    const sum = [];
+    const sum: number[] = [];
     let op = '+';
     let num = 0;
-    for (; i < s.length; ) {
-      const char = s[i++];
+    for (; i < input.length; ) {
+      const char = input[i++];
       if (char >= '0' && char <= '9') {
-        num = num * 10 + (char - '0');
+        num = num * 10 + Number(char);
       }
       if (char === '(') {
-        num = calculateDFS(s);
+        num = calculateDfs(input);
       }
-      if (i === s.length || ['+', '-', '*', '/', ')'].find(c => c === char)) {
+      if (
+        i === input.length ||
+        ['+', '-', '*', '/', ')'].find(c => c === char)
+      ) {
         switch (op) {
           case '+':
             sum.push(num);
@@ -43,10 +52,10 @@ function calculate(s) {
             sum.push(-num);
             break;
           case '*':
-            sum.push(sum.pop() * num);
+            sum.push(sum.pop()! * num);
             break;
           case '/':
-            sum.push(Math.trunc(sum.pop() / num));
+            sum.push(Math.trunc(sum.pop()! / num));
             break;
         }
         op = char;
@@ -58,19 +67,17 @@ function calculate(s) {
     }
     return sum.reduce((a, b) => a + b, 0);
   }
-
-  let i = 0;
-  return calculateDFS(s);
 }
 
-function calculateIterative(s) {
-  const [operands, operators] = [[], []];
+// iterative
+function calculateIII_Iterative(input: string): number {
+  const [operands, operators]: [number[], string[]] = [[], []];
   let num = 0;
-  for (let i = 0; i < s.length; ++i) {
-    const char = s[i];
+  for (let i = 0; i < input.length; ++i) {
+    const char = input[i];
     if (isDigit(char)) {
-      num = num * 10 + (char - '0');
-      if (i === s.length - 1 || !isDigit(s[i + 1])) {
+      num = num * 10 + Number(char);
+      if (i === input.length - 1 || !isDigit(input[i + 1])) {
         operands.push(num);
         num = 0;
       }
@@ -94,89 +101,66 @@ function calculateIterative(s) {
   while (operators.length !== 0) {
     compute(operands, operators);
   }
-  return operands.pop();
-}
+  return operands.pop()!;
 
-function isDigit(char) {
-  return char >= '0' && char <= '9';
-}
-
-function isOp(char) {
-  return Boolean(['+', '-', '*', '/'].find(c => c === char));
-}
-
-function getPrecendence(char) {
-  switch (char) {
-    case '+':
-      return 1;
-    case '-':
-      return 1;
-    case '*':
-      return 2;
-    case '/':
-      return 2;
+  function isDigit(char: string): boolean {
+    return char >= '0' && char <= '9';
   }
-  return 0;
-}
 
-function compute(operands, operators) {
-  const x = operands.pop();
-  const y = operands.pop();
-  const op = operators.pop();
-
-  switch (op) {
-    case '+':
-      operands.push(x + y);
-      break;
-    case '-':
-      operands.push(x - y);
-      break;
-    case '*':
-      operands.push(x * y);
-      break;
-    case '/':
-      operands.push(x / y);
-      break;
+  function isOp(char: string): boolean {
+    return Boolean(['+', '-', '*', '/'].find(c => c === char));
   }
-}
 
-function calculateDFS(s) {
-  let result = 0,
-    curr = 0,
-    num = 0;
-  let op = '+';
-  for (let i = 0; i < s.length; ++i) {
-    const char = s[i];
-    if (char >= '0' && char <= '9') {
-      num = num * 10 + (char - '0');
-    } else if (char === '(') {
-      num = calculateDFS(s.substring(j + 1));
+  function getPrecendence(char: string): number {
+    switch (char) {
+      case '+':
+        return 1;
+      case '-':
+        return 1;
+      case '*':
+        return 2;
+      case '/':
+        return 2;
     }
-    if (['+', '-', '*', '/'].find(c => c === char) || i === s.length - 1) {
-      switch (op) {
-        case '+':
-          curr += num;
-          break;
-        case '-':
-          curr -= num;
-          break;
-        case '*':
-          curr *= num;
-          break;
-        case '/':
-          curr = Math.trunc(curr / num);
-          break;
-      }
-      if (['+', '-'].find(c => c === char) || i === s.length - 1) {
-        result += curr;
-        curr = 0;
-      }
-      op = char;
-      num = 0;
-    }
-    if (char === ')') {
-      return result;
+    return 0;
+  }
+
+  function compute(operands: number[], operators: string[]): void {
+    const x = operands.pop()!;
+    const y = operands.pop()!;
+    const op = operators.pop();
+
+    switch (op) {
+      case '+':
+        operands.push(x + y);
+        break;
+      case '-':
+        operands.push(y - x);
+        break;
+      case '*':
+        operands.push(x * y);
+        break;
+      case '/':
+        operands.push(Math.trunc(y / x));
+        break;
     }
   }
-  return result;
 }
+
+// tests
+
+const testInputListCollection = [
+  ['1 + 1'],
+  [' 6-4 / 2 '],
+  ['2*(5+5*2)/3+(6/2+8)'],
+  ['(2+6* 3+5- (3*14/7+2)*5)+3'],
+];
+
+const expectedResultList = [2, 4, 21, -12];
+
+runTestCaseList(testInputListCollection, expectedResultList, calculateIII_Dfs);
+runTestCaseList(
+  testInputListCollection,
+  expectedResultList,
+  calculateIII_Iterative
+);

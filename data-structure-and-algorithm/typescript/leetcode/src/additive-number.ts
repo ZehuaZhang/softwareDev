@@ -51,24 +51,24 @@ function isAdditiveNumber(num: string): boolean {
     }
   }
   return false;
-}
 
-function isValid(num: string): boolean {
-  return num.length === 1 || num[0] !== '0';
-}
-
-function add(s1: string, s2: string): string {
-  let carry = 0;
-  const result = [];
-  for (let i = 1; i <= Math.max(s1.length, s2.length) || carry; ++i) {
-    const a = i <= s1.length ? Number(s1[s1.length - i]) : 0;
-    const b = i <= s2.length ? Number(s2[s2.length - i]) : 0;
-    const sum = a + b + carry;
-    carry = Math.trunc(sum / 10);
-    result.push(sum % 10);
+  function isValid(num: string): boolean {
+    return num.length === 1 || num[0] !== '0';
   }
 
-  return [...result].reverse().join('');
+  function add(s1: string, s2: string): string {
+    let carry = 0;
+    const result = [];
+    for (let i = 1; i <= Math.max(s1.length, s2.length) || carry; ++i) {
+      const a = i <= s1.length ? Number(s1[s1.length - i]) : 0;
+      const b = i <= s2.length ? Number(s2[s2.length - i]) : 0;
+      const sum = a + b + carry;
+      carry = Math.trunc(sum / 10);
+      result.push(sum % 10);
+    }
+
+    return [...result].reverse().join('');
+  }
 }
 
 // tests
@@ -78,5 +78,3 @@ const testInputListCollection = [['112358'], ['199100199'], ['199001200']];
 const expectedResultList = [true, true, false];
 
 runTestCaseList(testInputListCollection, expectedResultList, isAdditiveNumber);
-
-export {};

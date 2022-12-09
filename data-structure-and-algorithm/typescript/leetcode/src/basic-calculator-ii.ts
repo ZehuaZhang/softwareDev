@@ -30,16 +30,16 @@ All the integers in the expression are non-negative integers in the range [0, 23
 The answer is guaranteed to fit in a 32-bit integer.
 */
 
-function calculate(s) {
-  const sum = [];
+function calculateII(input: string): number {
+  const sum: number[] = [];
   let op = '+';
   let num = 0;
-  for (let i = 0; i < s.length; ) {
-    const char = s[i++];
+  for (let i = 0; i < input.length; ) {
+    const char = input[i++];
     if (char >= '0' && char <= '9') {
-      num = num * 10 + (char - '0');
+      num = num * 10 + Number(char);
     }
-    if (i === s.length || ['+', '-', '*', '/'].find(c => c === char)) {
+    if (i === input.length || ['+', '-', '*', '/'].find(c => c === char)) {
       switch (op) {
         case '+':
           sum.push(num);
@@ -48,10 +48,10 @@ function calculate(s) {
           sum.push(-num);
           break;
         case '*':
-          sum.push(sum.pop() * num);
+          sum.push(sum.pop()! * num);
           break;
         case '/':
-          sum.push(Math.trunc(sum.pop() / num));
+          sum.push(Math.trunc(sum.pop()! / num));
           break;
       }
       op = char;

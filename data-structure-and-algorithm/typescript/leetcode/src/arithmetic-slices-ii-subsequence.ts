@@ -33,48 +33,53 @@ Constraints:
 -231 <= nums[i] <= 231 - 1
 */
 
-/**
- *
- * @param { number[] } nums
- * @returns { number }
- */
-function numberOfArithmeticSlices(nums) {
+// method - dynamic programming
+function numberOfArithmeticSlicesDP(nums: number[]): number {
   let result = 0;
-  const diffCount = new Array(nums.length).fill(0).map(() => new Map());
-  for (const i = 1; i < nums.length; ++i) {
-    for (const j = 0; j < i; ++j) {
+
+  // count that ends with number array index and difference
+  const diffCountMap = [...Array(nums.length)].map(
+    () => new Map<number, number>()
+  );
+  for (let i = 1; i < nums.length; ++i) {
+    for (let j = 0; j < i; ++j) {
       const diff = nums[i] - nums[j];
-      const countJ = diffCount[j].has(diff) ? diffCount[j].get(diff) : 0;
-      const countI = diffCount[i].has(diff) ? diffCount[i].get(diff) : 0;
-      diffCount[i].set(diff, countI + countJ + 1);
+      const countJ = diffCountMap[j].get(diff) || 0;
+      const countI = diffCountMap[i].get(diff) || 0;
+      diffCountMap[i].set(diff, countI + countJ + 1);
       result += countJ;
     }
   }
   return result;
 }
 
-function numberOfArithmeticSlicesDFS(nums) {
-  const result = Array(1).fill(0);
-  const path = [];
-  numberOfArithmeticSlicesDFSHelper(nums, result, path, 0);
-  return result[0];
-}
+// method - dfs
+function numberOfArithmeticSlicesDFS(nums: number[]): number {
+  let result = 0;
+  const path: number[] = [];
+  numberOfArithmeticSlicesDFSHelper(nums, path, 0);
+  return result;
 
-function numberOfArithmeticSlicesDFSHelper(nums, result, path, start) {
-  for (let i = start; i < nums.length; ++i) {
-    if (
-      path.length < 2 ||
-      nums[i] - path[path.length - 1] ===
-        path[path.length - 1] - path[path.length - 2]
-    ) {
-      path.push(nums[i]);
-      numberOfArithmeticSlicesDFSHelper(nums, result, path, i + 1);
-      path.pop();
+  function numberOfArithmeticSlicesDFSHelper(
+    nums: number[],
+    path: number[],
+    start: number
+  ) {
+    for (let i = start; i < nums.length; ++i) {
+      if (
+        path.length < 2 ||
+        nums[i] - path[path.length - 1] ===
+          path[path.length - 1] - path[path.length - 2]
+      ) {
+        path.push(nums[i]);
+        numberOfArithmeticSlicesDFSHelper(nums, path, i + 1);
+        path.pop();
+      }
     }
-  }
 
-  if (path.length >= 3) {
-    ++result[0];
-    return;
+    if (path.length >= 3) {
+      ++result;
+      return;
+    }
   }
 }
