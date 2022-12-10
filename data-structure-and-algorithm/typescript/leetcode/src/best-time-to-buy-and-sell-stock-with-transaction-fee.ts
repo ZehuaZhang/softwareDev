@@ -31,13 +31,13 @@ Constraints:
 
 */
 
-function maxProfit(prices, fee) {
-  let sold = 0,
-    hold = -prices[0];
-  for (const p of prices) {
-    const temp = sold;
-    sold = Math.max(sold, hold + p - fee);
-    hold = Math.max(hold, temp - p);
+function maxProfitFee(prices: number[], fee: number): number {
+  let sell = 0;
+  let buy = -prices[0];
+  for (const price of prices) {
+    const temp = sell;
+    sell = Math.max(sell, buy + price - fee);
+    buy = Math.max(buy, temp - price);
   }
-  return sold;
+  return sell;
 }

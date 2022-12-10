@@ -26,12 +26,12 @@ Constraints:
 0 <= prices[i] <= 104
 */
 
-function maxProfit(prices) {
+function maxProfit(prices: number[]): number {
   let result = 0;
   let min = Infinity;
-  for (const p of prices) {
-    min = Math.min(min, p);
-    result = Math.max(result, p - min);
+  for (const price of prices) {
+    min = Math.min(min, price);
+    result = Math.max(result, price - min);
   }
   return result;
 }

@@ -48,14 +48,21 @@ The number of nodes in the tree is in the range [1, 105].
 At most 105 calls will be made to hasNext, next, hasPrev, and prev.
 */
 
+import {Nullable} from './util/object';
+import {TreeNode} from './data-structure/BinaryTree';
+import {Stack} from './data-structure/Stack';
+
 class BSTIterator {
-  constructor(root) {
-    this.dummy = new TreeNode();
+  dummy: TreeNode;
+  curr: TreeNode;
+  stack: Stack;
+  constructor(root: Nullable<TreeNode>) {
+    this.dummy = new TreeNode(NaN);
     this.curr = this.dummy;
-    this.stack = [];
-    let prev = this.dummy,
-      node = root;
-    while (node || this.stack.length) {
+    this.stack = new Stack();
+    let prev = this.dummy;
+    let node = root;
+    while (node || this.stack.size) {
       if (node) {
         this.stack.push(node);
         node = node.left;
@@ -63,25 +70,24 @@ class BSTIterator {
         node = this.stack.pop();
 
         // linked list with tree
-        const copy = new TreeNode(node.val);
+        const copy = new TreeNode(node!.data);
         prev.right = copy;
         copy.left = prev;
         prev = copy;
 
-        node = node.right;
+        node = node!.right;
       }
     }
-    curr = this.dummy;
   }
 
   next() {
-    this.curr = this.curr.right;
-    return this.curr.val;
+    this.curr = this.curr.right!;
+    return this.curr.data;
   }
 
   prev() {
-    this.curr = this.curr.left;
-    return this.curr.val;
+    this.curr = this.curr.left!;
+    return this.curr.data;
   }
 
   hasNext() {

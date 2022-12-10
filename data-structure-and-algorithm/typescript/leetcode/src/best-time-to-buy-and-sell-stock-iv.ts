@@ -26,7 +26,7 @@ Constraints:
 0 <= prices[i] <= 1000
 */
 
-function maxProfit(k, prices) {
+function maxProfitIV(k: number, prices: number[]): number {
   if (k >= prices.length) {
     return maxBestProfit(prices);
   }
@@ -41,14 +41,14 @@ function maxProfit(k, prices) {
     }
   }
   return result[k];
-}
 
-function maxBestProfit(prices) {
-  let result = 0;
-  for (let i = 1; i < prices.length; ++i) {
-    if (prices[i] - prices[i - 1] > 0) {
-      result += prices[i] - prices[i - 1];
+  function maxBestProfit(prices: number[]): number {
+    let result = 0;
+    for (let i = 1; i < prices.length; ++i) {
+      if (prices[i] - prices[i - 1] > 0) {
+        result += prices[i] - prices[i - 1];
+      }
     }
+    return result;
   }
-  return result;
 }

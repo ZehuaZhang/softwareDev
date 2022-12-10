@@ -36,7 +36,7 @@ Constraints:
 0 <= prices[i] <= 105
 */
 
-function maxProfit(prices) {
+function maxProfitIII(prices: number[]): number {
   const k = 2;
   if (k >= prices.length) {
     return maxBestProfit(prices);
@@ -52,14 +52,14 @@ function maxProfit(prices) {
     }
   }
   return result[k];
-}
 
-function maxBestProfit(prices) {
-  let result = 0;
-  for (let i = 1; i < prices.length; ++i) {
-    if (prices[i] - prices[i - 1] > 0) {
-      result += prices[i] - prices[i - 1];
+  function maxBestProfit(prices: number[]): number {
+    let result = 0;
+    for (let i = 1; i < prices.length; ++i) {
+      if (prices[i] - prices[i - 1] > 0) {
+        result += prices[i] - prices[i - 1];
+      }
     }
+    return result;
   }
-  return result;
 }

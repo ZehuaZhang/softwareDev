@@ -27,12 +27,12 @@ board[i][j] is either '.' or 'X'.
 Follow up: Could you do it in one-pass, using only O(1) extra memory and without modifying the values board?
 */
 
-function countBattleships(board) {
+function countBattleships(board: string[][]): number {
   let result = 0;
   board.forEach((row, i) => {
-    row.forEach((v, j) => {
+    row.forEach((data, j) => {
       if (
-        v === 'X' &&
+        data === 'X' &&
         (i === 0 || board[i - 1][j] !== 'X') &&
         (j === 0 || board[i][j - 1] !== 'X')
       ) {

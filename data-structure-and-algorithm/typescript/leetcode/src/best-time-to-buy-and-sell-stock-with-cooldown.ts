@@ -25,16 +25,16 @@ Constraints:
 0 <= prices[i] <= 1000
 */
 
-function maxProfit(prices) {
-  let buy = -Infinity,
-    prevBuy = 0,
-    sell = 0,
-    prevSell = 0;
-  for (const p of prices) {
+function maxProfitCooldown(prices: number[]): number {
+  let buy = -Infinity;
+  let prevBuy = 0;
+  let sell = 0;
+  let prevSell = 0;
+  for (const price of prices) {
     prevBuy = buy;
-    buy = Math.max(prevSell - p, prevBuy);
+    buy = Math.max(prevSell - price, prevBuy);
     prevSell = sell;
-    sell = Math.max(prevBuy + p, prevSell);
+    sell = Math.max(prevBuy + price, prevSell);
   }
   return sell;
 }

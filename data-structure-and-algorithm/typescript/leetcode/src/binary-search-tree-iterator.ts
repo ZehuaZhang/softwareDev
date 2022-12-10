@@ -44,26 +44,31 @@ Follow up:
 Could you implement next() and hasNext() to run in average O(1) time and use O(h) memory, where h is the height of the tree?
 */
 
+import {Nullable} from './util/object';
+import {TreeNode} from './data-structure/BinaryTree';
+import {Stack} from './data-structure/Stack';
+
 class BSTIterator {
-  constructor(root) {
-    this.stack = [];
+  stack: Stack;
+  constructor(root: Nullable<TreeNode>) {
+    this.stack = new Stack();
     while (root) {
       this.stack.push(root);
       root = root.left;
     }
   }
 
-  next() {
+  next(): number {
     const curr = this.stack.pop();
     let node = curr.right;
     while (node) {
       this.stack.push(node);
       node = node.left;
     }
-    return curr.val;
+    return curr.data;
   }
 
-  hasNext() {
-    return this.stack.length;
+  hasNext(): boolean {
+    return this.stack.size !== 0;
   }
 }

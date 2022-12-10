@@ -32,9 +32,9 @@ Constraints:
 0 <= prices[i] <= 104
 */
 
-function maxProfit(prices) {
+function maxProfitII(prices: number[]): number {
   let result = 0;
-  for (i = 1; i < prices.length; ++i) {
+  for (let i = 1; i < prices.length; ++i) {
     if (prices[i] > prices[i - 1]) {
       result += prices[i] - prices[i - 1];
     }
