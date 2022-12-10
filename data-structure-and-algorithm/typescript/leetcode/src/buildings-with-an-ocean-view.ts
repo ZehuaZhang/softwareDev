@@ -35,8 +35,10 @@ Constraints:
 1 <= heights[i] <= 109
 */
 
-function findBuildings(heights) {
-  const result = [];
+import {runTestCaseList} from './util/test';
+
+function findBuildings(heights: number[]): number[] {
+  const result: number[] = [];
   for (let i = 0; i < heights.length; ++i) {
     while (result.length && heights[result[result.length - 1]] <= heights[i]) {
       result.pop();
@@ -45,3 +47,14 @@ function findBuildings(heights) {
   }
   return result;
 }
+
+const testInputListCollection = [
+  [[4, 2, 3, 1]],
+  [[4, 3, 2, 1]],
+  [[1, 3, 2, 4]],
+  [[2, 2, 2, 2]],
+];
+
+const expectedResultList = [[0, 2, 3], [0, 1, 2, 3], [3], [3]];
+
+runTestCaseList(testInputListCollection, expectedResultList, findBuildings);

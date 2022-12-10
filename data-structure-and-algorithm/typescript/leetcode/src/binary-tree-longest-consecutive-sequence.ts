@@ -35,18 +35,43 @@ Output: 2
 Explanation: Longest consecutive sequence path is 2-3, not 3-2-1, so return 2.
 */
 
-function longestConsecutive(root) {
-  return dfs(root, null, 0);
+import {Nullable} from './util/object';
+import {runTestCaseList} from './util/test';
+import {TreeNode, BinaryTree} from './data-structure/BinaryTree';
+
+function longestConsecutive(root: Nullable<TreeNode>): number {
+  return longestConsecutiveDfs(root, null, 0);
+
+  function longestConsecutiveDfs(
+    node: Nullable<TreeNode>,
+    prev: Nullable<TreeNode>,
+    result: number
+  ): number {
+    if (node === null) {
+      return result;
+    }
+    result = prev && node.data === prev.data + 1 ? result + 1 : 1;
+    return Math.max(
+      result,
+      longestConsecutiveDfs(node.left, node, result),
+      longestConsecutiveDfs(node.right, node, result)
+    );
+  }
 }
 
-function dfs(node, prev, result) {
-  if (node === null) {
-    return result;
-  }
-  result = prev && node.val === prev.val + 1 ? result + 1 : 1;
-  return Math.max(
-    result,
-    dfs(node.left, node, result),
-    dfs(node.right, node, result)
-  );
-}
+// test
+const tree1 = new BinaryTree(1, null, 3, 2, 4, null, null, null, 5);
+const tree2 = new BinaryTree(2, null, 3, 2, null, 1);
+
+tree1.printLevel();
+tree2.printLevel();
+
+const testInputListCollection = [[tree1.root], [tree2.root]];
+
+const expectedResultList = [3, 2];
+
+runTestCaseList(
+  testInputListCollection,
+  expectedResultList,
+  longestConsecutive
+);

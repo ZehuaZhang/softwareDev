@@ -27,20 +27,21 @@ The number of nodes in the tree is in the range [1, 3 * 104].
 -1000 <= Node.val <= 1000
 */
 
-let max;
+import {Nullable} from './util/object';
+import {TreeNode} from './data-structure/BinaryTree';
 
-function maxPathSum(root) {
-  max = -Infinity;
-  dfs(root);
+function maxPathSum(root: Nullable<TreeNode>): number {
+  let max = -Infinity;
+  maxPathSumDfs(root);
   return max;
-}
 
-function dfs(node) {
-  if (node === null) {
-    return 0;
+  function maxPathSumDfs(node: Nullable<TreeNode>): number {
+    if (node === null) {
+      return 0;
+    }
+    const left = Math.max(0, maxPathSumDfs(node.left));
+    const right = Math.max(0, maxPathSumDfs(node.right));
+    max = Math.max(max, left + right + node.data);
+    return Math.max(left, right) + node.data;
   }
-  const left = Math.max(0, dfs(node.left));
-  const right = Math.max(0, dfs(node.right));
-  max = Math.max(max, left + right + node.val);
-  return Math.max(left, right) + node.val;
 }

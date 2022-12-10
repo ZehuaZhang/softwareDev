@@ -26,29 +26,51 @@ Explanation: The longest consecutive path is [1, 2, 3] or [3, 2, 1].
 Note: All the values of tree nodes are in the range of [-1e7, 1e7].
 */
 
-function longestConsecutive(root) {
+import {Nullable} from './util/object';
+import {runTestCaseList} from './util/test';
+import {TreeNode, BinaryTree} from './data-structure/BinaryTree';
+
+function longestConsecutiveII(root: Nullable<TreeNode>): number {
   if (root === null) {
     return 0;
   }
-  const result = dfs(root, 1) + dfs(root, -1) + 1;
+  const result =
+    longestConsecutiveDfs(root, 1) + longestConsecutiveDfs(root, -1) + 1;
   return Math.max(
     result,
-    longestConsecutive(root.left),
-    longestConsecutive(root.right)
+    longestConsecutiveII(root.left),
+    longestConsecutiveII(root.right)
   );
+
+  function longestConsecutiveDfs(node: Nullable<TreeNode>, diff: number) {
+    if (node === null) {
+      return 0;
+    }
+    let left = 0;
+    let right = 0;
+    if (node.left && node.data - node.left.data === diff) {
+      left = 1 + longestConsecutiveDfs(node.left, diff);
+    }
+    if (node.right && node.data - node.right.data === diff) {
+      right = 1 + longestConsecutiveDfs(node.right, diff);
+    }
+    return Math.max(left, right);
+  }
 }
 
-function dfs(node, diff) {
-  if (node === null) {
-    return 0;
-  }
-  let left = 0,
-    right = 0;
-  if (node.left && node.val - node.left.val === diff) {
-    left = 1 + dfs(node.left, diff);
-  }
-  if (node.right && node.val - node.right.val === diff) {
-    right = 1 + dfs(node.right, diff);
-  }
-  return Math.max(left, right);
-}
+// test
+const tree1 = new BinaryTree(1, 2, 3);
+const tree2 = new BinaryTree(2, 1, 3);
+
+tree1.printLevel();
+tree2.printLevel();
+
+const testInputListCollection = [[tree1.root], [tree2.root]];
+
+const expectedResultList = [2, 3];
+
+runTestCaseList(
+  testInputListCollection,
+  expectedResultList,
+  longestConsecutiveII
+);

@@ -39,6 +39,23 @@ export class Queue {
     return data;
   }
 
+  pushFront(data: Data): void {
+    if (this.isFull()) {
+      throw new Error('pushFront: queue overflow');
+    }
+    this.dataLinkedList.prepend(data);
+  }
+
+  popBack(): void {
+    if (this.isEmpty()) {
+      throw new Error('pop: queue underflow');
+    }
+    const index = this.size - 1;
+    const {data} = this.dataLinkedList.get(index)!;
+    this.dataLinkedList.removeAt(index);
+    return data;
+  }
+
   front(): Data {
     if (this.isEmpty()) {
       throw new Error('front: queue underflow');

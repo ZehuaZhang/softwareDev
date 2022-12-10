@@ -25,15 +25,21 @@ The number of nodes in the tree is in the range [1, 100].
 1 <= Node.val <= 1000
 */
 
-function isCompleteTree(root) {
-  const q = [root];
-  while (q[0]) {
-    const node = q.shift();
-    q.push(node.left);
-    q.push(node.right);
+import {Nullable} from './util/object';
+import {TreeNode} from './data-structure/BinaryTree';
+import {Queue} from './data-structure/Queue';
+
+function isCompleteTree(root: Nullable<TreeNode>): boolean {
+  const queue = new Queue();
+  queue.push(root);
+
+  while (queue.front() !== null) {
+    const node = queue.pop();
+    queue.push(node.left);
+    queue.push(node.right);
   }
-  while (q.length && !q[0]) {
-    q.shift();
+  while (queue.size && queue.front() === null) {
+    queue.pop();
   }
-  return !q.length;
+  return queue.isEmpty();
 }

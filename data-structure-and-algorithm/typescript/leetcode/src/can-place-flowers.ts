@@ -23,11 +23,11 @@ There are no two adjacent flowers in flowerbed.
 0 <= n <= flowerbed.length
 */
 
-function canPlaceFlowers(bed, n) {
+function canPlaceFlowers(bed: number[], n: number): boolean {
   let count = 1;
   let result = 0;
-  for (const b of bed) {
-    if (b) {
+  for (const flower of bed) {
+    if (flower) {
       result += (count - 1) >> 1;
       count = 0;
     } else {

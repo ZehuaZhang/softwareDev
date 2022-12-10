@@ -1,39 +1,32 @@
-class BinarySearchTreeNode {
-  constructor(data) {
-    this.data = data;
-    this.right = null;
-    this.left = null;
-  }
+import {Data, Nullable} from '../util/object';
+import {BinaryTree, TreeNode} from './BinaryTree';
 
-  add(node) {
-    if (node.data > this.data) {
-      if (this.right === null) {
-        this.right = node;
+export class BinarySearchTree extends BinaryTree {
+  add(node: TreeNode): TreeNode {
+    if (!this.root) {
+      return (this.root = node);
+    }
+
+    let curr = this.root;
+    while (curr) {
+      if (node.data < curr.data) {
+        if (curr.left) {
+          curr = curr.left;
+        } else {
+          curr.left = node;
+          break;
+        }
       } else {
-        this.right.add(node);
-      }
-    } else if (node.data < this.data) {
-      if (this.left === null) {
-        this.left = node;
-      } else {
-        this.left.add(node);
+        if (curr.right) {
+          curr = curr.right;
+        } else {
+          curr.right = node;
+          break;
+        }
       }
     }
-  }
 
-  toArray() {
-    const array = [];
-    dfs(this, array);
-    return array;
-
-    function dfs(node, array) {
-      if (node === null) {
-        return;
-      }
-      array.push(node);
-      dfs(node.left);
-      dfs(node.right);
-    }
+    return node;
   }
 
   has(data) {

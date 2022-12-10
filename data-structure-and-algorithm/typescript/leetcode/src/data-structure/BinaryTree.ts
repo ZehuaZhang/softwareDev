@@ -9,7 +9,7 @@ export class BinaryTree {
 
   fromArray(dataList: Data[]): Nullable<TreeNode> {
     if (dataList.length === 0) {
-      return (this.root = null);
+      return null;
     }
     const root = new TreeNode(dataList[0]);
     const queue = new Queue();
@@ -64,6 +64,51 @@ export class BinaryTree {
     return dataList;
   }
 
+  toArrayInOrder(): Data[] {
+    const array: Data[] = [];
+    toArrayInOrderDfs(this.root);
+    return array;
+
+    function toArrayInOrderDfs(node: Nullable<TreeNode>): void {
+      if (node === null) {
+        return;
+      }
+      toArrayInOrderDfs(node.left);
+      array.push(node.data);
+      toArrayInOrderDfs(node.right);
+    }
+  }
+
+  toArrayPreOrder(): Data[] {
+    const array: Data[] = [];
+    toArrayPreOrderDfs(this.root);
+    return array;
+
+    function toArrayPreOrderDfs(node: Nullable<TreeNode>): void {
+      if (node === null) {
+        return;
+      }
+      array.push(node.data);
+      toArrayPreOrderDfs(node.left);
+      toArrayPreOrderDfs(node.right);
+    }
+  }
+
+  toArrayPostOrder(): Data[] {
+    const array: Data[] = [];
+    toArrayPostOrderDfs(this.root);
+    return array;
+
+    function toArrayPostOrderDfs(node: Nullable<TreeNode>): void {
+      if (node === null) {
+        return;
+      }
+      toArrayPostOrderDfs(node.left);
+      toArrayPostOrderDfs(node.right);
+      array.push(node.data);
+    }
+  }
+
   toArrayList(): Data[][] {
     const dataList: Data[][] = [];
     const queue = new Queue();
@@ -108,6 +153,18 @@ export class BinaryTree {
 
   print(): void {
     console.log(this.toArray());
+  }
+
+  printInOrder(): void {
+    console.log(this.toArrayInOrder());
+  }
+
+  printPreOrder(): void {
+    console.log(this.toArrayPreOrder());
+  }
+
+  printPostOrder(): void {
+    console.log(this.toArrayPostOrder());
   }
 
   printLevel(): void {

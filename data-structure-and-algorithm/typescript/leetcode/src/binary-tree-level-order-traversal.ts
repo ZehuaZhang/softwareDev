@@ -24,20 +24,23 @@ The number of nodes in the tree is in the range [0, 2000].
 -1000 <= Node.val <= 1000
 */
 
-function levelOrder(root) {
-  const result = [];
-  dfs(root, 0, result);
-  return result;
-}
+import {Nullable} from './util/object';
+import {TreeNode} from './data-structure/BinaryTree';
 
-function dfs(node, level, result) {
-  if (node === null) {
-    return;
+function levelOrder(root: Nullable<TreeNode>): number[][] {
+  const result: number[][] = [];
+  levelOrderDfs(root, 0);
+  return result;
+
+  function levelOrderDfs(node: Nullable<TreeNode>, level: number) {
+    if (node === null) {
+      return;
+    }
+    if (result.length === level) {
+      result.push([]);
+    }
+    result[level].push(node.data);
+    levelOrderDfs(node.left, level + 1);
+    levelOrderDfs(node.right, level + 1);
   }
-  if (result.length === level) {
-    result.push([]);
-  }
-  result[level].push(node.val);
-  dfs(node.left, level + 1, result);
-  dfs(node.right, level + 1, result);
 }

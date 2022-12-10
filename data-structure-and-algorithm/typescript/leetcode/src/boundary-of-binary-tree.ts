@@ -47,52 +47,69 @@ The right boundary are node 1,3,6,10. (10 is the right-most node).
 So order them in anti-clockwise without duplicate nodes we have [1,2,4,7,8,9,10,6,3].
 */
 
-class TreeNode {
-  constructor(val) {
-    this.val = val;
-    this.left = null;
-    this.right = null;
-  }
-}
+import {Nullable} from './util/object';
+import {runTestCaseList} from './util/test';
+import {TreeNode, BinaryTree} from './data-structure/BinaryTree';
 
-function boundaryOfBinaryTree(root) {
+function boundaryOfBinaryTree(root: Nullable<TreeNode>): number[] {
   if (root === null) {
     return [];
   }
-  const result = [root.val];
-  dfs(root.left, true, false, result);
-  dfs(root.right, false, true, result);
+  const result: number[] = [root.data];
+  boundaryOfBinaryTreeDfs(root.left, true, false);
+  boundaryOfBinaryTreeDfs(root.right, false, true);
   return result;
+
+  function boundaryOfBinaryTreeDfs(
+    node: Nullable<TreeNode>,
+    isLeft: boolean,
+    isRight: boolean
+  ): void {
+    if (node === null) {
+      return;
+    }
+
+    if (node.left === null && node.right === null) {
+      result.push(node.data);
+      return;
+    }
+
+    if (isLeft) {
+      result.push(node.data);
+    }
+
+    boundaryOfBinaryTreeDfs(
+      node.left,
+      isLeft && node.left !== null,
+      isRight && node.right === null
+    );
+    boundaryOfBinaryTreeDfs(
+      node.right,
+      isLeft && node.left === null,
+      isRight && node.right !== null
+    );
+
+    if (isRight) {
+      result.push(node.data);
+    }
+  }
 }
 
-function dfs(node, isLeft, isRight, result) {
-  if (node === null) {
-    return;
-  }
+const tree1 = new BinaryTree(1, null, 2, 3, 4);
+const tree2 = new BinaryTree(1, 2, 3, 4, 5, 6, null, null, null, 7, 8, 9, 10);
 
-  if (node.left === null && node.right === null) {
-    result.push(node.val);
-    return;
-  }
+tree1.printLevel();
+tree2.printLevel();
 
-  if (isLeft) {
-    result.push(node.val);
-  }
+const testInputListCollection = [[tree1.root], [tree2.root]];
 
-  dfs(
-    node.left,
-    isLeft && node.left !== null,
-    isRight && node.right === null,
-    result
-  );
-  dfs(
-    node.right,
-    isLeft && node.left === null,
-    isRight && node.right !== null,
-    result
-  );
+const expectedResultList = [
+  [1, 3, 4, 2],
+  [1, 2, 4, 7, 8, 9, 10, 6, 3],
+];
 
-  if (isRight) {
-    result.push(node.val);
-  }
-}
+runTestCaseList(
+  testInputListCollection,
+  expectedResultList,
+  boundaryOfBinaryTree
+);

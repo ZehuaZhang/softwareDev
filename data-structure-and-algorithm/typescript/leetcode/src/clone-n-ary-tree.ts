@@ -27,14 +27,17 @@ The depth of the n-ary tree is less than or equal to 1000.
 The total number of nodes is between [0, 10^4].
 */
 
-function cloneNaryTree(root) {
+import {Nullable} from './util/object';
+import {NaryTreeNode} from './data-structure/NaryTree';
+
+function cloneNaryTree(root: Nullable<NaryTreeNode>): Nullable<NaryTreeNode> {
   if (root === null) {
     return null;
   }
-  const node = new Node(root.val);
-  node.children = [];
-  for (const c of root.children) {
-    node.children.push(cloneNaryTree(c));
+  const node = new NaryTreeNode(root.data);
+  node.childList = [];
+  for (const child of root.childList) {
+    node.childList.push(cloneNaryTree(child));
   }
   return node;
 }

@@ -25,49 +25,28 @@ Since the graph is undirected, if node p has node q as neighbor, then node q mus
 You must return the copy of the given node as a reference to the cloned graph.
 */
 
-class Queue {
-  constructor() {
-    this.arr = [];
-  }
+import {Nullable} from './util/object';
+import {GraphNode} from './data-structure/Graph';
+import {Queue} from './data-structure/Queue';
 
-  get size() {
-    return this.arr.length;
-  }
-
-  isEmpty() {
-    return this.size === 0;
-  }
-
-  top() {
-    return this.arr[this.arr.length - 1];
-  }
-
-  pop() {
-    return this.arr.pop();
-  }
-
-  push(val) {
-    this.arr.unshift(val);
-  }
-}
-
-function cloneGraph(node) {
+function cloneGraph(node: Nullable<GraphNode>): Nullable<GraphNode> {
   if (node === null) {
     return null;
   }
 
-  const map = new Map();
-  const q = [node];
-  map.set(node, new Node(node.val));
-  while (q.length) {
-    const curr = q.shift();
-    for (const n of curr.neighbors) {
-      if (!map.has(n)) {
-        map.set(n, new Node(n.val));
-        q.push(n);
+  const map = new Map<GraphNode, GraphNode>();
+  const queue = new Queue();
+  queue.push(node);
+  map.set(node, new GraphNode(node.data));
+  while (queue.size) {
+    const curr = queue.pop();
+    for (const neighbor of curr.neighborList) {
+      if (!map.has(neighbor)) {
+        map.set(neighbor, new GraphNode(neighbor.data));
+        queue.push(neighbor);
       }
-      map.get(curr).neighbors.push(map.get(n));
+      map.get(curr)!.neighborList.push(map.get(neighbor)!);
     }
   }
-  return map.get(node);
+  return map.get(node)!;
 }

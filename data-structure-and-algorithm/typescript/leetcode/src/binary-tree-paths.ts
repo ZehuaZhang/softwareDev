@@ -22,22 +22,25 @@ The number of nodes in the tree is in the range [1, 100].
 -100 <= Node.val <= 100
 */
 
-function binaryTreePaths(root) {
-  const result = [];
-  dfs(root, [], result);
-  return result;
-}
+import {Nullable} from './util/object';
+import {TreeNode} from './data-structure/BinaryTree';
 
-function dfs(node, path, result) {
-  if (!node) {
-    return;
+function binaryTreePaths(root: Nullable<TreeNode>): string[] {
+  const result: string[] = [];
+  binaryTreePathsDfs(root, []);
+  return result;
+
+  function binaryTreePathsDfs(node: Nullable<TreeNode>, path: number[]): void {
+    if (!node) {
+      return;
+    }
+    path.push(node.data);
+    if (!node.left && !node.right) {
+      result.push(path.join('->'));
+    } else {
+      binaryTreePathsDfs(node.left, path);
+      binaryTreePathsDfs(node.right, path);
+    }
+    path.pop();
   }
-  path.push(node.val);
-  if (!node.left && !node.right) {
-    result.add(path.join('->'));
-  } else {
-    dfs(node.left, path, result);
-    dfs(node.right, path, result);
-  }
-  path.pop();
 }

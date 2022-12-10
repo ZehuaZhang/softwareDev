@@ -99,6 +99,8 @@ class BSTIterator {
   }
 }
 
+// test
+
 const tree = new BinaryTree(7, 3, 15, null, null, 9, 20);
 tree.print();
 tree.printLevel();

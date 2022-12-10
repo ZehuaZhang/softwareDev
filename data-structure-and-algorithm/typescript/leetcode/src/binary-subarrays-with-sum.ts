@@ -41,23 +41,3 @@ function numSubarraysWithSum(nums: number[], goal: number): number {
   }
   return result;
 }
-
-function numSubarraysWithSumDFS(nums: number[], goal: number): number {
-  return atMost(nums, goal) - atMost(nums, goal - 1);
-
-  function atMost(nums: number[], goal: number): number { {
-    if (goal < 0) {
-      return 0;
-    }
-    let result = 0,
-      left = 0;
-    for (let right = 0; right < nums.length; ++right) {
-      goal -= nums[right];
-      for (; goal < 0; ++left) {
-        goal += nums[left];
-      }
-      result += right - left + 1;
-    }
-    return result;
-  }
-}

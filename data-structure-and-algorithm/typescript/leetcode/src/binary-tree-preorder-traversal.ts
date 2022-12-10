@@ -37,16 +37,20 @@ The number of nodes in the tree is in the range [0, 100].
 Follow up: Recursive solution is trivial, could you do it iteratively?
 */
 
-function preorderTraversal(root) {
-  const stack = [];
+import {Nullable} from './util/object';
+import {TreeNode} from './data-structure/BinaryTree';
+import {Stack} from './data-structure/Stack';
+
+function preorderTraversal(root: Nullable<TreeNode>): number[] {
+  const stack = new Stack();
   if (root) {
     stack.push(root);
   }
 
-  const result = [];
-  while (stack.length) {
+  const result: number[] = [];
+  while (stack.size) {
     const node = stack.pop();
-    result.push(node.val);
+    result.push(node.data);
     if (node.right) {
       stack.push(node.right);
     }
