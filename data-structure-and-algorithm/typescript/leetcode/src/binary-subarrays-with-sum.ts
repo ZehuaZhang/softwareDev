@@ -27,13 +27,13 @@ nums[i] is either 0 or 1.
 0 <= goal <= nums.length
 */
 
-function numSubarraysWithSum(nums, goal) {
-  let curr = 0,
-    result = 0;
+function numSubarraysWithSum(nums: number[], goal: number): number {
+  let curr = 0;
+  let result = 0;
   const count = Array(nums.length + 1).fill(0);
   count[0] = 1;
-  for (const n of nums) {
-    curr += n;
+  for (const num of nums) {
+    curr += num;
     if (curr >= goal) {
       result += count[curr - goal];
     }
@@ -42,22 +42,22 @@ function numSubarraysWithSum(nums, goal) {
   return result;
 }
 
-function numSubarraysWithSum(nums, goal) {
+function numSubarraysWithSumDFS(nums: number[], goal: number): number {
   return atMost(nums, goal) - atMost(nums, goal - 1);
-}
 
-function atMost(nums, goal) {
-  if (goal < 0) {
-    return 0;
-  }
-  let result = 0,
-    left = 0;
-  for (let right = 0; right < nums.length; ++right) {
-    goal -= nums[right];
-    for (; goal < 0; ++left) {
-      goal += nums[left];
+  function atMost(nums: number[], goal: number): number { {
+    if (goal < 0) {
+      return 0;
     }
-    result += right - left + 1;
+    let result = 0,
+      left = 0;
+    for (let right = 0; right < nums.length; ++right) {
+      goal -= nums[right];
+      for (; goal < 0; ++left) {
+        goal += nums[left];
+      }
+      result += right - left + 1;
+    }
+    return result;
   }
-  return result;
 }

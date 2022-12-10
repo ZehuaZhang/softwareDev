@@ -49,7 +49,7 @@ At most 105 calls will be made to hasNext, next, hasPrev, and prev.
 */
 
 import {Nullable} from './util/object';
-import {TreeNode} from './data-structure/BinaryTree';
+import {TreeNode, BinaryTree} from './data-structure/BinaryTree';
 import {Stack} from './data-structure/Stack';
 
 class BSTIterator {
@@ -98,3 +98,21 @@ class BSTIterator {
     return this.curr !== this.dummy && this.curr.left !== this.dummy;
   }
 }
+
+const tree = new BinaryTree(7, 3, 15, null, null, 9, 20);
+tree.print();
+tree.printLevel();
+
+const iter = new BSTIterator(tree.root); // state is   [3, 7, 9, 15, 20]
+console.log(iter.next()); // returns 3
+console.log(iter.next()); // returns 7
+console.log(iter.prev()); // returns 3
+console.log(iter.next()); // returns 7
+console.log(iter.hasNext()); // returns true
+console.log(iter.next()); // returns 9
+console.log(iter.next()); // returns 15
+console.log(iter.next()); // returns 20
+console.log(iter.hasNext()); // returns false
+console.log(iter.hasPrev()); // returns true
+console.log(iter.prev()); // returns 15
+console.log(iter.prev()); // returns 9
