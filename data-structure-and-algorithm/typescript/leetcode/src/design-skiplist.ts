@@ -42,12 +42,16 @@ Constraints:
 At most 50000 calls will be made to search, add, and erase.
 */
 
+import {Stack} from './data-structure/Stack';
+import {Data, Nullable} from './util/object';
+
 class Skiplist {
+  head: Nullable<SkipListNode>;
   constructor() {
-    this.head = new Node();
+    this.head = new SkipListNode(NaN);
   }
 
-  search(value) {
+  search(value: Data): boolean {
     for (let curr = this.head; curr; curr = curr.down) {
       for (; curr.next && curr.next.value < value; curr = curr.next);
       if (curr.next && curr.next.value === value) {
@@ -57,25 +61,25 @@ class Skiplist {
     return false;
   }
 
-  add(value) {
-    const stack = [];
+  add(value: Data): void {
+    const stack = new Stack();
     let curr = this.head;
     for (; curr; curr = curr.down) {
       for (; curr.next && curr.next.value < value; curr = curr.next);
       stack.push(curr);
     }
     let shouldInsert = true;
-    for (let down = null; shouldInsert && stack.length; down = curr.next) {
+    for (let down = null; shouldInsert && stack.size; down = curr!.next) {
       curr = stack.pop();
-      curr.next = new Node(value, curr.next, down);
+      curr!.next = new SkipListNode(value, curr!.next, down);
       shouldInsert = Math.random() < 0.5;
     }
     if (shouldInsert) {
-      this.head = new Node(undefined, null, this.head);
+      this.head = new SkipListNode(NaN, null, this.head);
     }
   }
 
-  erase(value) {
+  erase(value: Data): boolean {
     let isFound = false;
     for (let curr = this.head; curr; curr = curr.down) {
       for (; curr.next && curr.next.value < value; curr = curr.next);
@@ -88,8 +92,15 @@ class Skiplist {
   }
 }
 
-class Node {
-  constructor(value, next = null, down = null) {
+class SkipListNode {
+  value: Data;
+  next: Nullable<SkipListNode>;
+  down: Nullable<SkipListNode>;
+  constructor(
+    value: Data,
+    next: Nullable<SkipListNode> = null,
+    down: Nullable<SkipListNode> = null
+  ) {
     this.value = value;
     this.next = next;
     this.down = down;

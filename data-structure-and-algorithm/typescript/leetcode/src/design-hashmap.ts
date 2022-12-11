@@ -35,48 +35,63 @@ Constraints:
 At most 104 calls will be made to put, get, and remove.
 */
 
+import {Nullable} from './util/object';
+
 class MyHashMap {
-  constructor() {
-    this.chunkSize = 10000;
-    this.nodes = Array(this.chunkSize).fill(new Node());
+  chunkSize: number;
+  nodeList: MyHashMapNode[];
+  constructor(chunkSize = 10000) {
+    this.chunkSize = chunkSize;
+    this.nodeList = Array(this.chunkSize).fill(new MyHashMapNode(NaN, NaN));
   }
 
-  put(key, value) {
+  put(key: number, value: number): void {
     const prev = this.find(key);
     if (prev.next) {
       prev.next.value = value;
     } else {
-      prev.next = new Node(key, value);
+      prev.next = new MyHashMapNode(key, value);
     }
   }
 
-  get(key) {
+  get(key: number): number {
     const prev = this.find(key);
     return prev.next ? prev.next.value : -1;
   }
 
-  remove(key) {
+  remove(key: number): void {
     const prev = this.find(key);
     if (prev.next) {
       prev.next = prev.next.next;
     }
   }
 
-  find(key) {
-    const index = key % this.nodes.length;
-    const head = this.nodes[index];
-    let prev = null;
-    for (let curr = head; curr && curr.key !== key; curr = curr.next) {
+  find(key: number): MyHashMapNode {
+    const index = key % this.nodeList.length;
+    const head = this.nodeList[index];
+    let prev: Nullable<MyHashMapNode> = null;
+    for (
+      let curr: Nullable<MyHashMapNode> = head;
+      curr && curr.key !== key;
+      curr = curr.next
+    ) {
       prev = curr;
     }
-    return prev;
+    return prev!;
   }
 }
 
-class Node {
-  constructor(key, value) {
+class MyHashMapNode {
+  key: number;
+  value: number;
+  next: Nullable<MyHashMapNode>;
+  constructor(
+    key: number,
+    value: number,
+    next: Nullable<MyHashMapNode> = null
+  ) {
     this.key = key;
     this.value = value;
-    this.next = null;
+    this.next = next;
   }
 }

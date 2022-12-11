@@ -23,15 +23,15 @@ n == mat[i].length
 -105 <= mat[i][j] <= 105
 */
 
-function findDiagonalOrder(mat) {
+function findDiagonalOrder(mat: number[][]): number[] {
   const [rows, cols] = [mat.length, mat[0].length];
-  const result = [];
+  const result: number[] = [];
   for (let row = 0, col = 0, i = 0; i < rows * cols; ++i) {
     result.push(mat[row][col]);
 
     if ((row + col) % 2) {
       // moving down
-      if (row == rows - 1) {
+      if (row === rows - 1) {
         ++col;
       } else if (col) {
         ++row;

@@ -37,15 +37,16 @@ n == nums1.length == nums2.length
 */
 
 class SparseVector {
-  constructor(nums) {
-    this.vec = nums.filter(Boolean).map((n, i) => [i, n]);
+  vecList: number[][];
+  constructor(nums: number[]) {
+    this.vecList = nums.filter(Boolean).map((num, i) => [i, num]);
   }
 
-  dotProduct(vec) {
+  dotProduct(vecList: number[][]) {
     let result = 0;
-    for (let i = 0, j = 0; i < this.vec.length && j < vec.length; ) {
-      const [i1, n1] = this.vec[i];
-      const [i2, n2] = vec[j];
+    for (let i = 0, j = 0; i < this.vecList.length && j < vecList.length; ) {
+      const [i1, n1] = this.vecList[i];
+      const [i2, n2] = vecList[j];
       if (i1 === i2) {
         result += n1 * n2;
       } else if (i1 < i2) {

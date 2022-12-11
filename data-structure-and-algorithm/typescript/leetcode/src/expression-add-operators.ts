@@ -32,43 +32,52 @@ num consists of only digits.
 -231 <= target <= 231 - 1
 */
 
-function addOperators(num, target) {
-  const result = [];
-  for (let i = 0, value = 0, op = []; i < num.length; ++i) {
-    value = value * 10 + (num[i] - '0');
-    op.push(num[i]);
-    const ops = op.join('');
-    if (ops !== value.toString()) {
+function addOperators(num: string, target: number): string[] {
+  const result: string[] = [];
+  for (let i = 0, value = 0, digitList: string[] = []; i < num.length; ++i) {
+    value = value * 10 + Number(num[i]);
+    digitList.push(num[i]);
+    const operand = digitList.join('');
+    if (operand !== value.toString()) {
       break;
     }
-    dfs(num, target, i + 1, 0, value, [ops], result);
+    addOperatorsDfs(i + 1, 0, value, [operand]);
   }
   return result;
-}
 
-function dfs(num, target, left, op1, op2, path, result) {
-  if (left == num.length && op1 + op2 === target) {
-    result.push(path.join(''));
-    return;
-  }
-
-  for (let i = left, value = 0, op = []; i < num.length; ++i) {
-    value = value * 10 + (num[i] - '0');
-    op.push(num[i]);
-    const ops = op.join('');
-    if (ops !== value.toString()) {
-      break;
+  function addOperatorsDfs(
+    start: number,
+    operand1: number,
+    operand2: number,
+    path: string[]
+  ): void {
+    if (start === num.length && operand1 + operand2 === target) {
+      result.push(path.join(''));
+      return;
     }
-    path.push('+' + ops);
-    dfs(num, target, i + 1, op1 + op2, value, path, result);
-    path.pop();
 
-    path.push('-' + ops);
-    dfs(num, target, i + 1, op1 + op2, -value, path, result);
-    path.pop();
+    for (
+      let i = start, value = 0, digitList: string[] = [];
+      i < num.length;
+      ++i
+    ) {
+      value = value * 10 + Number(num[i]);
+      digitList.push(num[i]);
+      const operand = digitList.join('');
+      if (operand !== value.toString()) {
+        break;
+      }
+      path.push('+' + operand);
+      addOperatorsDfs(i + 1, operand1 + operand2, value, path);
+      path.pop();
 
-    path.push('*' + ops);
-    dfs(num, target, i + 1, op1, op2 * value, path, result);
-    path.pop();
+      path.push('-' + operand);
+      addOperatorsDfs(i + 1, operand1 + operand2, -value, path);
+      path.pop();
+
+      path.push('*' + operand);
+      addOperatorsDfs(i + 1, operand1, operand2 * value, path);
+      path.pop();
+    }
   }
 }

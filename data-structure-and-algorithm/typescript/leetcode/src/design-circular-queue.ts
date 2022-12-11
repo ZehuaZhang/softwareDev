@@ -45,47 +45,51 @@ At most 3000 calls will be made to enQueue, deQueue, Front, Rear, isEmpty, and i
 */
 
 class MyCircularQueue {
-  constructor(size) {
-    this.array = Array(size);
+  array: number[];
+  front: number;
+  back: number;
+  count: number;
+  capacity: number;
+  constructor(capacity = 0) {
+    this.array = Array(capacity).fill(0);
     this.front = 0;
-    this.rear = -1;
+    this.back = -1;
+    this.capacity = capacity;
     this.count = 0;
-    this.capacity = size;
-    this.size = 0;
   }
 
-  enQueue(value) {
+  enQueue(value: number): boolean {
     if (!this.isFull()) {
-      this.rear = (this.rear + 1) % this.capacity;
-      this.array[this.rear] = value;
-      ++this.size;
+      this.back = (this.back + 1) % this.capacity;
+      this.array[this.back] = value;
+      ++this.count;
       return true;
     }
     return false;
   }
 
-  deQueue() {
+  deQueue(): boolean {
     if (!this.isEmpty()) {
       this.front = (this.front + 1) % this.capacity;
-      --this.size;
+      --this.count;
       return true;
     }
     return false;
   }
 
-  Front() {
+  Front(): number {
     return this.isEmpty() ? -1 : this.array[this.front];
   }
 
-  Rear() {
-    return this.isEmpty() ? -1 : this.array[this.rear];
+  Rear(): number {
+    return this.isEmpty() ? -1 : this.array[this.back];
   }
 
-  isEmpty() {
-    return !this.size;
+  isEmpty(): boolean {
+    return !this.count;
   }
 
-  isFull() {
-    return this.size == this.capacity;
+  isFull(): boolean {
+    return this.count === this.capacity;
   }
 }

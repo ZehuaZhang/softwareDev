@@ -33,15 +33,15 @@ ai != bi
 All the pairs [ai, bi] are distinct.
 */
 
-function findOrder(numCourses, prerequisites) {
-  const graph = Array(numCourses)
-    .fill(0)
-    .map(() => Array(0));
-  const inDegree = Array(numCourses).fill(0);
+import {Queue} from './data-structure/Queue';
 
-  for (const pre of prerequisites) {
-    graph[pre[1]].push(pre[0]);
-    ++inDegree[pre[0]];
+function findOrder(count: number, reqList: number[][]): number[] {
+  const graph: number[][] = [...Array(count)].map(() => []);
+  const inDegree = Array(count).fill(0);
+
+  for (const [adv, org] of reqList) {
+    graph[org].push(adv);
+    ++inDegree[adv];
   }
 
   const queue = new Queue();
@@ -51,16 +51,16 @@ function findOrder(numCourses, prerequisites) {
     }
   });
 
-  const courses = [];
+  const result: number[] = [];
   while (!queue.isEmpty()) {
-    const node = queue.pop();
-    courses.push(node);
-    for (const dest of graph[node]) {
-      if (--inDegree[dest] === 0) {
-        queue.push(dest);
+    const org = queue.pop();
+    result.push(org);
+    for (const adv of graph[org]) {
+      if (--inDegree[adv] === 0) {
+        queue.push(adv);
       }
     }
   }
 
-  return courses.length === numCourses ? courses : [];
+  return result.length === count ? result : [];
 }

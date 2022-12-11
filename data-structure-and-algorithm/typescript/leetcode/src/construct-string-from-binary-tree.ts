@@ -25,21 +25,24 @@ The number of nodes in the tree is in the range [1, 104].
 -1000 <= Node.val <= 1000
 */
 
-function tree2str(root) {
-  if (!root) {
+import {TreeNode} from './data-structure/BinaryTree';
+import {Nullable} from './util/object';
+
+function tree2str(root: Nullable<TreeNode>): string {
+  if (root === null) {
     return '';
   }
 
   const left = tree2str(root.left);
   const right = tree2str(root.right);
 
-  let s = '';
+  let output = '';
   if (left.length && right.length) {
-    s = `(${left})(${right})`;
+    output = `(${left})(${right})`;
   } else if (left.length) {
-    s = `(${left})`;
+    output = `(${left})`;
   } else if (right.length) {
-    s = `()(${right})`;
+    output = `()(${right})`;
   }
-  return root.val + s;
+  return root.data + output;
 }

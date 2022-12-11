@@ -40,22 +40,23 @@ Output:
 ]
 */
 
-function getFactors(n) {
-  const result = [];
-  dfs(n, 2, [], result);
+function getFactors(num: number): number[][] {
+  const result: number[][] = [];
+  const path: number[] = [];
+  getFactorsDfs(num, 2);
   return result;
-}
 
-function dfs(target, left, curr, result) {
-  if (target === 1 && curr.length > 1) {
-    result.push([...curr]);
-    return;
-  }
-  for (let i = left; i <= target; ++i) {
-    if (target % i === 0) {
-      curr.push(i);
-      dfs(target / i, i, curr, result);
-      curr.pop();
+  function getFactorsDfs(target: number, start: number) {
+    if (target === 1 && path.length > 1) {
+      result.push([...path]);
+      return;
+    }
+    for (let i = start; i <= target; ++i) {
+      if (target % i === 0) {
+        path.push(i);
+        getFactorsDfs(target / i, i);
+        path.pop();
+      }
     }
   }
 }

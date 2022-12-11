@@ -34,18 +34,19 @@ n == mat[i].length
 No two adjacent cells are equal.
 */
 
-function findPeakGrid(mat) {
+function findPeakGrid(mat: number[][]): number[] {
   for (let left = 0, right = mat[0].length - 1; left <= right; ) {
-    let row = 0,
-      mid = left + Math.trunc((right - left) / 2);
+    let row = 0;
+    const mid = left + Math.trunc((right - left) / 2);
     for (let i = 0; i < mat.length; ++i) {
       row = mat[i][mid] >= mat[row][mid] ? i : row;
     }
     const isLeftBig = mid - 1 >= left && mat[row][mid - 1] > mat[row][mid];
     const isRightBig = mid + 1 <= right && mat[row][mid + 1] > mat[row][mid];
 
-    if (!isLeftBig && !isRightBig) return [row, mid];
-    else if (isRightBig) {
+    if (!isLeftBig && !isRightBig) {
+      return [row, mid];
+    } else if (isRightBig) {
       left = mid + 1;
     } else {
       right = mid - 1;

@@ -1,13 +1,17 @@
 class PhoneDirectory {
-  constructor(max) {
-    this.hasUsed = Array(max).fill(false);
-    this.numbers = this.hasUsed.map((used, index) => index);
+  hasUsed: boolean[];
+  numbers: number[];
+  index: number;
+  range: number;
+  constructor(range: number) {
+    this.hasUsed = Array(range).fill(false);
+    this.numbers = [...Array(range)].map((_, index) => index);
     this.index = 0;
-    this.max = max;
+    this.range = range;
   }
 
-  get() {
-    if (this.index === this.max) {
+  get(): number {
+    if (this.index === this.range) {
       return -1;
     }
 
@@ -16,16 +20,16 @@ class PhoneDirectory {
     return number;
   }
 
-  check(number) {
-    if (number < 0 || number >= this.max) {
+  check(number: number): boolean {
+    if (number < 0 || number >= this.range) {
       return false;
     }
 
     return !this.hasUsed[number];
   }
 
-  release(number) {
-    if (number < 0 || number >= this.max || !this.hasUsed[number]) {
+  release(number: number): void {
+    if (number < 0 || number >= this.range || !this.hasUsed[number]) {
       return;
     }
 

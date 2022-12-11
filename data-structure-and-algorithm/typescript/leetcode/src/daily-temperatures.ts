@@ -23,11 +23,13 @@ Constraints:
 30 <= temperatures[i] <= 100
 */
 
-function dailyTemperatures(temp) {
-  const stack = [];
-  const result = Array(temp.length).fill(0);
-  for (let i = 0; i < temp.length; ++i) {
-    while (stack.length && temp[i] > temp[stack[stack.length - 1]]) {
+import {Stack} from './data-structure/Stack';
+
+function dailyTemperatures(tempList: number[]): number[] {
+  const stack = new Stack();
+  const result = Array(tempList.length).fill(0);
+  for (let i = 0; i < tempList.length; ++i) {
+    while (stack.size && tempList[i] > tempList[stack.peek()]) {
       const index = stack.pop();
       result[index] = i - index;
     }

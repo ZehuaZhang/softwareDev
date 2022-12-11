@@ -34,20 +34,20 @@ Constraints:
 Note: This question is the same as 846: https://leetcode.com/problems/hand-of-straights/
 */
 
-function isPossibleDivide(nums, k) {
+function isPossibleDivide(nums: number[], k: number): boolean {
   if (nums.length % k) {
     return false;
   }
-  nums.sort((a, b) => a - b);
-  const map = new Map();
-  for (const n of nums) {
-    map.set(n, (map.get(n) || 0) + 1);
+  nums.sort();
+  const numCountMap = new Map<number, number>();
+  for (const num of nums) {
+    numCountMap.set(num, (numCountMap.get(num) || 0) + 1);
   }
-  for (const [n, c] of map.entries()) {
-    if (c) {
+  for (const [num, count] of numCountMap.entries()) {
+    if (count > 0) {
       for (let i = k - 1; i >= 0; --i) {
-        map.set(n + i, (map.get(n + i) || 0) - c);
-        if (map.get(n + i) < 0) {
+        numCountMap.set(num + i, (numCountMap.get(num + i) || 0) - count);
+        if (numCountMap.get(num + i)! < 0) {
           return false;
         }
       }

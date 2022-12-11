@@ -64,10 +64,12 @@ No two end events will happen at the same timestamp.
 Each function has an "end" log for each "start" log.
 */
 
-function exclusiveTime(n, logs) {
-  const result = new Array(n).fill(0);
-  const stack = [];
-  let prev;
+import {Stack} from './data-structure/Stack';
+
+function exclusiveTime(count: number, logs: string[]): number[] {
+  const result = new Array(count).fill(0);
+  const stack = new Stack();
+  let prev = 0;
   for (const log of logs) {
     const parts = log.split(':');
     const [id, status, time] = [
@@ -76,15 +78,14 @@ function exclusiveTime(n, logs) {
       parseInt(parts[2]),
     ];
     if (status === 'start') {
-      if (stack.length) {
-        const prevId = stack[stack.length - 1];
+      if (!stack.isEmpty()) {
+        const prevId = stack.peek();
         result[prevId] += time - prev;
       }
       stack.push(id);
       prev = time;
     } else {
-      const last = stack.pop();
-      result[last] += time - prev + 1;
+      result[stack.pop()] += time - prev + 1;
       prev = time + 1;
     }
   }

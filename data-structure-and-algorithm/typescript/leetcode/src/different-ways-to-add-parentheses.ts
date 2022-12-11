@@ -28,39 +28,39 @@ Constraints:
 expression consists of digits and the operator '+', '-', and '*'.
 */
 
-function diffWaysToCompute(exp) {
-  const map = new Map();
-  return dfs(exp, map);
-}
+function diffWaysToCompute(exp: string): number[] {
+  const expOutputListMap = new Map<string, number[]>();
+  return diffWaysToComputeDfs(exp);
 
-function dfs(exp, map) {
-  if (map.has(exp)) {
-    return map.get(exp);
-  }
+  function diffWaysToComputeDfs(exp: string): number[] {
+    if (expOutputListMap.has(exp)) {
+      return expOutputListMap.get(exp)!;
+    }
 
-  const result = [];
-  for (let i = 0; i < exp.length; ++i) {
-    if (['+', '-', '*'].find(c => c === exp[i])) {
-      for (const a of dfs(exp.substring(0, i), map)) {
-        for (const b of dfs(exp.substring(i + 1), map)) {
-          switch (exp[i]) {
-            case '+':
-              result.push(a + b);
-              break;
-            case '-':
-              result.push(a - b);
-              break;
-            case '*':
-              result.push(a * b);
-              break;
+    const result: number[] = [];
+    for (let i = 0; i < exp.length; ++i) {
+      if (['+', '-', '*'].find(c => c === exp[i])) {
+        for (const a of diffWaysToComputeDfs(exp.substring(0, i))) {
+          for (const b of diffWaysToComputeDfs(exp.substring(i + 1))) {
+            switch (exp[i]) {
+              case '+':
+                result.push(a + b);
+                break;
+              case '-':
+                result.push(a - b);
+                break;
+              case '*':
+                result.push(a * b);
+                break;
+            }
           }
         }
       }
     }
+    if (result.length === 0) {
+      result.push(Number(exp));
+    }
+    expOutputListMap.set(exp, result);
+    return result;
   }
-  if (result.length === 0) {
-    result.push(Number(exp));
-  }
-  map.set(exp, result);
-  return result;
 }

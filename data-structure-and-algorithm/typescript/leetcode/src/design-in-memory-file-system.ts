@@ -27,53 +27,65 @@
 // You can assume that all directory names and file names only contain lower-case letters, and same names won't exist in the same directory.
 
 class FileSystem {
+  dirComponentMap: Map<string, Set<string>>;
+  pathContentMap: Map<string, string>;
   constructor() {
-    this.dirs = new Map([['/', new Set()]]);
-    this.files = new Map();
+    this.dirComponentMap = new Map([['/', new Set()]]);
+    this.pathContentMap = new Map();
   }
 
-  ls(path) {
-    if (this.files.has(path)) {
+  ls(path: string): string[] {
+    if (this.pathContentMap.has(path)) {
       return [path.substring(path.lastIndexOf('/') + 1)];
     }
-    return [...this.files.get(path)];
+    if (!this.dirComponentMap.has(path)) {
+      return [];
+    }
+    return [...this.dirComponentMap.get(path)!];
   }
 
-  mkdir(path) {
+  mkdir(path: string): void {
     let dir = '/';
 
     path
       .split('/')
       .map(word => word.trim())
-      .filter(word => word)
-      .forEach(p => {
-        const set = this.dirs.get(dir) || new Set();
-        set.add(p);
-        this.dirs.set(dir, set);
+      .filter(Boolean)
+      .forEach(component => {
+        if (!this.dirComponentMap.has(dir)) {
+          this.dirComponentMap.set(dir, new Set());
+        }
+        this.dirComponentMap.get(dir)!.add(component);
 
         if (dir.length > 1) {
           dir += '/';
         }
-        dir += p;
+        dir += component;
       });
+
+    if (!this.dirComponentMap.has(dir)) {
+      this.dirComponentMap.set(dir, new Set());
+    }
   }
 
-  addContentToFile(filePath, content) {
-    const dir = filePath.substring(0, filePath.lastIndexOf('/')) || '/';
-    const file = filePath.substring(filePath.substring('/') + 1);
+  addContentToFile(path: string, content: string): void {
+    const delimiterIndex = path.lastIndexOf('/');
+    const dir = path.substring(0, delimiterIndex) || '/';
+    const file = path.substring(delimiterIndex + 1);
 
-    if (!this.dirs.has(dir)) {
+    if (!this.dirComponentMap.has(dir)) {
       this.mkdir(dir);
     }
 
-    const set = this.dirs.get(dir) || new Set();
-    set.add(file);
-    this.dirs.set(dir, set);
+    this.dirComponentMap.get(dir)!.add(file);
 
-    this.files.set(filePath, this.files.get(filePath) || '' + content);
+    this.pathContentMap.set(
+      path,
+      (this.pathContentMap.get(path)! || '') + content
+    );
   }
 
-  readContentFromFile(filePath) {
-    return files[filePath];
+  readContentFromFile(path: string): string {
+    return this.pathContentMap.get(path) || '';
   }
 }

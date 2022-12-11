@@ -36,12 +36,12 @@ divisor != 0
 */
 
 // O(logN^2)
-function divide(dividend, divisor) {
-  const Max = Math.pow(2, 31) - 1;
-  const Min = -1 * Math.pow(2, 31);
+function divide(dividend: number, divisor: number): number {
+  const max = Math.pow(2, 31) - 1;
+  const min = -1 * Math.pow(2, 31);
 
-  if (dividend === Min && divisor == -1) {
-    return Max;
+  if (dividend === min && divisor === -1) {
+    return max;
   }
 
   let result = 0;

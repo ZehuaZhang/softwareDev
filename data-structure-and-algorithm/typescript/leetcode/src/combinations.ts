@@ -29,20 +29,20 @@ Constraints:
 1 <= k <= n
 */
 
-function combine(n, k) {
-  const result = [];
-  dfs(n, k, 1, [], result);
+function combine(range: number, count: number): number[][] {
+  const result: number[][] = [];
+  combineDfs(1, []);
   return result;
-}
 
-function dfs(n, k, left, curr, result) {
-  if (curr.length === k) {
-    result.push([...curr]);
-    return;
-  }
-  for (let i = left; i <= n; ++i) {
-    curr.push(i);
-    dfs(n, k, i + 1, curr, result);
-    curr.pop();
+  function combineDfs(start: number, path: number[]) {
+    if (path.length === count) {
+      result.push([...path]);
+      return;
+    }
+    for (let i = start; i <= range; ++i) {
+      path.push(i);
+      combineDfs(i + 1, path);
+      path.pop();
+    }
   }
 }

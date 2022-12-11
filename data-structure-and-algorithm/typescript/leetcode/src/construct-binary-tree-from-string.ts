@@ -19,21 +19,25 @@ There will only be '(', ')', '-' and '0' ~ '9' in the input string.
 An empty tree is represented by "" instead of "()".
 */
 
-function str2tree(s) {
-  if (!s.length) {
+import {TreeNode} from './data-structure/BinaryTree';
+import {Stack} from './data-structure/Stack';
+import {Nullable} from './util/object';
+
+function str2tree(input: string): Nullable<TreeNode> {
+  if (!input.length) {
     return null;
   }
-  const stack = [];
-  for (let i = 0; i < s.length; ++i) {
-    const c = s[i];
+  const stack = new Stack();
+  for (let i = 0; i < input.length; ++i) {
+    const c = input[i];
     if (c === ')') {
       stack.pop();
     } else if (isDigit(c) || c === '-') {
       const j = i;
-      for (; i + 1 < s.length && isDigit(s[i + 1]); ++i);
-      const curr = new TreeNode(Number(s.substring(j, i + 1)));
-      if (stack.length) {
-        const node = stack[stack.length - 1];
+      for (; i + 1 < input.length && isDigit(input[i + 1]); ++i);
+      const curr = new TreeNode(Number(input.substring(j, i + 1)));
+      if (stack.size) {
+        const node = stack.peek();
         if (!node.left) {
           node.left = curr;
         } else {
@@ -44,8 +48,8 @@ function str2tree(s) {
     }
   }
   return stack.pop();
-}
 
-function isDigit(c) {
-  return c >= '0' && c <= '9';
+  function isDigit(char: string): boolean {
+    return char >= '0' && char <= '9';
+  }
 }

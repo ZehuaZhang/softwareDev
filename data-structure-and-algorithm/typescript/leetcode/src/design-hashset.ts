@@ -34,134 +34,57 @@ Constraints:
 At most 104 calls will be made to add, remove, and contains.
 */
 
+import {BinarySearchTree} from './data-structure/BinarySearchTree';
+import {TreeNode} from './data-structure/BinaryTree';
+
 class MyHashSet {
-  constructor() {
-    this.chunkSize = 1;
-    this.loadFactor = 0.7;
-    this.size = 0;
-    this.nodes = Array(this.chunkSize).fill(null);
+  chunkSize: number;
+  loadFactor: number;
+  count: number;
+  nodeList: BinarySearchTree[];
+  constructor(chunkSize = 1, loadFactor = 0.7) {
+    this.chunkSize = chunkSize;
+    this.loadFactor = loadFactor;
+    this.count = 0;
+    this.nodeList = Array(this.chunkSize).fill(new BinarySearchTree());
   }
 
-  hash(key) {
-    return key % this.nodes.length;
+  hash(key: number): number {
+    return key % this.nodeList.length;
   }
 
-  add(key) {
-    const h = this.hash(key);
-    const node = new BinarySearchTreeNode(key);
-    if (!this.nodes[h]) {
-      this.nodes[h] = node;
-    } else {
-      this.nodes[h].add(node);
-    }
-    ++this.size;
-    if (this.size > this.loadFactor * this.nodes.length) {
+  add(key: number): void {
+    const hash = this.hash(key);
+    const node = new TreeNode(key);
+    this.nodeList[hash].add(node);
+    ++this.count;
+    if (this.count > this.loadFactor * this.nodeList.length) {
       this.rehash();
     }
   }
 
-  remove(key) {
-    const h = this.hash(key);
-    if (this.nodes[h]) {
-      this.nodes[h] = this.nodes[h].remove(key);
-      --this.size;
+  remove(key: number): void {
+    const hash = this.hash(key);
+    if (this.nodeList[hash]) {
+      this.nodeList[hash].remove(key);
+      --this.count;
     }
   }
 
-  contains(key) {
-    return this.has(key);
-  }
-
-  has(key) {
-    const h = this.hash(key);
-    if (this.nodes[h]) {
-      return this.nodes[h].has(key);
-    }
-    return false;
+  contains(key: number): boolean {
+    const hash = this.hash(key);
+    return this.nodeList[hash].has(key);
   }
 
   rehash() {
-    const prev = this.nodes;
-    this.nodes = Array(this.nodes.length * 2);
-    for (const root of prev) {
-      if (root) {
-        for (const node of root.toArray()) {
-          this.add(node.data);
-        }
+    const prevList = this.nodeList;
+    this.nodeList = Array(this.nodeList.length * 2).fill(
+      new BinarySearchTree()
+    );
+    for (const tree of prevList) {
+      for (const node of tree.toArrayPreOrder()) {
+        this.add(node.data);
       }
     }
-  }
-}
-
-class BinarySearchTreeNode {
-  constructor(data) {
-    this.data = data;
-    this.right = null;
-    this.left = null;
-  }
-
-  add(node) {
-    if (node.data > this.data) {
-      if (this.right === null) {
-        this.right = node;
-      } else {
-        this.right.add(node);
-      }
-    } else if (node.data < this.data) {
-      if (this.left === null) {
-        this.left = node;
-      } else {
-        this.left.add(node);
-      }
-    }
-  }
-
-  toArray() {
-    const array = [];
-    dfs(this, array);
-    return array;
-
-    function dfs(node, array) {
-      if (node === null) {
-        return;
-      }
-      array.push(node);
-      dfs(node.left);
-      dfs(node.right);
-    }
-  }
-
-  has(data) {
-    if (this.data === data) {
-      return true;
-    }
-    if (this.data > data) {
-      return this.left ? this.left.has(data) : false;
-    }
-    return this.right ? this.right.has(data) : false;
-  }
-
-  remove(data) {
-    if (this.data === data) {
-      if (!this.right && !this.left) {
-        return null;
-      }
-      if (!this.right || !this.left) {
-        return this.left ? this.left : this.right;
-      }
-      this.data = this.left.max().data;
-      this.left.remove(this.data);
-    } else if (this.data > data) {
-      this.left = this.left ? this.left.remove(data) : null;
-    } else {
-      this.right = this.right ? this.right.remove(data) : null;
-    }
-    return this;
-  }
-
-  max() {
-    let curr = this;
-    for (; curr.right; curr = curr.right);
-    return curr;
   }
 }

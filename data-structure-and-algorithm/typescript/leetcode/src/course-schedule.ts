@@ -29,14 +29,14 @@ prerequisites[i].length == 2
 All the pairs prerequisites[i] are unique.
 */
 
-function canFinish(numCourses, prerequisites) {
-  const graph = Array(numCourses)
-    .fill(0)
-    .map(() => Array(0));
-  const inDegree = Array(numCourses).fill(0);
-  for (const pre of prerequisites) {
-    graph[pre[1]].push(pre[0]);
-    ++inDegree[pre[0]];
+import {Queue} from './data-structure/Queue';
+
+function canFinish(count: number, reqList: number[][]): boolean {
+  const graph: number[][] = [...Array(count)].map(() => []);
+  const inDegree: number[] = Array(count).fill(0);
+  for (const [adv, org] of reqList) {
+    graph[org].push(adv);
+    ++inDegree[adv];
   }
   const queue = new Queue();
   inDegree.forEach((degree, index) => {
@@ -45,16 +45,16 @@ function canFinish(numCourses, prerequisites) {
     }
   });
 
-  let count = 0;
+  let result = 0;
   while (!queue.isEmpty()) {
-    const node = queue.pop();
-    ++count;
-    for (const dest of graph[node]) {
-      if (--inDegree[dest] === 0) {
-        queue.push(dest);
+    const org = queue.pop();
+    ++result;
+    for (const adv of graph[org]) {
+      if (--inDegree[adv] === 0) {
+        queue.push(adv);
       }
     }
   }
 
-  return count === numCourses;
+  return result === count;
 }

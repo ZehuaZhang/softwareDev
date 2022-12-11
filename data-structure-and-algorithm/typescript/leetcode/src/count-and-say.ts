@@ -33,14 +33,14 @@ Constraints:
 1 <= n <= 30
 */
 
-function countAndSay(n) {
-  let result = ['1'];
-  for (let i = 1; i < n; ++i) {
-    const array = [...result.join('')];
+function countAndSay(loop: number): string {
+  let result: string[] = ['1'];
+  for (let i = 1; i < loop; ++i) {
+    const curr = result.join('');
     result = [];
-    for (let j = 0, count = 1; j < array.length; ++j) {
-      if (array[j] !== array[j + 1]) {
-        result.push(count, array[j]);
+    for (let j = 0, count = 1; j < curr.length; ++j) {
+      if (curr[j] !== curr[j + 1]) {
+        result.push(count.toString(), curr[j]);
         count = 1;
       } else {
         ++count;

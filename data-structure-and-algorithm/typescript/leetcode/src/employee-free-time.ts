@@ -31,11 +31,11 @@ schedule and schedule[i] are lists with lengths in range [1, 50].
 0 <= schedule[i].start < schedule[i].end <= 10^8.
 */
 
-function employeeFreeTime(schedule) {
-  const result = [];
-  const list = [];
-  for (const s of schedule) {
-    list.push(...s);
+function employeeFreeTime(scheduleList: number[][][]): number[][] {
+  const result: number[][] = [];
+  const list: number[][] = [];
+  for (const schedule of scheduleList) {
+    list.push(...schedule);
   }
   list.sort(([s1], [s2]) => s1 - s2);
   let curr = list[0];

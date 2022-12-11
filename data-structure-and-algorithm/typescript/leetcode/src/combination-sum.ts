@@ -41,23 +41,23 @@ All elements of candidates are distinct.
 1 <= target <= 500
 */
 
-function combinationSum(nums, target) {
-  const result = [];
-  dfs(nums, target, 0, [], result);
+function combinationSum(nums: number[], target: number): number[][] {
+  const result: number[][] = [];
+  combinationSumDfs(target, 0, []);
   return result;
-}
 
-function dfs(nums, target, left, curr, result) {
-  if (target === 0) {
-    result.push([...curr]);
-    return;
-  }
-  for (let i = left; i < nums.length; ++i) {
-    const diff = target - nums[i];
-    if (diff >= 0) {
-      curr.push(nums[i]);
-      dfs(nums, diff, i, curr, result);
-      curr.pop();
+  function combinationSumDfs(target: number, start: number, path: number[]) {
+    if (target === 0) {
+      result.push([...path]);
+      return;
+    }
+    for (let i = start; i < nums.length; ++i) {
+      const diff = target - nums[i];
+      if (diff >= 0) {
+        path.push(nums[i]);
+        combinationSumDfs(diff, i, path);
+        path.pop();
+      }
     }
   }
 }

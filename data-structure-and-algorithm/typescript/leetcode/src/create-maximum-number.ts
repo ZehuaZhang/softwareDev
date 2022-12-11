@@ -39,38 +39,40 @@ if i = 0 or j = 0, the issue turns into 1 array
 if k = 0 then dp[i][j][0] = empty
 */
 
-function maxNumber(nums1, nums2, k) {
-  const dp = [...Array(nums1.length + 1)].map(() =>
-    [...Array(nums2.length + 1)].map(() => Array(k + 1).fill(''))
+function maxNumber(nums1: number[], nums2: number[], length: number): number[] {
+  const result: string[][][] = [...Array(nums1.length + 1)].map(() =>
+    [...Array(nums2.length + 1)].map(() => Array(length + 1).fill(''))
   );
-  for (let l = 0; l <= k; ++l) {
+  for (let k = 0; k <= length; ++k) {
     for (let i = 0; i <= nums1.length; ++i) {
       for (let j = 0; j <= nums2.length; ++j) {
-        if (i + j < l) {
-          dp[i][j][l] = 0;
+        if (i + j < k) {
+          result[i][j][k] = '';
         } else {
-          const add1 = !i || !l ? '' : dp[i - 1][j][l - 1] + nums1[i - 1];
-          const add2 = !j || !l ? '' : dp[i][j - 1][l - 1] + nums2[j - 1];
-          const skip1 = !i ? '' : dp[i - 1][j][l];
-          const skip2 = !j ? '' : dp[i][j - 1][l];
-          const skip12 = !i || !j ? '' : dp[i - 1][j - 1][l];
+          const add1 = !i || !k ? '' : result[i - 1][j][k - 1] + nums1[i - 1];
+          const add2 = !j || !k ? '' : result[i][j - 1][k - 1] + nums2[j - 1];
+          const skip1 = !i ? '' : result[i - 1][j][k];
+          const skip2 = !j ? '' : result[i][j - 1][k];
+          const skip12 = !i || !j ? '' : result[i - 1][j - 1][k];
 
-          dp[i][j][l] = max(add1, add2, skip1, skip2, skip12);
+          result[i][j][k] = max(add1, add2, skip1, skip2, skip12);
         }
       }
     }
   }
-  return dp[nums1.length][nums2.length][k].split('').map(s => Number(s));
-}
+  return result[nums1.length][nums2.length][length]
+    .split('')
+    .map(s => Number(s));
 
-function max(...values) {
-  let result = 0;
-  values.forEach((v, i) => {
-    if (i) {
-      result = v > result ? v : result;
-    } else {
-      result = v;
-    }
-  });
-  return result;
+  function max(...valList: string[]): string {
+    let result = '';
+    valList.forEach((val, index) => {
+      if (index) {
+        result = Number(val) > Number(result) ? val : result;
+      } else {
+        result = val;
+      }
+    });
+    return result;
+  }
 }

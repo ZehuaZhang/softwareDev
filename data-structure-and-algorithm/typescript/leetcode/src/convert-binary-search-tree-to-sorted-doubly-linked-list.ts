@@ -41,21 +41,24 @@ All values of Node.val are unique.
 0 <= Number of Nodes <= 2000
 */
 
-function inorderTraversal(root) {
-  const stack = [];
-  const result = [];
-  const dummy = new TreeNode();
+import {TreeNode} from './data-structure/BinaryTree';
+import {Stack} from './data-structure/Stack';
+import {Nullable} from './util/object';
 
-  for (let node = root, prev = dummy; stack.length || node; ) {
+function inorderTraversal(root: Nullable<TreeNode>): Nullable<TreeNode> {
+  const stack = new Stack();
+  const dummy = new TreeNode(NaN);
+
+  for (let node = root, prev = dummy; stack.size || node; ) {
     if (node) {
       stack.push(node);
       node = node.left;
     } else {
       node = stack.pop();
       prev.right = node;
-      node.left = prev;
-      prev = node;
-      node = node.right;
+      node!.left = prev;
+      prev = node!;
+      node = node!.right;
     }
   }
 

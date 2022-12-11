@@ -30,8 +30,8 @@ Constraints:
 1 <= k <= 231 - 1
 */
 
-function checkSubarraySum(nums, k) {
-  const set = new Set();
+function checkSubarraySum(nums: number[], k: number): boolean {
+  const set = new Set<number>();
   for (let prev = 0, sum = 0, i = 0; i < nums.length; ++i) {
     sum += nums[i];
     const mod = k === 0 ? sum : sum % k;

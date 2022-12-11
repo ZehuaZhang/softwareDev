@@ -49,23 +49,23 @@ Constraints:
 1 <= n <= 60
 */
 
-function combinationSum3(k, n) {
-  const result = [];
-  dfs(n, k, 1, [], result);
+function combinationSumIII(count: number, target: number): number[][] {
+  const result: number[][] = [];
+  combinationSumIIIDfs(target, 1, []);
   return result;
-}
 
-function dfs(target, count, left, curr, result) {
-  if (target === 0 && curr.length === count) {
-    result.push([...curr]);
-    return;
-  }
-  for (let i = left; i <= 9; ++i) {
-    const diff = target - i;
-    if (diff >= 0 && curr.length < count) {
-      curr.push(i);
-      dfs(diff, count, i + 1, curr, result);
-      curr.pop();
+  function combinationSumIIIDfs(target: number, start: number, path: number[]) {
+    if (target === 0 && path.length === count) {
+      result.push([...path]);
+      return;
+    }
+    for (let i = start; i <= 9; ++i) {
+      const diff = target - i;
+      if (diff >= 0 && path.length < count) {
+        path.push(i);
+        combinationSumIIIDfs(diff, i + 1, path);
+        path.pop();
+      }
     }
   }
 }

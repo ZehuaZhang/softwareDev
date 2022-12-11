@@ -36,15 +36,15 @@ All the elements of nums are unique.
 Follow up: What if negative numbers are allowed in the given array? How does it change the problem? What limitation we need to add to the question to allow negative numbers?
 */
 
-function combinationSum4(nums, target) {
-  const dp = Array(target + 1).fill(0);
-  dp[0] = 1;
-  for (let i = 1; i < dp.length; ++i) {
+function combinationSumIV(nums: number[], target: number): number {
+  const result = Array(target + 1).fill(0);
+  result[0] = 1;
+  for (let i = 1; i < result.length; ++i) {
     for (let j = 0; j < nums.length; ++j) {
       if (i - nums[j] >= 0) {
-        dp[i] += dp[i - nums[j]];
+        result[i] += result[i - nums[j]];
       }
     }
   }
-  return dp[target];
+  return result[target];
 }

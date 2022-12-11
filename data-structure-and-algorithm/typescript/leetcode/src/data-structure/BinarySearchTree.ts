@@ -29,37 +29,54 @@ export class BinarySearchTree extends BinaryTree {
     return node;
   }
 
-  has(data) {
-    if (this.data === data) {
-      return true;
+  get(data: Data): Nullable<TreeNode> {
+    let node = this.root;
+    while (node) {
+      if (node.data === data) {
+        return node;
+      }
+
+      node = node.data < data ? node.right : node.left;
     }
-    if (this.data > data) {
-      return this.left ? this.left.has(data) : false;
-    }
-    return this.right ? this.right.has(data) : false;
+
+    return null;
   }
 
-  remove(data) {
-    if (this.data === data) {
-      if (!this.right && !this.left) {
+  has(data: Data) {
+    return Boolean(this.get(data));
+  }
+
+  remove(data: Data): Nullable<TreeNode> {
+    const removeDFS = (node: Nullable<TreeNode>): Nullable<TreeNode> => {
+      if (node === null) {
         return null;
       }
-      if (!this.right || !this.left) {
-        return this.left ? this.left : this.right;
+
+      if (node.data > data) {
+        node.left = removeDFS(node.left);
+      } else if (node.data < data) {
+        node.right = removeDFS(node.right);
+      } else {
+        if (!node.right || !node.left) {
+          node = node.left ? node.left : node.right;
+        } else {
+          node.data = this.max(node.left)!.data;
+          node.left = removeDFS(node.left);
+        }
       }
-      this.data = this.left.max().data;
-      this.left.remove(this.data);
-    } else if (this.data > data) {
-      this.left = this.left ? this.left.remove(data) : null;
-    } else {
-      this.right = this.right ? this.right.remove(data) : null;
-    }
-    return this;
+      return node;
+    };
+
+    return removeDFS(this.root);
   }
 
-  max() {
-    let curr = this;
-    for (; curr.right; curr = curr.right);
-    return curr;
+  min(node = this.root): Nullable<TreeNode> {
+    for (; node && node.left; node = node.left);
+    return node;
+  }
+
+  max(node = this.root): Nullable<TreeNode> {
+    for (; node && node.right; node = node.right);
+    return node;
   }
 }

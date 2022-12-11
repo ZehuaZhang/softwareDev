@@ -32,18 +32,14 @@ n == height.length
 0 <= height[i] <= 104
 */
 
-/**
- * @param { number[] } height
- * @return { number }
- */
-function maxArea(height) {
+function maxArea(heightList: number[]): number {
   let result = 0;
-  for (let left = 0, right = height.length - 1; left < right; ) {
+  for (let left = 0, right = heightList.length - 1; left < right; ) {
     result = Math.max(
       result,
-      Math.min(height[left], height[right]) * (right - left)
+      Math.min(heightList[left], heightList[right]) * (right - left)
     );
-    if (height[left] >= height[right]) {
+    if (heightList[left] >= heightList[right]) {
       --right;
     } else {
       ++left;

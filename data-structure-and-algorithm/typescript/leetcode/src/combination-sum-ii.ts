@@ -34,24 +34,24 @@ Constraints:
 1 <= target <= 30
 */
 
-function combinationSum2(nums, target) {
-  const result = [];
+function combinationSumII(nums: number[], target: number): number[][] {
+  const result: number[][] = [];
   nums.sort((a, b) => a - b);
-  dfs(nums, target, 0, [], result);
+  combinationSumIIDfs(target, 0, []);
   return result;
-}
 
-function dfs(nums, target, left, curr, result) {
-  if (target === 0) {
-    result.push([...curr]);
-    return;
-  }
-  for (let i = left; i < nums.length; ++i) {
-    const diff = target - nums[i];
-    if (diff >= 0 && (i === left || nums[i] !== nums[i - 1])) {
-      curr.push(nums[i]);
-      dfs(nums, diff, i + 1, curr, result);
-      curr.pop();
+  function combinationSumIIDfs(target: number, start: number, path: number[]) {
+    if (target === 0) {
+      result.push([...path]);
+      return;
+    }
+    for (let i = start; i < nums.length; ++i) {
+      const diff = target - nums[i];
+      if (diff >= 0 && (i === start || nums[i] !== nums[i - 1])) {
+        path.push(nums[i]);
+        combinationSumIIDfs(diff, i + 1, path);
+        path.pop();
+      }
     }
   }
 }

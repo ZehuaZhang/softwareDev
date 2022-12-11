@@ -45,27 +45,47 @@ Constraints:
 Node.random is null or is pointing to some node in the linked list.
 */
 
-function copyRandomList(head) {
+import {Data, Nullable} from './util/object';
+
+export class RandomListNode {
+  data: Data;
+  next: Nullable<RandomListNode>;
+  random: Nullable<RandomListNode>;
+
+  constructor(
+    data: Data,
+    next: Nullable<RandomListNode> = null,
+    random: Nullable<RandomListNode> = null
+  ) {
+    this.data = data;
+    this.next = next;
+    this.random = random;
+  }
+}
+
+function copyRandomList(
+  head: Nullable<RandomListNode>
+): Nullable<RandomListNode> {
   for (let curr = head; curr; curr = curr.next.next) {
-    const node = new Node(curr.val);
+    const node = new RandomListNode(curr.data);
     node.next = curr.next;
     curr.next = node;
   }
 
-  for (let curr = head; curr; curr = curr.next.next) {
+  for (let curr = head; curr; curr = curr.next!.next) {
     if (curr.random) {
-      curr.next.random = curr.random.next;
+      curr.next!.random = curr.random.next;
     }
   }
 
-  const dummy = new Node(0);
+  const dummy = new RandomListNode(NaN);
   for (
     let curr = head, copy = dummy;
     curr;
-    curr = curr.next, copy = copy.next
+    curr = curr.next, copy = copy.next!
   ) {
     copy.next = curr.next;
-    curr.next = curr.next.next;
+    curr.next = curr.next!.next;
   }
   return dummy.next;
 }

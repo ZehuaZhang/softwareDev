@@ -49,8 +49,15 @@ Follow up:
 Could you do better than O(n2) per move() operation?
 */
 
+import {createArray} from './util/array';
+
 class TicTacToe {
-  constructor(size) {
+  size: number;
+  rows: number[][];
+  cols: number[][];
+  diag1: number[];
+  diag2: number[];
+  constructor(size: number) {
     this.size = size;
     this.rows = createArray(0, 2, size);
     this.cols = createArray(0, 2, size);
@@ -58,7 +65,7 @@ class TicTacToe {
     this.diag2 = createArray(0, 2);
   }
 
-  move(row, col, player) {
+  move(row: number, col: number, player: number): number {
     ++this.rows[player - 1][row];
     ++this.cols[player - 1][col];
     if (row === col) {
@@ -78,14 +85,4 @@ class TicTacToe {
 
     return 0;
   }
-}
-
-function createArray(value, ...dimensions) {
-  if (dimensions.length === 1) {
-    return Array(dimensions[0]).fill(value);
-  }
-
-  return Array.from({length: dimensions[0]}, () =>
-    createArray(value, ...dimensions.slice(1))
-  );
 }

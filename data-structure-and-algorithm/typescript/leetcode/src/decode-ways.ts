@@ -47,16 +47,19 @@ Constraints:
 s contains only digits and may contain leading zero(s).
 */
 
-function numDecoding(s) {
+function numDecoding(input: string): number {
   let prevPrev = 0;
   let prev = 0;
   let curr = 1;
 
-  for (let i = 0; i < s.length; ++i) {
-    if (s[i] === '0') {
+  for (let i = 0; i < input.length; ++i) {
+    if (input[i] === '0') {
       curr = 0;
     }
-    if (!i || !(s[i - 1] == '1' || (s[i - 1] == '2' && s[i] <= '6'))) {
+    if (
+      !i ||
+      !(input[i - 1] === '1' || (input[i - 1] === '2' && input[i] <= '6'))
+    ) {
       prev = 0;
     }
     prevPrev = prev;

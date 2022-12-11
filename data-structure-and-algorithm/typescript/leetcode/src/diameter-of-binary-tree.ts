@@ -25,21 +25,22 @@ The number of nodes in the tree is in the range [1, 104].
 -100 <= Node.val <= 100
 */
 
-let max;
+import {TreeNode} from './data-structure/BinaryTree';
+import {Nullable} from './util/object';
 
-function diameterOfBinaryTree(root) {
-  max = 0;
-  dfs(root);
+function diameterOfBinaryTree(root: Nullable<TreeNode>): number {
+  let max = 0;
+  diameterOfBinaryTreeDfs(root);
   return max;
-}
 
-function dfs(node) {
-  if (!root) {
-    return 0;
+  function diameterOfBinaryTreeDfs(node: Nullable<TreeNode>): number {
+    if (!node) {
+      return 0;
+    }
+
+    const left = diameterOfBinaryTreeDfs(node.left);
+    const right = diameterOfBinaryTreeDfs(node.right);
+    max = Math.max(max, left + right);
+    return Math.max(left, right) + 1;
   }
-
-  const left = dfs(node.left);
-  const right = dfs(node.right);
-  max = Math.max(max, left + right);
-  return Math.max(left, right) + 1;
 }

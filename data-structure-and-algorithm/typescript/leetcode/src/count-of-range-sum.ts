@@ -24,36 +24,32 @@ Constraints:
 The answer is guaranteed to fit in a 32-bit integer.
 */
 
-function countRangeSum(nums, lower, upper) {
+function countRangeSum(nums: number[], lower: number, upper: number): number {
   const sum = Array(nums.length + 1).fill(0);
   for (let i = 1; i <= nums.length; ++i) {
     sum[i] = sum[i - 1] + nums[i - 1];
   }
-  return mergeSort(sum);
+  return mergeSort(0, sum.length - 1);
 
-  function mergeSort(array) {
-    return sort(array, 0, array.length - 1);
-
-    function sort(array, left, right) {
-      if (left >= right) {
-        return 0;
-      }
-      const mid = (left + right) >> 1;
-      let count = sort(array, left, mid) + sort(array, mid + 1, right);
-      const temp = [];
-      let low = mid + 1,
-        high = mid + 1;
-      for (let i = left, j = mid + 1; i <= mid; ++i) {
-        for (; low <= right && array[low] - array[i] < lower; ++low);
-        for (; high <= right && array[high] - array[i] <= upper; ++high);
-        for (; j <= right && array[j] < array[i]; ++j) {
-          temp.push(array[j]);
-        }
-        temp.push(array[i]);
-        count += high - low;
-      }
-      array.splice(left, temp.length, ...temp);
-      return count;
+  function mergeSort(left: number, right: number): number {
+    if (left >= right) {
+      return 0;
     }
+    const mid = (left + right) >> 1;
+    let count = mergeSort(left, mid) + mergeSort(mid + 1, right);
+    const temp: number[] = [];
+    let low = mid + 1;
+    let high = mid + 1;
+    for (let i = left, j = mid + 1; i <= mid; ++i) {
+      for (; low <= right && sum[low] - sum[i] < lower; ++low);
+      for (; high <= right && sum[high] - sum[i] <= upper; ++high);
+      for (; j <= right && sum[j] < sum[i]; ++j) {
+        temp.push(sum[j]);
+      }
+      temp.push(sum[i]);
+      count += high - low;
+    }
+    sum.splice(left, temp.length, ...temp);
+    return count;
   }
 }

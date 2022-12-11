@@ -21,18 +21,18 @@ Constraints:
 nums[i] is either 0 or 1.
 */
 
-function findMaxLength(nums) {
-  const map = new Map();
-  map.set(0, -1);
+function findMaxLength(nums: number[]): number {
+  const sumIndexMap = new Map<number, number>();
+  sumIndexMap.set(0, -1);
 
-  let result = 0,
-    sum = 0;
+  let result = 0;
+  let sum = 0;
   for (let i = 0; i < nums.length; ++i) {
     sum += nums[i] ? 1 : -1;
-    if (map.has(sum)) {
-      result = Math.max(i - map.get(sum), result);
+    if (sumIndexMap.has(sum)) {
+      result = Math.max(i - sumIndexMap.get(sum)!, result);
     } else {
-      map.set(sum, i);
+      sumIndexMap.set(sum, i);
     }
   }
   return result;

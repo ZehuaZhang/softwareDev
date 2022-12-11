@@ -36,21 +36,24 @@ The number of nodes in the binary tree is in the range [1, 10^5].
 Each node's value is between [-10^4, 10^4].
 */
 
-function goodNodes(root) {
+import {TreeNode} from './data-structure/BinaryTree';
+import {Nullable} from './util/object';
+
+function goodNodes(root: Nullable<TreeNode>): number {
   if (root === null) {
     return 0;
   }
-  return goodNodesDFS(root, root.val);
-}
+  return goodNodesDFS(root, root.data);
 
-function goodNodesDFS(node, max) {
-  if (node === null) {
-    return 0;
-  }
-  max = Math.max(node.val, max);
-  if (node.val >= max) {
-    return 1 + goodNodesDFS(node.left, max) + goodNodesDFS(node.right, max);
-  } else {
-    return goodNodesDFS(node.left, max) + goodNodesDFS(node.right, max);
+  function goodNodesDFS(node: Nullable<TreeNode>, max: number): number {
+    if (node === null) {
+      return 0;
+    }
+    max = Math.max(node.data, max);
+    if (node.data >= max) {
+      return 1 + goodNodesDFS(node.left, max) + goodNodesDFS(node.right, max);
+    } else {
+      return goodNodesDFS(node.left, max) + goodNodesDFS(node.right, max);
+    }
   }
 }
