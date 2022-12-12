@@ -32,8 +32,8 @@ n == nums.length
 1 <= k <= n * (n - 1) / 2
 */
 
-function smallestDistancePair(nums, k) {
-  nums.sort((a, b) => a - b);
+function smallestDistancePair(nums: number[], kth: number): number {
+  nums.sort();
   let left = 0;
   let right = nums[nums.length - 1] - nums[0];
   for (let count = 0; left < right; count = 0) {
@@ -43,7 +43,7 @@ function smallestDistancePair(nums, k) {
       count += j - i - 1;
     }
 
-    if (count < k) {
+    if (count < kth) {
       left = mid + 1;
     } else {
       right = mid;

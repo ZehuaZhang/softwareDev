@@ -16,21 +16,22 @@ Output:
 ]
 */
 
-function groupStrings(strs) {
-  const map = new Map();
-  for (const s of strs) {
-    const hash = [...s]
-      .map(c =>
+function groupStrings(inputList: string[]): string[][] {
+  const shiftSeqSetMap = new Map<string, Set<string>>();
+  for (const input of inputList) {
+    const hash = [...input]
+      .map(char =>
         String.fromCharCode(
-          ((c.charCodeAt() - s[0].charCodeAt() + 26) % 26) + 'a'.charCodeAt()
+          ((char.charCodeAt(0) - input[0].charCodeAt(0) + 26) % 26) +
+            'a'.charCodeAt(0)
         )
       )
       .join('');
-    if (!map.has(hash)) {
-      map.set(hash, new Set());
+    if (!shiftSeqSetMap.has(hash)) {
+      shiftSeqSetMap.set(hash, new Set<string>());
     }
-    map.get(hash).add(s);
+    shiftSeqSetMap.get(hash)!.add(input);
   }
 
-  return [...map.values()].map(set => [...set].sort());
+  return [...shiftSeqSetMap.values()].map(set => [...set].sort());
 }

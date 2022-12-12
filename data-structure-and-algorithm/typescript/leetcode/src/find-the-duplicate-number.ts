@@ -39,7 +39,7 @@ How can we prove that at least one duplicate number must exist in nums?
 Can you solve the problem in linear runtime complexity?
 */
 
-function findDuplicate(nums) {
+function findDuplicate(nums: number[]): number {
   let slow = nums[0];
   let fast = nums[nums[0]];
   while (slow !== fast) {

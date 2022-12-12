@@ -37,12 +37,7 @@ The directed graph is represented as an adjacency matrix, which is an n x n matr
 Remember that you won't have direct access to the adjacency matrix.
 */
 
-function knows(i, j) {
-  const graph = [];
-  return graph[i][j];
-}
-
-function findCelebrity(n) {
+function findCelebrity(n: number): number {
   let result = 0;
   for (let i = 0; i < n; ++i) {
     if (knows(result, i)) {
@@ -55,4 +50,8 @@ function findCelebrity(n) {
     }
   }
   return result;
+
+  function knows(i: number, j: number): boolean {
+    return Math.random() < 0.5;
+  }
 }

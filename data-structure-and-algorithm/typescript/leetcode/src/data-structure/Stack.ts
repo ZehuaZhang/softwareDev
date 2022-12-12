@@ -1,7 +1,5 @@
-import {Data} from '../util/object';
-
-export class Stack {
-  private dataList: Data[];
+export class Stack<T> {
+  private dataList: T[];
   private capacity: number;
 
   constructor(capacity = Number.MAX_SAFE_INTEGER) {
@@ -21,21 +19,21 @@ export class Stack {
     return this.size === this.capacity;
   }
 
-  push(data: Data): void {
+  push(data: T): void {
     if (this.isFull()) {
       throw new Error('push: stack overflow');
     }
     this.dataList.push(data);
   }
 
-  pop(): Data {
+  pop(): T {
     if (this.isEmpty()) {
       throw new Error('pop: stack underflow');
     }
-    return this.dataList.pop();
+    return this.dataList.pop()!;
   }
 
-  peek(): Data {
+  peek(): T {
     if (this.isEmpty()) {
       throw new Error('peek: stack underflow');
     }
@@ -46,14 +44,14 @@ export class Stack {
     this.dataList = [];
   }
 
-  fromArray(list: Data[]): Stack {
+  fromArray(list: T[]): Stack<T> {
     list.forEach(element => {
       this.push(element);
     });
     return this;
   }
 
-  toArray(): Data[] {
+  toArray(): T[] {
     return [...this.dataList];
   }
 

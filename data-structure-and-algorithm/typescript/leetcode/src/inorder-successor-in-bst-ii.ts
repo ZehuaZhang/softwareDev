@@ -56,11 +56,31 @@ Constraints:
 All Nodes will have unique values.
 */
 
-function inorderSuccessor(node) {
+import {Nullable} from './util/object';
+
+function inorderSuccessor(node: ParentTreeNode): Nullable<ParentTreeNode> {
   if (node.right !== null) {
     for (node = node.right; node.left; node = node.left);
     return node;
   }
   for (; node.parent && node === node.parent.right; node = node.parent);
   return node.parent;
+}
+
+class ParentTreeNode {
+  data: number;
+  left: Nullable<ParentTreeNode>;
+  right: Nullable<ParentTreeNode>;
+  parent: Nullable<ParentTreeNode>;
+  constructor(
+    data: number,
+    left: Nullable<ParentTreeNode> = null,
+    right: Nullable<ParentTreeNode> = null,
+    parent: Nullable<ParentTreeNode> = null
+  ) {
+    this.data = data;
+    this.left = left;
+    this.right = right;
+    this.parent = parent;
+  }
 }

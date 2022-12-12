@@ -40,29 +40,33 @@ If all integer numbers from the stream are in the range [0, 100], how would you 
 If 99% of all integer numbers from the stream are in the range [0, 100], how would you optimize your solution?
 */
 
+import {Heap} from './data-structure/Heap';
+
 class MedianFinder {
+  lowerHeap: Heap<number>;
+  upperHeap: Heap<number>;
   constructor() {
-    this.minHeap = new Heap(Infinity, (a, b) => a - b);
-    this.maxHeap = new Heap(Infinity, (a, b) => b - a);
+    this.lowerHeap = new Heap<number>((a, b) => b - a);
+    this.upperHeap = new Heap<number>((a, b) => a - b);
   }
 
-  addNum(num) {
-    if (this.minHeap.isEmpty() || num > this.minHeap.top()) {
-      this.minHeap.push(num);
-      if (this.minHeap.size > this.maxHeap.size + 1) {
-        this.maxHeap.push(this.minHeap.pop());
+  addNum(num: number): void {
+    if (this.upperHeap.isEmpty() || num > this.upperHeap.peek()) {
+      this.upperHeap.push(num);
+      if (this.upperHeap.size > this.lowerHeap.size + 1) {
+        this.lowerHeap.push(this.upperHeap.pop());
       }
     } else {
-      this.maxHeap.push(num);
-      if (this.maxHeap.size > this.minHeap.size) {
-        this.minHeap.push(this.maxHeap.pop());
+      this.lowerHeap.push(num);
+      if (this.lowerHeap.size > this.upperHeap.size) {
+        this.upperHeap.push(this.lowerHeap.pop());
       }
     }
   }
 
-  findMedian() {
-    return this.minHeap.size === this.maxHeap.size
-      ? (this.maxHeap.top() + this.minHeap.top()) / 2
-      : this.minHeap.top();
+  findMedian(): number {
+    return this.upperHeap.size === this.lowerHeap.size
+      ? (this.lowerHeap.peek() + this.upperHeap.peek()) / 2
+      : this.upperHeap.peek();
   }
 }

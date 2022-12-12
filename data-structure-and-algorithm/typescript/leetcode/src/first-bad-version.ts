@@ -27,9 +27,9 @@ Constraints:
 1 <= bad <= n <= 231 - 1
 */
 
-function firstBadVersion(n) {
-  let left = 1,
-    right = n;
+function firstBadVersion(count: number): number {
+  let left = 1;
+  let right = count;
   while (left <= right) {
     const mid = left + Math.trunc((right - left) / 2);
     if (!isBadVersion(mid)) {
@@ -39,4 +39,8 @@ function firstBadVersion(n) {
     }
   }
   return left;
+
+  function isBadVersion(version: number): boolean {
+    return Math.random() < 0.5;
+  }
 }

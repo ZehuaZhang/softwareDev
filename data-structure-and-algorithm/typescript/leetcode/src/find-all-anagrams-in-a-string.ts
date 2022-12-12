@@ -26,22 +26,25 @@ Constraints:
 s and p consist of lowercase English letters.
 */
 
-function findAnagrams(s, p) {
-  const result = [];
-  const map = Array(256).fill(0);
-  for (const c of p) {
-    ++map[c.charCodeAt()];
+function findAnagrams(string: string, anagram: string): number[] {
+  const result: number[] = [];
+  const charCountList = Array(256).fill(0);
+  for (const char of anagram) {
+    ++charCountList[char.charCodeAt(0)];
   }
-  for (let left = 0, right = 0, count = p.length; right < s.length; ++right) {
-    console.log(count, right, s[right]);
-    if (--map[s[right].charCodeAt()] >= 0) {
+  for (
+    let left = 0, right = 0, count = anagram.length;
+    right < string.length;
+    ++right
+  ) {
+    if (--charCountList[string[right].charCodeAt(0)] >= 0) {
       --count;
     }
     if (!count) {
       result.push(left);
     }
-    if (right - left + 1 === p.length) {
-      if (++map[s[left].charCodeAt()] >= 1) {
+    if (right - left + 1 === anagram.length) {
+      if (++charCountList[string[left].charCodeAt(0)] >= 1) {
         ++count;
       }
       ++left;

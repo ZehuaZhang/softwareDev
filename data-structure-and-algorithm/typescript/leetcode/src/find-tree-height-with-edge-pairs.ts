@@ -1,34 +1,26 @@
-function findTreeHeightWithEdgePairs(pairs) {
-  const set = new Set();
-  const parents = {};
-  pairs.forEach(([x, y]) => {
-    set.add(x);
-    set.add(y);
-    parents[y] = x;
+function findTreeHeightWithEdgePairs(pairList: number[][]): number {
+  const childParentMap = new Map<number, number>();
+  const leafSet = new Set<number>();
+  const parentSet = new Set<number>();
+  pairList.forEach(([parent, child]) => {
+    childParentMap.set(child, parent);
+    parentSet.add(parent);
+    if (leafSet.has(parent)) {
+      leafSet.delete(parent);
+    }
+    if (!parentSet.has(child)) {
+      leafSet.add(child);
+    }
   });
-  const n = set.size;
-  const depth = Array(size).fill(0);
-  for (const i = 0; i < n; ++i) {
-    findDepth(parents, i, depth);
+
+  let result = 0;
+  for (const leaf of leafSet) {
+    let count = 0;
+    for (let node = leaf; node; node = childParentMap.get(node)!) {
+      ++count;
+    }
+    result = Math.max(result, count);
   }
 
-  let max = 0;
-  depth.forEach(d => {
-    max = Math.max(d, max);
-  });
-  return max;
-}
-
-function findDepth(parents, i, depth) {
-  if (depth[i] !== 0) {
-    return;
-  }
-  if (!parents.hasOwnProperty(i)) {
-    depth[i] = 1;
-    return;
-  }
-  if (depth[parents[i]] === 0) {
-    findDepth(parents, parents[i], depth);
-  }
-  depth[i] = depth[parents[i]] + 1;
+  return result;
 }

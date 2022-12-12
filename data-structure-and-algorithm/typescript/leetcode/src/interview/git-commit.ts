@@ -1,7 +1,10 @@
-function findAllCommits(node) {
-  const result = [];
-  const queue = new Queue();
-  const visited = new Set();
+import {Queue} from '../data-structure/Queue';
+import {Nullable} from '../util/object';
+
+function findAllCommits(node: GitNode): GitNode[] {
+  const result: GitNode[] = [];
+  const queue = new Queue<GitNode>();
+  const visited = new Set<GitNode>();
 
   queue.push(node);
   visited.add(node);
@@ -19,24 +22,27 @@ function findAllCommits(node) {
   return result;
 }
 
-function findLatestCommonCommit(node1, node2) {
+function findLatestCommonCommit(
+  node1: GitNode,
+  node2: GitNode
+): Nullable<GitNode> {
   if (!node1 || !node2) {
     return null;
   }
 
-  const queue1 = new Queue();
-  const queue2 = new Queue();
+  const queue1 = new Queue<GitNode>();
+  const queue2 = new Queue<GitNode>();
 
-  const visited1 = new Set();
-  const visited2 = new Set();
+  const visited1 = new Set<GitNode>();
+  const visited2 = new Set<GitNode>();
 
-  queue1.add(node1);
+  queue1.push(node1);
   visited1.add(node1);
-  queue2.add(node2);
+  queue2.push(node2);
   visited2.add(node2);
 
   while (!queue1.isEmpty() && !queue2.isEmpty()) {
-    for (const size = queue1.count(); size > 0; --size) {
+    for (let {size} = queue1; size; --size) {
       const curr = queue1.pop();
 
       if (visited2.has(curr)) {
@@ -51,7 +57,7 @@ function findLatestCommonCommit(node1, node2) {
       }
     }
 
-    for (const size = queue2.count(); size > 0; --size) {
+    for (let {size} = queue2; size; --size) {
       const curr = queue2.pop();
 
       if (visited1.has(curr)) {
@@ -71,7 +77,9 @@ function findLatestCommonCommit(node1, node2) {
 }
 
 class GitNode {
-  constructor(id) {
+  id: number;
+  parents: GitNode[];
+  constructor(id: number) {
     this.id = id;
     this.parents = [];
   }

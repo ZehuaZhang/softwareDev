@@ -37,9 +37,9 @@ All the integers of nums are unique.
 nums is sorted and rotated between 1 and n times.
 */
 
-function findMin(nums) {
-  let left = 0,
-    right = nums.length - 1;
+function findMinUnqiue(nums: number[]): number {
+  let left = 0;
+  let right = nums.length - 1;
   while (left < right) {
     const mid = left + Math.trunc((right - left) / 2);
     if (nums[mid] < nums[right]) {

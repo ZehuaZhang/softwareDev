@@ -29,40 +29,41 @@ nums is a non-decreasing array.
 -109 <= target <= 109
 */
 
-function searchRange(nums, target) {
+function searchRange(nums: number[], target: number): number[] {
   const left = firstElementGreaterOrEqual(nums, target);
   const right = firstElementGreater(nums, target) - 1;
 
-  return [
-    left < nums.length && nums[left] === target ? left : -1,
-    right < nums.length && nums[right] === target ? right : -1,
-  ];
-}
+  return nums[left] === target ? [left, right] : [-1, -1];
+  // return [
+  //   left < nums.length && nums[left] === target ? left : -1,
+  //   right < nums.length && nums[right] === target ? right : -1,
+  // ];
 
-function firstElementGreaterOrEqual(nums, target) {
-  let left = 0,
-    right = nums.length - 1;
-  while (left <= right) {
-    const mid = left + Math.trunc((right - left) / 2);
-    if (nums[mid] >= target) {
-      right = mid - 1;
-    } else {
-      left = mid + 1;
+  function firstElementGreaterOrEqual(nums: number[], target: number): number {
+    let left = 0;
+    let right = nums.length - 1;
+    while (left <= right) {
+      const mid = left + Math.trunc((right - left) / 2);
+      if (nums[mid] >= target) {
+        right = mid - 1;
+      } else {
+        left = mid + 1;
+      }
     }
+    return left;
   }
-  return left;
-}
 
-function firstElementGreater(nums, target) {
-  let left = 0,
-    right = nums.length - 1;
-  while (left <= right) {
-    const mid = left + Math.trunc((right - left) / 2);
-    if (nums[mid] > target) {
-      right = mid - 1;
-    } else {
-      left = mid + 1;
+  function firstElementGreater(nums: number[], target: number): number {
+    let left = 0;
+    let right = nums.length - 1;
+    while (left <= right) {
+      const mid = left + Math.trunc((right - left) / 2);
+      if (nums[mid] > target) {
+        right = mid - 1;
+      } else {
+        left = mid + 1;
+      }
     }
+    return left;
   }
-  return left;
 }

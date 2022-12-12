@@ -25,40 +25,38 @@ Constraints:
 0 <= strs[i].length <= 100
 strs[i] consists of lower-case English letters.
 */
-function groupAnagrams(strs) {
-  const result = [];
-  const map = new Map();
-  for (const str of strs) {
-    const count = new Array(26).fill(0);
-    for (const c of str) {
-      ++count[c - '0'];
+function groupAnagrams(inputList: string[]): string[][] {
+  const result: string[][] = [];
+  const anagramListMap = new Map<string, string[]>();
+  for (const input of inputList) {
+    const countList = Array(26).fill(0);
+    for (const char of input) {
+      ++countList[char.charCodeAt(0) - 'a'.charCodeAt(0)];
     }
-    const key = count
+    const key = countList
       .filter(Boolean)
-      .map(c => `${c}:${i}`)
+      .map((count, i) => `${count}:${i}`)
       .join('_');
-    if (!map.has(key)) {
-      map.set(key) = [];
+    if (!anagramListMap.has(key)) {
+      anagramListMap.set(key, []);
     }
-    map.get(key).push(str);
+    anagramListMap.get(key)!.push(input);
   }
+  result.push(...anagramListMap.values());
 
-  for (const value of map.values()) {
-    result.push(value);
-  }
   return result;
 }
 
-function groupAnagramsSort(strs) {
-  const result = [];
-  const map = new Map();
-  for (const str of strs) {
-    const a = [...str].sort().join('');
-    if (!map.has(a)) {
-      map.set(a, result.length);
+function groupAnagramsSort(inputList: string[]): string[][] {
+  const result: string[][] = [];
+  const anagramIndexMap = new Map<string, number>();
+  for (const input of inputList) {
+    const sorted = [...input].sort().join('');
+    if (!anagramIndexMap.has(sorted)) {
+      anagramIndexMap.set(sorted, result.length);
       result.push([]);
     }
-    result[map.get(a)].push(str);
+    result[anagramIndexMap.get(sorted)!].push(input);
   }
 
   return result;

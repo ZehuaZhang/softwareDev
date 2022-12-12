@@ -35,40 +35,42 @@ There will be at least one element in the data structure when getRandom is calle
 */
 
 class RandomizedCollection {
+  list: number[];
+  indexSetMap: Map<number, Set<number>>;
   constructor() {
     this.list = [];
-    this.index = new Map();
+    this.indexSetMap = new Map();
   }
 
-  insert(number) {
-    this.list.push(number);
-    if (!this.index.has(number)) {
-      this.index.set(number, new Set());
+  insert(num: number): boolean {
+    this.list.push(num);
+    if (!this.indexSetMap.has(num)) {
+      this.indexSetMap.set(num, new Set<number>());
     }
-    this.index.get(number).add(this.list.length - 1);
+    this.indexSetMap.get(num)!.add(this.list.length - 1);
 
-    return this.index.get(number).size === 1;
+    return this.indexSetMap.get(num)!.size === 1;
   }
 
-  remove(number) {
-    if (!this.index.has(number)) {
+  remove(num: number): boolean {
+    if (!this.indexSetMap.has(num)) {
       return false;
     }
 
-    const indexSet = this.index.get(number);
+    const indexSet = this.indexSetMap.get(num)!;
     const index = indexSet.values().next().value;
     indexSet.delete(index);
 
-    swap(this.list, index, this.list.length - 1);
+    this.swap(this.list, index, this.list.length - 1);
 
     if (index !== this.list.length - 1) {
-      const swapIndexSet = this.index.get(this.list[index]);
+      const swapIndexSet = this.indexSetMap.get(this.list[index])!;
       swapIndexSet.delete(this.list.length - 1);
       swapIndexSet.add(index);
     }
 
-    if (!indexSet.size) {
-      this.index.delete(number);
+    if (indexSet.size === 0) {
+      this.indexSetMap.delete(num);
     }
     this.list.pop();
 
@@ -79,10 +81,10 @@ class RandomizedCollection {
     const randomIndex = Math.trunc(Math.random() * this.list.length);
     return this.list[randomIndex];
   }
-}
 
-function swap(items, i, j) {
-  const temp = items[i];
-  items[i] = items[j];
-  items[j] = temp;
+  swap(list: number[], i: number, j: number): void {
+    const temp = list[i];
+    list[i] = list[j];
+    list[j] = temp;
+  }
 }

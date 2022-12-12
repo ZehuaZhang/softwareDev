@@ -25,7 +25,7 @@ Constraints:
 -231 <= nums[i] <= 231 - 1
 */
 
-function firstMissingPositive(nums) {
+function firstMissingPositive(nums: number[]): number {
   for (let i = 0; i < nums.length; ++i) {
     while (
       nums[i] > 0 &&
@@ -41,10 +41,10 @@ function firstMissingPositive(nums) {
     }
   }
   return nums.length + 1;
-}
 
-function swap(nums, i, j) {
-  const temp = nums[i];
-  nums[i] = nums[j];
-  nums[j] = temp;
+  function swap(nums: number[], i: number, j: number) {
+    const temp = nums[i];
+    nums[i] = nums[j];
+    nums[j] = temp;
+  }
 }

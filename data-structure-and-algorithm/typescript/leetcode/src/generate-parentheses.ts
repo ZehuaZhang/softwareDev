@@ -18,17 +18,17 @@ Constraints:
 1 <= n <= 8
 */
 
-function generateParenthesis(n) {
-  if (n === 0) {
+function generateParenthesis(count: number): string[] {
+  if (count === 0) {
     return [''];
   }
-  if (n === 1) {
+  if (count === 1) {
     return ['()'];
   }
-  const result = [];
-  for (let i = 0; i < n; ++i) {
+  const result: string[] = [];
+  for (let i = 0; i < count; ++i) {
     for (const inner of generateParenthesis(i)) {
-      for (const outer of generateParenthesis(n - 1 - i)) {
+      for (const outer of generateParenthesis(count - 1 - i)) {
         result.push(`(${inner})${outer}`);
       }
     }

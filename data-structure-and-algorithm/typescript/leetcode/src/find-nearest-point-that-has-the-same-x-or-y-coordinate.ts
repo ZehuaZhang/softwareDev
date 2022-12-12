@@ -31,7 +31,7 @@ points[i].length == 2
 1 <= x, y, ai, bi <= 104
 */
 
-function nearestValidPoint(x, y, points) {
+function nearestValidPoint(x: number, y: number, points: number[][]): number {
   let result = -1;
   for (let i = 0, min = Infinity; i < points.length; ++i) {
     const [x1, y1] = points[i];

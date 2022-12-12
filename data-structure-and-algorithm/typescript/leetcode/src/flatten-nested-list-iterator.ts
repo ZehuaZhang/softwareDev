@@ -35,6 +35,8 @@ Constraints:
 The values of the integers in the nested list is in the range [-106, 106].
 */
 
+import {Stack} from './data-structure/Stack';
+
 /**
  * Your NestedIterator will be called like this:
  * var i = new NestedIterator(nestedList), a = [];
@@ -42,14 +44,15 @@ The values of the integers in the nested list is in the range [-106, 106].
  */
 
 class NestedIterator {
-  constructor(list) {
-    this.stack = [];
+  stack: Stack<NestedInteger>;
+  constructor(list: Array<NestedInteger>) {
+    this.stack = new Stack<NestedInteger>();
     list.reverse().forEach(entry => this.stack.push(entry));
   }
 
   hasNext() {
-    while (this.stack.length) {
-      const top = this.stack[this.stack.length - 1];
+    while (!this.stack.isEmpty()) {
+      const top = this.stack.peek();
       if (top.isInteger()) {
         return true;
       }
@@ -67,4 +70,10 @@ class NestedIterator {
   next() {
     return this.stack.pop().getInteger();
   }
+}
+
+interface NestedInteger {
+  isInteger(): boolean;
+  getInteger(): number;
+  getList(): Array<NestedInteger>;
 }

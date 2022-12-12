@@ -25,10 +25,16 @@ If the given node has no in-order successor in the tree, return null.
 It's guaranteed that the values of the tree are unique.
 */
 
-function inorderSuccessor(root, node) {
-  let result = null;
+import {TreeNode} from './data-structure/BinaryTree';
+import {Nullable} from './util/object';
+
+function inorderSuccessor(
+  root: Nullable<TreeNode<number>>,
+  node: TreeNode<number>
+): Nullable<TreeNode<number>> {
+  let result: Nullable<TreeNode<number>> = null;
   for (let curr = root; curr; ) {
-    if (node.val < curr.val) {
+    if (node.data < curr.data) {
       result = curr;
       curr = curr.left;
     } else {

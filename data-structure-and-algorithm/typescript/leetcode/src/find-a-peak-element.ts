@@ -28,9 +28,9 @@ Constraints:
 nums[i] != nums[i + 1] for all valid i.
 */
 
-function findPeakElement(nums) {
-  let left = 0,
-    right = nums.length - 1;
+function findPeakElement(nums: number[]): number {
+  let left = 0;
+  let right = nums.length - 1;
 
   while (left < right) {
     const mid1 = Math.trunc((left + right) / 2);

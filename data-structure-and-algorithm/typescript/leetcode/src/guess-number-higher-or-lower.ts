@@ -37,11 +37,9 @@ Constraints:
 1 <= pick <= n
 */
 
-function guessNumber(n) {
-  let left = 1,
-    right = n;
-  let mid;
-  while (left <= right) {
+function guessNumber(range: number): number {
+  let mid = NaN;
+  for (let left = 1, right = range; left <= right; ) {
     mid = Math.trunc((left + right) / 2);
     if (!guess(mid)) {
       return mid;
@@ -52,4 +50,12 @@ function guessNumber(n) {
     }
   }
   return mid;
+
+  function guess(num: number): number {
+    if (Math.random() < 0.3) {
+      return 1;
+    }
+
+    return Math.random() < 0.5 ? 0 : -1;
+  }
 }

@@ -32,9 +32,9 @@ nums is sorted and rotated between 1 and n times.
 Follow up: This problem is similar to Find Minimum in Rotated Sorted Array, but nums may contain duplicates. Would this affect the runtime complexity? How and why?
 */
 
-function findMin(nums) {
-  let left = 0,
-    right = nums.length - 1;
+function findMinDuplicate(nums: number[]): number {
+  let left = 0;
+  let right = nums.length - 1;
   while (left < right) {
     const mid = left + Math.trunc((right - left) / 2);
     if (nums[mid] === nums[right]) {

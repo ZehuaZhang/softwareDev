@@ -1,9 +1,8 @@
-import {Data} from '../util/object';
 import {LinkedList} from './LinkedList';
 
-export class Queue {
+export class Queue<T> {
   private capacity: number;
-  private dataLinkedList: LinkedList;
+  private dataLinkedList: LinkedList<T>;
 
   constructor(capacity = Number.MAX_SAFE_INTEGER) {
     this.dataLinkedList = new LinkedList();
@@ -22,14 +21,14 @@ export class Queue {
     return this.size === this.capacity;
   }
 
-  push(data: Data): void {
+  push(data: T): void {
     if (this.isFull()) {
       throw new Error('push: queue overflow');
     }
     this.dataLinkedList.append(data);
   }
 
-  pop(): Data {
+  pop(): T {
     if (this.isEmpty()) {
       throw new Error('pop: queue underflow');
     }
@@ -39,14 +38,14 @@ export class Queue {
     return data;
   }
 
-  pushFront(data: Data): void {
+  pushFront(data: T): void {
     if (this.isFull()) {
       throw new Error('pushFront: queue overflow');
     }
     this.dataLinkedList.prepend(data);
   }
 
-  popBack(): void {
+  popBack(): T {
     if (this.isEmpty()) {
       throw new Error('pop: queue underflow');
     }
@@ -56,7 +55,7 @@ export class Queue {
     return data;
   }
 
-  front(): Data {
+  front(): T {
     if (this.isEmpty()) {
       throw new Error('front: queue underflow');
     }
@@ -64,7 +63,7 @@ export class Queue {
     return data;
   }
 
-  back(): Data {
+  back(): T {
     if (this.isEmpty()) {
       throw new Error('front: queue underflow');
     }
@@ -72,13 +71,13 @@ export class Queue {
     return data;
   }
 
-  fromArray(dataList: Data[]): void {
+  fromArray(dataList: T[]): void {
     dataList.forEach(data => {
       this.push(data);
     });
   }
 
-  toArray(): Data[] {
+  toArray(): T[] {
     return this.dataLinkedList.toArray();
   }
 

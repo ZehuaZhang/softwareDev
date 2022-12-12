@@ -53,10 +53,10 @@ Constraints:
 1 <= n <= 200
 */
 
-function getMoneyAmount(n) {
-  const result = [...Array(n + 1)].map(() => Array(n + 1).fill(0));
-  for (let length = 1; length < n; ++length) {
-    for (let i = 1; i + length <= n; ++i) {
+function getMoneyAmount(range: number): number {
+  const result = [...Array(range + 1)].map(() => Array(range + 1).fill(0));
+  for (let length = 1; length < range; ++length) {
+    for (let i = 1; i + length <= range; ++i) {
       const j = i + length;
       result[i][j] = Infinity;
       for (let k = i; k < j; ++k) {
@@ -67,5 +67,5 @@ function getMoneyAmount(n) {
       }
     }
   }
-  return result[1][n];
+  return result[1][range];
 }

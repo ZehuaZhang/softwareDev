@@ -1,172 +1,111 @@
+/*
+1825. Finding MK Average
+
+You are given two integers, m and k, and a stream of integers. You are tasked to implement a data structure that calculates the MKAverage for the stream.
+
+The MKAverage can be calculated using these steps:
+
+If the number of the elements in the stream is less than m you should consider the MKAverage to be -1. Otherwise, copy the last m elements of the stream to a separate container.
+Remove the smallest k elements and the largest k elements from the container.
+Calculate the average value for the rest of the elements rounded down to the nearest integer.
+Implement the MKAverage class:
+
+MKAverage(int m, int k) Initializes the MKAverage object with an empty stream and the two integers m and k.
+void addElement(int num) Inserts a new element num into the stream.
+int calculateMKAverage() Calculates and returns the MKAverage for the current stream rounded down to the nearest integer.
+
+*/
+
+import {Heap} from './data-structure/Heap';
+import {Queue} from './data-structure/Queue';
+
 class MKAverage {
-  constructor(m, k) {
-    this.m = m;
-    this.k = k;
+  windowSize: number;
+  kth: number;
+  sum: number;
+  left: Heap<number>;
+  minMid: Heap<number>;
+  maxMid: Heap<number>;
+  right: Heap<number>;
+  queue: Queue<number>;
+
+  constructor(windowSize: number, kth: number) {
+    this.windowSize = windowSize;
+    this.kth = kth;
     this.sum = 0;
-    this.left = new Heap((a, b) => a > b);
-    this.mid = new Heap((a, b) => a < b);
-    this.right = new Heap((a, b) => a < b);
-    this.q = [];
+    this.left = new Heap((a, b) => b - a);
+    this.minMid = new Heap((a, b) => a - b);
+    this.maxMid = new Heap((a, b) => b - a);
+    this.right = new Heap((a, b) => a - b);
+    this.queue = new Queue();
   }
 
-  addElement(num) {
-    // add new num
-    if (this.q.length < this.m) {
-      this.mid.push(num);
+  addElement(num: number) {
+    if (this.queue.size < this.windowSize) {
+      this.minMid.push(num);
+      this.maxMid.push(num);
+      this.sum += num;
     }
-    this.q.push(num);
-    if (this.q.length === this.m) {
-      for (let i = 0; i < this.k; ++i) {
-        this.left.push(this.mid.pop());
+    this.queue.push(num);
+    if (this.queue.size === this.windowSize) {
+      for (let i = 0; i < this.kth; ++i) {
+        this.left.push(this.minMid.pop());
       }
-      for (let i = 0; i < this.k; ++i) {
-        this.right.push(this.mid.popMax());
+      for (let i = 0; i < this.kth; ++i) {
+        this.right.push(this.maxMid.pop());
       }
-      this.sum += this.mid.sum;
-    } else if (this.q.length > this.m) {
-      if (num < this.left.top()) {
-        this.left.push(num);
-        const value = this.left.pop();
-        this.mid.push(value);
-        this.sum += value;
-      } else if (num > this.right.top()) {
-        this.right.push(num);
-        const value = this.right.pop();
-        this.mid.push(value);
-        this.sum += value;
-      } else {
-        this.mid.push(num);
-        this.sum += num;
-      }
+      return;
+    }
 
-      // remove old num
-      const value = this.q.shift();
-      if (this.mid.has(value)) {
-        this.mid.remove(value);
-        this.sum -= value;
-      } else if (this.right.has(value)) {
-        this.right.remove(value);
-      } else {
-        this.left.remove(value);
-      }
+    // number list greater than windows size
+    // add new num
+    if (num < this.left.peek()) {
+      this.left.push(num);
+      const data = this.left.pop();
+      this.minMid.push(data);
+      this.maxMid.push(data);
+      this.sum += data;
+    } else if (num > this.right.peek()) {
+      this.right.push(num);
+      const data = this.right.pop();
+      this.minMid.push(data);
+      this.maxMid.push(data);
+      this.sum += data;
+    } else {
+      this.minMid.push(num);
+      this.maxMid.push(num);
+      this.sum += num;
+    }
 
-      // balance three heaps
-      if (this.left.size < this.k) {
-        const value = this.mid.pop();
-        this.left.push(value);
-        this.sum -= value;
-      } else if (this.right.size < this.k) {
-        const value = this.mid.popMax();
-        this.right.push(value);
-        this.sum -= value;
-      }
+    // remove old num
+    const data = this.queue.pop();
+    if (this.minMid.has(data)) {
+      this.minMid.remove(data);
+      this.maxMid.remove(data);
+      this.sum -= data;
+    } else if (this.right.has(data)) {
+      this.right.remove(data);
+    } else {
+      this.left.remove(data);
+    }
+
+    // balance three heaps
+    if (this.left.size < this.kth) {
+      const data = this.minMid.pop();
+      this.maxMid.remove(data);
+      this.left.push(data);
+      this.sum -= data;
+    } else if (this.right.size < this.kth) {
+      const data = this.maxMid.pop();
+      this.minMid.remove(data);
+      this.right.push(data);
+      this.sum -= data;
     }
   }
 
   calculateMKAverage() {
-    return this.q.length === this.m
-      ? Math.trunc(this.sum / (this.m - 2 * this.k))
+    return this.queue.size === this.windowSize
+      ? Math.trunc(this.sum / (this.windowSize - 2 * this.kth))
       : -1;
-  }
-}
-
-class Heap {
-  constructor(compare) {
-    this.store = [];
-    this.compare = compare;
-    this.index = {};
-  }
-
-  top() {
-    return this.store[0];
-  }
-
-  get size() {
-    return this.store.length;
-  }
-
-  isEmpty() {
-    return this.size === 0;
-  }
-
-  has(value) {
-    return Boolean(this.index[value] && this.index[value].size);
-  }
-
-  push(value) {
-    this.store.push(value);
-    const i = this.store.length - 1;
-    if (!this.index[value]) this.index[value] = new Set([i]);
-    else this.index[value].add(i);
-    this.heapifyUp(i);
-  }
-
-  remove(value) {
-    const i = this.index[value].values().next().value;
-    this.index[value].delete(i);
-    if (i === this.store.length - 1) return this.store.pop();
-    this.store[i] = this.store.pop();
-    this.index[this.store[i]].delete(this.store.length);
-    this.index[this.store[i]].add(i);
-    this.heapifyDown(this.heapifyUp(i));
-  }
-
-  popMax() {
-    const max = Math.max(...this.store);
-    this.remove(max);
-    return max;
-  }
-
-  get sum() {
-    return this.store.reduce((p, c) => p + c, 0);
-  }
-
-  pop() {
-    const value = this.store[0];
-    this.index[value].delete(0);
-    if (this.store.length < 2) return this.store.pop();
-    this.store[0] = this.store.pop();
-    this.index[this.store[0]].delete(this.store.length);
-    this.index[this.store[0]].add(0);
-    this.heapifyDown(0);
-    return value;
-  }
-
-  heapifyDown(parent) {
-    const childs = [1, 2]
-      .map(n => parent * 2 + n)
-      .filter(n => n < this.store.length);
-    let child = childs[0];
-    if (childs[1] && this.compare(this.store[childs[1]], this.store[child])) {
-      child = childs[1];
-    }
-    if (child && this.compare(this.store[child], this.store[parent])) {
-      const childVal = this.store[child];
-      const parentVal = this.store[parent];
-      this.store[child] = parentVal;
-      this.store[parent] = childVal;
-      this.index[childVal].delete(child);
-      this.index[childVal].add(parent);
-      this.index[parentVal].delete(parent);
-      this.index[parentVal].add(child);
-      return this.heapifyDown(child);
-    }
-    return parent;
-  }
-
-  heapifyUp(child) {
-    const parent = Math.floor((child - 1) / 2);
-    if (child && this.compare(this.store[child], this.store[parent])) {
-      const childVal = this.store[child];
-      const parentVal = this.store[parent];
-      this.store[child] = parentVal;
-      this.store[parent] = childVal;
-      this.index[childVal].delete(child);
-      this.index[childVal].add(parent);
-      this.index[parentVal].delete(parent);
-      this.index[parentVal].add(child);
-      return this.heapifyUp(parent);
-    }
-    return child;
   }
 }

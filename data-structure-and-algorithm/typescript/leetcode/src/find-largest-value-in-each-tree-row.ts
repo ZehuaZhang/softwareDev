@@ -35,20 +35,24 @@ The number of nodes in the tree will be in the range [0, 104].
 -231 <= Node.val <= 231 - 1
 */
 
-function largestValues(root) {
-  const result = [];
-  dfs(root, 0, result);
+import {TreeNode} from './data-structure/BinaryTree';
+import {Nullable} from './util/object';
+
+function largestValues(root: Nullable<TreeNode>): number[] {
+  const result: number[] = [];
+  dfs(root, 0);
   return result;
-}
-function dfs(node, level, result) {
-  if (!node) {
-    return;
+
+  function largestValuesDfs(node: Nullable<TreeNode>, level: number): void {
+    if (!node) {
+      return;
+    }
+    if (level === result.length) {
+      result.push(node.data);
+    } else {
+      result[level] = Math.max(result[level], node.data);
+    }
+    largestValuesDfs(node.left, level + 1);
+    largestValuesDfs(node.right, level + 1);
   }
-  if (level === result.length) {
-    result.push(node.val);
-  } else {
-    result[level] = Math.max(result[level], node.val);
-  }
-  dfs(node.left, level + 1, result);
-  dfs(node.right, level + 1, result);
 }

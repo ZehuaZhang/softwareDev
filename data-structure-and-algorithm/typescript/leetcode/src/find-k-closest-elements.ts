@@ -25,16 +25,20 @@ arr is sorted in ascending order.
 -104 <= arr[i], x <= 104
 */
 
-function findClosestElements(arr, k, x) {
-  let left = 0,
-    right = arr.length - k;
+function findClosestElements(
+  numList: number[],
+  k: number,
+  target: number
+): number[] {
+  let left = 0;
+  let right = numList.length - k;
   while (left < right) {
     const mid = (left + right) >> 1;
-    if (x - arr[mid] > arr[mid + k] - x) {
+    if (target - numList[mid] > numList[mid + k] - target) {
       left = mid + 1;
     } else {
       right = mid;
     }
   }
-  return arr.slice(left, left + k);
+  return numList.slice(left, left + k);
 }

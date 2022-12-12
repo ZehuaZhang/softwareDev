@@ -36,31 +36,33 @@ There will be at least one element in the data structure when getRandom is calle
 */
 
 class RandomizedSet {
+  list: number[];
+  indexMap: Map<number, number>;
   constructor() {
     this.list = [];
-    this.index = new Map();
+    this.indexMap = new Map<number, number>();
   }
 
-  insert(number) {
-    if (this.index.has(number)) {
+  insert(number: number): boolean {
+    if (this.indexMap.has(number)) {
       return false;
     }
 
     this.list.push(number);
-    this.index.set(number, this.list.length - 1);
+    this.indexMap.set(number, this.list.length - 1);
     return true;
   }
 
-  remove(number) {
-    if (!this.index.has(number)) {
+  remove(number: number): boolean {
+    if (!this.indexMap.has(number)) {
       return false;
     }
 
-    const index = this.index.get(number);
-    swap(this.list, index, this.list.length - 1);
-    this.index.set(this.list[index], index);
+    const index = this.indexMap.get(number)!;
+    this.swap(this.list, index, this.list.length - 1);
+    this.indexMap.set(this.list[index], index);
 
-    this.index.delete(number);
+    this.indexMap.delete(number);
     this.list.pop();
 
     return true;
@@ -69,10 +71,10 @@ class RandomizedSet {
   getRandom() {
     return this.list[Math.trunc(Math.random() * this.list.length)];
   }
-}
 
-function swap(items, i, j) {
-  const temp = items[i];
-  items[i] = items[j];
-  items[j] = temp;
+  swap(list: number[], i: number, j: number): void {
+    const temp = list[i];
+    list[i] = list[j];
+    list[j] = temp;
+  }
 }

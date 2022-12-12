@@ -29,7 +29,10 @@ The number of nodes in the tree is in the range [0, 2000].
 Follow up: Can you flatten the tree in-place (with O(1) extra space)?
 */
 
-function flatten(root) {
+import {TreeNode} from './data-structure/BinaryTree';
+import {Nullable} from './util/object';
+
+function flatten(root: Nullable<TreeNode<number>>): void {
   for (let curr = root; curr; curr = curr.right) {
     if (curr.left) {
       let next = curr.left;

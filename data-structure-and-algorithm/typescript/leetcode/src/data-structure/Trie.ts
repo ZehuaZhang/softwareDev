@@ -16,6 +16,7 @@ export class Trie {
     curr.isWord = true;
   }
 
+  // search term could contain '.'
   search(word: string): boolean {
     return searchDFS(this.root, 0);
 
@@ -40,6 +41,19 @@ export class Trie {
 
       return false;
     }
+  }
+
+  startsWith(prefix: string): boolean {
+    let node = this.root;
+
+    for (const char of prefix) {
+      if (!node.leaves.has(char)) {
+        return false;
+      }
+      node = node.leaves.get(char)!;
+    }
+
+    return true;
   }
 }
 

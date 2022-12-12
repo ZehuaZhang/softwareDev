@@ -1,38 +1,42 @@
-function findDisjointSetOfCommonElementsInPairs(n, nodes) {
-  const set = Array(n).map((_, i) => i);
-  for (const [src, dest] of nodes) {
-    const x = find(src, set);
-    const y = find(dest, set);
+function findDisjointSetOfCommonElementsInPairs(
+  count: number,
+  edgeList: number[][]
+): number[][] {
+  const nodeList = [...Array(count)].map((_, i) => i);
+  for (const [src, dest] of edgeList) {
+    const x = find(src, nodeList);
+    const y = find(dest, nodeList);
 
     if (x !== y) {
-      union(x, y, set);
+      union(x, y, nodeList);
     }
   }
 
-  const setList = {};
-  set.forEach((s, i) => {
-    if (!setList.hasOwnProperty(s)) {
-      setList[s] = [];
+  const rootListMap = new Map<number, number[]>();
+  nodeList.forEach((node, i) => {
+    const root = find(node, nodeList);
+    if (!rootListMap.has(root)) {
+      rootListMap.set(root, []);
     }
-    setList[s].push(i);
+    rootListMap.get(root)!.push(i);
   });
 
-  const result = [];
-  for (const list of Object.values(setList)) {
+  const result: number[][] = [];
+  for (const list of rootListMap.values()) {
     result.push(list);
   }
   return result;
-}
 
-function find(x, set) {
-  while (x !== set[x]) {
-    x = set[x];
+  function find(x: number, nodeList: number[]): number {
+    while (x !== nodeList[x]) {
+      x = nodeList[x];
+    }
+    return x;
   }
-  return x;
-}
 
-function union(x, y, set) {
-  const x = find(x, set);
-  const y = find(y, set);
-  set[Math.min(x, y)] = Math.max(x, y);
+  function union(x: number, y: number, nodeList: number[]): void {
+    x = find(x, nodeList);
+    y = find(y, nodeList);
+    nodeList[Math.min(x, y)] = Math.max(x, y);
+  }
 }

@@ -39,11 +39,8 @@ Constraints:
 -1000 <= nums[i] <= 1000
 */
 
-function pivotIndex(nums) {
-  let total = 0;
-  for (const n of nums) {
-    total += n;
-  }
+function pivotIndex(nums: number[]): number {
+  const total = nums.reduce((a, b) => a + b, 0);
   for (let i = 0, sum = 0; i < nums.length; ++i) {
     if (sum * 2 === total - nums[i]) {
       return i;

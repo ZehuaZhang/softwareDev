@@ -28,24 +28,27 @@ As an added challenge, try to code it using only iterators in C++ or iterators i
 */
 
 class Vector2D {
-  constructor(array) {
+  row: number;
+  col: number;
+  array: number[][];
+  constructor(array: number[][]) {
     this.row = 0;
     this.col = 0;
     this.array = array;
     this.adjust();
   }
 
-  next() {
-    const value = this.array[this.row][this.col++];
+  next(): number {
+    const data = this.array[this.row][this.col++];
     this.adjust();
-    return value;
+    return data;
   }
 
-  hasNext() {
+  hasNext(): boolean {
     return this.row !== this.array.length;
   }
 
-  adjust() {
+  adjust(): void {
     for (
       ;
       this.row !== this.array.length &&

@@ -1,18 +1,18 @@
-import {Nullable, Data} from '../util/object';
+import {Nullable} from '../util/object';
 import {Queue} from './Queue';
 
-export class BinaryTree {
-  root: Nullable<TreeNode> = null;
-  constructor(...dataList: Data[]) {
+export class BinaryTree<T> {
+  root: Nullable<TreeNode<T>> = null;
+  constructor(...dataList: T[]) {
     this.root = this.fromArray(dataList);
   }
 
-  fromArray(dataList: Data[]): Nullable<TreeNode> {
-    if (dataList.length === 0) {
+  fromArray(dataList: Nullable<T>[]): Nullable<TreeNode<T>> {
+    if (dataList.length === 0 || dataList[0] === null) {
       return null;
     }
     const root = new TreeNode(dataList[0]);
-    const queue = new Queue();
+    const queue = new Queue<TreeNode<T>>();
     queue.push(root);
     for (let i = 1; i < dataList.length; ) {
       const node = queue.pop();
@@ -30,9 +30,9 @@ export class BinaryTree {
     return root;
   }
 
-  toArray(): Data[] {
+  toArray(): Nullable<T>[] {
     const dataList = [];
-    const queue = new Queue();
+    const queue = new Queue<Nullable<TreeNode<T>>>();
     if (this.root) {
       queue.push(this.root);
     }
@@ -46,11 +46,11 @@ export class BinaryTree {
           dataList.push(node.data);
           if (!hasLeaf || node.left) {
             queue.push(node.left);
-            hasLeaf ||= node.left;
+            hasLeaf ||= node.left !== null;
           }
           if (!hasLeaf || node.right) {
             queue.push(node.right);
-            hasLeaf ||= node.right;
+            hasLeaf ||= node.right !== null;
           }
         } else {
           dataList.push(null);
@@ -64,12 +64,12 @@ export class BinaryTree {
     return dataList;
   }
 
-  toArrayInOrder(): Data[] {
-    const array: Data[] = [];
+  toArrayInOrder(): T[] {
+    const array: T[] = [];
     toArrayInOrderDfs(this.root);
     return array;
 
-    function toArrayInOrderDfs(node: Nullable<TreeNode>): void {
+    function toArrayInOrderDfs(node: Nullable<TreeNode<T>>): void {
       if (node === null) {
         return;
       }
@@ -79,12 +79,12 @@ export class BinaryTree {
     }
   }
 
-  toArrayPreOrder(): Data[] {
-    const array: Data[] = [];
+  toArrayPreOrder(): T[] {
+    const array: T[] = [];
     toArrayPreOrderDfs(this.root);
     return array;
 
-    function toArrayPreOrderDfs(node: Nullable<TreeNode>): void {
+    function toArrayPreOrderDfs(node: Nullable<TreeNode<T>>): void {
       if (node === null) {
         return;
       }
@@ -94,12 +94,12 @@ export class BinaryTree {
     }
   }
 
-  toArrayPostOrder(): Data[] {
-    const array: Data[] = [];
+  toArrayPostOrder(): T[] {
+    const array: T[] = [];
     toArrayPostOrderDfs(this.root);
     return array;
 
-    function toArrayPostOrderDfs(node: Nullable<TreeNode>): void {
+    function toArrayPostOrderDfs(node: Nullable<TreeNode<T>>): void {
       if (node === null) {
         return;
       }
@@ -109,9 +109,9 @@ export class BinaryTree {
     }
   }
 
-  toArrayList(): Data[][] {
-    const dataList: Data[][] = [];
-    const queue = new Queue();
+  toArrayList(): Nullable<T>[][] {
+    const dataList: Nullable<T>[][] = [];
+    const queue = new Queue<Nullable<TreeNode<T>>>();
     if (this.root) {
       queue.push(this.root);
     }
@@ -127,13 +127,13 @@ export class BinaryTree {
           dataList[level].push(node.data);
           if (node.left) {
             queue.push(node.left);
-            hasLeaf ||= node.left;
+            hasLeaf ||= node.left !== null;
           } else {
             queue.push(null);
           }
           if (node.right) {
             queue.push(node.right);
-            hasLeaf ||= node.right;
+            hasLeaf ||= node.right !== null;
           } else {
             queue.push(null);
           }
@@ -175,11 +175,15 @@ export class BinaryTree {
   }
 }
 
-export class TreeNode {
-  data: Data;
-  left: Nullable<TreeNode>;
-  right: Nullable<TreeNode>;
-  constructor(data: Data, left = null, right = null) {
+export class TreeNode<T> {
+  data: T;
+  left: Nullable<TreeNode<T>>;
+  right: Nullable<TreeNode<T>>;
+  constructor(
+    data: T,
+    left: Nullable<TreeNode<T>> = null,
+    right: Nullable<TreeNode<T>> = null
+  ) {
     this.data = data;
     this.left = left;
     this.right = right;

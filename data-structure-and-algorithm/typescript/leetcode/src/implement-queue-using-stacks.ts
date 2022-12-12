@@ -1,14 +1,18 @@
+import {Stack} from './data-structure/Stack';
+
 class MyQueue {
+  buffer: Stack<number>;
+  output: Stack<number>;
   constructor() {
-    this.buffer = [];
-    this.output = [];
+    this.buffer = new Stack<number>();
+    this.output = new Stack<number>();
   }
 
-  push(x) {
+  push(x: number): void {
     this.buffer.push(x);
   }
 
-  pop() {
+  pop(): number {
     this.transferBufferToOutput();
 
     return this.output.pop();
@@ -17,19 +21,19 @@ class MyQueue {
   peek() {
     this.transferBufferToOutput();
 
-    return this.output[this.output.length - 1];
+    return this.output.peek();
   }
 
   empty() {
-    return !this.output.length && !this.buffer.length;
+    return this.output.isEmpty() && this.buffer.isEmpty();
   }
 
-  transferBufferToOutput() {
-    if (this.output.length) {
+  transferBufferToOutput(): void {
+    if (this.output.size) {
       return;
     }
 
-    while (this.buffer.length) {
+    while (this.buffer.size) {
       this.output.push(this.buffer.pop());
     }
   }

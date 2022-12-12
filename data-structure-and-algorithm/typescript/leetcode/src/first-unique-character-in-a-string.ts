@@ -23,11 +23,11 @@ Constraints:
 s consists of only lowercase English letters.
 */
 
-function firstUniqChar(s) {
-  const map = new Map();
-  const set = new Set();
-  for (let i = 0; i < s.length; ++i) {
-    const c = s[i];
+function firstUniqChar(input: string): number {
+  const map = new Map<string, number>();
+  const set = new Set<string>();
+  for (let i = 0; i < input.length; ++i) {
+    const c = input[i];
     if (set.has(c)) {
       map.delete(c);
     } else {

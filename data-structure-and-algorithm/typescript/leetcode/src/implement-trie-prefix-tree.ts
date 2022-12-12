@@ -1,51 +1,39 @@
-class TrieNode {
-  constructor() {
-    this.leaves = {};
-    this.isWord = false;
-  }
-}
+/*
+208. Implement Trie (Prefix Tree)
 
-class Trie {
-  constructor() {
-    this.root = new TrieNode();
-  }
+A trie (pronounced as "try") or prefix tree is a tree data structure used to efficiently store and retrieve keys in a dataset of strings. There are various applications of this data structure, such as autocomplete and spellchecker.
 
-  insert(word) {
-    let node = this.root;
+Implement the Trie class:
 
-    for (const character of word) {
-      if (!node.leaves.hasOwnProperty(character)) {
-        node.leaves[character] = new TrieNode();
-      }
-      node = node.leaves[character];
-    }
+Trie() Initializes the trie object.
+void insert(String word) Inserts the string word into the trie.
+boolean search(String word) Returns true if the string word is in the trie (i.e., was inserted before), and false otherwise.
+boolean startsWith(String prefix) Returns true if there is a previously inserted string word that has the prefix prefix, and false otherwise.
 
-    node.isWord = true;
-  }
 
-  search(word) {
-    let node = this.root;
+Example 1:
 
-    for (const character of word) {
-      if (!node.leaves.hasOwnProperty(character)) {
-        return false;
-      }
-      node = node.leaves[character];
-    }
+Input
+["Trie", "insert", "search", "search", "startsWith", "insert", "search"]
+[[], ["apple"], ["apple"], ["app"], ["app"], ["app"], ["app"]]
+Output
+[null, null, true, false, true, null, true]
 
-    return node.isWord;
-  }
+Explanation
+Trie trie = new Trie();
+trie.insert("apple");
+trie.search("apple");   // return True
+trie.search("app");     // return False
+trie.startsWith("app"); // return True
+trie.insert("app");
+trie.search("app");     // return True
 
-  startsWith(prefix) {
-    let node = this.root;
 
-    for (const character of prefix) {
-      if (!node.leaves.hasOwnProperty(character)) {
-        return false;
-      }
-      node = node.leaves[character];
-    }
+Constraints:
 
-    return true;
-  }
-}
+1 <= word.length, prefix.length <= 2000
+word and prefix consist only of lowercase English letters.
+At most 3 * 104 calls in total will be made to insert, search, and startsWith.
+*/
+
+import {Trie} from './data-structure/Trie';
