@@ -31,7 +31,7 @@ col == grid[i].length
 grid[i][j] is 0 or 1.
 */
 
-function islandPerimeter(grid) {
+function islandPerimeter(grid: number[][]): number {
   const [rows, cols] = [grid.length, grid[0].length];
   let result = 0;
   for (let i = 0; i < rows; ++i) {

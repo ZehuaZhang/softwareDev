@@ -26,21 +26,24 @@ Constraints:
 0 <= num <= 231 - 1
 */
 
-function numberToWords(num) {
+function numberToWords(num: number): string {
+  const thousandsList = ['Thousand', 'Million', 'Billion'];
+
   let result = toHundreds(num % 1000);
-  const map3 = ['Thousand', 'Million', 'Billion'];
   for (let i = 0; i < 3; ++i) {
     num = Math.trunc(num / 1000);
     result =
       num % 1000 !== 0
-        ? [toHundreds(num % 1000), map3[i], result].filter(Boolean).join(' ')
+        ? [toHundreds(num % 1000), thousandsList[i], result]
+            .filter(Boolean)
+            .join(' ')
         : result;
   }
   return result.length === 0 ? 'Zero' : result;
 }
 
-function toHundreds(num) {
-  const map1 = [
+function toHundreds(num: number): string {
+  const numsLess20List = [
     '',
     'One',
     'Two',
@@ -62,7 +65,7 @@ function toHundreds(num) {
     'Eighteen',
     'Nineteen',
   ];
-  const map2 = [
+  const tensGreaterEqual20List = [
     '',
     '',
     'Twenty',
@@ -74,12 +77,13 @@ function toHundreds(num) {
     'Eighty',
     'Ninety',
   ];
-  const result = Array(3).fill('');
-  const a = Math.trunc(num / 100),
-    b = num % 100,
-    c = num % 10;
-  result[0] = a > 0 ? `${map1[a]} Hundred` : '';
-  result[1] = b < 20 ? map1[b] : map2[Math.trunc(b / 10)];
-  result[2] = b >= 20 ? `${map1[c]}` : '';
+  const result: string[] = Array(3).fill('');
+  const a = Math.trunc(num / 100);
+  const b = num % 100;
+  const c = num % 10;
+  result[0] = a > 0 ? `${numsLess20List[a]} Hundred` : '';
+  result[1] =
+    b < 20 ? numsLess20List[b] : tensGreaterEqual20List[Math.trunc(b / 10)];
+  result[2] = b >= 20 ? numsLess20List[c] : '';
   return result.filter(Boolean).join(' ');
 }

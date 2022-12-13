@@ -30,24 +30,29 @@ Constraints:
 -104 < xi, yi < 104
 */
 
-function kClosest(points, k) {
-  let left = 0,
-    right = points.length - 1;
+function kClosest(pointList: number[][], kth: number): number[][] {
+  let left = 0;
+  let right = pointList.length - 1;
   while (left <= right) {
     const randomIndex = left + Math.trunc(Math.random() * (right - left + 1));
-    const partitionIndex = partition(points, left, right, randomIndex);
+    const partitionIndex = partition(pointList, left, right, randomIndex);
 
-    if (partitionIndex === k - 1) {
+    if (partitionIndex === kth - 1) {
       break;
-    } else if (partitionIndex > k - 1) {
+    } else if (partitionIndex > kth - 1) {
       right = partitionIndex - 1;
     } else {
       left = partitionIndex + 1;
     }
   }
-  return points.slice(0, k);
+  return pointList.slice(0, kth);
 
-  function partition(items, left, right, pivotIndex) {
+  function partition(
+    items: number[][],
+    left: number,
+    right: number,
+    pivotIndex: number
+  ) {
     swap(items, right, pivotIndex);
 
     let nextPivotIndex = left;
@@ -61,13 +66,13 @@ function kClosest(points, k) {
     return nextPivotIndex;
   }
 
-  function swap(items, i, j) {
+  function swap<T>(items: T[], i: number, j: number): void {
     const temp = items[i];
     items[i] = items[j];
     items[j] = temp;
   }
 
-  function compare(points, i, j) {
+  function compare(points: number[][], i: number, j: number): number {
     const [x1, y1] = points[i];
     const [x2, y2] = points[j];
     return x1 * x1 + y1 * y1 - x2 * x2 - y2 * y2;

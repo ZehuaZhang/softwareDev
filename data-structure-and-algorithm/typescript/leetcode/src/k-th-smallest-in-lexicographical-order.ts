@@ -19,26 +19,30 @@ Constraints:
 1 <= k <= n <= 109
 */
 
-function findKthNumber(n, k) {
+function findKthNumber(range: number, kth: number): number {
   // prefix
   let result = 1;
-  for (--k; k; ) {
+  for (--kth; kth; ) {
     let count = 0;
 
     // [result, result + 1)
     // [result * 10, (result + 1) * 10 )
     // [result * 100, (result + 1) * 100 )
-    for (left = result, right = left + 1; left <= n; left *= 10, right *= 10) {
-      count += Math.min(n + 1, right) - left;
+    for (
+      let left = result, right = left + 1;
+      left <= range;
+      left *= 10, right *= 10
+    ) {
+      count += Math.min(range + 1, right) - left;
     }
-    if (k >= count) {
+    if (kth >= count) {
       // skip search
       ++result;
-      k -= count;
+      kth -= count;
     } else {
       // search within range
       result *= 10;
-      --k;
+      --kth;
     }
   }
   return result;

@@ -31,14 +31,17 @@ All the values Node.val are unique.
 It's guaranteed that val does not exist in the original BST.
 */
 
-function insertIntoBST(node, val) {
-  if (!node) {
-    return new TreeNode(val);
+import {TreeNode} from './data-structure/BinaryTree';
+import {Nullable} from './util/object';
+
+function insertIntoBST(node: Nullable<TreeNode<number>>, data: number) {
+  if (node === null) {
+    return new TreeNode(data);
   }
-  if (val < node.val) {
-    node.left = insertIntoBST(node.left, val);
+  if (data < node.data) {
+    node.left = insertIntoBST(node.left, data);
   } else {
-    node.right = insertIntoBST(node.right, val);
+    node.right = insertIntoBST(node.right, data);
   }
   return node;
 }

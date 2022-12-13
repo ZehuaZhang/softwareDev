@@ -16,14 +16,18 @@ Constraints:
 1 <= arr1[i], arr2[i], arr3[i] <= 2000
 */
 
-function arraysIntersection(nums1, nums2, nums3) {
-  const result = [];
+function arraysIntersection(
+  nums1: number[],
+  nums2: number[],
+  nums3: number[]
+): number[] {
+  const result: number[] = [];
   for (
     let i = 0, j = 0, k = 0;
     i < nums1.length && j < nums2.length && k < nums3.length;
 
   ) {
-    if (nums1[i] == nums2[j] && nums1[i] == nums3[k]) {
+    if (nums1[i] === nums2[j] && nums1[i] === nums3[k]) {
       result.push(nums1[i]);
       ++i, ++j, ++k;
     } else if (nums1[i] < nums2[j]) {

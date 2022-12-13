@@ -38,11 +38,14 @@ endi < starti+1
 endj < startj+1
 */
 
-function intervalIntersection(firstList, secondList) {
-  const result = [];
-  for (let i = 0, j = 0; i < firstList.length && j < secondList.length; ) {
-    const [l1, r1] = firstList[i];
-    const [l2, r2] = secondList[j];
+function intervalIntersection(
+  list1: number[][],
+  list2: number[][]
+): number[][] {
+  const result: number[][] = [];
+  for (let i = 0, j = 0; i < list1.length && j < list2.length; ) {
+    const [l1, r1] = list1[i];
+    const [l2, r2] = list2[j];
     const l = Math.max(l1, l2);
     const r = Math.min(r1, r2);
     if (l <= r) {

@@ -27,18 +27,18 @@ What if nums1's size is small compared to nums2's size? Which algorithm is bette
 What if elements of nums2 are stored on disk, and the memory is limited such that you cannot load all elements into the memory at once?
 */
 
-function intersect(nums1, nums2) {
-  const map = new Map();
-  for (const n of nums1) {
-    map.set(n, (map.get(n) || 0) + 1);
+function intersect(nums1: number[], nums2: number[]): number[] {
+  const numCountMap = new Map<number, number>();
+  for (const num of nums1) {
+    numCountMap.set(num, (numCountMap.get(num) || 0) + 1);
   }
-  const result = [];
-  for (const n of nums2) {
-    if (map.has(n)) {
-      const count = map.get(n) || 0;
-      if (count > 0) {
-        result.push(n);
-        map.set(n, count - 1);
+  const result: number[] = [];
+  for (const num of nums2) {
+    if (numCountMap.has(num)) {
+      let count = numCountMap.get(num)!;
+      if (count-- > 0) {
+        result.push(num);
+        numCountMap.set(num, count);
       }
     }
   }

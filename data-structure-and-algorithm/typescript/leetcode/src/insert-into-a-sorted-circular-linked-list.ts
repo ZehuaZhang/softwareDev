@@ -35,26 +35,32 @@ Constraints:
 -10^6 <= insertVal <= 10^6
 */
 
-function insert(head, value) {
-  if (!head) {
-    head = new Node(value);
+import {ListNode} from './data-structure/LinkedList';
+import {Nullable} from './util/object';
+
+function insert(
+  head: Nullable<ListNode<number>>,
+  data: number
+): ListNode<number> {
+  if (head === null) {
+    head = new ListNode<number>(data);
     head.next = head;
     return head;
   }
 
-  let prev = head,
-    curr = prev.next;
-  for (; curr !== head; prev = curr, curr = curr.next) {
+  let prev: ListNode<number> = head;
+  let curr: ListNode<number> = prev.next!;
+  for (; curr !== head; prev = curr, curr = curr.next!) {
     // middle
-    if (prev.val <= value && curr.val >= value) {
+    if (prev.data <= data && curr.data >= data) {
       break;
     }
 
-    // head & tail
-    if (prev.val > curr.val && (prev.val <= value || curr.val >= value)) {
+    // tail, head
+    if (prev.data > curr.data && (prev.data <= data || curr.data >= data)) {
       break;
     }
   }
-  prev.next = new Node(value, curr);
+  prev.next = new ListNode<number>(data, curr);
   return head;
 }

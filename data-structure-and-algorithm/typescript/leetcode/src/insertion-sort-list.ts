@@ -29,21 +29,26 @@ The number of nodes in the list is in the range [1, 5000].
 -5000 <= Node.val <= 5000
 */
 
-function insertionSortList(head) {
-  const dummy = new ListNode();
+import {ListNode} from './data-structure/LinkedList';
+import {Nullable} from './util/object';
+
+function insertionSortList(
+  head: Nullable<ListNode<number>>
+): Nullable<ListNode<number>> {
+  const dummy = new ListNode(NaN);
   let prev = dummy;
 
-  while (head) {
-    const next = head.next;
+  for (let node = head; node; ) {
+    const next = node.next;
 
-    if (prev.val >= head.val) {
+    if (prev.data >= node.data) {
       prev = dummy;
     }
-    for (; prev.next && prev.next.val < head.val; prev = prev.next);
+    for (; prev.next && prev.next.data < node.data; prev = prev.next);
 
-    head.next = prev.next;
-    prev.next = head;
-    head = next;
+    node.next = prev.next;
+    prev.next = node;
+    node = next;
   }
   return dummy.next;
 }

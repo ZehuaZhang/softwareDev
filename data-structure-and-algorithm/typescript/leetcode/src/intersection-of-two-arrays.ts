@@ -20,13 +20,13 @@ Constraints:
 0 <= nums1[i], nums2[i] <= 1000
 */
 
-function intersection(nums1, nums2) {
-  const set = new Set([...nums1]);
-  const result = [];
-  for (const n of nums2) {
-    if (set.has(n)) {
-      result.push(n);
-      set.delete(n);
+function intersection(nums1: number[], nums2: number[]): number[] {
+  const set = new Set<number>([...nums1]);
+  const result: number[] = [];
+  for (const num of nums2) {
+    if (set.has(num)) {
+      result.push(num);
+      set.delete(num);
     }
   }
   return result;

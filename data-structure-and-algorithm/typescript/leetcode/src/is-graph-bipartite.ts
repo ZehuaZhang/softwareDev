@@ -36,25 +36,25 @@ All the values of graph[u] are unique.
 If graph[u] contains v, then graph[v] contains u.
 */
 
-function isBipartite(graph) {
-  const colors = Array(graph.length).fill(0);
+function isBipartite(graph: number[][]): boolean {
+  const colorList: number[] = Array(graph.length).fill(0);
   for (let i = 0; i < graph.length; ++i) {
-    if (!colors[i] && !dfs(graph, colors, 1, i)) {
+    if (!colorList[i] && !isBipartiteDfs(1, i)) {
       return false;
     }
   }
   return true;
-}
 
-function dfs(graph, colors, color, node) {
-  colors[node] = color;
-  for (const next of graph[node]) {
-    if (colors[next] === -color) {
-      continue;
+  function isBipartiteDfs(color: number, node: number): boolean {
+    colorList[node] = color;
+    for (const next of graph[node]) {
+      if (colorList[next] === -color) {
+        continue;
+      }
+      if (colorList[next] === color || !isBipartiteDfs(-color, next)) {
+        return false;
+      }
     }
-    if (colors[next] === color || !dfs(graph, colors, -color, next)) {
-      return false;
-    }
+    return true;
   }
-  return true;
 }
