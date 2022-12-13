@@ -21,38 +21,43 @@ Follow up:
 Can you figure out ways to solve it with O(n) time complexity?
 */
 
-function largestBSTSubtree(root) {
+import {TreeNode} from './data-structure/BinaryTree';
+import {Nullable} from './util/object';
+
+function largestBSTSubtree(root: Nullable<TreeNode<number>>): number {
   if (!root) {
     return 0;
   }
   let result = 1;
-  dfs(root, result);
+  largestBSTSubtreeDfs(root);
   return result;
 
-  function dfs(node) {
+  function largestBSTSubtreeDfs(
+    node: TreeNode<number>
+  ): [number, number, number] {
     if (!node.left && !node.right) {
-      return [1, node.val, node.val];
+      return [1, node.data, node.data];
     }
 
-    let [size1, min1, max1] = [0, node.val, node.val];
+    let [size1, min1, max1] = [0, node.data, node.data];
     if (node.left) {
-      [size1, min1, max1] = dfs(node.left);
+      [size1, min1, max1] = largestBSTSubtreeDfs(node.left);
     }
 
-    let [size2, min2, max2] = [0, node.val, node.val];
+    let [size2, min2, max2] = [0, node.data, node.data];
     if (node.right) {
-      [size2, min2, max2] = dfs(node.right);
+      [size2, min2, max2] = largestBSTSubtreeDfs(node.right);
     }
 
     let size = 0;
     if (
       (!node.left || size1) &&
       (!node.right || size2) &&
-      max1 <= node.val &&
-      node.val <= min2
+      max1 <= node.data &&
+      node.data <= min2
     ) {
       size = 1 + size1 + size2;
-      result = max(result, size);
+      result = Math.max(result, size);
     }
     return [size, min1, max2];
   }

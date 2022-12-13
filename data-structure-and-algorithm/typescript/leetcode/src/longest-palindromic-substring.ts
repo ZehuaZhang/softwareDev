@@ -28,21 +28,19 @@ Constraints:
 s consist of only digits and English letters (lower-case and/or upper-case),
 */
 
-function longestPalindrome(s) {
-  const dp = Array(s.length)
-    .fill(false)
-    .map(() => Array(s.length).fill(false));
-  let left = 0,
-    right = 0;
-  for (let i = 0; i < s.length; ++i) {
+function longestPalindromeSubString(input: string): string {
+  const {length} = input;
+  const dp = [...Array(length)].map(() => Array(length).fill(false));
+  let [left, right] = [0, 0];
+  for (let i = 0; i < length; ++i) {
     dp[i][i] = true;
     for (let j = 0; j < i; ++j) {
-      dp[j][i] = s[i] === s[j] && (i - j < 2 || dp[j + 1][i - 1]);
+      dp[j][i] = input[i] === input[j] && (i - j < 2 || dp[j + 1][i - 1]);
       if (dp[j][i] && right - left < i - j) {
         right = i;
         left = j;
       }
     }
   }
-  return s.substring(left, right + 1);
+  return input.substring(left, right + 1);
 }

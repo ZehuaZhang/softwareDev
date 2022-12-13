@@ -31,22 +31,17 @@ Constraints:
 s consists of English letters, digits, symbols and spaces.
 */
 
-/**
- * @param { string } s
- * @return { number }
- */
-function lengthOfLongestSubstring(s) {
-  const indexMap = new Map();
-  let result = 0,
-    left = 0;
-
-  for (let i = 0; i < s.length; ++i) {
-    const prev = indexMap.get(s[i]);
-    if (indexMap.has(s[i]) && prev >= left) {
+function lengthOfLongestSubstring(input: string): number {
+  const indexMap = new Map<string, number>();
+  let result = 0;
+  let left = 0;
+  for (let right = 0; right < input.length; ++right) {
+    const prev = indexMap.get(input[right])!;
+    if (indexMap.has(input[right]) && prev >= left) {
       left = prev + 1;
     }
-    indexMap.set(s[i], i);
-    result = Math.max(result, i - left + 1);
+    indexMap.set(input[right], right);
+    result = Math.max(result, right - left + 1);
   }
 
   return result;

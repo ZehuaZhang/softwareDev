@@ -13,19 +13,19 @@ Output: 2
 Explanation: T is "aa" which its length is 2.
 */
 
-function lengthOfLongestSubstringKDistinct(s, k) {
-  const map = Array(128).fill(0);
+function lengthOfLongestSubstringKDistinct(input: string, kth: number): number {
+  const countList = Array(128).fill(0);
   let result = 0;
-  for (let count = 0, left = 0, i = 0; i < s.length; ++i) {
-    if (++map[s[i].charCodeAt()] === 1) {
+  for (let count = 0, left = 0, right = 0; right < input.length; ++right) {
+    if (++countList[input[right].charCodeAt(0)] === 1) {
       ++count;
     }
-    for (; count > k; ++left) {
-      if (--map[s[left].charCodeAt()] === 0) {
+    for (; count > kth; ++left) {
+      if (--countList[input[left].charCodeAt(0)] === 0) {
         --count;
       }
     }
-    result = Math.max(result, i - left + 1);
+    result = Math.max(result, right - left + 1);
   }
   return result;
 }

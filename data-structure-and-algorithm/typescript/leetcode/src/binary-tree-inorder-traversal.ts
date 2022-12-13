@@ -41,8 +41,8 @@ import {Nullable} from './util/object';
 import {TreeNode} from './data-structure/BinaryTree';
 import {Stack} from './data-structure/Stack';
 
-function inorderTraversal(root: Nullable<TreeNode>): number[] {
-  const stack = new Stack();
+function inorderTraversal(root: Nullable<TreeNode<number>>): number[] {
+  const stack = new Stack<TreeNode<number>>();
   const result: number[] = [];
   for (let node = root; stack.size || node; ) {
     if (node) {
@@ -50,8 +50,8 @@ function inorderTraversal(root: Nullable<TreeNode>): number[] {
       node = node.left;
     } else {
       node = stack.pop();
-      result.push(node!.data);
-      node = node!.right;
+      result.push(node.data);
+      node = node.right;
     }
   }
   return result;

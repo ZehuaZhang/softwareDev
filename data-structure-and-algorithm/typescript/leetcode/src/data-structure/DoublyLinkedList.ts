@@ -1,10 +1,10 @@
-import {Nullable, Data} from '../util/object';
+import {Nullable} from '../util/object';
 
-export class DoublyLinkedList {
-  head: Nullable<DoublyLinkedListNode>;
-  tail: Nullable<DoublyLinkedListNode>;
+export class DoublyLinkedList<T> {
+  head: Nullable<DoubleListNode<T>>;
+  tail: Nullable<DoubleListNode<T>>;
   length: number;
-  constructor(...dataList: Data[]) {
+  constructor(...dataList: T[]) {
     this.head = null;
     this.tail = null;
     this.length = 0;
@@ -13,26 +13,29 @@ export class DoublyLinkedList {
     }
   }
 
-  append(data: Data): DoublyLinkedListNode {
-    const node = new DoublyLinkedListNode(data);
-    if (!this.head) {
-      this.head = this.tail = node;
-    } else {
+  appendNode(node: DoubleListNode<T>): DoubleListNode<T> {
+    node.next = null;
+    node.prev = this.tail;
+
+    if (this.tail) {
       this.tail!.next = node;
-      node.prev = this.tail;
-      this.tail = node;
+    }
+    this.tail = node;
+    if (!this.head) {
+      this.head = node;
     }
     ++this.length;
     return this.tail;
   }
 
-  prepend(data: Data): DoublyLinkedListNode {
-    const node = new DoublyLinkedListNode(data, this.head);
+  prependNode(node: DoubleListNode<T>): DoubleListNode<T> {
+    node.prev = null;
+    node.next = this.head;
 
     if (this.head) {
       this.head!.prev = node;
     }
-    this.head! = node;
+    this.head = node;
     if (!this.tail) {
       this.tail! = node;
     }
@@ -40,8 +43,18 @@ export class DoublyLinkedList {
     return this.head;
   }
 
+  append(data: T): DoubleListNode<T> {
+    const node = new DoubleListNode<T>(data);
+    return this.appendNode(node);
+  }
+
+  prepend(data: T): DoubleListNode<T> {
+    const node = new DoubleListNode<T>(data);
+    return this.prependNode(node);
+  }
+
   reverse(): void {
-    let [curr, prev, next]: Nullable<DoublyLinkedListNode>[] = [
+    let [curr, prev, next]: Nullable<DoubleListNode<T>>[] = [
       this.head,
       null,
       null,
@@ -61,7 +74,7 @@ export class DoublyLinkedList {
     this.head = prev;
   }
 
-  get(index: number): Nullable<DoublyLinkedListNode> {
+  get(index: number): Nullable<DoubleListNode<T>> {
     if (index < 0 || index >= this.length) {
       return null;
     }
@@ -73,17 +86,14 @@ export class DoublyLinkedList {
     return curr;
   }
 
-  insert(
-    prev: Nullable<DoublyLinkedListNode>,
-    data: Data
-  ): DoublyLinkedListNode {
-    let node: Nullable<DoublyLinkedListNode> = null;
+  insert(prev: Nullable<DoubleListNode<T>>, data: T): DoubleListNode<T> {
+    let node: Nullable<DoubleListNode<T>> = null;
     if (prev === null) {
       node = this.prepend(data);
     } else if (prev === this.tail) {
       node = this.append(data);
     } else {
-      node = new DoublyLinkedListNode(data, prev!.next, prev);
+      node = new DoubleListNode(data, prev!.next, prev);
       prev!.next = node;
       node.next!.prev = node;
       ++this.length;
@@ -91,11 +101,11 @@ export class DoublyLinkedList {
     return node;
   }
 
-  insertAt(index: number, data: Data): DoublyLinkedListNode {
+  insertAt(index: number, data: T): DoubleListNode<T> {
     if (index < 0 || index > this.length) {
       throw new Error('insert - out of bound');
     }
-    let prev: Nullable<DoublyLinkedListNode> = null;
+    let prev: Nullable<DoubleListNode<T>> = null;
     if (index === this.length) {
       prev = this.tail;
     } else {
@@ -104,7 +114,7 @@ export class DoublyLinkedList {
     return this.insert(prev, data);
   }
 
-  remove(node: DoublyLinkedListNode): void {
+  remove(node: DoubleListNode<T>): void {
     const prev = node.prev;
     const next = node.next;
     if (prev) {
@@ -135,12 +145,12 @@ export class DoublyLinkedList {
     this.remove(node);
   }
 
-  fromArray(dataList: Data[]): DoublyLinkedList {
+  fromArray(dataList: T[]): DoublyLinkedList<T> {
     dataList.forEach(data => this.append(data));
     return this;
   }
 
-  toArray(): Data[] {
+  toArray(): T[] {
     const dataList = [];
     for (let curr = this.head; curr; curr = curr.next) {
       dataList.push(curr.data);
@@ -166,14 +176,14 @@ export class DoublyLinkedList {
   }
 }
 
-export class DoublyLinkedListNode {
-  data: Data;
-  next: Nullable<DoublyLinkedListNode>;
-  prev: Nullable<DoublyLinkedListNode>;
+export class DoubleListNode<T> {
+  data: T;
+  next: Nullable<DoubleListNode<T>>;
+  prev: Nullable<DoubleListNode<T>>;
   constructor(
-    data: Data,
-    next: Nullable<DoublyLinkedListNode> = null,
-    prev: Nullable<DoublyLinkedListNode> = null
+    data: T,
+    next: Nullable<DoubleListNode<T>> = null,
+    prev: Nullable<DoubleListNode<T>> = null
   ) {
     this.data = data;
     this.next = next;

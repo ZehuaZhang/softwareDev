@@ -27,15 +27,15 @@ Constraints:
 s consists of lowercase and/or uppercase English letters only.
 */
 
-function longestPalindrome(s) {
-  const set = new Set();
-  for (const c of s) {
-    if (set.has(c)) {
-      set.delete(c);
+function longestPalindrome(input: string): number {
+  const letterSet = new Set<string>();
+  for (const char of input) {
+    if (letterSet.has(char)) {
+      letterSet.delete(char);
     } else {
-      set.add(c);
+      letterSet.add(char);
     }
   }
 
-  return s.length - Math.max(0, set.size - 1);
+  return letterSet.size - Math.max(0, letterSet.size - 1);
 }

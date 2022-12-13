@@ -29,24 +29,25 @@ Constraints:
 s consists of lowercase English letters.
 */
 
-function longestPalindromeSubseq(s) {
-  const dp = [...Array(s.length)].map(() =>
-    [...Array(s.length)].map(() => Array(27).fill(0))
+function longestPalindromeSubseqII(input: string): string {
+  const codeBase = 'a'.charCodeAt(0);
+  const {length} = input;
+  const dp = [...Array(length)].map(() =>
+    [...Array(length)].map(() => Array(27).fill(0))
   );
-  for (let d = 1; d < s.length; ++d)
-    for (let i = 0; i + d < s.length; ++i)
+  for (let delta = 1; delta < length; ++delta)
+    for (let i = 0; i + delta < length; ++i)
       for (let k = 0; k <= 26; ++k) {
-        const j = i + d;
+        const j = i + delta;
         if (
-          s[i] === s[j] &&
-          s[i] !== String.fromCharCode('a'.charCodeAt() + k)
+          input[i] === input[j] &&
+          input[i] !== String.fromCharCode(codeBase + k)
         ) {
-          dp[i][j][k] =
-            dp[i + 1][j - 1][s[i].charCodeAt() - 'a'.charCodeAt()] + 2;
+          dp[i][j][k] = dp[i + 1][j - 1][input[i].charCodeAt(0) - codeBase] + 2;
         } else {
           dp[i][j][k] = Math.max(dp[i + 1][j][k], dp[i][j - 1][k]);
         }
       }
 
-  return dp[0][n - 1][26];
+  return dp[0][length - 1][26];
 }

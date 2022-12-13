@@ -13,20 +13,20 @@ Output: 5
 Explanation: t is "aabbb" which its length is 5.
 */
 
-function lengthOfLongestSubstringTwoDistinct(s) {
+function lengthOfLongestSubstringTwoDistinct(input: string): number {
   const k = 2;
-  const map = Array(128).fill(0);
+  const countList = Array(128).fill(0);
   let result = 0;
-  for (let count = 0, left = 0, i = 0; i < s.length; ++i) {
-    if (++map[s[i].charCodeAt()] === 1) {
+  for (let count = 0, left = 0, right = 0; right < input.length; ++right) {
+    if (++countList[input[right].charCodeAt(0)] === 1) {
       ++count;
     }
     for (; count > k; ++left) {
-      if (--map[s[left].charCodeAt()] === 0) {
+      if (--countList[input[left].charCodeAt(0)] === 0) {
         --count;
       }
     }
-    result = Math.max(result, i - left + 1);
+    result = Math.max(result, right - left + 1);
   }
   return result;
 }

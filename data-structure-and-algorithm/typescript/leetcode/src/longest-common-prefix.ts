@@ -23,20 +23,16 @@ Constraints:
 strs[i] consists of only lower-case English letters.
 */
 
-/**
- * @param { string[] } strs
- * @return { string }
- */
-function longestCommonPrefix(s) {
+function longestCommonPrefix(inputList: string[]): string {
   let result = '';
 
-  for (let j = 0; j < s[0].length; ++j) {
-    for (let i = 1; i < s.length; ++i) {
-      if (s[i][j] !== s[0][j]) {
+  for (let j = 0; j < inputList[0].length; ++j) {
+    for (let i = 1; i < inputList.length; ++i) {
+      if (inputList[i][j] !== inputList[0][j]) {
         return result;
       }
     }
-    result += s[0][j];
+    result += inputList[0][j];
   }
 
   return result;

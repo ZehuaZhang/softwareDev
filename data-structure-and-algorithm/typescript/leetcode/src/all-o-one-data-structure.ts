@@ -40,15 +40,15 @@ At most 5 * 104 calls will be made to inc, dec, getMaxKey, and getMinKey.
 import {Data} from './util/object';
 import {
   DoublyLinkedList,
-  DoublyLinkedListNode,
+  DoubleListNode,
 } from './data-structure/DoublyLinkedList';
 
 class AllOne {
   bucketList: DoublyLinkedList;
-  keyBucketMap: Map<string, DoublyLinkedListNode>;
+  keyBucketMap: Map<string, DoubleListNode>;
   constructor() {
     this.bucketList = new DoublyLinkedList();
-    this.keyBucketMap = new Map<string, DoublyLinkedListNode>();
+    this.keyBucketMap = new Map<string, DoubleListNode>();
   }
 
   inc(key: string): void {
@@ -119,7 +119,7 @@ class AllOne {
       : '';
   }
 
-  remove(key: string, node: DoublyLinkedListNode) {
+  remove(key: string, node: DoubleListNode) {
     node.data.keySet.delete(key);
     if (node.data.keySet.size === 0) {
       this.bucketList.remove(node);

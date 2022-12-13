@@ -26,18 +26,18 @@ All the rows and columns of matrix are guaranteed to be sorted in non-decreasing
 1 <= k <= n2
 */
 
-function kthSmallest(grid, k) {
+function kthSmallest(grid: number[][], kth: number): number {
   const [rows, cols] = [grid.length, grid[0].length];
-  let left = grid[0][0],
-    right = grid[rows - 1][cols - 1] + 1;
+  let left = grid[0][0];
+  let right = grid[rows - 1][cols - 1] + 1;
   while (left < right) {
     const mid = (left + right) >> 1;
     let count = 0;
-    for (let i = 0, j = cols - 1; i < rows; i++) {
+    for (let i = 0, j = cols - 1; i < rows; ++i) {
       for (; j >= 0 && grid[i][j] > mid; --j);
       count += j + 1;
     }
-    if (count < k) {
+    if (count < kth) {
       left = mid + 1;
     } else {
       right = mid;

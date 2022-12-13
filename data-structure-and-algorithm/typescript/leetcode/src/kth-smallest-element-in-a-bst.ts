@@ -25,20 +25,25 @@ The number of nodes in the tree is n.
 Follow up: If the BST is modified often (i.e., we can do insert and delete operations) and you need to find the kth smallest frequently, how would you optimize?
 */
 
-function kthSmallest(root, k) {
-  const left = dfs(root.left);
-  if (left == k - 1) {
-    return root.val;
-  }
-  if (left >= k) {
-    return kthSmallest(root.left, k);
-  }
-  return kthSmallest(root.right, k - left - 1);
-}
+import {TreeNode} from './data-structure/BinaryTree';
+import {Nullable} from './util/object';
+import {Stack} from './data-structure/Stack';
 
-function dfs(node) {
-  if (!node) {
-    return 0;
+function kthSmallest(root: Nullable<TreeNode<number>>, kth: number): number {
+  const stack = new Stack<TreeNode<number>>();
+  let count = 0;
+  for (let node = root; stack.size || node; ) {
+    if (node) {
+      stack.push(node);
+      node = node.left;
+    } else {
+      node = stack.pop();
+      if (++count === kth) {
+        return node.data;
+      }
+      result.push(node.data);
+      node = node.right;
+    }
   }
-  return 1 + dfs(node.left) + dfs(node.right);
+  return NaN;
 }

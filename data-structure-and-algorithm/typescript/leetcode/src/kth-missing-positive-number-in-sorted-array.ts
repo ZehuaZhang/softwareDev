@@ -21,16 +21,16 @@ Constraints:
 arr[i] < arr[j] for 1 <= i < j <= arr.length
 */
 
-function findKthPositive(arr, k) {
-  let left = 0,
-    right = arr.length - 1;
+function findKthPositive(numList: number[], kth: number): number {
+  let left = 0;
+  let right = numList.length - 1;
   while (left <= right) {
     const mid = Math.trunc((left + right) / 2);
-    if (arr[mid] - (mid + 1) >= k) {
+    if (numList[mid] - (mid + 1) >= kth) {
       right = mid - 1;
     } else {
       left = mid + 1;
     }
   }
-  return left + k;
+  return left + kth;
 }

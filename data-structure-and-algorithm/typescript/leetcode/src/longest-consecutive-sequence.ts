@@ -22,7 +22,7 @@ Constraints:
 -109 <= nums[i] <= 109
 */
 
-function longest(nums) {
+function longest(nums: number[]): number {
   let result = 0;
   const set = new Set(nums);
   for (const num of nums) {
@@ -30,15 +30,14 @@ function longest(nums) {
       continue;
     }
     set.delete(num);
-    let l = num - 1,
-      r = num + 1;
-    for (; set.has(l); --l) {
-      set.delete(l);
+    let [left, right] = [num - 1, num + 1];
+    for (; set.has(left); --left) {
+      set.delete(left);
     }
-    for (; set.has(r); ++r) {
-      set.delete(r);
+    for (; set.has(right); ++right) {
+      set.delete(right);
     }
-    result = Math.max(result, r - l - 1);
+    result = Math.max(result, right - left + 1);
   }
   return result;
 }

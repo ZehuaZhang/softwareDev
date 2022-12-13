@@ -52,107 +52,133 @@ Constraints:
 At most 2 * 105 calls will be made to get and put.
 */
 
-class Node {
-  constructor(key = undefined, value = undefined) {
+import {
+  DoublyLinkedList,
+  DoubleListNode,
+} from './data-structure/DoublyLinkedList';
+import {Heap} from './data-structure/Heap';
+import {Nullable} from './util/object';
+
+class LfuNodeData {
+  key: number;
+  data: number;
+  freq: number;
+  constructor(key: number, data: number, freq = 0) {
     this.key = key;
-    this.value = value;
-    this.freq = 0;
-    this.next = null;
-    this.prev = null;
+    this.data = data;
+    this.freq = freq;
   }
 }
 
-class List {
-  constructor() {
-    this.head = new Node();
-    this.tail = new Node();
-    this.head.next = this.tail;
-    this.tail.prev = this.head;
-  }
-
-  insert(node, prev) {
-    node.prev = prev;
-    node.next = prev.next;
-    prev.next.prev = node;
-    prev.next = node;
-  }
-
-  preprend(node) {
-    this.insert(node, this.head);
-  }
-
-  remove(curr) {
-    if (this.isEmpty()) {
-      return;
-    }
-    curr.prev.next = curr.next;
-    curr.next.prev = curr.prev;
-  }
-
-  pop() {
-    this.remove(this.tail.prev);
-  }
-
-  isEmpty() {
-    return this.head.next === this.tail;
-  }
-}
-
-class LFUCache {
-  constructor(capacity) {
+class LfuCache {
+  capacity: number;
+  size: number;
+  freqHeap: Heap<number>;
+  keyNodeMap: Map<number, DoubleListNode<LfuNodeData>>;
+  freqNodeListMap: Map<number, DoublyLinkedList<LfuNodeData>>;
+  constructor(capacity = Infinity) {
     this.capacity = capacity;
+    if (this.capacity <= 0) {
+      throw 'capacity should be positive';
+    }
     this.size = 0;
-    this.minFreq = 0;
-    this.keyNode = new Map();
-    this.freqList = new Map();
+    this.freqHeap = new Heap<number>((a, b) => a - b);
+    this.keyNodeMap = new Map<number, DoubleListNode<LfuNodeData>>();
+    this.freqNodeListMap = new Map<number, DoublyLinkedList<LfuNodeData>>();
   }
 
-  get(key) {
-    if (!this.keyNode.has(key)) {
+  get(key: number): number {
+    if (!this.keyNodeMap.has(key)) {
       return -1;
     }
-    const node = this.keyNode.get(key);
+    const node = this.keyNodeMap.get(key)!;
     this.update(node);
-    return node.value;
+    return node.data.data;
   }
 
-  put(key, value) {
-    if (this.capacity <= 0) {
-      return;
-    }
-    if (this.keyNode.has(key)) {
-      const node = this.keyNode.get(key);
-      node.value = value;
+  put(key: number, data: number): void {
+    if (this.keyNodeMap.has(key)) {
+      const node = this.keyNodeMap.get(key)!;
+      node.data.data = data;
       this.update(node);
     } else {
       if (this.size === this.capacity) {
-        const list = this.freqList.get(this.minFreq);
-        this.keyNode.delete(list.tail.prev.key);
-        list.pop();
-        --this.size;
+        const minFreq = this.freqHeap.peek();
+        const node = this.freqNodeListMap.get(minFreq)!.tail!;
+        this.remove(node);
       }
-      const node = new Node(key, value);
-      this.minFreq = 0;
+      const node = new DoubleListNode<LfuNodeData>(new LfuNodeData(key, data));
       this.update(node);
-      ++this.size;
     }
   }
 
-  update(node) {
-    if (this.freqList.has(node.freq)) {
-      this.freqList.get(node.freq).remove(node);
+  update(node: DoubleListNode<LfuNodeData>): void {
+    this.remove(node);
+    ++node.data.freq;
+    const {key, freq} = node.data;
+    this.freqHeap.push(freq);
+    if (!this.freqNodeListMap.has(freq)) {
+      this.freqNodeListMap.set(freq, new DoublyLinkedList());
     }
-    if (
-      node.freq === this.minFreq &&
-      (!this.freqList.has(node.freq) || this.freqList.get(node.freq).isEmpty())
-    ) {
-      ++this.minFreq;
+    this.freqNodeListMap.get(freq)!.prependNode(node);
+    this.keyNodeMap.set(key, node);
+    ++this.size;
+  }
+
+  remove(node: DoubleListNode<LfuNodeData>) {
+    const {key, freq} = node.data;
+    if (this.keyNodeMap.has(key)) {
+      this.keyNodeMap.delete(key);
+      const list = this.freqNodeListMap.get(freq)!;
+      list.remove(node);
+      if (list.length === 0) {
+        this.freqNodeListMap.delete(freq);
+      }
+      this.freqHeap.remove(freq);
+      --this.size;
     }
-    ++node.freq;
-    if (!this.freqList.has(node.freq)) {
-      this.freqList.set(node.freq, new List());
-    }
-    this.freqList.get(node.freq).preprend(node);
-    this.keyNode.set(node.key, node);
   }
 }
+
+// test
+
+const lfu = new LfuCache(2);
+
+console.log(lfu.put(1, 1));
+// return undefined
+// cache=[1,_], cnt(1)=1
+
+console.log(lfu.put(2, 2));
+// return undefined
+// cache=[2,1], cnt(2)=1, cnt(1)=1
+
+console.log(lfu.get(1));
+// return 1
+// cache=[1,2], cnt(2)=1, cnt(1)=2
+
+console.log(lfu.put(3, 3));
+// return undefined
+// 2 is the LFU key because cnt(2)=1 is the smallest, invalidate 2.
+// cache=[3,1], cnt(3)=1, cnt(1)=2
+console.log(lfu.get(2));
+// return -1 (not found)
+
+console.log(lfu.get(3));
+// return 3
+// cache=[3,1], cnt(3)=2, cnt(1)=2
+
+console.log(lfu.put(4, 4));
+// return undefined
+// Both 1 and 3 have the same cnt, but 1 is LRU, invalidate 1.
+// cache=[4,3], cnt(4)=1, cnt(3)=2
+
+console.log(lfu.get(1));
+// return -1 (not found)
+
+console.log(lfu.get(3));
+// return 3
+// cache=[3,4], cnt(4)=1, cnt(3)=3
+
+console.log(lfu.get(4));
+// return 4
+// cache=[3,4], cnt(4)=2, cnt(3)=3

@@ -36,11 +36,11 @@ mat[i][j] is either 0 or 1.
 mat[i] is sorted in a non-decreasing way.
 */
 
-function leftMostColumnWithOne(matrix) {
-  const [rows, cols] = matrix.dimensions();
+function leftMostColumnWithOne(matrix: number[][]): number {
+  const [rows, cols] = [matrix.length, matrix[0].length];
   let result = -1;
   for (let row = 0, col = cols - 1; row < rows && col >= 0; ) {
-    if (matrix.get(row, col) === 1) {
+    if (matrix[row][col] === 1) {
       result = col;
       --col;
     } else {
@@ -50,25 +50,28 @@ function leftMostColumnWithOne(matrix) {
   return result;
 }
 
-function leftMostColumnWithOneBinarySearch(matrix) {
-  const [rows, cols] = matrix.dimensions();
-  let result = Infinity;
-  for (let i = 0; i < rows; ++i) {
-    result = Math.min(result, binarySearch(matrix, i, cols));
-  }
-  return result === Infinity ? -1 : result;
-}
+function leftMostColumnWithOneBinarySearch(matrix: number[][]): number {
+  const [rows, cols] = [matrix.length, matrix[0].length];
+  let result = -1;
+  let [left, right] = [0, cols];
 
-function binarySearch(matrix, i, cols) {
-  let left = 0,
-    right = cols - 1;
-  for (; left <= right; ) {
-    const mid = Math.trunc((right + low) / 2);
-    if (matrix.get(row, mid) === 1) {
-      right = mid + 1;
+  while (left <= right) {
+    const mid = left + Math.trunc((right - left) / 2);
+    if (checkRowsHaveOne(matrix, mid)) {
+      result = mid;
+      right = mid - 1;
     } else {
       left = mid + 1;
     }
   }
-  return left;
+  return result;
+
+  function checkRowsHaveOne(matrix: number[][], col: number): boolean {
+    for (let row = 0; row < rows; row++) {
+      if (matrix[row][col] === 1) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

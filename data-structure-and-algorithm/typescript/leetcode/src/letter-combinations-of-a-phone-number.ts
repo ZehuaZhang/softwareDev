@@ -27,12 +27,8 @@ Constraints:
 digits[i] is a digit in the range ['2', '9'].
 */
 
-/**
- * @param {string} digits
- * @return {string[]}
- */
-function letterCombinations(digits) {
-  const map = [
+function letterCombinations(digits: string): string[] {
+  const digitLetterList = [
     '_',
     '',
     'abc',
@@ -44,18 +40,20 @@ function letterCombinations(digits) {
     'tuv',
     'wxyz',
   ];
-  const result = [];
-  letterCombinationsDFS(digits, map, 0, '', result);
+  const result: string[] = [];
+  letterCombinationsDFS(0, '');
   return result.filter(Boolean);
-}
 
-function letterCombinationsDFS(digits, map, index, path, result) {
-  if (index === digits.length) {
-    result.push(path);
-    return;
-  }
+  function letterCombinationsDFS(index: number, path: string) {
+    if (index === digits.length) {
+      result.push(path);
+      return;
+    }
 
-  for (const c of map[digits[index] - '0']) {
-    letterCombinationsDFS(digits, map, index + 1, path + c, result);
+    for (const c of digitLetterList[
+      digits[index].charCodeAt(0) - '0'.charCodeAt(0)
+    ]) {
+      letterCombinationsDFS(index + 1, path + c);
+    }
   }
 }
