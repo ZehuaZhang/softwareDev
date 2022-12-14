@@ -9,23 +9,22 @@ Example 2:
 
 Input: [[7,10],[2,4]]
 Output: 1
-NOTE: input types have been changed on April 15, 2019. Please reset to default code definition to get new method signature.
 */
 
-function minMeetingRooms(intervals) {
-  const sArr = [];
-  const eArr = [];
+function minMeetingRooms(intervals: number[][]): number {
+  const sList: number[] = [];
+  const eList: number[] = [];
   for (const [s, e] of intervals) {
-    sArr.push(s);
-    eArr.push(e);
+    sList.push(s);
+    eList.push(e);
   }
-  sArr.sort((a, b) => a - b);
-  eArr.sort((a, b) => a - b);
+  sList.sort((a, b) => a - b);
+  eList.sort((a, b) => a - b);
 
-  let result = 0,
-    index = 0;
-  for (const s of sArr) {
-    if (s < eArr[index]) {
+  let result = 0;
+  let index = 0;
+  for (const s of sList) {
+    if (s < eList[index]) {
       ++result;
     } else {
       ++index;

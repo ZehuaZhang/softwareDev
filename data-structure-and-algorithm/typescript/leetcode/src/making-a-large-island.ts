@@ -32,11 +32,12 @@ n == grid[i].length
 grid[i][j] is either 0 or 1.
 */
 
-function largestIsland(grid) {
-  const parent = [...Array(grid.length * grid[0].length)].map((_, i) => i);
-  const area = [...Array(grid.length * grid[0].length)].fill(1);
-  for (let i = 0; i < grid.length; ++i) {
-    for (let j = 0; j < grid[0].length; ++j) {
+function largestIsland(grid: number[][]): number {
+  const [rows, cols] = [grid.length, grid[0].length];
+  const parentList = [...Array(rows * cols)].map((_, i) => i);
+  const areaList = [...Array(rows * cols)].fill(1);
+  for (let i = 0; i < rows; ++i) {
+    for (let j = 0; j < cols; ++j) {
       if (grid[i][j]) {
         for (const [dx, dy] of [
           [-1, 0],
@@ -45,20 +46,20 @@ function largestIsland(grid) {
           [0, 1],
         ]) {
           const [x, y] = [i + dx, j + dy];
-          if (isValid(grid, x, y) && grid[x][y]) {
-            union(parent, area, id(grid, i, j), id(grid, x, y));
+          if (isValid(grid, x, y)) {
+            union(id(i, j), id(x, y));
           }
         }
       }
     }
   }
 
-  let result = Math.max(...area);
-  for (let i = 0; i < grid.length; ++i) {
-    for (let j = 0; j < grid[0].length; ++j) {
-      if (!grid[i][j]) {
+  let result = Math.max(...areaList);
+  for (let i = 0; i < rows; ++i) {
+    for (let j = 0; j < cols; ++j) {
+      if (grid[i][j] === 0) {
         let curr = 1;
-        const visited = new Set();
+        const visited = new Set<number>();
         for (const [dx, dy] of [
           [-1, 0],
           [1, 0],
@@ -66,10 +67,10 @@ function largestIsland(grid) {
           [0, 1],
         ]) {
           const [x, y] = [i + dx, j + dy];
-          if (isValid(grid, x, y) && grid[x][y]) {
-            const root = find(parent, id(grid, x, y));
+          if (isValid(grid, x, y)) {
+            const root = find(id(x, y));
             if (!visited.has(root)) {
-              curr += area[root];
+              curr += areaList[root];
               visited.add(root);
             }
           }
@@ -79,28 +80,28 @@ function largestIsland(grid) {
     }
   }
   return result;
-}
 
-function id(grid, i, j) {
-  return i * grid[0].length + j;
-}
+  function id(i: number, j: number): number {
+    return i * cols + j;
+  }
 
-function isValid(grid, i, j) {
-  return i >= 0 && i < grid.length && j >= 0 && j < grid[0].length;
-}
+  function isValid(grid: number[][], i: number, j: number): boolean {
+    return i >= 0 && i < rows && j >= 0 && j < cols;
+  }
 
-function find(parent, x) {
-  if (x === parent[x]) {
+  function find(x: number): number {
+    while (x !== parentList[x]) {
+      x = parentList[x];
+    }
     return x;
   }
-  return (parent[x] = find(parent, parent[x]));
-}
 
-function union(parent, area, x, y) {
-  const xr = find(parent, x);
-  const yr = find(parent, y);
-  if (xr !== yr) {
-    parent[xr] = yr;
-    area[yr] += area[xr];
+  function union(x: number, y: number): void {
+    const xr = find(x);
+    const yr = find(y);
+    if (xr !== yr) {
+      parentList[xr] = yr;
+      areaList[yr] += areaList[xr];
+    }
   }
 }

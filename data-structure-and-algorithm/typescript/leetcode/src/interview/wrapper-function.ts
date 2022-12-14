@@ -31,7 +31,7 @@ import {Queue} from '../data-structure/Queue';
 
 const queueRequests = (doSomething: Function, timeout: number) => {
   let done = false;
-  const queue = new Queue();
+  const queue = new Queue<Function>();
   return function () {
     queue.push(doSomething);
     if (!done && !queue.isEmpty()) {

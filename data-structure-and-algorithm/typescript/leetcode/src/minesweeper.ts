@@ -11,7 +11,6 @@
 // If an empty square ('E') with at least one adjacent mine is revealed, then change it to a digit ('1' to '8') representing the number of adjacent mines.
 // Return the board when no more squares will be revealed.
 
-
 // Example 1:
 
 // Input:
@@ -30,12 +29,8 @@
 //  ['B', '1', '1', '1', 'B'],
 //  ['B', 'B', 'B', 'B', 'B']]
 
-/**
- * @param {character[][]} board
- * @param {number[]} click
- * @return {character[][]}
- */
-function updateBoard(board, click) {
+function updateBoard(board: string[][], click: number[]): string[][] {
+  const [rows, cols] = [board.length, board[0].length];
   const [row, col] = click;
 
   if (board[row][col] === 'M') {
@@ -43,63 +38,55 @@ function updateBoard(board, click) {
     return board;
   }
 
-  updateBoardHelper(board, row, col);
+  updateBoardHelper(row, col);
   return board;
-}
 
-function updateBoardHelper(board, row, col) {
-  if (board[row][col] === 'B') {
-    return;
-  }
+  function updateBoardHelper(row: number, col: number): void {
+    if (board[row][col] === 'B') {
+      return;
+    }
 
-  const mines = countMines(board, row, col);
-  if (mines) {
-    board[row][col] = mines.toString();
-    return;
-  }
+    const mines = countMines(row, col);
+    if (mines) {
+      board[row][col] = mines.toString();
+      return;
+    }
 
-  // board[row][col] === 'E'
-  board[row][col] = 'B';
+    board[row][col] = 'B';
 
-  for (const dx of [-1, 0, 1]) {
-    for (const dy of [-1, 0, 1]) {
-      if (!dx && !dy) {
-        continue;
-      }
-
-      const x = dx + row;
-      const y = dy + col;
+    for (const [dx, dy] of [
+      [0, 1],
+      [1, 0],
+      [-1, 0],
+      [0, -1],
+    ]) {
+      const [x, y] = [row + dx, col + dy];
 
       if (x >= 0 && x < board.length && y >= 0 && y < board[0].length) {
-
-                updateBoardHelper(board, x, y)
+        updateBoardHelper(x, y);
       }
     }
   }
-}
 
-function countMines(board, row, col) {
-  let count = 0;
-  for (const dx of [-1, 0, 1]) {
-    for (const dy of [-1, 0, 1]) {
-      if (!dx && !dy) {
-        continue;
-      }
-
-      const x = dx + row;
-      const y = dy + col;
-
-
+  function countMines(row: number, col: number): number {
+    let count = 0;
+    for (const [dx, dy] of [
+      [0, 1],
+      [1, 0],
+      [-1, 0],
+      [0, -1],
+    ]) {
+      const [x, y] = [row + dx, col + dy];
+      if (
         x >= 0 &&
         x < board.length &&
         y >= 0 &&
         y < board[0].length &&
         board[x][y] === 'M'
-
+      ) {
         ++count;
       }
     }
+    return count;
   }
-
-  return count;
 }

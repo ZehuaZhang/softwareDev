@@ -24,15 +24,14 @@ nums[i] is either 0 or 1.
 0 <= k <= nums.length
 */
 
-function longestOnes(nums, k) {
-  let left = 0,
-    right = 0;
+function longestOnes(nums: number[], kth: number): number {
+  let [left, right] = [0, 0];
   for (; right < nums.length; ++right) {
-    if (!nums[right]) {
-      --k;
+    if (nums[right] === 0) {
+      --kth;
     }
-    if (k < 0 && !nums[left++]) {
-      ++k;
+    if (kth < 0 && nums[left++] === 0) {
+      ++kth;
     }
   }
   return right - left;

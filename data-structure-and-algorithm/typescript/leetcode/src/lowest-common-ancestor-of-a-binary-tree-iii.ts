@@ -40,9 +40,13 @@ p != q
 p and q exist in the tree.
 */
 
-let result;
+import {Nullable} from './util/object';
 
-function lowestCommonAncestor(root, p, q) {
+function lowestCommonAncestorIII(
+  root: Nullable<ParentTreeNode<number>>,
+  p: Nullable<ParentTreeNode<number>>,
+  q: Nullable<ParentTreeNode<number>>
+): Nullable<ParentTreeNode<number>> {
   const set = new Set();
   let node;
   for (node = p; node; node = node.parent) {
@@ -50,4 +54,22 @@ function lowestCommonAncestor(root, p, q) {
   }
   for (node = q; node && !set.has(node); node = node.parent);
   return node;
+}
+
+class ParentTreeNode<T> {
+  data: T;
+  left: Nullable<ParentTreeNode<T>>;
+  right: Nullable<ParentTreeNode<T>>;
+  parent: Nullable<ParentTreeNode<T>>;
+  constructor(
+    data: T,
+    left: Nullable<ParentTreeNode<T>> = null,
+    right: Nullable<ParentTreeNode<T>> = null,
+    parent: Nullable<ParentTreeNode<T>> = null
+  ) {
+    this.data = data;
+    this.left = left;
+    this.right = right;
+    this.parent = parent;
+  }
 }

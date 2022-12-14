@@ -25,8 +25,8 @@ Constraints:
 1 <= nums[i] <= 104
 */
 
-function maximumUniqueSubarray(nums) {
-  const set = new Set();
+function maximumUniqueSubarray(nums: number[]): number {
+  const set = new Set<number>();
   let result = 0;
   for (
     let left = 0, right = 0, sum = 0;

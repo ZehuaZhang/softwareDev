@@ -32,12 +32,19 @@ p != q
 p and q will exist in the BST.
 */
 
-function lowestCommonAncestor(root, p, q) {
-  const min = Math.min(p.val, q.val);
-  const max = Math.max(p.val, q.val);
+import {TreeNode} from './data-structure/BinaryTree';
+import {Nullable} from './util/object';
 
-  while (root.val < min || root.val > max) {
-    root = root.val < min ? root.right : root.left;
+function lowestCommonAncestorBST(
+  root: TreeNode<number>,
+  p: TreeNode<number>,
+  q: TreeNode<number>
+): Nullable<TreeNode<number>> {
+  const min = Math.min(p.data, q.data);
+  const max = Math.max(p.data, q.data);
+
+  while (root.data < min || root.data > max) {
+    root = root.data < min ? root.right! : root.left!;
   }
   return root;
 }

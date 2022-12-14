@@ -28,15 +28,23 @@ You cannnot eat at restaurant 0 on day 2 because you cannot eat at a restaurant 
 difference is greater by eating at restaurant 0 on day 1 than day 2
 */
 
-function maxEnjoyment(meals) {
-  const dp = [...meals];
-  for (let i = 1; i < dp.length; ++i) {
-    for (let j = 0; j < dp[0].length; ++j) {
-      dp[i][j] += Math.max(...dp[i - 1].filter((_, k) => j !== k));
+function maxEnjoyment(dailyMealEnjoyment: number[][]): number {
+  const [days, meals] = [
+    dailyMealEnjoyment.length,
+    dailyMealEnjoyment[0].length,
+  ];
+  const result: number[][] = [...Array(days)].map((_, index) => [
+    ...dailyMealEnjoyment[index],
+  ]);
+  for (let i = 1; i < days; ++i) {
+    for (let j = 0; j < meals; ++j) {
+      result[i][j] += Math.max(
+        ...result[i - 1].filter((_, index) => j !== index)
+      );
     }
   }
 
-  return Math.max(...dp[dp.length - 1]);
+  return Math.max(...result[days - 1]);
 }
 
 console.log(

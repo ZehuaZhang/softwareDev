@@ -20,11 +20,11 @@ Constraints:
 nums[i] is either 0 or 1.
 */
 
-function findMaxConsecutiveOnes(nums) {
-  let curr = 0,
-    result = 0;
-  for (const n of nums) {
-    curr = n ? curr + 1 : 0;
+function findMaxConsecutiveOnes(nums: number[]): number {
+  let curr = 0;
+  let result = 0;
+  for (const num of nums) {
+    curr = num ? curr + 1 : 0;
     result = Math.max(result, curr);
   }
   return result;

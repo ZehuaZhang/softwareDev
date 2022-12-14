@@ -22,14 +22,14 @@ intervals[i].length == 2
 0 <= starti <= endi <= 104
 */
 
-function merge(intervals) {
+function mergeIntervals(intervals: number[][]): number[][] {
   intervals.sort(([s1, e1], [s2, e2]) => {
     if (s1 === s2) {
       return e1 - e2;
     }
     return s1 - s2;
   });
-  const result = intervals.length === 0 ? [] : [intervals[0]];
+  const result: number[][] = intervals.length === 0 ? [] : [intervals[0]];
   for (let i = 1; i < intervals.length; ++i) {
     const [s, e] = result[result.length - 1];
     const [s1, e1] = intervals[i];

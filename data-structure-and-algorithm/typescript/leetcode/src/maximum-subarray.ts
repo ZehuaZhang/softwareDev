@@ -27,9 +27,9 @@ Constraints:
 Follow up: If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
 */
 
-function maxSubArray(nums) {
-  let result = -Infinity,
-    curr = 0;
+function maxSubArray(nums: number[]): number {
+  let result = -Infinity;
+  let curr = 0;
   for (const num of nums) {
     curr = Math.max(curr + num, num);
     result = Math.max(curr, result);

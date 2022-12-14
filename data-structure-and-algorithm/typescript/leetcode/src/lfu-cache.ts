@@ -57,7 +57,6 @@ import {
   DoubleListNode,
 } from './data-structure/DoublyLinkedList';
 import {Heap} from './data-structure/Heap';
-import {Nullable} from './util/object';
 
 class LfuNodeData {
   key: number;

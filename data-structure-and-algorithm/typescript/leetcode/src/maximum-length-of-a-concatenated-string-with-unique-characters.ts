@@ -29,39 +29,40 @@ Constraints:
 arr[i] contains only lower case English letters.
 */
 
-function maxLength(arr) {
-  const cache = new Map();
-  return dfs(arr, '', 0, cache);
-}
+function maxLength(inputList: string[]): number {
+  const cache = new Map<string, number>();
+  return maxLengthDfs('', 0);
 
-function dfs(arr, curr, idx, cache) {
-  if (cache.has(curr)) {
-    return cache.get(curr);
-  }
-
-  const set = new Set();
-  for (const c of curr) {
-    if (set.has(c)) {
-      return 0;
+  function maxLengthDfs(path: string, start: number): number {
+    if (cache.has(path)) {
+      return cache.get(path)!;
     }
-    set.add(c);
+
+    const letterSet = new Set<string>();
+    for (const char of path) {
+      if (letterSet.has(char)) {
+        cache.set(path, 0);
+        return 0;
+      }
+      letterSet.add(char);
+    }
+    let max = path.length;
+    for (let i = start; i < inputList.length; ++i) {
+      max = Math.max(max, maxLengthDfs(path + inputList[i], i + 1));
+    }
+    cache.set(path, max);
+    return cache.get(path)!;
   }
-  let max = curr.length;
-  for (let i = idx; i < arr.length; ++i) {
-    max = Math.max(max, dfs(arr, curr + arr[i], i + 1, cache));
-  }
-  cache.set(curr, max);
-  return cache.get(curr);
 }
 
-function maxLengthBitCount(arr) {
+function maxLength_BitCount(inputList: string[]): number {
   const dp = [0];
   let result = 0;
-  for (const s of arr) {
-    let a = 0,
-      dup = 0;
-    for (const c of s) {
-      const bit = 1 << (c.charCodeAt(0) - 'a'.charCodeAt(0));
+  for (const input of inputList) {
+    let a = 0;
+    let dup = 0;
+    for (const char of input) {
+      const bit = 1 << (char.charCodeAt(0) - 'a'.charCodeAt(0));
       dup |= a & bit;
       a |= bit;
     }
@@ -78,8 +79,8 @@ function maxLengthBitCount(arr) {
     }
   }
   return result;
-}
 
-function bitCount(n) {
-  return n.toString(2).match(/1/g).length;
+  function bitCount(n: number) {
+    return n.toString(2).match(/1/g)!.length;
+  }
 }

@@ -27,41 +27,40 @@ n == grid[i].length
 grid[i][j] is either 0 or 1.
 */
 
-function maxAreaOfIsland(grid) {
+function maxAreaOfIsland(grid: number[][]): number {
+  const [rows, cols] = [grid.length, grid[0].length];
+  const visited = [...Array(rows)].map(() => Array(cols).fill(false));
   let result = 0;
-  const visited = [...Array(grid.length)].map(() =>
-    Array(grid[0].length).fill(false)
-  );
-  for (let i = 0; i < grid.length; ++i)
-    for (let j = 0; j < grid[0].length; ++j)
+  for (let i = 0; i < rows; ++i)
+    for (let j = 0; j < cols; ++j)
       if (grid[i][j] === 1 && !visited[i][j]) {
-        result = Math.max(result, dfs(grid, i, j, visited));
+        result = Math.max(result, maxAreaOfIslandDfs(i, j));
       }
   return result;
-}
 
-function dfs(grid, i, j, visited) {
-  if (
-    i < 0 ||
-    i >= grid.length ||
-    j < 0 ||
-    j >= grid[0].length ||
-    visited[i][j] ||
-    !grid[i][j]
-  ) {
-    return 0;
-  }
+  function maxAreaOfIslandDfs(i: number, j: number): number {
+    if (
+      i < 0 ||
+      i >= rows ||
+      j < 0 ||
+      j >= cols ||
+      visited[i][j] ||
+      grid[i][j] === 0
+    ) {
+      return 0;
+    }
 
-  let area = 1;
-  visited[i][j] = true;
-  for (const [dx, dy] of [
-    [-1, 0],
-    [1, 0],
-    [0, 1],
-    [0, -1],
-  ]) {
-    const [x, y] = [dx + i, dy + j];
-    area += dfs(grid, x, y, visited);
+    let area = 1;
+    visited[i][j] = true;
+    for (const [dx, dy] of [
+      [-1, 0],
+      [1, 0],
+      [0, 1],
+      [0, -1],
+    ]) {
+      const [x, y] = [dx + i, dy + j];
+      area += maxAreaOfIslandDfs(x, y);
+    }
+    return area;
   }
-  return area;
 }

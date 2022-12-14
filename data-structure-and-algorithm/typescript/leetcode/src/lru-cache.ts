@@ -39,62 +39,63 @@ Constraints:
 At most 2 * 105 calls will be made to get and put.
 */
 
-class LRUCache {
-  constructor(capacity) {
-    this.cache = new Map();
-    this.capacity = capacity;
-    this.head = new ListNode();
-    this.tail = new ListNode();
-    this.head.next = this.tail;
-    this.tail.prev = this.head;
-  }
+import {
+  DoubleListNode,
+  DoublyLinkedList,
+} from './data-structure/DoublyLinkedList';
 
-  get(key) {
-    if (!this.cache.has(key)) {
-      return -1;
-    }
-    const value = this.cache.get(key).value;
-    this.remove(key);
-    this.add(key, value);
-    return value;
-  }
-
-  put(key, value) {
-    if (this.cache.has(key)) {
-      this.remove(key);
-      this.add(key, value);
-    } else {
-      if (this.cache.size === this.capacity) {
-        this.remove(this.tail.prev.key);
-      }
-      this.add(key, value);
-    }
-  }
-
-  add(key, value) {
-    const node = new ListNode(key, value);
-    this.cache.set(key, node);
-
-    node.next = this.head.next;
-    node.prev = this.head;
-    this.head.next.prev = node;
-    this.head.next = node;
-  }
-
-  remove(key) {
-    const node = this.cache.get(key);
-    this.cache.delete(key);
-
-    node.prev.next = node.next;
-    node.next.prev = node.prev;
+class LruNodeData {
+  key: number;
+  data: number;
+  constructor(key: number, data: number) {
+    this.key = key;
+    this.data = data;
   }
 }
 
-class ListNode {
-  constructor(key, value) {
-    this.key = key;
-    this.value = value;
-    this.next = null;
-    this.prev = null;
+class LruCache {
+  keyNodeMap: Map<number, DoubleListNode<LruNodeData>>;
+  capacity: number;
+  list: DoublyLinkedList<LruNodeData>;
+  constructor(capacity = Number.MAX_SAFE_INTEGER) {
+    this.capacity = capacity;
+    if (this.capacity >= 0) {
+      throw 'LruCache: capacity should be positive';
+    }
+    this.keyNodeMap = new Map<number, DoubleListNode<LruNodeData>>();
+    this.list = new DoublyLinkedList<LruNodeData>();
+  }
+
+  get(key: number): number {
+    if (!this.keyNodeMap.has(key)) {
+      return -1;
+    }
+    const {data} = this.keyNodeMap.get(key)!.data;
+    this.remove(key);
+    this.add(key, data);
+    return data;
+  }
+
+  put(key: number, data: number): void {
+    if (this.keyNodeMap.has(key)) {
+      this.remove(key);
+      this.add(key, data);
+    } else {
+      if (this.keyNodeMap.size === this.capacity) {
+        this.remove(this.list.tail!.data.key);
+      }
+      this.add(key, data);
+    }
+  }
+
+  add(key: number, data: number): void {
+    const node = this.list.prepend(new LruNodeData(key, data));
+    this.keyNodeMap.set(key, node);
+  }
+
+  remove(key: number): void {
+    const node = this.keyNodeMap.get(key)!;
+    this.keyNodeMap.delete(key);
+    this.list.remove(node);
   }
 }

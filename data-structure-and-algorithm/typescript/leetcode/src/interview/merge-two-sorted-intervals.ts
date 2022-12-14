@@ -19,34 +19,36 @@ The intervals in the given list do not overlap.
 The intervals in different lists may overlap.
 */
 
-function mergeTwoInterval(list1, list2) {
-  const result = [];
-  let curr = null;
+import {Nullable} from '../util/object';
+
+function mergeTwoInterval(list1: number[][], list2: number[][]): number[][] {
+  const result: number[][] = [];
+  let curr: Nullable<number[]> = null;
   for (let i = 0, j = 0; i < list1.length || j < list2.length; ) {
     if (i === list1.length || list2[j][0] < list1[i][0]) {
-      curr = merge(curr, list2[j], result);
+      curr = merge(curr, list2[j]);
       ++j;
     } else {
-      curr = merge(curr, list1[i], result);
+      curr = merge(curr, list1[i]);
       ++i;
     }
   }
-  result.push(curr);
+  result.push(curr!);
   return result;
-}
 
-function merge(curr, next, result) {
-  const [s, e] = curr || [NaN, NaN];
-  const [s1, e1] = next;
-  if (curr === null) {
-    curr = next;
-  } else if (e < s1) {
-    result.push(curr);
-    curr = next;
-  } else {
-    curr = [Math.min(s, s1), Math.max(e, e1)];
+  function merge(curr: Nullable<number[]>, next: number[]): number[] {
+    const [s, e] = curr || [NaN, NaN];
+    const [s1, e1] = next;
+    if (curr === null) {
+      curr = next;
+    } else if (e < s1) {
+      result.push(curr);
+      curr = next;
+    } else {
+      curr = [Math.min(s, s1), Math.max(e, e1)];
+    }
+    return curr;
   }
-  return curr;
 }
 
 console.log(

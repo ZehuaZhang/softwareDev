@@ -41,17 +41,29 @@ All nodes[i] will exist in the tree.
 All nodes[i] are distinct.
 */
 
-function lowestCommonAncestor(root, nodes) {
-  return dfs(root, new Set([...nodes]));
-}
+import {TreeNode} from './data-structure/BinaryTree';
+import {Nullable} from './util/object';
 
-function dfs(node, set) {
-  if (!node || set.has(node)) {
-    return node;
+function lowestCommonAncestorIV(
+  root: Nullable<TreeNode<number>>,
+  nodes: Nullable<TreeNode<number>>[]
+) {
+  return lowestCommonAncestorIVDfs(
+    root,
+    new Set<Nullable<TreeNode<number>>>(nodes)
+  );
+
+  function lowestCommonAncestorIVDfs(
+    node: Nullable<TreeNode<number>>,
+    set: Set<Nullable<TreeNode<number>>>
+  ): Nullable<TreeNode<number>> {
+    if (node === null || set.has(node)) {
+      return node;
+    }
+
+    const left = lowestCommonAncestorIVDfs(node.left, set);
+    const right = lowestCommonAncestorIVDfs(node.right, set);
+
+    return left ? (right ? node : left) : right;
   }
-
-  const left = dfs(node.left, set);
-  const right = dfs(node.right, set);
-
-  return left ? (right ? node : left) : right;
 }

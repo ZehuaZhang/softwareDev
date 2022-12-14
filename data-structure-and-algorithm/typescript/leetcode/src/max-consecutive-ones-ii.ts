@@ -14,17 +14,17 @@ Follow up:
 What if the input numbers come in one by one as an infinite stream? In other words, you can't store all numbers coming from the stream as it's too large to hold in memory. Could you solve it efficiently?
 */
 
-function findMaxConsecutiveOnes(nums) {
-  let result = 0,
-    curr = 0,
-    count = 0;
-  for (const n of nums) {
-    ++count;
-    if (!n) {
-      curr = count;
-      count = 0;
+function findMaxConsecutiveOnesII(nums: number[]): number {
+  let result = 0;
+  let prevOnesZero = 0;
+  let countOnes = 0;
+  for (const num of nums) {
+    ++countOnes;
+    if (num === 0) {
+      prevOnesZero = countOnes;
+      countOnes = 0;
     }
-    result = Math.max(result, count + curr);
+    result = Math.max(result, countOnes + prevOnesZero);
   }
   return result;
 }

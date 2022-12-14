@@ -37,45 +37,51 @@ lists[i] is sorted in ascending order.
 The sum of lists[i].length won't exceed 10^4.
 */
 
-/**
- * @param { ListNode[] } lists
- * @return { ListNode }
- */
-function mergeKList(lists) {
-  return mergeKListsDFS(lists, 0, lists.length - 1);
-}
+import {ListNode} from './data-structure/LinkedList';
+import {Nullable} from './util/object';
 
-function mergeKListDFS(lists, left, right) {
-  if (left > right) {
-    return null;
-  }
+function mergeKList(lists: ListNode<number>[]): Nullable<ListNode<number>> {
+  return mergeKListDFS(lists, 0, lists.length - 1);
 
-  if (left === right) {
-    return lists[left];
-  }
-
-  const mid = Math.trunc((left + right) / 2);
-  const lList = mergeKListDFS(lists, left, mid);
-  const rList = mergeKListDFS(lists, mid + 1, right);
-
-  return merge2List(lList, rList);
-}
-
-function merge2List(l, r) {
-  const dummy = new ListNode(-1);
-  let curr = dummy;
-
-  while (l && r) {
-    if (l.val <= r.val) {
-      curr.next = l;
-      l = l.next;
-    } else {
-      curr.next = r;
-      r = r.next;
+  function mergeKListDFS(
+    lists: ListNode<number>[],
+    left: number,
+    right: number
+  ): Nullable<ListNode<number>> {
+    if (left > right) {
+      return null;
     }
-    curr = curr.next;
+
+    if (left === right) {
+      return lists[left];
+    }
+
+    const mid = (left + right) >> 1;
+    const lList = mergeKListDFS(lists, left, mid);
+    const rList = mergeKListDFS(lists, mid + 1, right);
+
+    return merge2List(lList, rList);
   }
 
-  curr.next = l ? l : r;
-  return dummy.next;
+  function merge2List(
+    left: Nullable<ListNode<number>>,
+    right: Nullable<ListNode<number>>
+  ): Nullable<ListNode<number>> {
+    const dummy = new ListNode(-1);
+    let curr = dummy;
+
+    while (left && right) {
+      if (left.data <= right.data) {
+        curr.next = left;
+        left = left.next;
+      } else {
+        curr.next = right;
+        right = right.next;
+      }
+      curr = curr.next;
+    }
+
+    curr.next = left ? left : right;
+    return dummy.next;
+  }
 }

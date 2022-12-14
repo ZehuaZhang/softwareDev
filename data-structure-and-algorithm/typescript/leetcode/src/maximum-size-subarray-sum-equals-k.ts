@@ -18,19 +18,19 @@ Follow Up:
 Can you do it in O(n) time?
 */
 
-function maxSubArrayLen(nums, k) {
-  let sum = 0,
-    result = 0;
-  const map = new Map();
+function maxSubArrayLen(nums: number[], target: number): number {
+  let sum = 0;
+  let result = 0;
+  const sumIndexMap = new Map<number, number>();
   for (let i = 0; i < nums.length; ++i) {
     sum += nums[i];
-    if (sum === k) {
+    if (sum === target) {
       result = i + 1;
-    } else if (map.has(sum - k)) {
-      result = Math.max(result, i - map.get(sum - k));
+    } else if (sumIndexMap.has(sum - target)) {
+      result = Math.max(result, i - sumIndexMap.get(sum - target)!);
     }
-    if (!map.has(sum)) {
-      map.set(sum, i);
+    if (!sumIndexMap.has(sum)) {
+      sumIndexMap.set(sum, i);
     }
   }
   return result;

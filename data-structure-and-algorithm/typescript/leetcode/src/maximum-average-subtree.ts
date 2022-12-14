@@ -25,20 +25,27 @@ Each node will have a value between 0 and 100000.
 Answers will be accepted as correct if they are within 10^-5 of the correct answer.
 */
 
-function maximumAverageSubtree(root) {
+import {TreeNode} from './data-structure/BinaryTree';
+import {Nullable} from './util/object';
+
+function maximumAverageSubtree(root: Nullable<TreeNode<number>>): number {
   let result = 0.0;
-  dfs(root);
+  maximumAverageSubtreeDfs(root);
   return result;
 
-  function dfs(node) {
-    const data = [0, 0];
-    if (!node) {
-      return data;
+  function maximumAverageSubtreeDfs(
+    node: Nullable<TreeNode<number>>
+  ): number[] {
+    let [data, count] = [0, 0];
+    if (node !== null) {
+      const [[leftData, leftCount], [rightData, rightCount]] = [
+        maximumAverageSubtreeDfs(node.left),
+        maximumAverageSubtreeDfs(node.right),
+      ];
+      data = node.data + leftData + rightData;
+      count = 1 + leftCount + rightCount;
+      result = Math.max(result, data / count);
     }
-    const [left, right] = [dfs(node.left), dfs(node.right)];
-    data[0] += node.val + left[0] + right[0];
-    data[1] += 1 + left[1] + right[1];
-    result = Math.max(result, data[0] / data[1]);
-    return data;
+    return [data, count];
   }
 }

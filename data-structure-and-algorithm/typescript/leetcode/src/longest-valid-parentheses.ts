@@ -5,7 +5,7 @@ Given a string containing just the characters '(' and ')', find the length of th
 
 Example 1:
 
-Input: s = "(()"
+Input: input = "(()"
 Output: 2
 Explanation: The longest valid parentheses substring is "()".
 Example 2:
@@ -25,18 +25,21 @@ Constraints:
 s[i] is '(', or ')'.
 */
 
-function longestValidParentheses(s) {
+import {Stack} from './data-structure/Stack';
+
+function longestValidParentheses(input: string): number {
   let result = 0;
-  const idx = [-1];
-  for (let i = 0; i < s.length; ++i) {
-    if (s[i] === '(') {
-      idx.push(i);
+  const index = new Stack<number>();
+  index.push(-1);
+  for (let i = 0; i < input.length; ++i) {
+    if (input[i] === '(') {
+      index.push(i);
     } else {
-      idx.pop();
-      if (idx.length === 0) {
-        idx.push(i);
+      index.pop();
+      if (index.size === 0) {
+        index.push(i);
       } else {
-        result = Math.max(result, i - idx[idx.length - 1]);
+        result = Math.max(result, i - index.peek());
       }
     }
   }

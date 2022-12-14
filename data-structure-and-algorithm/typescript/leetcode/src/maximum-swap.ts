@@ -22,25 +22,24 @@ Constraints:
 0 <= num <= 108
 */
 
-function maximumSwap(num) {
-  const s = [...num.toString()];
-  let max = s.length - 1;
-  let i1 = 0,
-    i2 = 0;
-  for (let i = s.length - 2; i >= 0; --i) {
-    if (s[max] === s[i]) {
+function maximumSwap(num: number): number {
+  const input: string[] = [...num.toString()];
+  let swapIndex = input.length - 1;
+  let [i1, i2] = [0, 0];
+  for (let i = input.length - 2; i >= 0; --i) {
+    if (input[swapIndex] === input[i]) {
       continue;
-    } else if (s[max] < s[i]) {
-      max = i;
+    } else if (input[swapIndex] < input[i]) {
+      swapIndex = i;
     } else {
-      i1 = max;
+      i1 = swapIndex;
       i2 = i;
     }
   }
 
-  const swap = s[i2];
-  s[i2] = s[i1];
-  s[i1] = swap;
+  const swap = input[i2];
+  input[i2] = input[i1];
+  input[i1] = swap;
 
-  return BigInt(s.join(''));
+  return Number(input.join(''));
 }

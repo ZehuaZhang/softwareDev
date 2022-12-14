@@ -35,24 +35,74 @@ All Node.val are unique.
 p != q
 */
 
-let result;
+import {BinaryTree, TreeNode} from './data-structure/BinaryTree';
+import {lowestCommonAncestor} from './lowest-common-ancestor-of-a-binary-tree';
+import {Nullable} from './util/object';
+import {runTestCaseList} from './util/test';
 
-function lowestCommonAncestor(root, p, q) {
-  result = null;
-  dfs(root, p, q);
+function lowestCommonAncestorII(
+  root: Nullable<TreeNode<number>>,
+  p: Nullable<TreeNode<number>>,
+  q: Nullable<TreeNode<number>>
+): Nullable<TreeNode<number>> {
+  return lowestCommonAncestor(root, p, q);
+}
+
+function lowestCommonAncestorII_diameter(
+  root: Nullable<TreeNode<number>>,
+  p: Nullable<TreeNode<number>>,
+  q: Nullable<TreeNode<number>>
+): Nullable<TreeNode<number>> {
+  let result: Nullable<TreeNode<number>> = null;
+  lowestCommonAncestorIIDfs(root, p, q);
   return result;
+
+  function lowestCommonAncestorIIDfs(
+    node: Nullable<TreeNode<number>>,
+    p: Nullable<TreeNode<number>>,
+    q: Nullable<TreeNode<number>>
+  ): number {
+    if (!node || result) {
+      return 0;
+    }
+    const left = lowestCommonAncestorIIDfs(node.left, p, q);
+    const right = lowestCommonAncestorIIDfs(node.right, p, q);
+    const mid = node === p || node === q ? 1 : 0;
+    const sum = left + right + mid;
+    if (sum > 1) {
+      result = node;
+    }
+    return sum > 0 ? 1 : 0;
+  }
 }
 
-function dfs(node, p, q) {
-  if (!node || result) {
-    return 0;
-  }
-  const left = dfs(node.left, p, q);
-  const right = dfs(node.right, p, q);
-  const mid = node === p || node === q ? 1 : 0;
-  const sum = left + right + mid;
-  if (sum > 1) {
-    result = node;
-  }
-  return sum > 0 ? 1 : 0;
-}
+// test
+const tree1 = new BinaryTree(3, 5, 1, 6, 2, 0, 8, null, null, 7, 4);
+const tree2 = new BinaryTree(3, 5, 1, 6, 2, 0, 8, null, null, 7, 4);
+const tree3 = new BinaryTree(1, 2);
+
+tree1.printLevel();
+tree2.printLevel();
+tree3.printLevel();
+
+const testInputListCollection = [
+  [tree1.root, tree1.root?.left, tree1.root?.right],
+  [tree2.root, tree2.root?.left, tree2.root?.left?.right?.right],
+  [tree1.root, tree2.root?.left, tree2.root?.right],
+  [tree2.root, tree1.root?.left, tree1.root?.left?.right?.right],
+  [tree3.root, tree3.root, tree3.root?.left],
+];
+
+const expectedResultList = [
+  tree1.root,
+  tree2.root?.left,
+  null,
+  null,
+  tree3.root,
+];
+
+runTestCaseList(
+  testInputListCollection,
+  expectedResultList,
+  lowestCommonAncestorII_diameter
+);

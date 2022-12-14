@@ -12,7 +12,7 @@ Output: true
 NOTE: input types have been changed on April 15, 2019. Please reset to default code definition to get new method signature.
 */
 
-function canAttendMeetings(intervals) {
+function canAttendMeetings(intervals: number[][]): boolean {
   intervals.sort(([s1], [s2]) => s1 - s2);
   for (let i = 1; i < intervals.length; ++i) {
     const [s] = intervals[i];
