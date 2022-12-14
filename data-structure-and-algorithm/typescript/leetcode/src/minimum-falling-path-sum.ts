@@ -34,16 +34,17 @@ n == matrix[i].length
 -100 <= matrix[i][j] <= 100
 */
 
-function minFallingPathSum(grid) {
-  const dp = [...grid];
-  for (let i = 1; i < dp.length; ++i) {
-    for (let j = 0; j < dp.length; ++j) {
+function minFallingPathSum(grid: number[][]): number {
+  const size = grid.length;
+  const dp = [...Array(size)].map((_, index) => [...grid[index]]);
+  for (let i = 1; i < size; ++i) {
+    for (let j = 0; j < size; ++j) {
       const left = dp[i - 1][Math.max(0, j - 1)];
       const top = dp[i - 1][j];
-      const right = dp[i - 1][Math.min(dp.length - 1, j + 1)];
+      const right = dp[i - 1][Math.min(size - 1, j + 1)];
       dp[i][j] += Math.min(left, top, right);
     }
   }
 
-  return Math.min(...dp[dp.length - 1]);
+  return Math.min(...dp[size - 1]);
 }

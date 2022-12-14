@@ -34,16 +34,17 @@ s.length <= 1000
 s only consists of '(' and ')' characters.
 */
 
-function minAddToMakeValid(s) {
-  let left = 0,
-    right = 0;
-  for (const c of s) {
-    if (c === '(') {
+function minAddToMakeValid(input: string): number {
+  let [left, right] = [0, 0];
+  for (const char of input) {
+    if (char === '(') {
       ++right;
-    } else if (right > 0) {
-      --right;
     } else {
-      ++left;
+      if (right > 0) {
+        --right;
+      } else {
+        ++left;
+      }
     }
   }
   return left + right;

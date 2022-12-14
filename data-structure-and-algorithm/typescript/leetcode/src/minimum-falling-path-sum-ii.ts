@@ -23,12 +23,13 @@ Constraints:
 -99 <= arr[i][j] <= 99
 */
 
-function minFallingPathSum(grid) {
-  const dp = [...grid];
-  for (let i = 1; i < dp.length; ++i) {
-    for (let j = 0; j < dp[0].length; ++j) {
-      dp[i][j] += Math.min(...dp[i - 1].filter((_, k) => j !== k));
+function minFallingPathSumII(grid: number[][]): number {
+  const size = grid.length;
+  const dp = [...Array(size)].map((_, index) => [...grid[index]]);
+  for (let i = 1; i < size; ++i) {
+    for (let j = 0; j < size; ++j) {
+      dp[i][j] += Math.min(...dp[i - 1].filter((_, index) => j !== index));
     }
   }
-  return Math.min(...dp[dp.length - 1]);
+  return Math.min(...dp[size - 1]);
 }

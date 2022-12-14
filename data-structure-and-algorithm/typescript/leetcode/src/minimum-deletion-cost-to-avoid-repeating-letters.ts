@@ -32,12 +32,12 @@ s.length == cost.length
 s contains only lowercase English letters.
 */
 
-function minCost(s, cost) {
-  let result = 0,
-    max = 0,
-    sum = 0;
-  for (let i = 0; i < s.length; ++i) {
-    if (i > 0 && s[i] !== s[i - 1]) {
+function minCostRepeatLetterDeletion(input: string, cost: number[]): number {
+  let result = 0;
+  let max = 0;
+  let sum = 0;
+  for (let i = 0; i < input.length; ++i) {
+    if (i > 0 && input[i] !== input[i - 1]) {
       result += sum - max;
       sum = 0;
       max = 0;

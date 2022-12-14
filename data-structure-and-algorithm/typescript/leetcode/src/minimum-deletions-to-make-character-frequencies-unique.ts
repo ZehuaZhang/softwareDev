@@ -32,21 +32,18 @@ Constraints:
 s contains only lowercase English letters.
 */
 
-function minDeletions(s) {
-  const freq = Array(26).fill(0);
-  for (const c of s) {
-    ++freq[c.charCodeAt(0) - 'a'.charCodeAt(0)];
+function minDeletions(input: string): number {
+  const letterFreqMap = new Map<string, number>();
+  for (const char of input) {
+    letterFreqMap.set(char, (letterFreqMap.get(char) || 0) + 1);
   }
-  freq.sort((a, b) => b - a);
-  const result = 0;
-  for (let i = 1; i < 26; ++i) {
-    if (freq[i] === 0) {
-      break;
-    }
-    if (freq[i] >= freq[i - 1]) {
-      const val = Math.max(freq[i - 1] - 1, 0);
-      total += freq[i] - val;
-      freq[i] = val;
+  const freqList = [...letterFreqMap.values()].sort((a, b) => b - a);
+  let result = 0;
+  for (let i = 1; i < freqList.length; ++i) {
+    if (freqList[i] >= freqList[i - 1]) {
+      const freq = Math.max(freqList[i - 1] - 1, 0);
+      result += freqList[i] - freq;
+      freqList[i] = freq;
     }
   }
   return result;

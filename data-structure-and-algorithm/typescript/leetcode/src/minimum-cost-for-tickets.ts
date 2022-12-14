@@ -41,22 +41,22 @@ costs.length == 3
 1 <= costs[i] <= 1000
 */
 
-function mincostTickets(days, costs) {
-  const dp = new Array(days[days.length - 1] + 1).fill(0);
-  for (const d of days) {
-    dp[d] = 1;
+function minCostTickets(days: number[], costs: number[]): number {
+  const result = Array(days[days.length - 1] + 1).fill(0);
+  for (const day of days) {
+    result[day] = 1;
   }
 
-  for (let i = 1; i < dp.length; i++) {
-    if (!dp[i]) {
-      dp[i] = dp[i - 1];
+  for (let i = 1; i < result.length; i++) {
+    if (result[i] === 0) {
+      result[i] = result[i - 1];
     } else {
-      dp[i] = Math.min(
-        dp[Math.max(0, i - 1)] + costs[0],
-        dp[Math.max(0, i - 7)] + costs[1],
-        dp[Math.max(0, i - 30)] + costs[2]
+      result[i] = Math.min(
+        result[Math.max(0, i - 1)] + costs[0],
+        result[Math.max(0, i - 7)] + costs[1],
+        result[Math.max(0, i - 30)] + costs[2]
       );
     }
   }
-  return dp[dp.length - 1];
+  return result[result.length - 1];
 }
