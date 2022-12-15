@@ -33,7 +33,7 @@ matrix[i].length == n
 -1000 <= matrix[i][j] <= 1000
 */
 
-function rotate(matrix) {
+function rotateMatrix(matrix: number[][]): void {
   matrix.reverse();
   for (let i = 0; i < matrix.length; ++i) {
     for (let j = i + 1; j < matrix[0].length; ++j) {

@@ -38,20 +38,26 @@ The number of nodes in the list is in the range sz.
 Follow-up: Can you solve the problem in O(1) extra memory space?
 */
 
-function reverseKGroup(head, k) {
+import {ListNode} from './data-structure/LinkedList';
+import {Nullable} from './util/object';
+
+function reverseKGroup(
+  head: Nullable<ListNode<number>>,
+  kth: number
+): Nullable<ListNode<number>> {
   let node = head;
-  let cnt = 0;
-  for (; cnt < k; ++cnt) {
+  let count = 0;
+  for (; count < kth; ++count) {
     if (node === null) {
       return head;
     }
     node = node.next;
   }
 
-  let curr = reverseKGroup(node, k);
-  for (; cnt > 0; --cnt) {
-    const next = head.next;
-    head.next = curr;
+  let curr = reverseKGroup(node, kth);
+  for (; count > 0; --count) {
+    const next = head!.next;
+    head!.next = curr;
     curr = head;
     head = next;
   }

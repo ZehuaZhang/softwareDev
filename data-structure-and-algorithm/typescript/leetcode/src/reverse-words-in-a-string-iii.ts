@@ -22,41 +22,22 @@ There is at least one word in s.
 All the words in s are separated by a single space.
 */
 
-function reverseWords(s) {
-  let result = '';
-  for (let i = 0; i < s.length; ++i) {
-    if (s[i] !== ' ') {
-      if (result.length !== 0) {
-        result += ' ';
-      }
-      let j = i;
-      for (; j < s.length && s[j] !== ' '; ++j) {
-        result += s[j];
-      }
-      result = reverse(result, result.length - (j - i), result.length - 1);
-      i = j;
+function reverseWordsIII(input: string): string {
+  const inputList = [...input];
+  for (let left = 0, i = 0; i <= inputList.length; ++i) {
+    if (i === inputList.length || inputList[i] === ' ') {
+      reverse(left, i - 1);
+      left = i + 1;
     }
   }
-  return result;
-}
+  return inputList.join('');
 
-function reverse(s, l = 0, r = s.length - 1) {
-  const a = [...s];
-  for (; l < r; ++l, --r) {
-    const t = a[l];
-    a[l] = a[r];
-    a[r] = t;
-  }
-  return a.join('');
-}
-
-function reverseWords2(s) {
-  for (let l = 0, i = 0; i <= s.length; ++i) {
-    if (i === s.length || s[i] === ' ') {
-      s = reverse(s, l, i - 1);
-      l = i + 1;
+  function reverse(left = 0, right = inputList.length - 1) {
+    for (; left < right; ++left, --right) {
+      const t = inputList[left];
+      inputList[left] = inputList[right];
+      inputList[right] = t;
     }
+    return inputList.join('');
   }
-
-  return s;
 }

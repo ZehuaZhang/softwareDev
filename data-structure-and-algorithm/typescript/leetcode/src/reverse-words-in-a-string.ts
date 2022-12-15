@@ -43,31 +43,31 @@ There is at least one word in s.
 Follow-up: If the string data type is mutable in your language, can you solve it in-place with O(1) extra space?
 */
 
-function reverseWords(s) {
-  const rs = reverse(s);
+function reverseWords(input: string): string {
+  const reversed = reverse(input);
   let result = '';
-  for (let i = 0; i < rs.length; ++i) {
-    if (rs[i] !== ' ') {
+  for (let i = 0; i < reversed.length; ++i) {
+    if (reversed[i] !== ' ') {
       if (result.length !== 0) {
         result += ' ';
       }
       let j = i;
-      for (; j < rs.length && rs[j] !== ' '; ++j) {
-        result += rs[j];
+      for (; j < reversed.length && reversed[j] !== ' '; ++j) {
+        result += reversed[j];
       }
       result = reverse(result, result.length - (j - i), result.length - 1);
       i = j;
     }
   }
   return result;
-}
 
-function reverse(s, left = 0, right = s.length - 1) {
-  const as = [...s];
-  for (; left < right; ++left, --right) {
-    const temp = as[right];
-    as[right] = as[left];
-    as[left] = temp;
+  function reverse(input: string, left = 0, right = input.length - 1) {
+    const reversed = [...input];
+    for (; left < right; ++left, --right) {
+      const temp = reversed[right];
+      reversed[right] = reversed[left];
+      reversed[left] = temp;
+    }
+    return reversed.join('');
   }
-  return as.join('');
 }

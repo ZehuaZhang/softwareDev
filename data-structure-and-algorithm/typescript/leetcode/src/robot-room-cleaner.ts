@@ -49,33 +49,40 @@ All accessible cells are connected, which means the all cells marked as 1 will b
 Assume all four edges of the grid are all surrounded by wall.
 */
 
-function cleanRoom(robot) {
-  const visited = new Set();
-  dfs(robot, 0, 0, 0, visited);
-}
-
-function dfs(robot, x, y, i, visited) {
-  const dirs = [
+function cleanRoom(robot: Robot): void {
+  const visited = new Set<string>();
+  const dirList = [
     [-1, 0],
-    [1, 0],
+    [0, 1],
     [1, 0],
     [0, -1],
   ];
-  robot.clean();
-  visited.add(`${x}-${y}`);
+  cleanRoomDfs(0, 0, 0);
 
-  for (let di = 0; di < 4; ++di) {
-    const ni = (di + i) % 4;
-    const [dx, dy] = dirs[ni];
-    const [nx, ny] = [x + dx, y + dy];
-    if (!visited.has(`${nx}-${ny}` && robot.move())) {
-      dfs(robot, nx, ny, ni, visited);
-      robot.turnRight();
-      robot.turnRight();
-      robot.move();
-      robot.turnRight();
+  function cleanRoomDfs(x: number, y: number, index: number): void {
+    robot.clean();
+    visited.add(`${x}-${y}`);
+
+    for (let i = 0; i < 4; ++i) {
+      const nextIndex = (i + index) % 4;
+      const [dx, dy] = dirList[nextIndex];
+      const [nx, ny] = [x + dx, y + dy];
+      if (!visited.has(`${nx}-${ny}`) && robot.move()) {
+        cleanRoomDfs(nx, ny, nextIndex);
+        robot.turnRight();
+        robot.turnRight();
+        robot.move();
+        robot.turnRight();
+        robot.turnRight();
+      }
       robot.turnRight();
     }
-    robot.turnRight();
   }
+}
+
+interface Robot {
+  turnRight: () => void;
+  turnLeft: () => void;
+  move: () => boolean;
+  clean: () => void;
 }
