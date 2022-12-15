@@ -29,23 +29,24 @@ The number of nodes in the list is sz.
 Follow up: Could you do this in one pass?
 */
 
-/**
- * @param { ListNode } head
- * @param { number } n
- * @return { ListNode }
- */
-function removeNthFromEnd(head, n) {
-  const dummy = new ListNode();
+import {ListNode} from './data-structure/LinkedList';
+import {Nullable} from './util/object';
+
+function removeNthFromEnd(
+  head: Nullable<ListNode<number>>,
+  lastNth: number
+): Nullable<ListNode<number>> {
+  const dummy = new ListNode(NaN);
   dummy.next = head;
 
   let fast = dummy;
-  for (; n >= 0; --n) {
-    fast = fast.next;
+  for (; lastNth >= 0; --lastNth) {
+    fast = fast.next!;
   }
 
   let slow = dummy;
-  for (; fast; slow = slow.next, fast = fast.next);
+  for (; fast; slow = slow.next!, fast = fast.next!);
 
-  slow.next = slow.next.next;
+  slow.next = slow.next!.next;
   return dummy.next;
 }

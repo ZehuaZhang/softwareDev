@@ -44,11 +44,11 @@ import {
 } from './data-structure/DoublyLinkedList';
 
 class AllOne {
-  bucketList: DoublyLinkedList;
-  keyBucketMap: Map<string, DoubleListNode>;
+  bucketList: DoublyLinkedList<Bucket>;
+  keyBucketMap: Map<string, DoubleListNode<Bucket>>;
   constructor() {
     this.bucketList = new DoublyLinkedList();
-    this.keyBucketMap = new Map<string, DoubleListNode>();
+    this.keyBucketMap = new Map<string, DoubleListNode<Bucket>>();
   }
 
   inc(key: string): void {
@@ -119,7 +119,7 @@ class AllOne {
       : '';
   }
 
-  remove(key: string, node: DoubleListNode) {
+  remove(key: string, node: DoubleListNode<Bucket>) {
     node.data.keySet.delete(key);
     if (node.data.keySet.size === 0) {
       this.bucketList.remove(node);

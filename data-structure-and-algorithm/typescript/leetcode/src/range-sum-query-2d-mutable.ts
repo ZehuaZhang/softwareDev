@@ -23,12 +23,16 @@ You may assume that row1 ≤ row2 and col1 ≤ col2.
 */
 
 class NumMatrix {
-  constructor(matrix) {
+  numList: number[][];
+  bitList: number[][];
+  rows: number;
+  cols: number;
+  constructor(matrix: number[][]) {
     [this.rows, this.cols] = [matrix.length + 1, matrix[0].length + 1];
-    this.matrix = [...Array(this.rows + 1)].map(() =>
+    this.numList = [...Array(this.rows + 1)].map(() =>
       Array(this.cols + 1).fill(0)
     );
-    this.bits = [...Array(this.rows + 1)].map(() =>
+    this.bitList = [...Array(this.rows + 1)].map(() =>
       Array(this.cols + 1).fill(0)
     );
     for (let i = 0; i < this.rows - 1; ++i) {
@@ -38,17 +42,17 @@ class NumMatrix {
     }
   }
 
-  update(row, col, value) {
-    const diff = value - this.matrix[row + 1][col + 1];
-    for (let i = row + 1; i < this.rows; i += i & -i) {
-      for (let j = col + 1; j < this.cols; j += j & -j) {
-        this.bits[i][j] += diff;
+  update(row: number, col: number, data: number): void {
+    const diff = data - this.numList[row + 1][col + 1];
+    for (let i = row + 1; i < this.rows; i += this.leastBit(i)) {
+      for (let j = col + 1; j < this.cols; j += this.leastBit(j)) {
+        this.bitList[i][j] += diff;
       }
     }
-    this.matrix[row + 1][col + 1] = value;
+    this.numList[row + 1][col + 1] = data;
   }
 
-  sumRegion(row1, col1, row2, col2) {
+  sumRegion(row1: number, col1: number, row2: number, col2: number): number {
     return (
       this.getSum(row2 + 1, col2 + 1) -
       this.getSum(row1, col2 + 1) -
@@ -57,14 +61,18 @@ class NumMatrix {
     );
   }
 
-  getSum(row, col) {
+  getSum(row: number, col: number): number {
     let result = 0;
-    for (let i = row; i > 0; i -= i & -i) {
-      for (let j = col; j > 0; j -= j & -j) {
-        result += this.bits[i][j];
+    for (let i = row; i > 0; i -= this.leastBit(i)) {
+      for (let j = col; j > 0; j -= this.leastBit(j)) {
+        result += this.bitList[i][j];
       }
     }
     return result;
+  }
+
+  leastBit(num: number): number {
+    return num & -num;
   }
 }
 

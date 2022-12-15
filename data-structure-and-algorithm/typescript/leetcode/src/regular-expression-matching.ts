@@ -42,45 +42,24 @@ p contains only lowercase English letters, '.', and '*'.
 It is guaranteed for each appearance of the character '*', there will be a previous valid character to match.
 */
 
-/**
- * @param { string } s
- * @param { string } p
- * @return { boolean }
- */
-function isMatch(s, p) {
-  if (!p.length) {
-    return !s.length;
+function isMatch(input1: string, input2: string): boolean {
+  if (input2.length === 0) {
+    return input1.length === 0;
   }
 
-  if (p[1] === '*') {
+  if (input2[1] === '*') {
     return (
-      isMatch(s, p.substring(2)) ||
-      (s.length && (s[0] == p[0] || '.' == p[0]) && isMatch(s.substring(1), p))
+      isMatch(input1, input2.substring(2)) ||
+      Boolean(
+        input1.length &&
+          (input1[0] === input2[0] || '.' === input2[0]) &&
+          isMatch(input1.substring(1), input2)
+      )
     );
   }
-  return (
-    s.length &&
-    (s[0] == p[0] || '.' == p[0]) &&
-    isMatch(s.substring(1), p.substring(1))
+  return Boolean(
+    input1.length &&
+      (input1[0] === input2[0] || '.' === input2[0]) &&
+      isMatch(input1.substring(1), input2.substring(1))
   );
-}
-
-function dfs(s, p, i, j) {
-  if (j === p.length) {
-    return i === s.length;
-  }
-
-  if (p[j + 1] !== '*') {
-    if (s[i] === p[j] || (p[j] === '.' && i !== s.length)) {
-      return dfs(s, p, i + 1, j + 1);
-    }
-    return false;
-  }
-  while (s[i] === p[j] || (p[j] === '.' && i !== s.length)) {
-    if (dfs(s, p, i, j + 2)) {
-      return true;
-    }
-    ++i;
-  }
-  return dfs(s, p, i, j + 2);
 }

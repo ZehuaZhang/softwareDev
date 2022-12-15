@@ -24,21 +24,24 @@ The number of nodes in the tree is in the range [0, 1000].
 -1000 <= targetSum <= 1000
 */
 
-function pathSum(root, sum) {
-  const map = new Map();
-  map.set(0, 1);
-  return dfs(root, 0, sum, map);
-}
+import {TreeNode} from './data-structure/BinaryTree';
+import {Nullable} from './util/object';
 
-function dfs(node, curr, sum, map) {
-  if (!node) {
-    return 0;
+function pathSum(root: Nullable<TreeNode<number>>, sum: number): number {
+  const sumCountMap = new Map<number, number>();
+  sumCountMap.set(0, 1);
+  return pathSumDfs(root, 0);
+
+  function pathSumDfs(node: Nullable<TreeNode<number>>, path: number) {
+    if (!node) {
+      return 0;
+    }
+    path += node.data;
+    let result = sumCountMap.get(path - sum) || 0;
+    sumCountMap.set(path, (sumCountMap.get(path) || 0) + 1);
+
+    result += pathSumDfs(node.left, path) + pathSumDfs(node.right, path);
+    sumCountMap.set(path, (sumCountMap.get(path) || 0) - 1);
+    return result;
   }
-  curr += node.val;
-  let result = map.get(curr - sum) || 0;
-  map.set(curr, (map.get(curr) || 0) + 1);
-
-  result += dfs(node.left, curr, sum, map) + dfs(node.right, curr, sum, map);
-  map.set(curr, (map.get(curr) || 0) - 1);
-  return result;
 }

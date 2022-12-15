@@ -28,13 +28,16 @@ The number of nodes in the tree is in the range [0, 5000].
 -1000 <= targetSum <= 1000
 */
 
-function hasPathSum(root, target) {
-  if (!root) {
+import {TreeNode} from './data-structure/BinaryTree';
+import {Nullable} from './util/object';
+
+function hasPathSum(root: Nullable<TreeNode<number>>, target: number): boolean {
+  if (root === null) {
     return false;
   }
-  const diff = target - root.val;
-  if (!root.left && !root.right) {
-    return !diff;
+  const diff = target - root.data;
+  if (root.left === null && root.right === null) {
+    return diff === 0;
   }
 
   return hasPathSum(root.left, diff) || hasPathSum(root.right, diff);

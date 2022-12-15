@@ -21,32 +21,39 @@ Constraints:
 The frequency of each element is in the range [1, 4].
 */
 
-function canPartitionKSubsets(nums, k) {
+function canPartitionKSubsets(nums: number[], count: number): boolean {
   const sum = nums.reduce((p, c) => p + c, 0);
-  if (sum % k) {
+  if (sum % count) {
     return false;
   }
-  return dfs(nums, sum / k, k, 0, 0, Array(nums.length).fill(false));
-}
+  const visited: boolean[] = Array(nums.length).fill(false);
+  return canPartitionKSubsetsDfs(sum / count, count, 0, 0);
 
-function dfs(nums, target, k, left, sum, visited) {
-  if (sum > target) {
-    return false;
-  }
-  if (k === 1) {
-    return true;
-  }
-  if (sum === target) {
-    return dfs(nums, target, k - 1, 0, 0, visited);
-  }
-  for (let i = left; i < nums.length; ++i) {
-    if (!visited[i]) {
-      visited[i] = true;
-      if (dfs(nums, target, k, i + 1, sum + nums[i], visited)) {
+  function canPartitionKSubsetsDfs(
+    target: number,
+    count: number,
+    start: number,
+    sum: number
+  ): boolean {
+    if (sum > target) {
+      return false;
+    }
+
+    if (sum === target) {
+      if (count === 1) {
         return true;
       }
-      visited[i] = false;
+      return canPartitionKSubsetsDfs(target, count - 1, 0, 0);
     }
+    for (let i = start; i < nums.length; ++i) {
+      if (!visited[i]) {
+        visited[i] = true;
+        if (canPartitionKSubsetsDfs(target, count, i + 1, sum + nums[i])) {
+          return true;
+        }
+        visited[i] = false;
+      }
+    }
+    return false;
   }
-  return false;
 }

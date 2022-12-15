@@ -36,33 +36,33 @@ The tree that the list represents is:
 The path sum is (3 + 1) = 4.
 */
 
-function pathSum(nums) {
-  if (!nums.length) {
+function pathSum(nums: number[]): number {
+  if (nums.length === 0) {
     return 0;
   }
-  const map = new Map();
-  for (const n of nums) {
-    map.set(Math.trunc(n / 10), n % 10);
+  const levelPosDataMap = new Map<number, number>();
+  for (const num of nums) {
+    levelPosDataMap.set(Math.trunc(num / 10), num % 10);
   }
   let result = 0;
-  dfs(Math.trunc(nums[0] / 10), 0);
+  pathSumDfs(Math.trunc(nums[0] / 10), 0);
   return result;
 
-  function dfs(num, curr) {
-    const level = Math.trunc(num / 10);
-    const pos = num % 10;
+  function pathSumDfs(levelPos: number, path: number): void {
+    const level = Math.trunc(levelPos / 10);
+    const pos = levelPos % 10;
     const left = (level + 1) * 10 + 2 * pos - 1;
     const right = left + 1;
-    curr += map.get(num);
-    if (!map.has(left) && !map.has(right)) {
-      result += curr;
+    path += levelPosDataMap.get(levelPos)!;
+    if (!levelPosDataMap.has(left) && !levelPosDataMap.has(right)) {
+      result += path;
       return;
     }
-    if (map.has(left)) {
-      dfs(left, curr);
+    if (levelPosDataMap.has(left)) {
+      pathSumDfs(left, path);
     }
-    if (map.has(right)) {
-      dfs(right, curr);
+    if (levelPosDataMap.has(right)) {
+      pathSumDfs(right, path);
     }
   }
 }

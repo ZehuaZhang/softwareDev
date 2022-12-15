@@ -25,19 +25,26 @@ The number of nodes in the tree is in the range [1, 2 * 104].
 All Node.val are unique.
 */
 
-function rangeSumBST(root, low, high) {
+import {TreeNode} from './data-structure/BinaryTree';
+import {Nullable} from './util/object';
+
+function rangeSumBST(
+  root: Nullable<TreeNode<number>>,
+  low: number,
+  high: number
+): number {
   if (root === null) {
     return 0;
   }
-  if (root.val < low) {
+  if (root.data < low) {
     return rangeSumBST(root.right, low, high);
   }
-  if (root.val > high) {
+  if (root.data > high) {
     return rangeSumBST(root.left, low, high);
   }
   return (
-    root.val +
-    rangeSumBST(root.left, low, root.val) +
-    rangeSumBST(root.right, root.val, high)
+    root.data +
+    rangeSumBST(root.left, low, root.data) +
+    rangeSumBST(root.right, root.data, high)
   );
 }

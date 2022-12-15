@@ -30,34 +30,34 @@ The input is two lists: the subroutines called and their arguments. Solution's c
 */
 
 class Solution {
-  constructor(rects) {
-    this.rects = [...rects];
-    this.sum = [];
+  rectList: number[][];
+  sumList: number[];
+  constructor(rectList: number[][]) {
+    this.rectList = [...rectList].map(rect => [...rect]);
+    this.sumList = [];
     let sum = 0;
-    for (const r of rects) {
-      sum += area(r);
-      this.sum.push(sum);
+    for (const rect of rectList) {
+      sum += area(rect);
+      this.sumList.push(sum);
     }
 
-    function area(rect) {
-      const [x0, y0, x1, y1] = rect;
+    function area([x0, y0, x1, y1]: number[]) {
       return (x1 - x0 + 1) * (y1 - y0 + 1);
     }
   }
 
   pick() {
-    const index = upperBound(
-      this.sum,
-      Math.trunc(Math.random() * this.sum[this.sum.length - 1])
+    const index = findGreater(
+      this.sumList,
+      Math.trunc(Math.random() * this.sumList[this.sumList.length - 1])
     );
-    const [x0, y0, x1, y1] = this.rects[index];
+    const [x0, y0, x1, y1] = this.rectList[index];
     const x = Math.trunc(Math.random() * (x1 - x0 + 1)) + x0;
     const y = Math.trunc(Math.random() * (y1 - y0 + 1)) + y0;
     return [x, y];
 
-    function upperBound(nums, target) {
-      let left = 0,
-        right = nums.length - 1;
+    function findGreater(nums: number[], target: number) {
+      let [left, right] = [0, nums.length - 1];
       for (; left <= right; ) {
         const mid = left + Math.trunc((right - left) / 2);
         if (nums[mid] > target) {

@@ -69,17 +69,21 @@ The read function will only be called once for each test case.
 You may assume the destination buffer array, buf, is guaranteed to have enough space for storing n characters.
 */
 
-function read(buf, n) {
+function read(buf: string[], count: number): number {
   let result = 0;
   const chunk = Array(4).fill('');
-  while (result < n) {
-    const curr = read4(chunk);
-    for (let i = 0; i < curr && result < n; ++i) {
+  while (result < count) {
+    const size = read4(chunk);
+    for (let i = 0; i < size && result < count; ++i) {
       buf[result++] = chunk[i];
     }
-    if (curr < 4) {
+    if (size < 4) {
       break;
     }
   }
   return result;
+
+  function read4(chunk: string[]) {
+    return Math.trunc(Math.random() * chunk.length);
+  }
 }

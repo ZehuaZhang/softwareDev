@@ -33,15 +33,15 @@ Constraints:
 s contains only lower case English letters and '?'.
 */
 
-function modifyString(s) {
-  const baseCode = 'a'.charCodeAt();
-  const arr = [...s];
+function modifyString(input: string): string {
+  const baseCode = 'a'.charCodeAt(0);
+  const arr: string[] = [...input];
   for (let i = 0; i < arr.length; ++i) {
     if (arr[i] === '?') {
       for (let j = 0; j < 3; ++j) {
         if (
-          (i <= 0 || arr[i - 1].charCodeAt() - baseCode !== j) &&
-          (i + 1 >= arr.length || arr[i + 1].charCodeAt() - baseCode !== j)
+          (i === 0 || arr[i - 1].charCodeAt(0) - baseCode !== j) &&
+          (i === arr.length - 1 || arr[i + 1].charCodeAt(0) - baseCode !== j)
         ) {
           arr[i] = String.fromCharCode(baseCode + j);
           break;

@@ -16,32 +16,36 @@ function generatePalindromes(input: string): string[] {
   for (const char of input) {
     letterCountMap.set(char, (letterCountMap.get(char) || 0) + 1);
   }
-  const ss: string[] = [];
-  const oddList: string[] = [];
+  const letterList: string[] = [];
+  let midChar = '';
   for (const [char, count] of letterCountMap.entries()) {
     if (count & 1) {
-      if (oddList.length) {
+      if (midChar.length !== 0) {
         return [];
       }
-      oddList.push(char);
+      midChar = char;
     }
-    letterCountMap.set(char, count / 2);
-    ss.push(char.repeat(count / 2));
+    letterCountMap.set(char, count >> 1);
+    letterList.push(char.repeat(count >> 1));
   }
   const result: string[] = [];
-  dfs(ss.join(''), oddList, '');
+  generatePalindromesDfs(letterList.join(''), midChar, '');
   return result;
 
-  function dfs(input: string, odd: string[], curr) {
-    if (curr.length === input.length) {
-      result.push([curr, ...odd, ...[...curr].reverse()].join(''));
+  function generatePalindromesDfs(
+    input: string,
+    midChar: string,
+    path: string
+  ): void {
+    if (path.length === input.length) {
+      result.push([path, midChar, ...[...path].reverse()].join(''));
       return;
     }
-    for (const [c, count] of letterCountMap) {
+    for (const [char, count] of letterCountMap.entries()) {
       if (count > 0) {
-        letterCountMap.set(c, count - 1);
-        dfs(input, odd, curr + c);
-        letterCountMap.set(c, count);
+        letterCountMap.set(char, count - 1);
+        generatePalindromesDfs(input, midChar, path + char);
+        letterCountMap.set(char, count);
       }
     }
   }

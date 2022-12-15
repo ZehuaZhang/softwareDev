@@ -32,17 +32,20 @@ At most 104 calls will be made to sumRange.
 */
 
 class NumArray {
-  constructor(nums) {
-    this.nums = [...nums];
-    for (let i = 1; i < nums.length; ++i) {
-      this.nums[i] += this.nums[i - 1];
+  sumList: number[];
+  constructor(numList: number[]) {
+    this.sumList = [];
+    let sum = 0;
+    for (let i = 1; i < numList.length; ++i) {
+      sum += numList[i];
+      this.sumList.push(sum);
     }
   }
 
-  sumRange(i, j) {
-    if (i == 0) {
-      return this.nums[j];
+  sumRange(i: number, j: number): number {
+    if (i === 0) {
+      return this.sumList[j];
     }
-    return this.nums[j] - this.nums[i - 1];
+    return this.sumList[j] - this.sumList[i - 1];
   }
 }

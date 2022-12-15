@@ -33,15 +33,15 @@ Constraints:
 s only contains lower case English letters.
 */
 
-function removeDuplicates(s, k) {
-  const result = [...s];
-  const count = Array(s.length).fill(0);
+function removeDuplicatesII(input: string, kth: number): string {
+  const result: string[] = [...input];
+  const count = Array(input.length).fill(0);
   let i = 0;
-  for (let j = 0; j < s.length; ++i, ++j) {
+  for (let j = 0; j < input.length; ++i, ++j) {
     result[i] = result[j];
     count[i] = i > 0 && result[i - 1] === result[i] ? count[i - 1] + 1 : 1;
-    if (count[i] === k) {
-      i -= k;
+    if (count[i] === kth) {
+      i -= kth;
     }
   }
   return result.slice(0, i).join('');

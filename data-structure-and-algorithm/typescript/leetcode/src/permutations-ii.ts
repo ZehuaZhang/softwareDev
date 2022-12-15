@@ -22,26 +22,30 @@ Constraints:
 -10 <= nums[i] <= 10
 */
 
-function permuteUnique(nums) {
-  const result = [];
-  const visited = Array(nums.length).fill(false);
+function permuteUnique(nums: number[]): number[][] {
+  const result: number[][] = [];
+  const visited: boolean[] = Array(nums.length).fill(false);
+  const path: number[] = [];
   nums.sort((a, b) => a - b);
-  dfs(nums, visited, [], result);
+  permuteDfs();
   return result;
-}
 
-function dfs(nums, visited, curr, result) {
-  if (curr.length === nums.length) {
-    result.push([...curr]);
-    return;
-  }
-  for (let i = 0; i < nums.length; ++i) {
-    if (!visited[i] && (i === 0 || nums[i] !== nums[i - 1] || visited[i - 1])) {
-      curr.push(nums[i]);
-      visited[i] = true;
-      dfs(nums, visited, curr, result);
-      visited[i] = false;
-      curr.pop();
+  function permuteDfs(): void {
+    if (path.length === nums.length) {
+      result.push([...path]);
+      return;
+    }
+    for (let i = 0; i < nums.length; ++i) {
+      if (
+        !visited[i] &&
+        (i === 0 || nums[i] !== nums[i - 1] || visited[i - 1])
+      ) {
+        path.push(nums[i]);
+        visited[i] = true;
+        permuteDfs();
+        visited[i] = false;
+        path.pop();
+      }
     }
   }
 }

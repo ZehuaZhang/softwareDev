@@ -28,13 +28,18 @@ The number of nodes in the list is the range [0, 5000].
 Follow up: A linked list can be reversed either iteratively or recursively. Could you implement both?
 */
 
-function reverseList(head) {
+import {ListNode} from './data-structure/LinkedList';
+import {Nullable} from './util/object';
+
+function reverseList(
+  head: Nullable<ListNode<number>>
+): Nullable<ListNode<number>> {
   let prev = null;
-  for (; head; ) {
-    const next = head.next;
-    head.next = prev;
-    prev = head;
-    head = next;
+  for (let node = head; node; ) {
+    const next = node.next;
+    node.next = prev;
+    prev = node;
+    node = next;
   }
   return prev;
 }

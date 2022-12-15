@@ -25,23 +25,32 @@ The number of nodes in the list is in the range [0, 104].
 0 <= val <= 50
 */
 
-function removeElements(head, val) {
-  const dummy = new ListNode();
+import {ListNode} from './data-structure/LinkedList';
+import {Nullable} from './util/object';
+
+function removeElements(
+  head: Nullable<ListNode<number>>,
+  data: number
+): Nullable<ListNode<number>> {
+  const dummy = new ListNode(NaN);
   dummy.next = head;
   for (let curr = head, prev = dummy; curr; curr = curr.next) {
-    if (curr.val === val) {
+    if (curr.data === data) {
       prev.next = curr.next;
     } else {
-      prev = prev.next;
+      prev = prev.next!;
     }
   }
   return dummy.next;
 }
 
-function removeElementsDFS(head, val) {
-  if (!head) {
+function removeElements_dfs(
+  head: Nullable<ListNode<number>>,
+  data: number
+): Nullable<ListNode<number>> {
+  if (head === null) {
     return null;
   }
-  head.next = removeElements(head.next, val);
-  return head.val === val ? head.next : head;
+  head.next = removeElements(head.next, data);
+  return head.data === data ? head.next : head;
 }

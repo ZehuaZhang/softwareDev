@@ -35,28 +35,14 @@
 //     print(nums[i]);
 // }
 
-/**
- * @param {number[]} nums
- * @return {number}
- */
-const removeDuplicates = function (nums) {
-  if (!isArray(nums)) {
-    throw 'invalid input array';
-  }
-
-  const duplicateAllowedCount = 1;
-
-  let index = duplicateAllowedCount;
-  for (let i = duplicateAllowedCount; i < nums.length; ++i) {
-    if (nums[i - duplicateAllowedCount] === nums[i]) {
+function removeDuplicatesSorted(nums: number[]): number {
+  const kth = 1;
+  let index = kth;
+  for (let i = kth; i < nums.length; ++i) {
+    if (nums[i - kth] === nums[i]) {
       continue;
     }
     nums[index++] = nums[i];
   }
-
   return index;
-};
-
-function isArray(item) {
-  return Array.isArray(item);
 }

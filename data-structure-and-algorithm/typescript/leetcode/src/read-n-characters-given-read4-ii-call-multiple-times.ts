@@ -65,20 +65,24 @@ You may assume the destination buffer array, buf, is guaranteed to have enough s
 It is guaranteed that in a given test case the same buffer buf is called by read.
 */
 
-let r = 0;
-let w = 0;
+let index = 0;
+let size = 0;
 const chunk = Array(4).fill('');
 
-function read(buf, n) {
-  for (let i = 0; i < n; ++i) {
-    if (r == w) {
-      w = read4(buff);
-      r = 0;
-      if (w === 0) {
+function readII(buf: string[], count: number): number {
+  for (let i = 0; i < count; ++i) {
+    if (index === size) {
+      size = read4(chunk);
+      index = 0;
+      if (size === 0) {
         return i;
       }
     }
-    buf[i] = chunk[r++];
+    buf[i] = chunk[index++];
   }
-  return n;
+  return count;
+
+  function read4(chunk: string[]) {
+    return Math.trunc(Math.random() * chunk.length);
+  }
 }

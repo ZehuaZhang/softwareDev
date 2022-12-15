@@ -37,31 +37,41 @@ At most 1000 calls will be made to next, hasNext, and peek.
 Follow up: How would you extend your design to be generic and work with all types, not just integer?
 */
 
-class PeekingIterator {
-  constructor(iterator) {
+import {Nullable} from './util/object';
+
+class PeekingIterator<T> {
+  iterator: DataIterator<T>;
+  data: Nullable<T>;
+  hasPeeked: boolean;
+  constructor(iterator: DataIterator<T>) {
     this.iterator = iterator;
-    this.value = 0;
+    this.data = null;
     this.hasPeeked = false;
   }
 
-  peek() {
+  peek(): T {
     if (!this.hasPeeked) {
-      this.value = this.iterator.next();
+      this.data = this.iterator.next();
       this.hasPeeked = true;
     }
-    return this.value;
+    return this.data!;
   }
 
-  hasNext() {
+  hasNext(): boolean {
     return this.hasPeeked || this.iterator.hasNext();
   }
 
-  next() {
+  next(): T {
     if (this.hasPeeked) {
       this.hasPeeked = false;
-      return this.value;
+      return this.data!;
     }
 
     return this.iterator.next();
   }
+}
+
+interface DataIterator<T> {
+  hasNext: () => boolean;
+  next: () => T;
 }

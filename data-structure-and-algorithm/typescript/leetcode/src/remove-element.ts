@@ -39,31 +39,13 @@
 //     print(nums[i]);
 // }
 
-/**
- * @param {number[]} nums
- * @param {number} val
- * @return {number}
- */
-const removeElement = function (nums, val) {
-  if (!isArray(nums) || !isNumber(val)) {
-    throw 'invalid input types';
-  }
-
+function removeElement(nums: number[], data: number): number {
   let index = 0;
   for (let i = 0; i < nums.length; ++i) {
-    if (nums[i] === val) {
+    if (nums[i] === data) {
       continue;
     }
     nums[index++] = nums[i];
   }
-
   return index;
-};
-
-function isArray(item) {
-  return Array.isArray(item);
-}
-
-function isNumber(item) {
-  return typeof item === 'number';
 }

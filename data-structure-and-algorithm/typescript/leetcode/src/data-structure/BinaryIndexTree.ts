@@ -1,4 +1,4 @@
-export class FenwickTree {
+export class BinaryIndexTree {
   numList: number[];
   bitList: number[];
   constructor(numList: number[]) {
@@ -9,12 +9,12 @@ export class FenwickTree {
     }
   }
 
-  update(i: number, value: number): void {
-    const diff = value - this.numList[i + 1];
+  update(i: number, data: number): void {
+    const diff = data - this.numList[i + 1];
     for (let j = i + 1; j < this.bitList.length; j += this.leastBit(j)) {
       this.bitList[j] += diff;
     }
-    this.numList[i + 1] = value;
+    this.numList[i + 1] = data;
   }
 
   sumRange(i: number, j: number): number {

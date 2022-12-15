@@ -25,25 +25,27 @@ Constraints:
 s consists of lowercase English letters.
 */
 
-function countSubstrings(s) {
+function countSubstrings(input: string): number {
   let result = 0;
-  for (let i = 0; i < s.length; ++i) {
-    // s[i - j] <=> s[i + j]
+  for (let i = 0; i < input.length; ++i) {
+    // input[i - j] <=> input[i + j]
     for (
       let j = 0;
-      i - j >= 0 && i + j < s.length && s[i - j] === s[i + j];
+      i - j >= 0 && i + j < input.length && input[i - j] === input[i + j];
       ++j
     ) {
-      result++;
+      ++result;
     }
 
-    // s[i - 1 - j] <=> s[i + j]
+    // input[i - 1 - j] <=> input[i + j]
     for (
       let j = 0;
-      i - 1 - j >= 0 && i + j < s.length && s[i - 1 - j] == s[i + j];
+      i - 1 - j >= 0 &&
+      i + j < input.length &&
+      input[i - 1 - j] === input[i + j];
       ++j
     ) {
-      result++;
+      ++result;
     }
   }
   return result;

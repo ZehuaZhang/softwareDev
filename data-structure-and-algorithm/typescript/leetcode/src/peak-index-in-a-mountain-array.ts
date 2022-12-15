@@ -41,9 +41,8 @@ arr is guaranteed to be a mountain array.
 Follow up: Finding the O(n) is straightforward, could you find an O(log(n)) solution?
 */
 
-function peakIndexInMountainArray(arr) {
-  let left = 0,
-    right = nums.length - 1;
+function peakIndexInMountainArray(nums: number[]): number {
+  let [left, right] = [0, nums.length - 1];
 
   while (left < right) {
     const mid1 = Math.trunc((left + right) / 2);

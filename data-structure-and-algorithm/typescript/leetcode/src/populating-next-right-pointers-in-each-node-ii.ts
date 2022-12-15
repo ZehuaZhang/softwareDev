@@ -34,7 +34,11 @@ The number of nodes in the given tree is less than 6000.
 -100 <= node.val <= 100
 */
 
-function connect(root) {
+import {Nullable} from './util/object';
+
+function connect(
+  root: Nullable<NextTreeNode<number>>
+): Nullable<NextTreeNode<number>> {
   for (let curr = root, next = null; curr; curr = next, next = null) {
     for (let prev = null; curr; curr = curr.next) {
       if (!next) {
@@ -55,4 +59,22 @@ function connect(root) {
     }
   }
   return root;
+}
+
+class NextTreeNode<T> {
+  data: T;
+  left: Nullable<NextTreeNode<T>>;
+  right: Nullable<NextTreeNode<T>>;
+  next: Nullable<NextTreeNode<T>>;
+  constructor(
+    data: T,
+    left: Nullable<NextTreeNode<T>> = null,
+    right: Nullable<NextTreeNode<T>> = null,
+    next: Nullable<NextTreeNode<T>> = null
+  ) {
+    this.data = data;
+    this.left = left;
+    this.right = right;
+    this.next = next;
+  }
 }

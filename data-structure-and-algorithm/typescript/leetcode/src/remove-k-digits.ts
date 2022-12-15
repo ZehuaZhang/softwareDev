@@ -27,15 +27,19 @@ num consists of only digits.
 num does not have any leading zeros except for the zero itself.
 */
 
-function removeKdigits(num, k) {
-  const result = [];
-  const right = num.length - k;
-  for (const n of num) {
-    for (; result.length && result[result.length - 1] > n && k; --k) {
+function removeKdigits(num: string, count: number): string {
+  const result: string[] = [];
+  const right = num.length - count;
+  for (const digit of num) {
+    for (
+      ;
+      result.length && result[result.length - 1] > digit && count;
+      --count
+    ) {
       result.pop();
     }
-    result.push(n);
+    result.push(digit);
   }
   result.splice(right);
-  return BigInt(result.join('')).toString();
+  return Number(result.join('')).toString();
 }

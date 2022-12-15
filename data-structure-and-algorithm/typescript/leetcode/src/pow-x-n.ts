@@ -25,15 +25,15 @@ Constraints:
 -104 <= xn <= 104
 */
 
-function myPow(x, n) {
-  if (n == 0) {
+function myPow(num: number, degree: number): number {
+  if (degree === 0) {
     return 1;
   }
-  if (n < 0) {
-    n = -n;
-    x = 1 / x;
+  if (degree < 0) {
+    degree = -degree;
+    num = 1 / num;
   }
-  return n % 2 == 0
-    ? Math.pow(x * x, Math.trunc(n / 2))
-    : x * Math.pow(x * x, Math.trunc(n / 2));
+  return degree % 2 === 0
+    ? myPow(num * num, degree >> 1)
+    : num * myPow(num * num, degree >> 1);
 }

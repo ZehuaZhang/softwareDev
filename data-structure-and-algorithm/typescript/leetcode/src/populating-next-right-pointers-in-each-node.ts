@@ -34,17 +34,39 @@ The number of nodes in the given tree is less than 4096.
 -1000 <= node.val <= 1000
 */
 
-function connect(root) {
-  if (!root) {
+import {Nullable} from './util/object';
+
+function connect(
+  root: Nullable<NextTreeNode<number>>
+): Nullable<NextTreeNode<number>> {
+  if (root === null) {
     return null;
   }
   for (let prev = root, curr = null; prev.left; prev = prev.left) {
     for (curr = prev; curr; curr = curr.next) {
-      curr.left.next = curr.right;
+      curr.left!.next = curr.right;
       if (curr.next) {
-        curr.right.next = curr.next.left;
+        curr.right!.next = curr.next.left;
       }
     }
   }
   return root;
+}
+
+class NextTreeNode<T> {
+  data: T;
+  left: Nullable<NextTreeNode<T>>;
+  right: Nullable<NextTreeNode<T>>;
+  next: Nullable<NextTreeNode<T>>;
+  constructor(
+    data: T,
+    left: Nullable<NextTreeNode<T>> = null,
+    right: Nullable<NextTreeNode<T>> = null,
+    next: Nullable<NextTreeNode<T>> = null
+  ) {
+    this.data = data;
+    this.left = left;
+    this.right = right;
+    this.next = next;
+  }
 }

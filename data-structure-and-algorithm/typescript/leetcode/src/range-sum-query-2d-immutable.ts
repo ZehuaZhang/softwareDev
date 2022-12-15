@@ -35,26 +35,27 @@ n == matrix[i].length
 At most 104 calls will be made to sumRegion.
 */
 
-class NumMatrix {
-  constructor(matrix) {
+class NumImmutableMatrix {
+  sumList: number[][];
+  constructor(matrix: number[][]) {
     const [rows, cols] = [matrix.length, matrix[0].length];
-    this.sums = [...Array(rows + 1)].map(() => Array(cols + 1).fill(0));
+    this.sumList = [...Array(rows + 1)].map(() => Array(cols + 1).fill(0));
     for (let i = 1; i <= rows; ++i) {
       for (let j = 1; j <= cols; ++j) {
-        this.sums[i][j] =
+        this.sumList[i][j] =
           matrix[i - 1][j - 1] +
-          this.sums[i - 1][j] +
-          this.sums[i][j - 1] -
-          this.sums[i - 1][j - 1];
+          this.sumList[i - 1][j] +
+          this.sumList[i][j - 1] -
+          this.sumList[i - 1][j - 1];
       }
     }
   }
-  sumRegion(row1, col1, row2, col2) {
+  sumRegion(row1: number, col1: number, row2: number, col2: number) {
     return (
-      this.sums[row2 + 1][col2 + 1] -
-      this.sums[row2 + 1][col1] -
-      this.sums[row1][col2 + 1] +
-      this.sums[row1][col1]
+      this.sumList[row2 + 1][col2 + 1] -
+      this.sumList[row2 + 1][col1] -
+      this.sumList[row1][col2 + 1] +
+      this.sumList[row1][col1]
     );
   }
 }

@@ -21,49 +21,47 @@ Constraints:
 1 <= nums[i] <= 100
 */
 
-function canPartition(nums) {
+function canPartition(nums: number[]): boolean {
   const sum = nums.reduce((p, c) => p + c, 0);
   if (sum & 1) {
     return false;
   }
   const target = sum >> 1;
-  const dp = Array(target + 1).fill(0);
-  dp[0] = 1;
-  for (const n of nums) {
-    for (let i = target; i >= n; --i) {
-      dp[i] = dp[i] || dp[i - n];
+  const result: boolean[] = Array(target + 1).fill(false);
+  result[0] = true;
+  for (const num of nums) {
+    for (let i = target; i >= num; --i) {
+      result[i] ||= result[i - num];
     }
   }
-  return dp[target];
+  return result[target];
 }
 
-function canPartitionDFS(nums) {
+function canPartitionDfs(nums: number[]): boolean {
   const sum = nums.reduce((p, c) => p + c, 0);
   if (sum & 1) {
     return false;
   }
   const target = sum >> 1;
-  return dfs(
-    nums,
-    target,
-    nums.length - 1,
-    [...Array(nums.length + 1)].map(() => Array(target + 1).fill(undefined))
+  const cache: (boolean | undefined)[][] = [...Array(nums.length + 1)].map(() =>
+    Array(target + 1).fill(undefined)
   );
-}
+  return canPartitionDfsHelper(target, nums.length - 1);
 
-function dfs(nums, target, i, cache) {
-  if (i < 0 || target < 0) {
-    return false;
-  }
-  if (!target) {
-    return true;
-  }
-  if (cache[i][target] !== undefined) {
-    return cache[i][target];
-  }
+  function canPartitionDfsHelper(target: number, i: number): boolean {
+    if (i < 0 || target < 0) {
+      return false;
+    }
+    if (target === 0) {
+      return (cache[i][target] = true);
+    }
+    if (cache[i][target] !== undefined) {
+      return cache[i][target]!;
+    }
 
-  cache[i][target] =
-    dfs(nums, target, i - 1, cache) ||
-    dfs(nums, target - nums[i], i - 1, cache);
-  return cache[i][target];
+    cache[i][target] =
+      canPartitionDfsHelper(target, i - 1) ||
+      canPartitionDfsHelper(target - nums[i], i - 1);
+    return cache[i][target]!;
+  }
 }

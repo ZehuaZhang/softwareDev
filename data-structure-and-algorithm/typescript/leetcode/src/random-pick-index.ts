@@ -30,18 +30,21 @@ target is an integer from nums.
 At most 104 calls will be made to pick.
 */
 
-class Solution {
-  constructor(nums) {
+class RandomPickIndex {
+  nums: number[];
+  constructor(nums: number[]) {
     this.nums = nums;
   }
 
-  pick(target) {
+  pick(target: number): number {
     let result = NaN;
-    for (let i = 0, count = 0; i < nums.length; ++i) {
-      if (nums[i] != target) {
+    for (let i = 0, count = 0; i < this.nums.length; ++i) {
+      if (this.nums[i] !== target) {
         continue;
       }
-      if (Math.trunc(Math.random() * ++count) == 0) result = i;
+      if (Math.trunc(Math.random() * ++count) === 0) {
+        result = i;
+      }
     }
 
     return result;

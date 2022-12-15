@@ -25,10 +25,10 @@ Constraints:
 s consists of lowercase English letters.
 */
 
-function removeDuplicates(s) {
-  const result = [...s];
+function removeDuplicates(input: string): string {
+  const result: string[] = [...input];
   let i = 0;
-  for (let j = 0; j < s.length; ++i, ++j) {
+  for (let j = 0; j < input.length; ++i, ++j) {
     result[i] = result[j];
     if (i > 0 && result[i - 1] === result[i]) {
       i -= 2;

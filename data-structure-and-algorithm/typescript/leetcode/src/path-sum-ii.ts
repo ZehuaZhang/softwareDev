@@ -21,23 +21,32 @@ Input: root = [1,2], targetSum = 0
 Output: []
 */
 
-function pathSum(root, sum) {
-  const result = [];
-  const path = [];
-  dfs(root, sum, path, result);
-  return result;
-}
+import {TreeNode} from './data-structure/BinaryTree';
+import {Nullable} from './util/object';
 
-function dfs(node, sum, path, result) {
-  if (!node) {
-    return;
+function pathSumRootToLeaf(
+  root: Nullable<TreeNode<number>>,
+  sum: number
+): number[][] {
+  const result: number[][] = [];
+  const path: number[] = [];
+  pathSumRootToLeafDfs(root, sum);
+  return result;
+
+  function pathSumRootToLeafDfs(
+    node: Nullable<TreeNode<number>>,
+    sum: number
+  ): void {
+    if (node === null) {
+      return;
+    }
+    if (node.left === null && node.right === null && node.data === sum) {
+      result.push([...path, node.data]);
+      return;
+    }
+    path.push(node.data);
+    pathSumRootToLeafDfs(node.left, sum - node.data);
+    pathSumRootToLeafDfs(node.right, sum - node.data);
+    path.pop();
   }
-  if (!node.left && !node.right && node.val === sum) {
-    result.push([...path, node.val]);
-    return;
-  }
-  path.push(node.val);
-  dfs(node.left, sum - node.val, path, result);
-  dfs(node.right, sum - node.val, path, result);
-  path.pop();
 }

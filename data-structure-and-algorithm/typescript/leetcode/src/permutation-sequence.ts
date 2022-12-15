@@ -33,34 +33,33 @@ Constraints:
 1 <= k <= n!
 */
 
-function getPermutation(n, k) {
-  const result = [];
-  const curr = [...Array(n)].map((_, i) => i + 1);
-  const count = [k];
-  dfs(n, count, 0, curr, result);
+function getPermutation(range: number, kth: number): string {
+  const result: number[] = [];
+  const path: number[] = [...Array(range)].map((_, i) => i + 1);
+  getPermutationDfs(0);
   return result.join('');
-}
 
-function dfs(n, count, left, curr, result) {
-  if (count[0] === 0) {
-    return;
-  }
-  if (left === n - 1) {
-    if (--count[0] === 0) {
-      result.splice(0, result.length, ...curr);
+  function getPermutationDfs(start: number): void {
+    if (kth === 0) {
+      return;
     }
-    return;
+    if (start === range - 1) {
+      if (--kth === 0) {
+        result.splice(0, result.length, ...path);
+      }
+      return;
+    }
+    path.splice(start, path.length, ...path.slice(start).sort());
+    for (let i = start; i < range; ++i) {
+      swap(path, i, start);
+      getPermutationDfs(start + 1);
+      swap(path, i, start);
+    }
   }
-  curr = [...curr.slice(0, left), ...curr.slice(left).sort((a, b) => a - b)];
-  for (let i = left; i < n; ++i) {
-    swap(curr, i, left);
-    dfs(n, count, left + 1, [...curr], result);
-    swap(curr, i, left);
-  }
-}
 
-function swap(nums, i, j) {
-  const value = nums[i];
-  nums[i] = nums[j];
-  nums[j] = value;
+  function swap(nums: number[], i: number, j: number): void {
+    const data = nums[i];
+    nums[i] = nums[j];
+    nums[j] = data;
+  }
 }

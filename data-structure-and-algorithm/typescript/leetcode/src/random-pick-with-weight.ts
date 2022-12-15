@@ -51,28 +51,30 @@ Constraints:
 pickIndex will be called at most 10000 times.
 */
 
-class Solution {
-  constructor(w) {
-    this.sum = [];
-    for (const n of w) {
-      if (!this.sum.length) {
-        this.sum.push(n);
+class RandomPickWithWeights {
+  sumList: number[];
+  constructor(weightList: number[]) {
+    this.sumList = [];
+    for (const num of weightList) {
+      const {length} = this.sumList;
+      if (length === 0) {
+        this.sumList.push(num);
       } else {
-        this.sum.push(n + this.sum[this.sum.length - 1]);
+        this.sumList.push(num + this.sumList[length - 1]);
       }
     }
   }
 
-  pickIndex() {
-    const target = Math.trunc(Math.random() * this.sum[this.sum.length - 1]);
-    const result = upperBound(this.sum, target);
-    return result === this.sum.length ? this.sum.length - 1 : result;
+  pickIndex(): number {
+    const {length} = this.sumList;
+    const target = Math.trunc(Math.random() * this.sumList[length - 1]);
+    const result = findGreater(this.sumList, target);
+    return result === length ? length - 1 : result;
 
-    function upperBound(nums, target) {
-      let left = 0,
-        right = nums.length - 1;
+    function findGreater(nums: number[], target: number) {
+      let [left, right] = [0, nums.length - 1];
       for (; left <= right; ) {
-        const mid = left + Math.trunc((right - left) / 2);
+        const mid = (left + right) >> 1;
         if (nums[mid] > target) {
           right = mid - 1;
         } else {
