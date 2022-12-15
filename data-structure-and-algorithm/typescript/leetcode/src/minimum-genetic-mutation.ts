@@ -35,29 +35,33 @@ bank[i].length == 8
 start, end, and bank[i] consist of only the characters ['A', 'C', 'G', 'T'].
 */
 
-function minMutation(begin, end, bank) {
-  const set = new Set([...bank]);
-  let q = [begin];
-  let level = 0;
-  for (; q.length; ++level) {
-    const next = [];
-    for (const curr of q) {
+import {Queue} from './data-structure/Queue';
+
+function minMutation(begin: string, end: string, bank: string[]): number {
+  const bankSet = new Set([...bank]);
+  const queue = new Queue<string>();
+  queue.push(begin);
+  let result = 0;
+  for (; !queue.isEmpty(); ++result) {
+    for (let {size} = queue; size; --size) {
+      const curr = queue.pop()!;
       if (curr === end) {
-        return level;
+        return result;
       }
-      set.delete(curr);
+      if (bankSet.has(curr)) {
+        bankSet.delete(curr);
+      }
       for (let i = 0; i < curr.length; ++i) {
         const array = [...curr];
-        for (const c of ['A', 'C', 'G', 'T']) {
-          array[i] = c;
+        for (const char of ['A', 'C', 'G', 'T']) {
+          array[i] = char;
           const word = array.join('');
-          if (set.has(word)) {
-            next.push(word);
+          if (bankSet.has(word)) {
+            queue.push(word);
           }
         }
       }
     }
-    q = next;
   }
   return -1;
 }

@@ -35,9 +35,8 @@ n == nums.length
 All the numbers of nums are unique.
 */
 
-function missingNumber(nums) {
+function missingNumber(nums: number[]) {
   const {length} = nums;
-  const sum = 0;
-  nums.reduce((p, c) => p + c, 0);
+  const sum = nums.reduce((p, c) => p + c, 0);
   return Math.trunc((length * (length + 1)) / 2) - sum;
 }

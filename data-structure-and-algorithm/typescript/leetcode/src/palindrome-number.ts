@@ -20,38 +20,25 @@
 
 // Coud you solve it without converting the integer to a string?
 
-/**
- * @param {number} x
- * @return {boolean}
- */
-const isPalindrome = function (x) {
-  if (!isNumber(x)) {
-    throw 'invalid input number';
-  }
-
-  if (Math.sign(x) < 0) {
+function isPalindromeNumber(num: number): boolean {
+  if (Math.sign(num) < 0) {
     return false;
   }
 
   const maxInteger = Math.pow(2, 31) - 1;
 
-  let reverseX = 0;
-  let copyX = x;
-  while (copyX) {
+  let reversed = 0;
+  for (let data = num; data; ) {
     if (
-      reverseX > Math.trunc(maxInteger / 10) ||
-      (reverseX === maxInteger / 10 && copyX > maxInteger % 10)
+      reversed > Math.trunc(maxInteger / 10) ||
+      (reversed === maxInteger / 10 && data > maxInteger % 10)
     ) {
       return false;
     }
 
-    reverseX = reverseX * 10 + (copyX % 10);
-    copyX = Math.trunc(copyX / 10);
+    reversed = reversed * 10 + (data % 10);
+    data = Math.trunc(data / 10);
   }
 
-  return reverseX === x;
-};
-
-function isNumber(item) {
-  return typeof item === 'number';
+  return reversed === num;
 }

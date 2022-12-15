@@ -21,31 +21,32 @@ Constraints:
 s contains only lowercase English letters.
 */
 
-function partition(s) {
-  const result = [];
-  dfs(s, 0, [], result);
+function palindromePartition(input: string): string[][] {
+  const result: string[][] = [];
+  const path: string[] = [];
+  palindromePartitionDfs(0);
   return result;
-}
 
-function dfs(s, left, curr, result) {
-  if (left === s.length) {
-    result.push([...curr]);
-  }
+  function palindromePartitionDfs(start: number): void {
+    if (start === input.length) {
+      result.push([...path]);
+    }
 
-  for (let i = left; i < s.length; ++i) {
-    if (isPalindrome(s, left, i)) {
-      curr.push(s.substring(left, i + 1));
-      dfs(s, i + 1, curr, result);
-      curr.pop();
+    for (let i = start; i < input.length; ++i) {
+      if (isPalindrome(start, i)) {
+        path.push(input.substring(start, i + 1));
+        palindromePartitionDfs(i + 1);
+        path.pop();
+      }
     }
   }
-}
 
-function isPalindrome(s, left, right) {
-  for (; left < right; ++left, --right) {
-    if (s[left] !== s[right]) {
-      return false;
+  function isPalindrome(left: number, right: number): boolean {
+    for (; left < right; ++left, --right) {
+      if (input[left] !== input[right]) {
+        return false;
+      }
     }
+    return true;
   }
-  return true;
 }

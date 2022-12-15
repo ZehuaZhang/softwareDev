@@ -31,7 +31,7 @@ Constraints:
 0 <= nums[i] <= 100
 */
 
-function nextPermutation(nums) {
+function nextPermutation(nums: number[]): number[] {
   let k;
   for (k = nums.length - 2; k >= 0 && nums[k] >= nums[k + 1]; --k);
   if (k < 0) {
@@ -44,4 +44,5 @@ function nextPermutation(nums) {
     nums[k] = swap;
     nums.splice(k + 1, nums.length, ...nums.slice(k + 1).reverse());
   }
+  return nums;
 }

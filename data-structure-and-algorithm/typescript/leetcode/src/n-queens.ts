@@ -24,33 +24,37 @@ Constraints:
 1 <= n <= 9
 */
 
-function solveNQueens(n) {
-  const cols = Array(n).fill(false);
-  const diags1 = Array(2 * n - 1).fill(false);
-  const diags2 = Array(2 * n - 1).fill(false);
-  const result = [];
-  const curr = [];
-  dfs(0, curr, result);
+function solveNQueens(size: number): string[][] {
+  const colList: boolean[] = Array(size).fill(false);
+  const diagList1: boolean[] = Array(2 * size - 1).fill(false);
+  const diagList2: boolean[] = Array(2 * size - 1).fill(false);
+  const result: string[][] = [];
+  const path: number[] = [];
+  solveNQueensDfs(0, path);
   return result;
 
-  function dfs(row, curr, result) {
-    if (row == n) {
+  function solveNQueensDfs(row: number, path: number[]): void {
+    if (row === size) {
       result.push(
-        curr.map(col => {
-          const array = [...'.'.repeat(n)];
+        path.map(col => {
+          const array = [...'.'.repeat(size)];
           array[col] = 'Q';
           return array.join('');
         })
       );
       return;
     }
-    for (let i = 0; i < n; ++i) {
-      if (!cols[i] && !diags1[row - i + n - 1] && !diags2[row + i]) {
-        curr.push(i);
-        cols[i] = diags1[row - i + n - 1] = diags2[row + i] = true;
-        dfs(row + 1, curr, result);
-        curr.pop();
-        cols[i] = diags1[row - i + n - 1] = diags2[row + i] = false;
+    for (let i = 0; i < size; ++i) {
+      if (
+        !colList[i] &&
+        !diagList1[row - i + size - 1] &&
+        !diagList2[row + i]
+      ) {
+        path.push(i);
+        colList[i] = diagList1[row - i + size - 1] = diagList2[row + i] = true;
+        solveNQueensDfs(row + 1, path);
+        path.pop();
+        colList[i] = diagList1[row - i + size - 1] = diagList2[row + i] = false;
       }
     }
   }

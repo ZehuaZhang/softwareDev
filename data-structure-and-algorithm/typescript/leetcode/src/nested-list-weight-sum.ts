@@ -15,18 +15,24 @@ Output: 27
 Explanation: One 1 at depth 1, one 4 at depth 2, and one 6 at depth 3; 1 + 4*2 + 6*3 = 27.
 */
 
-function depthSum(list) {
-  return dfs(list, 1);
+function depthSum(list: NestedInteger[]): number {
+  return depthSumDfs(list, 1);
+
+  function depthSumDfs(list: NestedInteger[], depth: number): number {
+    let sum = 0;
+    for (const nestedInteger of list) {
+      if (nestedInteger.isInteger()) {
+        sum += nestedInteger.getInteger() * depth;
+      } else {
+        sum += depthSumDfs(nestedInteger.getList(), depth + 1);
+      }
+    }
+    return sum;
+  }
 }
 
-function dfs(list, depth) {
-  let sum = 0;
-  for (const l of list) {
-    if (l.isInteger()) {
-      sum += l.getInteger() * depth;
-    } else {
-      sum += dfs(l.getList(), depth + 1);
-    }
-  }
-  return sum;
+interface NestedInteger {
+  isInteger(): boolean;
+  getInteger(): number;
+  getList(): Array<NestedInteger>;
 }

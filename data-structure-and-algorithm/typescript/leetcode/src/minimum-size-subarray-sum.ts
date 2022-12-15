@@ -28,7 +28,7 @@ Constraints:
 Follow up: If you have figured out the O(n) solution, try coding another solution of which the time complexity is O(n log(n)).
 */
 
-function minSubArrayLen(target, nums) {
+function minSubArrayLen(target: number, nums: number[]): number {
   let result = Infinity;
   for (let sum = 0, left = 0, i = 0; i < nums.length; ++i) {
     sum += nums[i];

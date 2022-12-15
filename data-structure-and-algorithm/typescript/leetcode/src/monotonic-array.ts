@@ -35,11 +35,11 @@ Note:
 -100000 <= nums[i] <= 100000
 */
 
-function isMonotonic(nums) {
-  let isInc = true,
-    isDec = true;
+function isMonotonic(nums: number[]): boolean {
+  let [isInc, isDec] = [true, true];
   for (let i = 1; i < nums.length; ++i) {
-    (isInc &= nums[i - 1] <= nums[i]), (isDec &= nums[i - 1] >= nums[i]);
+    isInc &&= nums[i - 1] <= nums[i];
+    isDec &&= nums[i - 1] >= nums[i];
   }
   return isInc || isDec;
 }

@@ -33,37 +33,37 @@ n == grid[i].length
 grid[i][j] is '0' or '1'.
 */
 
-function numIslands(grid) {
-  const [m, n] = [grid.length, grid[0].length];
-  const visited = Array(m)
-    .fill(0)
-    .map(() => Array(n).fill(false));
-  let count = 0;
-  for (let i = 0; i < m; ++i) {
-    for (let j = 0; j < n; ++j) {
+function numIslands(grid: string[][]): number {
+  const [rows, cols] = [grid.length, grid[0].length];
+  const visited: boolean[][] = [...Array(rows)].map(() =>
+    Array(cols).fill(false)
+  );
+  let result = 0;
+  for (let i = 0; i < rows; ++i) {
+    for (let j = 0; j < cols; ++j) {
       if (grid[i][j] === '1' && !visited[i][j]) {
-        numIslandsDFS(grid, visited, i, j, m, n);
-        ++count;
+        numIslandsDFS(i, j);
+        ++result;
       }
     }
   }
-  return count;
-}
+  return result;
 
-function numIslandsDFS(grid, visited, x, y, m, n) {
-  if (
-    x < 0 ||
-    x >= m ||
-    y < 0 ||
-    y >= n ||
-    grid[x][y] !== '1' ||
-    visited[x][y]
-  ) {
-    return;
+  function numIslandsDFS(x: number, y: number) {
+    if (
+      x < 0 ||
+      x >= rows ||
+      y < 0 ||
+      y >= cols ||
+      grid[x][y] !== '1' ||
+      visited[x][y]
+    ) {
+      return;
+    }
+    visited[x][y] = true;
+    numIslandsDFS(x - 1, y);
+    numIslandsDFS(x + 1, y);
+    numIslandsDFS(x, y - 1);
+    numIslandsDFS(x, y + 1);
   }
-  visited[x][y] = true;
-  numIslandsDFS(grid, visited, x - 1, y, m, n);
-  numIslandsDFS(grid, visited, x + 1, y, m, n);
-  numIslandsDFS(grid, visited, x, y - 1, m, n);
-  numIslandsDFS(grid, visited, x, y + 1, m, n);
 }

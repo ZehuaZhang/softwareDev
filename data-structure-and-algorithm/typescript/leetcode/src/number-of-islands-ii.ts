@@ -31,57 +31,56 @@ Operation #4: addLand(2, 1) turns the water at grid[2][1] into a land.
 We return the result as an array: [1, 1, 2, 3]
 */
 
-function numIslands2(m, n, positions) {
-  const result = [];
-  let count = 0;
-  const islands = new Map();
+function numIslands2(
+  rows: number,
+  cols: number,
+  posList: number[][]
+): number[] {
+  const result: number[] = [];
+  let count = posList.length;
+  const parentMap = new Map<number, number>();
+  for (const [x, y] of posList) {
+    const id = getId(x, y);
+    parentMap.set(id, id);
 
-  for (const [x, y] of positions) {
-    const cId = getId(x, y, n);
-    islands.set(cId, cId);
-    ++count;
-
-    for (const d of [
+    for (const [dx, dy] of [
       [0, -1],
       [0, 1],
       [-1, 0],
       [1, 0],
     ]) {
-      const [dx, dy] = d;
-      const neighbour = [x + dx, y + dy];
-      const [nx, ny] = neighbour;
-      const nId = getId(nx, ny, n);
-
+      const [xNext, yNext] = [x + dx, y + dy];
+      const idNext = getId(xNext, yNext);
       if (
-        nx >= 0 &&
-        nx < m &&
-        ny >= 0 &&
-        ny < n &&
-        islands.has(nId) &&
-        find(cId, islands) !== find(nId, islands)
+        xNext >= 0 &&
+        xNext < rows &&
+        yNext >= 0 &&
+        yNext < cols &&
+        parentMap.has(idNext) &&
+        find(id) !== find(idNext)
       ) {
-        union(cId, nId, islands);
+        union(id, idNext);
         --count;
       }
     }
     result.push(count);
   }
   return result;
-}
 
-function getId(row, col, n) {
-  return row * n + col;
-}
-
-function find(x, map) {
-  while (map.get(x) !== x) {
-    x = map.get(x);
+  function getId(row: number, col: number): number {
+    return row * cols + col;
   }
-  return x;
-}
 
-function union(x, y, map) {
-  const rx = find(x, map);
-  const ry = find(y, map);
-  map.set(ry, rx);
+  function find(x: number): number {
+    while (parentMap.get(x) !== x) {
+      x = parentMap.get(x)!;
+    }
+    return x;
+  }
+
+  function union(x: number, y: number): void {
+    const xParent = find(x);
+    const yParent = find(y);
+    parentMap.set(yParent, xParent);
+  }
 }

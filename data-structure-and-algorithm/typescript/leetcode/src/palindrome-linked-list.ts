@@ -24,25 +24,29 @@ The number of nodes in the list is in the range [1, 105].
 Follow up: Could you do it in O(n) time and O(1) space?
 */
 
-function isPalindrome(head) {
-  let slow = head,
-    fast = head;
-  for (; fast && fast.next; slow = slow.next, fast = fast.next.next);
+import {ListNode} from './data-structure/LinkedList';
+import {Nullable} from './util/object';
+
+function isPalindrome(head: Nullable<ListNode<number>>): boolean {
+  let [slow, fast]: Nullable<ListNode<number>>[] = [head, head];
+  for (; fast && fast.next; slow = slow!.next, fast = fast.next.next);
   if (fast) {
-    slow = slow.next;
+    slow = slow!.next;
   }
   slow = reverse(slow);
-  for (; slow && head.val === slow.val; head = head.next, slow = slow.next);
+  for (; slow && head!.data === slow.data; head = head!.next, slow = slow.next);
   return slow === null;
-}
 
-function reverse(node) {
-  let prev = null;
-  for (; node; ) {
-    const next = node.next;
-    node.next = prev;
-    prev = node;
-    node = next;
+  function reverse(
+    node: Nullable<ListNode<number>>
+  ): Nullable<ListNode<number>> {
+    let prev = null;
+    for (; node; ) {
+      const next = node.next;
+      node.next = prev;
+      prev = node;
+      node = next;
+    }
+    return prev;
   }
-  return prev;
 }

@@ -23,28 +23,30 @@ Note:
 You can assume that no duplicate edges will appear in edges. Since all edges are undirected, [0, 1] is the same as [1, 0] and thus will not appear together in edges.
 */
 
-function countComponents(n, edges) {
-  const set = [...Array(n)].map((_, i) => i);
-  let result = n;
-  for (const [i, j] of edges) {
-    const x = find(i, set);
-    const y = find(i, set);
+function countComponents(count: number, edges: number[][]): number {
+  const parentList = [...Array(count)].map((_, i) => i);
+  let result = count;
+  for (const [src, dst] of edges) {
+    const x = find(src);
+    const y = find(dst);
 
-    if (x != y) {
-      union(x, y, set);
+    if (x !== y) {
+      union(x, y);
       --result;
     }
   }
   return result;
-}
 
-function find(node, set) {
-  while (set[node] !== node) {
-    node = set[node];
+  function find(node: number): number {
+    while (parentList[node] !== node) {
+      node = parentList[node];
+    }
+    return node;
   }
-  return node;
-}
 
-function union(x, y, set) {
-  set[find(x, set)] = find(y, set);
+  function union(x: number, y: number): void {
+    const xParent = find(x);
+    const yParent = find(y);
+    parentList[xParent] = parentList[yParent];
+  }
 }

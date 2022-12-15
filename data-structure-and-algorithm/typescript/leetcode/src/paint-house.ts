@@ -14,12 +14,15 @@ Explanation: Paint house 0 into blue, paint house 1 into green, paint house 2 in
              Minimum cost: 2 + 5 + 3 = 10.
 */
 
-function minCost(costs) {
-  const dp = [...costs];
-  for (let i = 1; i < dp.length; ++i) {
-    for (let j = 0; j < dp[0].length; ++j) {
-      dp[i][j] += Math.min(...dp[i - 1].filter((_, k) => j !== k));
+function minCost(costs: number[][]): number {
+  const [rows, cols] = [costs.length, costs[0].length];
+  const result: number[][] = [...costs].map(cost => [...cost]);
+  for (let i = 1; i < rows; ++i) {
+    for (let j = 0; j < result[0].length; ++j) {
+      result[i][j] += Math.min(
+        ...result[i - 1].filter((_, index) => j !== index)
+      );
     }
   }
-  return Math.min(...dp[dp.length - 1]);
+  return Math.min(...result[rows - 1]);
 }

@@ -36,14 +36,16 @@ Constraints:
 s[i] is one of  '(' , ')' and lowercase English letters.
 */
 
-function minRemoveToMakeValid(s) {
-  const isValid = Array(s.length).fill(false);
-  const stack = [];
-  for (let i = 0; i < s.length; ++i) {
-    if (s[i] === '(') {
+import {Stack} from './data-structure/Stack';
+
+function minRemoveToMakeValid(input: string): string {
+  const isValid = Array(input.length).fill(false);
+  const stack = new Stack<number>();
+  for (let i = 0; i < input.length; ++i) {
+    if (input[i] === '(') {
       stack.push(i);
-    } else if (s[i] === ')') {
-      if (stack.length) {
+    } else if (input[i] === ')') {
+      if (!stack.isEmpty()) {
         isValid[i] = true;
         isValid[stack.pop()] = true;
       }
@@ -51,5 +53,5 @@ function minRemoveToMakeValid(s) {
       isValid[i] = true;
     }
   }
-  return [...s].filter((_, i) => isValid[i]).join('');
+  return [...input].filter((_, i) => isValid[i]).join('');
 }

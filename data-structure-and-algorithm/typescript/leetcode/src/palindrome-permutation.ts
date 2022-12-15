@@ -15,14 +15,14 @@ Input: "carerac"
 Output: true
 */
 
-function canPermutePalindrome(s) {
-  const set = new Set();
-  for (const c of s) {
-    if (set.has(c)) {
-      set.delete(c);
+function canPermutePalindrome(input: string): boolean {
+  const letterSet = new Set<string>();
+  for (const char of input) {
+    if (letterSet.has(char)) {
+      letterSet.delete(char);
     } else {
-      set.add(c);
+      letterSet.add(char);
     }
   }
-  return set.size < 2;
+  return letterSet.size < 2;
 }

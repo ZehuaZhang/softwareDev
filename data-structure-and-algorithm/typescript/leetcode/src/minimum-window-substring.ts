@@ -40,25 +40,25 @@ Submissions
 1,518,535
 */
 
-function minWindow(s, t) {
-  const map = Array(128).fill(0);
-  for (const c of t) {
-    ++map[c.charCodeAt()];
+function minWindow(input: string, letters: string) {
+  const countList = Array(128).fill(0);
+  for (const char of letters) {
+    ++countList[char.charCodeAt(0)];
   }
-  let count = t.length;
-  let result = [-1, s.length];
-  for (let left = 0, right = 0; right < s.length; ++right) {
-    if (--map[s[right].charCodeAt()] >= 0) {
+  let count = letters.length;
+  let result: [number, number] = [-1, input.length];
+  for (let left = 0, right = 0; right < input.length; ++right) {
+    if (--countList[input[right].charCodeAt(0)] >= 0) {
       --count;
     }
     for (; count === 0; ++left) {
       if (right - left + 1 < result[1] - result[0]) {
         result = [left, right + 1];
       }
-      if (++map[s[left].charCodeAt()] === 1) {
+      if (++countList[input[left].charCodeAt(0)] === 1) {
         ++count;
       }
     }
   }
-  return result[0] === -1 ? '' : s.substring(...result);
+  return result[0] === -1 ? '' : input.substring(...result);
 }

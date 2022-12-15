@@ -25,7 +25,7 @@ n == grid[i].length
 0 <= grid[i][j] <= 100
 */
 
-function minPathSum(grid) {
+function minPathSum(grid: number[][]) {
   const [rows, cols] = [grid.length, grid[0].length];
   const dp = Array(cols).fill(Infinity);
   dp[0] = 0;

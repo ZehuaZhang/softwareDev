@@ -28,8 +28,13 @@ n == number of nodes in the linked list
 -106 <= Node.val <= 106
 */
 
-function oddEvenList(head) {
-  if (!head) {
+import {ListNode} from './data-structure/LinkedList';
+import {Nullable} from './util/object';
+
+function oddEvenList(
+  head: Nullable<ListNode<number>>
+): Nullable<ListNode<number>> {
+  if (head === null) {
     return head;
   }
   for (

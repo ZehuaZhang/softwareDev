@@ -29,22 +29,23 @@ Constraints:
 s only contains lowercase English letters.
 */
 
-function palindromePartition(s, k) {
-  // cost s[0, i] with j parts
-  const result = [...Array(s.length + 1)].map(() =>
-    Array(k + 1).fill(s.length)
+function palindromePartitionIII(input: string, count: number): number {
+  const size = input.length;
+  // cost input[0, i] with j parts
+  const result: number[][] = [...Array(size + 1)].map(() =>
+    Array(count + 1).fill(size)
   );
 
-  // cost s[i,j] to palindrome
-  const cost = [...Array(s.length)].map(() => Array(s.length).fill(0));
+  // cost input[i,j] to palindrome
+  const cost: number[][] = [...Array(size)].map(() => Array(size).fill(0));
 
   result[0][0] = 0;
-  for (let i = 1; i <= s.length; ++i) {
-    for (let j = 1; j <= k; ++j) {
+  for (let i = 1; i <= size; ++i) {
+    for (let j = 1; j <= count; ++j) {
       for (let left = i - 1; left >= 0; --left) {
         cost[left][i - 1] =
           (left + 1 < i - 1 ? cost[left + 1][i - 2] : 0) +
-          (s[left] !== s[i - 1] ? 1 : 0);
+          Number(input[left] !== input[i - 1]);
         result[i][j] = Math.min(
           result[left][j - 1] + cost[left][i - 1],
           result[i][j]
@@ -52,5 +53,5 @@ function palindromePartition(s, k) {
       }
     }
   }
-  return result[s.length][k];
+  return result[size][count];
 }

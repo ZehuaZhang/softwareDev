@@ -22,25 +22,28 @@ Constraints:
 1 <= n <= 9
 */
 
-function solveNQueens(n) {
-  const cols = Array(n).fill(false);
-  const diags1 = Array(2 * n - 1).fill(false);
-  const diags2 = Array(2 * n - 1).fill(false);
+function solveNQueensII(size: number): number {
+  const colList: boolean[] = Array(size).fill(false);
+  const diagList1: boolean[] = Array(2 * size - 1).fill(false);
+  const diagList2: boolean[] = Array(2 * size - 1).fill(false);
   let result = 0;
-  const curr = [];
-  dfs(0);
+  solveNQueensIIDfs(0);
   return result;
 
-  function dfs(row) {
-    if (row == n) {
+  function solveNQueensIIDfs(row: number): void {
+    if (row === size) {
       ++result;
       return;
     }
-    for (let i = 0; i < n; ++i) {
-      if (!cols[i] && !diags1[row - i + n - 1] && !diags2[row + i]) {
-        cols[i] = diags1[row - i + n - 1] = diags2[row + i] = true;
-        dfs(row + 1);
-        cols[i] = diags1[row - i + n - 1] = diags2[row + i] = false;
+    for (let i = 0; i < size; ++i) {
+      if (
+        !colList[i] &&
+        !diagList1[row - i + size - 1] &&
+        !diagList2[row + i]
+      ) {
+        colList[i] = diagList1[row - i + size - 1] = diagList2[row + i] = true;
+        solveNQueensIIDfs(row + 1);
+        colList[i] = diagList1[row - i + size - 1] = diagList2[row + i] = false;
       }
     }
   }

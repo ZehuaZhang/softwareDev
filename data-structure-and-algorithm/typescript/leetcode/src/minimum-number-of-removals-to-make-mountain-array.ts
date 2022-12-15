@@ -36,50 +36,50 @@ Constraints:
 It is guaranteed that you can make a mountain array out of nums.
 */
 
-function minimumMountainRemovals(nums) {
-  let result = nums.length;
-  const a = Array(nums.length).fill(0);
-  const b = Array(nums.length).fill(0);
-  const v = [];
-  for (let i = 0; i < nums.length; ++i) {
-    const j = firstElementGreaterOrEqual(v, nums[i]);
-    if (v[j] === undefined) {
-      v.push(nums[i]);
-      a[i] = v.length - 1;
+function minimumMountainRemovals(nums: number[]): number {
+  const size = nums.length;
+  const leftList = Array(size).fill(0);
+  const rightList = Array(size).fill(0);
+  const incSeqList: number[] = [];
+  for (let i = 0; i < size; ++i) {
+    const j = findGreaterEqual(incSeqList, nums[i]);
+    if (incSeqList[j] === undefined) {
+      incSeqList.push(nums[i]);
+      leftList[i] = incSeqList.length - 1;
     } else {
-      v[j] = nums[i];
-      a[i] = j;
+      incSeqList[j] = nums[i];
+      leftList[i] = j;
     }
   }
-  v.splice(0);
-  for (let i = nums.length - 1; i >= 0; --i) {
-    const j = firstElementGreaterOrEqual(v, nums[i]);
-    if (v[j] === undefined) {
-      v.push(nums[i]);
-      b[i] = v.length - 1;
+  incSeqList.splice(0);
+  for (let i = size - 1; i >= 0; --i) {
+    const j = findGreaterEqual(incSeqList, nums[i]);
+    if (incSeqList[j] === undefined) {
+      incSeqList.push(nums[i]);
+      rightList[i] = incSeqList.length - 1;
     } else {
-      v[j] = nums[i];
-      b[i] = j;
+      incSeqList[j] = nums[i];
+      rightList[i] = j;
     }
   }
-  for (let i = 1; i < nums.length; ++i) {
-    if (a[i] && b[i]) {
-      result = Math.min(result, nums.length - (a[i] + b[i] + 1));
+  let result = size;
+  for (let i = 1; i < size; ++i) {
+    if (leftList[i] && rightList[i]) {
+      result = Math.min(result, size - (leftList[i] + rightList[i] + 1));
     }
   }
   return result;
-}
 
-function firstElementGreaterOrEqual(nums, target) {
-  let left = 0,
-    right = nums.length - 1;
-  while (left <= right) {
-    const mid = left + Math.trunc((right - left) / 2);
-    if (nums[mid] >= target) {
-      right = mid - 1;
-    } else {
-      left = mid + 1;
+  function findGreaterEqual(nums: number[], target: number) {
+    let [left, right] = [0, nums.length - 1];
+    while (left <= right) {
+      const mid = (left + right) >> 1;
+      if (nums[mid] >= target) {
+        right = mid - 1;
+      } else {
+        left = mid + 1;
+      }
     }
+    return left;
   }
-  return left;
 }

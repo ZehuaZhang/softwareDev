@@ -26,13 +26,14 @@ Constraints:
 s consists of lower-case English letters only.
 */
 
-function minCut(s) {
-  const result = [...Array(s.length + 1)].map((_, i) => i - 1);
-  for (let i = 0; i < s.length; ++i) {
+function minCutPalindrome(input: string): number {
+  const size = input.length;
+  const result = [...Array(size + 1)].map((_, index) => index - 1);
+  for (let i = 0; i < size; ++i) {
     // odd length
     for (
       let j = 0;
-      i - j >= 0 && i + j < s.length && s[i - j] === s[i + j];
+      i - j >= 0 && i + j < size && input[i - j] === input[i + j];
       ++j
     ) {
       result[i + j + 1] = Math.min(result[i + j + 1], 1 + result[i - j]);
@@ -41,11 +42,11 @@ function minCut(s) {
     // even length
     for (
       let j = 1;
-      i - j + 1 >= 0 && i + j < s.length && s[i - j + 1] === s[i + j];
+      i - j + 1 >= 0 && i + j < size && input[i - j + 1] === input[i + j];
       ++j
     ) {
       result[i + j + 1] = Math.min(result[i + j + 1], 1 + result[i - j + 1]);
     }
   }
-  return result[s.length];
+  return result[size];
 }
