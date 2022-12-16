@@ -1,5 +1,5 @@
 export class Trie {
-  private root: TrieNode;
+  root: TrieNode;
 
   constructor() {
     this.root = new TrieNode();
@@ -14,6 +14,7 @@ export class Trie {
       curr = curr.leaves.get(char)!;
     }
     curr.isWord = true;
+    curr.word = word;
   }
 
   // search term could contain '.'
@@ -60,9 +61,11 @@ export class Trie {
 export class TrieNode {
   leaves: Map<string, TrieNode>;
   isWord: boolean;
+  word: string;
 
   constructor() {
     this.leaves = new Map();
     this.isWord = false;
+    this.word = '';
   }
 }

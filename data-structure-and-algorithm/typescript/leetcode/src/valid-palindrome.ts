@@ -21,19 +21,19 @@ Constraints:
 s consists only of printable ASCII characters.
 */
 
-function isPalindrome(s) {
-  for (let left = 0, right = s.length - 1; left < right; ) {
-    if (!isAlphaNumeric(s[left])) {
+function isPalindrome(input: string): boolean {
+  for (let left = 0, right = input.length - 1; left < right; ) {
+    if (!isAlphaNumeric(input[left])) {
       ++left;
-    } else if (!isAlphaNumeric(s[right])) {
+    } else if (!isAlphaNumeric(input[right])) {
       --right;
-    } else if (s[left++].toLowerCase() !== s[right--].toLowerCase()) {
+    } else if (input[left++].toLowerCase() !== input[right--].toLowerCase()) {
       return false;
     }
   }
   return true;
 }
 
-function isAlphaNumeric(c) {
-  return c.match(/[0-9a-zA-Z]/g);
+function isAlphaNumeric(char: string): boolean {
+  return Boolean(char.match(/[0-9a-zA-Z]/g));
 }

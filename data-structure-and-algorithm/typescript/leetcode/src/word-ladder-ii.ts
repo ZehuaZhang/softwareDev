@@ -33,19 +33,22 @@ beginWord != endWord
 All the words in wordList are unique.
 */
 
-function findLadders(begin, end, words) {
-  const set = new Set([...words]);
-  const visited = new Set();
-  const result = [];
-  let q = [[begin]];
-  for (; q.length; ) {
-    const next = [];
-    for (const curr of q) {
+import {Queue} from './data-structure/Queue';
+
+function findLadders(begin: string, end: string, words: string[]): string[][] {
+  const set = new Set<string>(words);
+  const queue = new Queue<string[]>();
+  const result: string[][] = [];
+  queue.push([begin]);
+  while (!queue.isEmpty()) {
+    const visited = new Set<string>();
+    for (let {size} = queue; size; --size) {
+      const curr = queue.pop();
       const last = curr[curr.length - 1];
       for (let i = 0; i < last.length; ++i) {
+        const array = [...last];
         for (let j = 0; j < 26; ++j) {
-          const array = [...last];
-          array[i] = String.fromCharCode('a'.charCodeAt() + j);
+          array[i] = String.fromCharCode('a'.charCodeAt(0) + j);
           const word = array.join('');
           if (set.has(word)) {
             const path = [...curr, word];
@@ -53,14 +56,13 @@ function findLadders(begin, end, words) {
             if (word === end) {
               result.push(path);
             } else {
-              next.push(path);
+              queue.push(path);
             }
           }
         }
       }
     }
     [...visited].forEach(w => set.delete(w));
-    q = next;
   }
   return result;
 }

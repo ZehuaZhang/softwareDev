@@ -2,3 +2,6 @@ nearest overlapped tiles click
 implement getelements
 subscribe unscribe web_onload
 call apply
+max holiday
+dungeon grid
+reconstruct iternary

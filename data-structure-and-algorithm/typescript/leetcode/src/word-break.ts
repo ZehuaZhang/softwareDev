@@ -31,18 +31,19 @@ s and wordDict[i] consist of only lowercase English letters.
 All the strings of wordDict are unique.
 */
 
-function wordBreak(s, dict) {
-  const dp = Array(s.length + 1).fill(false);
-  dp[0] = true;
+function wordBreak(input: string, dict: string[]): boolean {
+  const wordSet = new Set<string>(dict);
+  const result = Array(input.length + 1).fill(false);
+  result[0] = true;
 
-  for (let i = 1; i <= s.length; ++i) {
+  for (let i = 1; i <= input.length; ++i) {
     for (let j = 0; j < i; ++j) {
-      if (dp[j] && dict.includes(s.substring(j, i))) {
-        dp[i] = true;
+      if (result[j] && wordSet.has(input.substring(j, i))) {
+        result[i] = true;
         break;
       }
     }
   }
 
-  return dp[s.length];
+  return result[input.length];
 }

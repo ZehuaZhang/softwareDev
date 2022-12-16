@@ -35,27 +35,25 @@ Constraints:
 s consists of parentheses only '()[]{}'.
 */
 
-/**
- * @param { string } s
- * @return { boolean }
- */
-function isValid(s) {
+import {Stack} from './data-structure/Stack';
+
+function isValidParenthesis(input: string): boolean {
   const left = '([{';
-  const map = new Map([
+  const parenthesisMap = new Map<string, string>([
     [')', '('],
     ['}', '{'],
     [']', '['],
   ]);
-  const stack = [];
-  for (const c of s) {
-    if (left.includes(c)) {
-      stack.push(c);
-    } else if (map.get(c) !== stack[stack.length - 1]) {
+  const stack = new Stack<string>();
+  for (const char of input) {
+    if (left.includes(char)) {
+      stack.push(char);
+    } else if (parenthesisMap.get(char) !== stack.peek()) {
       return false;
     } else {
       stack.pop();
     }
   }
 
-  return stack.length === 0;
+  return stack.isEmpty();
 }

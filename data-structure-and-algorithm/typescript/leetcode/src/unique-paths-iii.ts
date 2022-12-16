@@ -39,15 +39,13 @@ Note:
 1 <= grid.length * grid[0].length <= 20
 */
 
-function uniquePathsIII(grid) {
-  const [m, n] = [grid.length, grid[0].length];
-  const visited = Array(m)
-    .fill(0)
-    .map(() => Array(n).fill(false));
-  let x0, y0;
+function uniquePathsIII(grid: number[][]): number {
+  const [rows, cols] = [grid.length, grid[0].length];
+  const visited = [...Array(rows)].map(() => Array(cols).fill(false));
+  let [x0, y0] = [0, 0];
   let count = 1;
-  for (let i = 0; i < m; ++i) {
-    for (let j = 0; j < n; ++j) {
+  for (let i = 0; i < rows; ++i) {
+    for (let j = 0; j < cols; ++j) {
       if (grid[i][j] === 1) {
         x0 = i;
         y0 = j;
@@ -57,38 +55,35 @@ function uniquePathsIII(grid) {
     }
   }
 
-  const result = [0];
-  uniquePathsIIIDFS(grid, x0, y0, count, visited, result);
-  return result[0];
-}
-
-function uniquePathsIIIDFS(grid, x, y, count, visited, result) {
-  const [m, n] = [grid.length, grid[0].length];
-  if (grid[x][y] === 2 && count === 0) {
-    ++result[0];
-    return;
-  }
-
-  visited[x][y] = true;
-  for (const [dx, dy] of [
-    [1, 0],
-    [-1, 0],
-    [0, 1],
-    [0, -1],
-  ]) {
-    const x1 = x + dx;
-    const y1 = y + dy;
-    if (
-      x1 >= 0 &&
-      x1 < m &&
-      y1 >= 0 &&
-      y1 < n &&
-      grid[x1][y1] !== -1 &&
-      !visited[x1][y1]
-    ) {
-      uniquePathsIIIDFS(grid, x1, y1, count - 1, visited, result);
-    }
-  }
-  visited[x][y] = false;
+  let result = 0;
+  uniquePathsIIIDFS(x0, y0, count);
   return result;
+
+  function uniquePathsIIIDFS(x: number, y: number, count: number): void {
+    if (grid[x][y] === 2 && count === 0) {
+      ++result;
+      return;
+    }
+
+    visited[x][y] = true;
+    for (const [dx, dy] of [
+      [1, 0],
+      [-1, 0],
+      [0, 1],
+      [0, -1],
+    ]) {
+      const [x1, y1] = [x + dx, y + dy];
+      if (
+        x1 >= 0 &&
+        x1 < rows &&
+        y1 >= 0 &&
+        y1 < cols &&
+        grid[x1][y1] !== -1 &&
+        !visited[x1][y1]
+      ) {
+        uniquePathsIIIDFS(x1, y1, count - 1);
+      }
+    }
+    visited[x][y] = false;
+  }
 }

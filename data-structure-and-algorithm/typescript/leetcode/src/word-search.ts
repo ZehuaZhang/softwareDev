@@ -34,47 +34,46 @@ board and word consists of only lowercase and uppercase English letters.
 Follow up: Could you use search pruning to make your solution faster with a larger board?
 */
 
-function exist(board, word) {
-  const visited = Array(board.length)
-    .fill(0)
-    .map(() => Array(board[0].length).fill(false));
-  for (let i = 0; i < board.length; ++i) {
-    for (let j = 0; j < board[0].length; ++j) {
-      if (existDFS(board, word, 0, i, j, visited)) {
+function existWord(board: string[][], word: string): boolean {
+  const [rows, cols] = [board.length, board[0].length];
+  const visited = [...Array(rows)].map(() => Array(cols).fill(false));
+  for (let i = 0; i < rows; ++i) {
+    for (let j = 0; j < cols; ++j) {
+      if (existWordDfs(0, i, j)) {
         return true;
       }
     }
   }
   return false;
-}
 
-function existDFS(board, word, index, i, j, visited) {
-  if (index === word.length) {
-    return true;
-  }
-  if (
-    i < 0 ||
-    i >= board.length ||
-    j < 0 ||
-    j >= board[0].length ||
-    board[i][j] !== word[index] ||
-    visited[i][j]
-  ) {
-    return false;
-  }
-  visited[i][j] = true;
-  let result = false;
-  for (const [dx, dy] of [
-    [1, 0],
-    [-1, 0],
-    [0, 1],
-    [0, -1],
-  ]) {
-    if (existDFS(board, word, index + 1, i + dx, j + dy, visited)) {
-      result = true;
-      break;
+  function existWordDfs(index: number, i: number, j: number): boolean {
+    if (index === word.length) {
+      return true;
     }
+    if (
+      i < 0 ||
+      i >= rows ||
+      j < 0 ||
+      j >= cols ||
+      board[i][j] !== word[index] ||
+      visited[i][j]
+    ) {
+      return false;
+    }
+    visited[i][j] = true;
+    let result = false;
+    for (const [dx, dy] of [
+      [1, 0],
+      [-1, 0],
+      [0, 1],
+      [0, -1],
+    ]) {
+      if (existWordDfs(index + 1, i + dx, j + dy)) {
+        result = true;
+        break;
+      }
+    }
+    visited[i][j] = false;
+    return result;
   }
-  visited[i][j] = false;
-  return result;
 }

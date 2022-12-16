@@ -29,27 +29,28 @@ s and wordDict[i] consist of only lowercase English letters.
 All the strings of wordDict are unique.
 */
 
-function wordBreak(s, dict) {
-  return dfs(s, dict, new Map());
-}
+function wordBreakII(input: string, dict: string[]): string[] {
+  const cache = new Map<string, string[]>();
+  return wordBreakIIDfs(input);
 
-function dfs(s, dict, cache) {
-  if (cache.has(s)) {
-    return cache.get(s);
-  }
-  const result = [];
-  if (s.length === 0) {
-    result.push('');
-    cache.set(s, result);
-    return result;
-  }
-  for (const w of dict) {
-    if (s.startsWith(w)) {
-      for (const sub of dfs(s.substring(w.length), dict, cache)) {
-        result.push([w, sub].filter(Boolean).join(' '));
+  function wordBreakIIDfs(input: string): string[] {
+    if (cache.has(input)) {
+      return cache.get(input)!;
+    }
+    const result: string[] = [];
+    if (input.length === 0) {
+      result.push('');
+      cache.set(input, result);
+      return result;
+    }
+    for (const word of dict) {
+      if (input.startsWith(word)) {
+        for (const phraseList of wordBreakIIDfs(input.substring(word.length))) {
+          result.push([word, phraseList].filter(Boolean).join(' '));
+        }
       }
     }
+    cache.set(input, result);
+    return result;
   }
-  cache.set(s, result);
-  return result;
 }

@@ -36,17 +36,22 @@ leftChild.length == rightChild.length == n
 -1 <= leftChild[i], rightChild[i] <= n - 1
 */
 
-function validateBinaryTreeNodes(n, left, right) {
-  const inDegree = Array(n).fill(0);
+function validateBinaryTreeNodes(
+  count: number,
+  leftList: number[],
+  rightList: number[]
+) {
+  const inDegree = Array(count).fill(0);
   let root = -1;
-  for (let i = 0; i < left.length; ++i) {
-    if (left[i] !== -1 && ++inDegree[left[i]] > 1) {
-      return false;
-    } else if (right[i] !== -1 && ++inDegree[right[i]] > 1) {
+  for (let i = 0; i < count; ++i) {
+    if (
+      (leftList[i] !== -1 && ++inDegree[leftList[i]] > 1) ||
+      (rightList[i] !== -1 && ++inDegree[rightList[i]] > 1)
+    ) {
       return false;
     }
   }
-  for (let i = 0; i < left.length; ++i) {
+  for (let i = 0; i < count; ++i) {
     if (inDegree[i] === 0) {
       if (root === -1) {
         root = i;
@@ -58,12 +63,12 @@ function validateBinaryTreeNodes(n, left, right) {
   if (root === -1) {
     return false;
   }
-  return dfs(root, left, right) === n;
+  return getNodeCount(root) === count;
 
-  function dfs(node, left, right) {
+  function getNodeCount(node: number): number {
     if (node === -1) {
       return 0;
     }
-    return 1 + dfs(left[node], left, right) + dfs(right[node], left, right);
+    return 1 + getNodeCount(leftList[node]) + getNodeCount(rightList[node]);
   }
 }

@@ -29,27 +29,26 @@ Constraints:
 s[i] is '(', ')' or '*'.
 */
 
-function checkValidString(s) {
+function checkValidString(input: string): boolean {
   // count of "(" when "*" is considered ")" and "("
-  let l = 0,
-    r = 0;
-  for (const c of s) {
-    if (c === '(') {
-      ++l;
-      ++r;
+  let [left, right] = [0, 0];
+  for (const char of input) {
+    if (char === '(') {
+      ++left;
+      ++right;
     } else {
-      if (l > 0) {
-        --l;
+      if (left > 0) {
+        --left;
       }
-      if (c === ')') {
-        --r;
+      if (char === ')') {
+        --right;
       } else {
-        ++r;
+        ++right;
       }
     }
-    if (r < 0) {
+    if (right < 0) {
       return false;
     }
   }
-  return l === 0;
+  return left === 0;
 }

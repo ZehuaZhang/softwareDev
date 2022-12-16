@@ -26,32 +26,32 @@ n == heightMap[i].length
 0 <= heightMap[i][j] <= 2 * 104
 */
 
-function trapRainWater(height: number[][]): number {
-  if (height.length === 0) {
-    return 0;
-  }
-  const q = new Heap(Infinity, (a, b) => a[2] - b[2]);
-  const visited = Array(height.length)
-    .fill(0)
-    .map(() => Array(height[0].length).fill(false));
+import {Heap} from './data-structure/Heap';
 
-  for (let i = 0; i < height.length; ++i) {
-    for (const [left, right] of [
+function trapRainWater(heightGrid: number[][]): number {
+  const [rows, cols] = [heightGrid.length, heightGrid[0].length];
+  const q = new Heap<number[]>(([x0, y0, z0], [x1, y1, z1]) => z0 - z1);
+  const visited: boolean[][] = [...Array(rows)].map(() =>
+    Array(cols).fill(false)
+  );
+
+  for (let i = 0; i < rows; ++i) {
+    for (const [x, y] of [
       [i, 0],
-      [i, height[0].length - 1],
+      [i, cols - 1],
     ]) {
-      q.push([left, right, height[left][right]]);
-      visited[left][right] = true;
+      q.push([x, y, heightGrid[x][y]]);
+      visited[x][y] = true;
     }
   }
 
-  for (let j = 1; j < height[0].length - 1; ++j) {
-    for (const [left, right] of [
+  for (let j = 1; j < cols - 1; ++j) {
+    for (const [x, y] of [
       [0, j],
-      [height.length - 1, j],
+      [rows - 1, j],
     ]) {
-      q.push([left, right, height[left][right]]);
-      visited[left][right] = true;
+      q.push([x, y, heightGrid[x][y]]);
+      visited[x][y] = true;
     }
   }
 
@@ -64,17 +64,10 @@ function trapRainWater(height: number[][]): number {
       [0, 1],
       [0, -1],
     ]) {
-      const nx = x + dx,
-        ny = y + dy;
-      if (
-        nx >= 0 &&
-        nx < height.length &&
-        ny >= 0 &&
-        ny < height[0].length &&
-        !visited[nx][ny]
-      ) {
-        result += Math.max(0, h - height[nx][ny]);
-        q.push([nx, ny, Math.max(height[nx][ny], h)]);
+      const [nx, ny] = [x + dx, y + dy];
+      if (nx >= 0 && nx < rows && ny >= 0 && ny < cols && !visited[nx][ny]) {
+        result += Math.max(0, h - heightGrid[nx][ny]);
+        q.push([nx, ny, Math.max(heightGrid[nx][ny], h)]);
         visited[nx][ny] = true;
       }
     }

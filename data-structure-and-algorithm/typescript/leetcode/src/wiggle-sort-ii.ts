@@ -26,9 +26,11 @@ It is guaranteed that there will be an answer for the given input nums.
 Follow Up: Can you do it in O(n) time and/or in-place with O(1) extra space?
 */
 
-function wiggleSort(nums) {
+import {findKth} from './algorithm/bound';
+
+function wiggleSortII(nums: number[]): void {
   const mid = (nums.length + 1) >> 1;
-  const median = findKth(mid, (a, b) => a < b);
+  const median = findKth(nums, mid, (a, b) => a - b);
 
   for (let left = 0, right = nums.length - 1, i = 0; i <= right; ) {
     if (nums[index(i)] > median) {
@@ -40,13 +42,13 @@ function wiggleSort(nums) {
     }
   }
 
-  function swap(i, j) {
+  function swap(i: number, j: number): void {
     const temp = nums[i];
     nums[i] = nums[j];
     nums[j] = temp;
   }
 
-  function index(i) {
+  function index(i: number): number {
     return (2 * i + 1) % (nums.length | 1);
   }
 }

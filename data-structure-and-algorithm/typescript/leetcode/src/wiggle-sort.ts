@@ -7,7 +7,7 @@ Input: nums = [3,5,2,1,6,4]
 Output: One possible answer is [3,5,1,6,2,4]
 */
 
-function wiggleSort(nums) {
+function wiggleSort(nums: number[]): void {
   for (let i = 1; i < nums.length; ++i) {
     if (
       (i % 2 && nums[i] < nums[i - 1]) ||
@@ -17,7 +17,7 @@ function wiggleSort(nums) {
     }
   }
 
-  function swap(i, j) {
+  function swap(i: number, j: number): void {
     const temp = nums[i];
     nums[i] = nums[j];
     nums[j] = temp;

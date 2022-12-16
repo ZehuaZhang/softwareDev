@@ -27,23 +27,28 @@ The number of nodes in the tree is in the range [1, 104].
 -231 <= Node.val <= 231 - 1
 */
 
-function isValidBST(root) {
-  const min = -Infinity,
-    max = Infinity;
-  return isValidBSTDFS(root, min, max);
-}
+import {TreeNode} from './data-structure/BinaryTree';
+import {Nullable} from './util/object';
 
-function isValidBSTDFS(node, min, max) {
-  if (node === null) {
-    return true;
+function isValidBST(root: Nullable<TreeNode<number>>): boolean {
+  return isValidBSTDfs(root, -Infinity, Infinity);
+
+  function isValidBSTDfs(
+    node: Nullable<TreeNode<number>>,
+    min: number,
+    max: number
+  ): boolean {
+    if (node === null) {
+      return true;
+    }
+
+    if (node.data <= min || node.data >= max) {
+      return false;
+    }
+
+    return (
+      isValidBSTDfs(node.left, min, Math.min(max, node.data)) &&
+      isValidBSTDfs(node.right, Math.max(min, node.data), max)
+    );
   }
-
-  if (node.val <= min || node.val >= max) {
-    return false;
-  }
-
-  return (
-    isValidBSTDFS(node.left, min, Math.min(max, node.val)) &&
-    isValidBSTDFS(node.right, Math.max(min, node.val), max)
-  );
 }

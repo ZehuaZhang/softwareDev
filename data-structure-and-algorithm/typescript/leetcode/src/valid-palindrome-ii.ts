@@ -24,15 +24,15 @@ Constraints:
 s consists of lowercase English letters.
 */
 
-function validPalindrome(s) {
-  for (let left = 0, right = s.length - 1; left < right; ++left, --right) {
-    if (s[left] !== s[right]) {
+function validPalindromeAtMostOnceDeletion(input: string): boolean {
+  for (let left = 0, right = input.length - 1; left < right; ++left, --right) {
+    if (input[left] !== input[right]) {
       let i, j;
-      for (i = left, j = right - 1; i < j && s[i] === s[j]; ++i, --j);
+      for (i = left, j = right - 1; i < j && input[i] === input[j]; ++i, --j);
       if (i >= j) {
         return true;
       }
-      for (i = left + 1, j = right; i < j && s[i] === s[j]; ++i, --j);
+      for (i = left + 1, j = right; i < j && input[i] === input[j]; ++i, --j);
       if (i >= j) {
         return true;
       }

@@ -48,35 +48,34 @@ The number of nodes in the tree is in the range [1, 1000].
 0 <= Node.val <= 1000
 */
 
-function verticalTraversal(root) {
-  const map = new Map();
-  let q = [[root, 0]];
+import {TreeNode} from './data-structure/BinaryTree';
+import {Queue} from './data-structure/Queue';
+import {Nullable} from './util/object';
 
-  while (q.length) {
-    const cols = new Map();
-    const next = [];
-    for (const [node, x] of q) {
-      if (!cols.has(x)) {
-        cols.set(x, []);
+function verticalTraversal(root: Nullable<TreeNode<number>>): number[][] {
+  const verticalNodeMap = new Map<number, number[]>();
+  const queue = new Queue<[TreeNode<number>, number]>();
+  if (root === null) {
+    return [];
+  }
+  queue.push([root, 0]);
+
+  while (!queue.isEmpty()) {
+    for (let {size} = queue; size; --size) {
+      const [node, x] = queue.pop();
+      if (!verticalNodeMap.has(x)) {
+        verticalNodeMap.set(x, []);
       }
-      cols.get(x).push(node.val);
+      verticalNodeMap.get(x)!.push(node.data);
       if (node.left) {
-        next.push([node.left, x - 1]);
+        queue.push([node.left, x - 1]);
       }
       if (node.right) {
-        next.push([node.right, x + 1]);
+        queue.push([node.right, x + 1]);
       }
     }
-
-    for (const [x, arr] of cols) {
-      if (!map.has(x)) {
-        map.set(x, []);
-      }
-      map.get(x).push(...arr.sort((a, b) => a - b));
-    }
-    q = next;
   }
-  return [...map.entries()]
+  return [...verticalNodeMap.entries()]
     .sort(([key1], [key2]) => key1 - key2)
-    .map(([_, value]) => value);
+    .map(([_, value]) => value.sort());
 }

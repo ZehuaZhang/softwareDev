@@ -13,20 +13,21 @@
  */
 
 class TwoSum {
+  countMap: Map<number, number>;
   constructor() {
-    this.numberCount = {};
+    this.countMap = new Map<number, number>();
   }
 
-  add(number) {
-    this.numberCount[number] = (this.numberCount[number] || 0) + 1;
+  add(num: number) {
+    this.countMap.set(num, (this.countMap.get(num) || 0) + 1);
   }
 
-  find(value) {
-    for (const number of Object.keys(this.numberCount)) {
-      const anotherNumber = value - number;
+  find(sum: number): boolean {
+    for (const num of this.countMap.keys()) {
+      const num2 = sum - num;
       if (
-        numberCount.hasOwnProperty(anotherNumber) &&
-        (anotherNumber !== number || numberCount[number] > 1)
+        this.countMap.has(num2) &&
+        (num2 !== num || this.countMap.get(num)! > 1)
       ) {
         return true;
       }

@@ -19,22 +19,23 @@ s has only lowercase English letters.
 1 <= k <= s.length
 */
 
-function isValidPalindrome(s, k) {
-  const length = longestPalindromeSubseq(s);
-  return Math.abs(length - s.length) <= k;
+function isValidPalindromeAtMostKDeletion(input: string, kth: number): boolean {
+  const {length} = input;
+  const palLength = longestPalindromeSubseq(input);
+  return Math.abs(length - palLength) <= kth;
 
-  function longestPalindromeSubseq(s) {
-    const dp = [...Array(s.length)].map(() => Array(s.length).fill(0));
-    for (let i = s.length - 1; i >= 0; --i) {
+  function longestPalindromeSubseq(input: string): number {
+    const dp = [...Array(length)].map(() => Array(length).fill(0));
+    for (let i = length - 1; i >= 0; --i) {
       dp[i][i] = 1;
-      for (let j = i + 1; j < s.length; ++j) {
-        if (s[i] == s[j]) {
+      for (let j = i + 1; j < length; ++j) {
+        if (input[i] === input[j]) {
           dp[i][j] = dp[i + 1][j - 1] + 2;
         } else {
           dp[i][j] = Math.max(dp[i + 1][j], dp[i][j - 1]);
         }
       }
     }
-    return dp[0][s.length - 1];
+    return dp[0][input.length - 1];
   }
 }

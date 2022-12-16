@@ -44,13 +44,13 @@ Constraints:
 s consists of only English letters (both uppercase and lowercase), digits (0-9), plus '+', minus '-', or dot '.'.
 */
 
-function isNumber(s) {
+function isNumber(input: string): boolean {
   let result = false;
   let hasE = false;
   let hasD = false;
-  s = s.trim();
-  for (let i = 0; i < s.length; ++i) {
-    switch (s[i]) {
+  input = input.trim();
+  for (let i = 0; i < input.length; ++i) {
+    switch (input[i]) {
       case '.':
         if (hasD || hasE) {
           return false;
@@ -67,13 +67,13 @@ function isNumber(s) {
         break;
       case '+':
       case '-':
-        if (i !== 0 && s[i - 1] != 'e') {
+        if (i !== 0 && input[i - 1] !== 'e') {
           return false;
         }
         result = false;
         break;
       default:
-        if (s[i] < '0' || s[i] > '9') {
+        if (input[i] < '0' || input[i] > '9') {
           return false;
         }
         result = true;

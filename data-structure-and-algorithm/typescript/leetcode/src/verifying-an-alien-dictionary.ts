@@ -30,24 +30,24 @@ order.length == 26
 All characters in words[i] and order are English lowercase letters.
 */
 
-function isAlienSorted(words, order) {
-  const map = new Map();
+function isAlienSorted(words: string[], order: string): boolean {
+  const orderIndexMap = new Map<string, number>();
   for (let i = 0; i < order.length; ++i) {
-    map.set(order[i], i);
+    orderIndexMap.set(order[i], i);
   }
   for (let i = 1; i < words.length; ++i) {
-    if (bigger(words[i - 1], words[i], map)) {
+    if (bigger(words[i - 1], words[i])) {
       return false;
     }
   }
   return false;
-}
 
-function bigger(s1, s2, map) {
-  for (let i = 0; i < s1.length && i < s2.length; ++i) {
-    if (s1[i] !== s2[i]) {
-      return map.get(s1[i]) > map.get(s2[i]);
+  function bigger(word1: string, word2: string): boolean {
+    for (let i = 0; i < word1.length && i < word2.length; ++i) {
+      if (word1[i] !== word2[i]) {
+        return orderIndexMap.get(word1[i])! > orderIndexMap.get(word2[i])!;
+      }
     }
+    return word1.length > word2.length;
   }
-  return s1.length > s2.length;
 }

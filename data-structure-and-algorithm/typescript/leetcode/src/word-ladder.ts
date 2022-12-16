@@ -31,29 +31,32 @@ beginWord != endWord
 All the words in wordList are unique.
 */
 
-function ladderLength(begin, end, words) {
-  const set = new Set([...words]);
-  let q = [begin];
-  let level = 1;
-  for (; q.length; ++level) {
-    const next = [];
-    for (const curr of q) {
+import {Queue} from './data-structure/Queue';
+
+function ladderLength(begin: string, end: string, words: string[]): number {
+  const set = new Set<string>(words);
+  const queue = new Queue<string>();
+  queue.push(begin);
+  let result = 1;
+  while (!queue.isEmpty()) {
+    for (let {size} = queue; size; --size) {
+      const curr = queue.pop();
       if (curr === end) {
-        return level;
+        return result;
       }
       set.delete(curr);
       for (let i = 0; i < curr.length; ++i) {
         const array = [...curr];
         for (let j = 0; j < 26; ++j) {
-          array[i] = String.fromCharCode('a'.charCodeAt() + j);
+          array[i] = String.fromCharCode('a'.charCodeAt(0) + j);
           const word = array.join('');
           if (set.has(word)) {
-            next.push(word);
+            queue.push(word);
           }
         }
       }
     }
-    q = next;
+    ++result;
   }
   return 0;
 }

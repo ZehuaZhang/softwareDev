@@ -24,27 +24,30 @@ Input:
 Output: [1,4,8,2,5,9,3,6,7].
 */
 
+import {Queue} from './data-structure/Queue';
+
 class ZigZagIterator {
-  constructor(v1, v2) {
-    this.queue = [];
-    if (v1.length) {
-      this.queue.push([v1, 0]);
+  queue: Queue<[number[], number]>;
+  constructor(list1: number[], list2: number[]) {
+    this.queue = new Queue<[number[], number]>();
+    if (list1.length) {
+      this.queue.push([list1, 0]);
     }
-    if (v2.length) {
-      this.queue.push([v2, 0]);
+    if (list2.length) {
+      this.queue.push([list2, 0]);
     }
   }
 
   next() {
-    const [v, i] = q.shift();
-    const value = v[i++];
-    if (i !== v.length) {
-      q.push([v, i]);
+    const [list, index] = this.queue.pop();
+    const data = list[index];
+    if (index !== list.length - 1) {
+      this.queue.push([list, index + 1]);
     }
-    return value;
+    return data;
   }
 
   hasNext() {
-    return !q.length;
+    return !this.queue.isEmpty();
   }
 }

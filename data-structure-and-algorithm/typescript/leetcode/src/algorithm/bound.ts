@@ -50,7 +50,7 @@ function findGreater(nums: number[], target: number): number {
   return left;
 }
 
-function findKth(
+export function findKth(
   nums: number[],
   kth: number,
   compare: (a: number, b: number) => number

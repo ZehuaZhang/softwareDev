@@ -33,17 +33,12 @@ Only one valid answer exists.
 Follow-up: Can you come up with an algorithm that is less than O(n2) time complexity?
 */
 
-/**
- * @param { number[] } nums
- * @param { number } target
- * @return { number[] }
- */
-function twoSum(nums, target) {
-  const indexMap = new Map();
+function twoSum(nums: number[], target: number): number[] {
+  const indexMap = new Map<number, number>();
   for (let i = 0; i < nums.length; ++i) {
     const diff = target - nums[i];
     if (indexMap.has(diff)) {
-      return [indexMap.get(diff), i];
+      return [indexMap.get(diff)!, i];
     }
     indexMap.set(nums[i], i);
   }
