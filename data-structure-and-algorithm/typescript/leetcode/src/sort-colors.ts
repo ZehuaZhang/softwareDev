@@ -35,18 +35,18 @@ nums[i] is 0, 1, or 2.
 Follow up: Could you come up with a one-pass algorithm using only constant extra space?
 */
 
-function sortColors(nums) {
+function sortColors(nums: number[]): void {
   for (let left = 0, mid = 0, right = nums.length - 1; mid <= right; ) {
-    if (nums[mid] == 0) {
+    if (nums[mid] === 0) {
       swap(mid++, left++);
-    } else if (nums[mid] == 1) {
+    } else if (nums[mid] === 1) {
       mid++;
     } else {
       swap(mid, right--);
     }
   }
 
-  function swap(i, j) {
+  function swap(i: number, j: number): void {
     const temp = nums[i];
     nums[i] = nums[j];
     nums[j] = temp;

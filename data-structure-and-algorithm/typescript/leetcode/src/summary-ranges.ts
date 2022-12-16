@@ -48,9 +48,9 @@ All the values of nums are unique.
 nums is sorted in ascending order.
 */
 
-function summaryRanges(nums) {
-  const result = [];
-  if (!nums.length) {
+function summaryRanges(nums: number[]): string[] {
+  const result: string[] = [];
+  if (nums.length === 0) {
     return result;
   }
   for (let left = nums[0], right = nums[0], i = 1; i <= nums.length; ++i) {

@@ -35,18 +35,23 @@ The number of nodes in the list is n.
 0 <= Node.val <= 100
 */
 
-function swapNodes(head, k) {
-  let n1 = null,
-    n2 = null;
+import {ListNode} from './data-structure/LinkedList';
+import {Nullable} from './util/object';
+
+function swapNodes(
+  head: Nullable<ListNode<number>>,
+  kth: number
+): Nullable<ListNode<number>> {
+  let [node1, node2]: Nullable<ListNode<number>>[] = [null, null];
   for (let curr = head; curr; curr = curr.next) {
-    n2 = n2 ? n2.next : null;
-    if (--k === 0) {
-      n1 = curr;
-      n2 = head;
+    node2 = node2 ? node2.next : null;
+    if (--kth === 0) {
+      node1 = curr;
+      node2 = head;
     }
   }
-  const val = n1.val;
-  n1.val = n2.val;
-  n2.val = val;
+  const data = node1!.data;
+  node1!.data = node2!.data;
+  node2!.data = data;
   return head;
 }

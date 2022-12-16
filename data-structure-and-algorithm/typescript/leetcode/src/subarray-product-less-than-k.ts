@@ -34,17 +34,17 @@ for window (5, 2), when 6 is introduced, it add 3 new subarray: (5, (2, (6)))
   (5, 2, 6)
 */
 
-function numSubarrayProductLessThanK(nums, k) {
-  if (k === 0) {
+function numSubarrayProductLessThanK(nums: number[], target: number): number {
+  if (target === 0) {
     return 0;
   }
   let result = 0;
-  for (let i = 0, j = 0, multi = 1; j < nums.length; ++j) {
-    multi *= nums[j];
-    for (; i <= j && multi >= k; ++i) {
-      multi = Math.trunc(multi / nums[i]);
+  for (let left = 0, right = 0, multi = 1; right < nums.length; ++right) {
+    multi *= nums[right];
+    for (; left <= right && multi >= target; ++left) {
+      multi = Math.trunc(multi / nums[left]);
     }
-    result += j - i + 1;
+    result += right - left + 1;
   }
   return result;
 }

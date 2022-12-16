@@ -17,8 +17,8 @@ Input:  "962"
 Output: false
 */
 
-function isStrobogrammatic(num) {
-  const map = new Map([
+function isStrobogrammatic(num: string): boolean {
+  const pairMap = new Map<string, string>([
     ['0', '0'],
     ['1', '1'],
     ['8', '8'],
@@ -26,7 +26,10 @@ function isStrobogrammatic(num) {
     ['9', '6'],
   ]);
   for (let i = 0; i <= num.length / 2; ++i) {
-    if (!map.has(num[i]) || map.get(num[i]) !== num[num.length - 1 - i]) {
+    if (
+      !pairMap.has(num[i]) ||
+      pairMap.get(num[i]) !== num[num.length - 1 - i]
+    ) {
       return false;
     }
   }

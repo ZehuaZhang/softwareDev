@@ -7,7 +7,7 @@ Return the minimum number of stickers that you need to spell out target. If the 
 
 Note: In all test cases, all words were chosen randomly from the 1000 most common US English words, and target was chosen as a concatenation of two random words.
 
- 
+
 
 Example 1:
 
@@ -23,7 +23,7 @@ Input: stickers = ["notice","possible"], target = "basicbasic"
 Output: -1
 Explanation:
 We cannot form the target "basicbasic" from cutting letters from the given stickers.
- 
+
 
 Constraints:
 
@@ -34,24 +34,26 @@ n == stickers.length
 stickers[i] and target consist of lowercase English letters.
 */
 
-const length = 1 << target.length;
-    const dp = Array(length).fill(Infinity);
-    dp[0] = 0;
-    for (let i = 0; i < length; ++i) {
-        if (dp[i] !== -1) {
-            for (const s of stickers) {
-                let curr = i;
-                for (const c of s) {
-                    for (let j = 0; j < target.length; j++) {
-                        if (target[j] === c && !((curr >> j) & 1)) {
-                            curr |= (1 << j);
-                            break;
-                        }
-                    }
-                }
-                dp[curr] = Math.min(dp[curr], dp[i] + 1);
-            }
-        }
+function stickerToSpellWord(stickers: string[], target: string): number {
+  const length = 1 << target.length;
+  const result = Array(length).fill(Infinity);
+  result[0] = 0;
+  for (let i = 0; i < length; ++i) {
+    if (result[i] === Infinity) {
+      continue;
     }
-    return dp[length - 1] === Infinity ? -1 : dp[length - 1];
+    for (const sticker of stickers) {
+      let mask = i;
+      for (const char of sticker) {
+        for (let j = 0; j < target.length; j++) {
+          if (target[j] === char && !((mask >> j) & 1)) {
+            mask |= 1 << j;
+            break;
+          }
+        }
+      }
+      result[mask] = Math.min(result[mask], result[i] + 1);
+    }
+  }
+  return result[length - 1] === Infinity ? -1 : result[length - 1];
 }

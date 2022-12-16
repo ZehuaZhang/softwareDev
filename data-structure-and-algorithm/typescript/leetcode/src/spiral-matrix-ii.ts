@@ -19,13 +19,13 @@ Constraints:
 1 <= n <= 20
 */
 
-function generateMatrix(n) {
-  const result = new Array(n).fill(0).map(() => Array(n).fill(0));
+function generateMatrix(size: number): number[][] {
+  const result: number[][] = [...Array(size)].map(() => Array(size).fill(0));
   for (
-    let num = 0, left = 0, right = n - 1, top = 0, bottom = n - 1;
+    let num = 0, left = 0, right = size - 1, top = 0, bottom = size - 1;
     left <= right && top <= bottom;
     ++left, --right, ++top, --bottom
-
+  ) {
     for (let j = left; j <= right; ++j) {
       result[top][j] = ++num;
     }

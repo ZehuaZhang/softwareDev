@@ -25,9 +25,15 @@ root is a binary search tree.
 1 <= val <= 107
 */
 
-function searchBST(node, val) {
-  while (node && node.val !== val) {
-    node = val < node.val ? node.left : node.right;
+import {TreeNode} from './data-structure/BinaryTree';
+import {Nullable} from './util/object';
+
+function searchBST(
+  node: Nullable<TreeNode<number>>,
+  data: number
+): Nullable<TreeNode<number>> {
+  while (node && node.data !== data) {
+    node = data < node.data ? node.left : node.right;
   }
   return node;
 }

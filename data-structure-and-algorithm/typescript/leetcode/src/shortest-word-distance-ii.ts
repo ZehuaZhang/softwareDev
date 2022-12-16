@@ -20,21 +20,29 @@
 // Space: O(n)
 
 class WordDistance {
-  constructor() {
-    const wordIndexListMap = {};
+  wordIndexListMap: Map<string, number[]>;
+  constructor(wordList: string[]) {
+    this.wordIndexListMap = new Map<string, number[]>();
+    for (let i = 0; i < wordList.length; ++i) {
+      const word = wordList[i];
+      if (!this.wordIndexListMap.has(word)) {
+        this.wordIndexListMap.set(word, []);
+      }
+      this.wordIndexListMap.get(word)!.push(i);
+    }
   }
 
-  shortest(word1, word2) {
-    const indexList1 = wordIndexListMap[word1];
-    const indexList2 = wordIndexListMap[word2];
+  shortest(word1: string, word2: string): number {
+    const indexList1 = this.wordIndexListMap.get(word1) || [];
+    const indexList2 = this.wordIndexListMap.get(word2) || [];
 
-    let result = Number.MIN_VALUE;
+    let result = Infinity;
     for (
       let index1 = 0, index2 = 0;
       index1 < indexList1.length && index2 < indexList2.length;
 
     ) {
-      result = Math.min(Math.abs(index1 - index2));
+      result = Math.min(result, Math.abs(index1 - index2));
 
       if (index1 < index2) {
         ++index1;
@@ -43,6 +51,6 @@ class WordDistance {
       }
     }
 
-    return result;
+    return result === Infinity ? -1 : result;
   }
 }

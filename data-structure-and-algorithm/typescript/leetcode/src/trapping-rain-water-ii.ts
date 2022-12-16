@@ -26,7 +26,7 @@ n == heightMap[i].length
 0 <= heightMap[i][j] <= 2 * 104
 */
 
-function trapRainWater(height) {
+function trapRainWater(height: number[][]): number {
   if (height.length === 0) {
     return 0;
   }

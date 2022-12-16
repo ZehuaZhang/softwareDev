@@ -35,27 +35,30 @@ n == grid[i].length
 grid[i][j] is 0, 1, or 2.
 */
 
-function orangesRotting(grid) {
+import {Queue} from './data-structure/Queue';
+
+function orangesRotting(grid: number[][]): number {
   const [rows, cols] = [grid.length, grid[0].length];
   let total = 0;
-  let q = [];
+  const queue = new Queue<number[]>();
   for (let i = 0; i < rows; ++i) {
     for (let j = 0; j < cols; ++j) {
       if (grid[i][j]) {
         ++total;
-      }
-      if (grid[i][j] === 2) {
-        q.push([i, j]);
+        if (grid[i][j] === 2) {
+          queue.push([i, j]);
+        }
       }
     }
   }
 
-  let count = 0,
-    days = 0;
-  while (q.length) {
-    count += q.length;
-    const next = [];
-    for (const [i, j] of q) {
+  let count = 0;
+  let mins = 0;
+  while (!queue.isEmpty()) {
+    let {size} = queue;
+    count += size;
+    for (; size; --size) {
+      const [i, j] = queue.pop();
       for (const [dx, dy] of [
         [-1, 0],
         [1, 0],
@@ -65,14 +68,13 @@ function orangesRotting(grid) {
         const [x, y] = [i + dx, j + dy];
         if (x >= 0 && x < rows && y >= 0 && y < cols && grid[x][y] === 1) {
           grid[x][y] = 2;
-          next.push([x, y]);
+          queue.push([x, y]);
         }
       }
     }
-    if (next.length) {
-      ++days;
+    if (!queue.isEmpty()) {
+      ++mins;
     }
-    q = next;
   }
-  return total == count ? days : -1;
+  return total === count ? mins : -1;
 }

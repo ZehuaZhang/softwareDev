@@ -38,17 +38,23 @@ The number of nodes in the tree is in the range [1, 1000].
 The depth of the tree will not exceed 10.
 */
 
-function sumNumbers(root) {
-  return dfs(root, 0);
-}
+import {TreeNode} from './data-structure/BinaryTree';
+import {Nullable} from './util/object';
 
-function dfs(node, sum) {
-  if (!node) {
-    return 0;
+function sumNumbers(root: Nullable<TreeNode<number>>): number {
+  return sumNumbersDfs(root, 0);
+
+  function sumNumbersDfs(
+    node: Nullable<TreeNode<number>>,
+    path: number
+  ): number {
+    if (node === null) {
+      return 0;
+    }
+    path = path * 10 + node.data;
+    if (node.left === null && node.right === null) {
+      return path;
+    }
+    return sumNumbersDfs(node.left, path) + sumNumbersDfs(node.right, path);
   }
-  sum = sum * 10 + node.val;
-  if (!node.left && !node.right) {
-    return sum;
-  }
-  return dfs(node.left, sum) + dfs(node.right, sum);
 }

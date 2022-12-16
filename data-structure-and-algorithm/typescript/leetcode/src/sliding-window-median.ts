@@ -34,53 +34,57 @@ Constraints:
 231 <= nums[i] <= 231 - 1
 */
 
-function medianSlidingWindow(nums, k) {
+import {Heap} from './data-structure/Heap';
+
+function medianSlidingWindow(nums: number[], size: number): number[] {
   const window = new Window();
-  for (let i = 0; i < k - 1; ++i) {
+  for (let i = 0; i < size - 1; ++i) {
     window.push(nums[i]);
   }
-  const result = [];
-  for (let i = k - 1; i < nums.length; ++i) {
+  const result: number[] = [];
+  for (let i = size - 1; i < nums.length; ++i) {
     window.push(nums[i]);
     result.push(window.median());
-    window.remove(nums[i - k + 1]);
+    window.remove(nums[i - size + 1]);
   }
   return result;
 }
 
 class Window {
+  lowerHeap: Heap<number>;
+  upperHeap: Heap<number>;
   constructor() {
-    this.minHeap = new Heap((a, b) => a < b);
-    this.maxHeap = new Heap((a, b) => a > b);
+    this.upperHeap = new Heap((a, b) => a - b);
+    this.lowerHeap = new Heap((a, b) => b - a);
   }
 
-  push(value) {
-    this.heap(value).push(value);
+  push(data: number): void {
+    this.heap(data).push(data);
     this.balance();
   }
 
-  remove(value) {
-    this.heap(value).remove(value);
+  remove(data: number): void {
+    this.heap(data).remove(data);
     this.balance();
   }
 
-  median() {
-    if (this.minHeap.size === this.maxHeap.size) {
-      return (this.minHeap.top() + this.maxHeap.top()) / 2;
+  median(): number {
+    if (this.upperHeap.size === this.lowerHeap.size) {
+      return (this.upperHeap.peek() + this.lowerHeap.peek()) / 2;
     }
-    return this.minHeap.top();
+    return this.upperHeap.peek();
   }
 
-  heap(value) {
-    return BigInt(value) < this.median() ? this.maxHeap : this.minHeap;
+  heap(data: number): Heap<number> {
+    return data < this.median() ? this.lowerHeap : this.upperHeap;
   }
 
-  balance() {
-    const diff = this.maxHeap.size - this.minHeap.size;
+  balance(): void {
+    const diff = this.lowerHeap.size - this.upperHeap.size;
     if (diff > 0) {
-      this.minHeap.push(this.maxHeap.pop());
+      this.upperHeap.push(this.lowerHeap.pop());
     } else if (diff < -1) {
-      this.maxHeap.push(this.minHeap.pop());
+      this.lowerHeap.push(this.upperHeap.pop());
     }
   }
 }

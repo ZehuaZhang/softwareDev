@@ -37,9 +37,12 @@ What if the matrix is stored on disk, and the memory is limited such that you ca
 What if the matrix is so large that you can only load up a partial row into the memory at once?
 */
 
-function isToeplitzMatrix(grid) {
-  for (let i = 0; i < grid.length - 1; ++i) {
-    for (let j = 0; j < grid[i].length - 1; ++j) {
+import {Queue} from './data-structure/Queue';
+
+function isToeplitzMatrix(grid: number[][]): boolean {
+  const [rows, cols] = [grid.length, grid[0].length];
+  for (let i = 0; i < rows - 1; ++i) {
+    for (let j = 0; j < cols - 1; ++j) {
       if (grid[i][j] !== grid[i + 1][j + 1]) {
         return false;
       }
@@ -49,28 +52,31 @@ function isToeplitzMatrix(grid) {
 }
 
 // Load one row each time
-function isToeplitzMatrix(grid) {
+function isToeplitzMatrix_oneRow(grid: number[][]): boolean {
   const [rows, cols] = [grid.length, grid[0].length];
-  const q = [];
+  const queue = new Queue<number>();
   for (let j = cols - 1; j >= 0; --j) {
-    q.push(grid[0][j]);
+    queue.push(grid[0][j]);
   }
   for (let i = 1; i < rows; ++i) {
-    q.shift();
+    queue.pop();
     for (let j = cols - 1; j > 0; --j) {
-      if (grid[i][j] === q.shift()) {
-        q.push(grid[i][j]);
+      if (grid[i][j] === queue.pop()) {
+        queue.push(grid[i][j]);
       } else {
         return false;
       }
     }
-    q.push(grid[i][0]);
+    queue.push(grid[i][0]);
   }
   return true;
 }
 
 // Load a partial row/column each time
-function isToeplitzMatrix(grid, chunk) {
+function isToeplitzMatrix_oneRowPartial(
+  grid: number[][],
+  chunk: number
+): boolean {
   const [rows, cols] = [grid.length, grid[0].length];
   let size = 1;
   let index = cols - 1;
@@ -84,7 +90,7 @@ function isToeplitzMatrix(grid, chunk) {
       const right = Math.min(index + j, cols - 1);
       const left = Math.max(index - chunk + 1 + j, j);
       for (let ci = 0, k = left; ci < size && k <= right; ++ci, ++k) {
-        if (grid[j][k] != cache[ci]) {
+        if (grid[j][k] !== cache[ci]) {
           return false;
         }
       }
@@ -94,15 +100,18 @@ function isToeplitzMatrix(grid, chunk) {
   index = 0;
   for (; index < rows; index += chunk) {
     size = Math.min(rows - 1 - index, chunk);
-    const cache = new int[size]();
+    const cache = Array(size).fill(0);
     for (let i = 0; i < size; ++i) {
       cache[size - 1 - i] = grid[rows - index - 1 - i][0];
     }
     for (let j = 1; j < Math.min(rows, cols); ++j) {
       const right = Math.max(rows - index - chunk + j, j + 1);
       const left = Math.min(rows - index - 1 + j, rows - 1);
-      for (let ci = 0, k = right; ci < size && k <= left; ++ci, ++k)
-        if (grid[k][j] != cache[ci]) return false;
+      for (let ci = 0, k = right; ci < size && k <= left; ++ci, ++k) {
+        if (grid[k][j] !== cache[ci]) {
+          return false;
+        }
+      }
     }
   }
   return true;

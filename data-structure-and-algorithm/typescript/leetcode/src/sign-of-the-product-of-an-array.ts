@@ -33,7 +33,7 @@ Constraints:
 -100 <= nums[i] <= 100
 */
 
-function arraySign(nums) {
+function arraySign(nums: number[]): number {
   let result = 1;
   for (const num of nums) {
     if (num === 0) {

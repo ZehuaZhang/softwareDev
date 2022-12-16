@@ -41,21 +41,24 @@ path consists of English letters, digits, period '.', slash '/' or '_'.
 path is a valid absolute Unix path.
 */
 
-function simplifyPath(path) {
-  const stack = [];
+import {Stack} from './data-structure/Stack';
+
+function simplifyPath(path: string): string {
+  const stack = new Stack<string>();
   for (const line of path.split('/')) {
     switch (line) {
       case '..':
-        if (stack.length) {
+        if (!stack.isEmpty()) {
           stack.pop();
         }
         break;
       case '':
+        break;
       case '.':
         break;
       default:
         stack.push(line);
     }
   }
-  return `/${stack.join('/')}`;
+  return `/${stack.toArray().join('/')}`;
 }

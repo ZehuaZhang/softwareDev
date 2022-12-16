@@ -49,24 +49,24 @@ When we meet number i, try to put it to the tail of one of found subsequences ta
 If we can't, it will cost one i+1 and one i+2 later to generate a new sequence. We just pay that right now by decrease cnt[i+1] and cnt[i+2]. Some one may worry that we make use of the numbers we haven't scanned so far. But actually we've already kept track of the numbers remained by cnt. Just imaging we grab the numbers needed from the very end of the string, and mark them as "used". If there is no such number available to pay, cnt will tell us by checking cnt[i+1] cnt[i+2] is positive or not
 */
 
-function isPossible(nums) {
-  const count = new Map();
-  const tails = new Map();
-  for (const n of nums) {
-    count.set(n, (count.get(n) || 0) + 1);
+function isPossible(nums: number[]): boolean {
+  const countMap = new Map<number, number>();
+  const tailCountMap = new Map<number, number>();
+  for (const num of nums) {
+    countMap.set(num, (countMap.get(num) || 0) + 1);
   }
-  for (const n of nums) {
-    if (!count.get(n)) {
+  for (const num of nums) {
+    if (countMap.get(num) === 0) {
       continue;
     }
-    count.set(n, count.get(n) - 1);
-    if (tails.get(n - 1) > 0) {
-      tails.set(n - 1, tails.get(n - 1) - 1);
-      tails.set(n, (tails.get(n) || 0) + 1);
-    } else if (count.get(n + 1) && count.get(n + 2)) {
-      count.set(n + 1, count.get(n + 1) - 1);
-      count.set(n + 2, count.get(n + 2) - 1);
-      tails.set(n + 2, (tails.get(n + 2) || 0) + 1);
+    countMap.set(num, countMap.get(num)! - 1);
+    if (tailCountMap.get(num - 1)! > 0) {
+      tailCountMap.set(num - 1, tailCountMap.get(num - 1)! - 1);
+      tailCountMap.set(num, (tailCountMap.get(num) || 0) + 1);
+    } else if (countMap.get(num + 1)! > 0 && countMap.get(num + 2)! > 0) {
+      countMap.set(num + 1, countMap.get(num + 1)! - 1);
+      countMap.set(num + 2, countMap.get(num + 2)! - 1);
+      tailCountMap.set(num + 2, (tailCountMap.get(num + 2) || 0) + 1);
     } else {
       return false;
     }

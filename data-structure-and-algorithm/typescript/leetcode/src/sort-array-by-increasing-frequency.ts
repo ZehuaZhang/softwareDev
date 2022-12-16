@@ -27,18 +27,18 @@ Constraints:
 -100 <= nums[i] <= 100
 */
 
-function frequencySort(nums) {
-  const count = new Map();
-  for (const n of nums) {
-    count.set(n, (count.has(n) ? count.get(n) : 0) + 1);
+function frequencySortArary(nums: number[]): number[] {
+  const countMap = new Map<number, number>();
+  for (const num of nums) {
+    countMap.set(num, (countMap.get(num) || 0) + 1);
   }
-  const bucket = [...Array(nums.length + 1)].map(() => []);
-  for (let n = -100; n <= 100; ++n) {
-    if (count.has(n)) {
-      bucket[count.get(n)].push(n);
+  const bucket: number[][] = [...Array(nums.length + 1)].map(() => []);
+  for (let num = -100; num <= 100; ++num) {
+    if (countMap.has(num)) {
+      bucket[countMap.get(num)!].push(num);
     }
   }
-  const result = [];
+  const result: number[] = [];
   for (let i = 1; i < bucket.length; ++i) {
     for (let j = bucket[i].length - 1; j >= 0; --j) {
       result.push(...Array(i).fill(bucket[i][j]));

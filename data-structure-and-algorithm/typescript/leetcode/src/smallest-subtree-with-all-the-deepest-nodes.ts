@@ -38,17 +38,27 @@ The number of nodes in the tree will be in the range [1, 500].
 The values of the nodes in the tree are unique.
 */
 
-function subtreeWithAllDeepest(root) {
-  return dfs(root)[1];
-}
+import {TreeNode} from './data-structure/BinaryTree';
+import {Nullable} from './util/object';
 
-function dfs(node) {
-  if (!node) {
-    return [0, null];
+function subtreeWithAllDeepest(
+  root: Nullable<TreeNode<number>>
+): Nullable<TreeNode<number>> {
+  return subtreeWithAllDeepestDfs(root)[1];
+
+  function subtreeWithAllDeepestDfs(
+    node: Nullable<TreeNode<number>>
+  ): [number, Nullable<TreeNode<number>>] {
+    if (node === null) {
+      return [0, null];
+    }
+    const [[depth1, left], [depth2, right]] = [
+      subtreeWithAllDeepestDfs(node.left),
+      subtreeWithAllDeepestDfs(node.right),
+    ];
+    return [
+      Math.max(depth1, depth2) + 1,
+      depth1 === depth2 ? node : depth1 > depth2 ? left : right,
+    ];
   }
-  const [[depth1, left], [depth2, right]] = [dfs(node.left), dfs(node.right)];
-  return [
-    Math.max(depth1, depth2) + 1,
-    depth1 == depth2 ? node : depth1 > depth2 ? left : right,
-  ];
 }

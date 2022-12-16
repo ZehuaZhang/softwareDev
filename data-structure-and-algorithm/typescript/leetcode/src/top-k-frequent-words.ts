@@ -20,20 +20,20 @@ Follow up:
 Try to solve it in O(n log k) time and O(n) extra space.
 */
 
-function topKFrequent(words, k) {
-  const count = new Map();
-  for (const w of words) {
-    count.set(w, (count.has(w) ? count.get(w) : 0) + 1);
+function topKFrequent(words: string[], kth: number): string[] {
+  const countMap = new Map<string, number>();
+  for (const word of words) {
+    countMap.set(word, (countMap.get(word) || 0) + 1);
   }
-  const bucket = [...Array(words.length + 1)].map(() => []);
-  for (const [w, c] of count.entries()) {
-    bucket[c].push(w);
+  const bucket: string[][] = [...Array(words.length + 1)].map(() => []);
+  for (const [word, count] of countMap.entries()) {
+    bucket[count].push(word);
   }
-  const result = [];
+  const result: string[] = [];
   for (let i = bucket.length - 1; i >= 1; --i) {
     for (let j = 0; j < bucket[i].length; ++j) {
       result.push(bucket[i][j]);
-      if (result.length === k) {
+      if (result.length === kth) {
         return result;
       }
     }

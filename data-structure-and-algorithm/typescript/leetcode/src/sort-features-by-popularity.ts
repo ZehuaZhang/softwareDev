@@ -31,19 +31,19 @@ responses[i] contains no two consecutive spaces.
 responses[i] has no leading or trailing spaces.
 */
 
-function sortFeatures(features, responses) {
-  const count = new Map();
-  for (let i = 0; i < features.length; ++i) {
-    count.set(features[i], 0);
+function sortFeatures(features: string[], responses: string[]): string[] {
+  const countMap = new Map<string, number>();
+  for (const feature of features) {
+    countMap.set(feature, 0);
   }
-  for (const r of responses) {
-    for (const w of new Set(r.split(' '))) {
-      if (count.has(w)) {
-        count.set(w, count.get(w) + 1);
+  for (const resp of responses) {
+    for (const word of new Set<string>(resp.split(' '))) {
+      if (countMap.has(word)) {
+        countMap.set(word, countMap.get(word)! + 1);
       }
     }
   }
-  return [...features].sort((a, b) => count.get(b) - count.get(a));
+  return [...features].sort((a, b) => countMap.get(b)! - countMap.get(a)!);
 }
 
 console.log(

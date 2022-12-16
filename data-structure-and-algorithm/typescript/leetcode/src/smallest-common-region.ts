@@ -31,19 +31,23 @@ region1 != region2
 All strings consist of English letters and spaces with at most 20 letters.
 */
 
-function findSmallestRegion(regions, region1, region2) {
-  const parent = new Map();
+function findSmallestRegion(
+  regions: string[][],
+  region1: string,
+  region2: string
+): string {
+  const parentMap = new Map<string, string>();
   for (const [parent, ...children] of regions) {
-    children.forEach(child => parent.set(child, parent));
+    children.forEach(child => parentMap.set(child, parent));
   }
-  const visited = new Set();
+  const visited = new Set<string>();
   while (region1) {
     visited.add(region1);
-    region1 = parent.get(region1);
+    region1 = parentMap.get(region1)!;
   }
 
   while (!visited.has(region2) && region2) {
-    region2 = parent.get(region2);
+    region2 = parentMap.get(region2)!;
   }
 
   return region2;

@@ -20,14 +20,14 @@ Constraints:
 -107 <= k <= 107
 */
 
-function subarraySum(nums, k) {
-  let result = 0,
-    sum = 0;
-  const map = new Map([[0, 1]]);
-  for (const n of nums) {
-    sum += n;
-    result += map.has(sum - k) ? map.get(sum - k) : 0;
-    map.set(sum, (map.has(sum) ? map.get(sum) : 0) + 1);
+function subarraySum(nums: number[], target: number): number {
+  let result = 0;
+  let sum = 0;
+  const sumCountMap = new Map<number, number>([[0, 1]]);
+  for (const num of nums) {
+    sum += num;
+    result += sumCountMap.get(sum - target) || 0;
+    sumCountMap.set(sum, (sumCountMap.get(sum) || 0) + 1);
   }
   return result;
 }

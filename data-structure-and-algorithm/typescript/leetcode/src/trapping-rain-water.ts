@@ -22,9 +22,9 @@ n == height.length
 0 <= height[i] <= 105
 */
 
-function trap(height) {
-  let level = 0,
-    result = 0;
+function trap(height: number[]): number {
+  let level = 0;
+  let result = 0;
   for (let left = 0, right = height.length - 1; left < right; ) {
     const lower = height[height[left] < height[right] ? left++ : right--];
     level = Math.max(level, lower);

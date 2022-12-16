@@ -32,36 +32,39 @@ The number of nodes in the tree is in the range [0, 104].
 -1000 <= Node.val <= 1000
 */
 
-const serialize = function (root) {
-  const result = [];
-  serializeDFS(root, result);
-  return result.join(' ');
-};
+import {TreeNode} from './data-structure/BinaryTree';
+import {Nullable} from './util/object';
 
-function serializeDFS(node, result) {
-  if (node === null) {
-    result.push('#');
-  } else {
-    result.push(node.val);
-    serializeDFS(node.left, result);
-    serializeDFS(node.right, result);
+function serialize(root: Nullable<TreeNode<number>>): string {
+  const result: (number | string)[] = [];
+  serializeDFS(root);
+  return result.join(' ');
+
+  function serializeDFS(node: Nullable<TreeNode<number>>): void {
+    if (node === null) {
+      result.push('#');
+    } else {
+      result.push(node.data);
+      serializeDFS(node.left);
+      serializeDFS(node.right);
+    }
   }
 }
 
-const deserialize = function (data) {
-  list = data.split(' ');
+function deserialize(data: string): Nullable<TreeNode<number>> {
+  const list = data.split(' ');
   const iter = list.values();
-  return deserializeDFS(iter);
-};
+  return deserializeDfs();
 
-function deserializeDFS(iter) {
-  const {value, done} = iter.next();
-  if (done || value === '#') {
-    return null;
+  function deserializeDfs(): Nullable<TreeNode<number>> {
+    const {value: data, done} = iter.next();
+    if (done || data === '#') {
+      return null;
+    }
+
+    const node = new TreeNode(Number(data));
+    node.left = deserializeDfs();
+    node.right = deserializeDfs();
+    return node;
   }
-
-  const node = new TreeNode(value);
-  node.left = deserializeDFS(iter);
-  node.right = deserializeDFS(iter);
-  return node;
 }

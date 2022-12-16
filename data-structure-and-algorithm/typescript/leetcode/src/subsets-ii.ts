@@ -21,20 +21,21 @@ Constraints:
 -10 <= nums[i] <= 10
 */
 
-function subsetsWithDup(nums) {
-  const result = [];
+function subsetsWithDup(nums: number[]): number[][] {
+  const result: number[][] = [];
   nums.sort((a, b) => a - b);
-  dfs(nums, 0, [], result);
+  const path: number[] = [];
+  subsetsDfs(0);
   return result;
-}
 
-function dfs(nums, left, curr, result) {
-  result.push([...curr]);
-  for (let i = left; i < nums.length; ++i) {
-    if (i === left || nums[i] !== nums[i - 1]) {
-      curr.push(nums[i]);
-      dfs(nums, i + 1, curr, result);
-      curr.pop();
+  function subsetsDfs(start: number): void {
+    result.push([...path]);
+    for (let i = start; i < nums.length; ++i) {
+      if (i === start || nums[i] !== nums[i - 1]) {
+        path.push(nums[i]);
+        subsetsDfs(i + 1);
+        path.pop();
+      }
     }
   }
 }

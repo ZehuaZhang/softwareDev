@@ -43,19 +43,21 @@ Constraints:
 1 <= k <= nums.length
 */
 
-function maxSlidingWindow(nums, k) {
-  const dq = [];
-  const result = [];
+import {Queue} from './data-structure/Queue';
+
+function maxSlidingWindow(nums: number[], size: number): number[] {
+  const queue = new Queue<number>();
+  const result: number[] = [];
   for (let i = 0; i < nums.length; ++i) {
-    while (dq.length && nums[i] >= nums[dq[dq.length - 1]]) {
-      dq.pop();
+    while (!queue.isEmpty() && nums[i] >= nums[queue.back()]) {
+      queue.popBack();
     }
-    dq.push(i);
-    if (dq.length && dq[0] === i - k) {
-      dq.shift();
+    queue.push(i);
+    if (!queue.isEmpty() && queue.front() === i - size) {
+      queue.pop();
     }
-    if (i >= k - 1) {
-      result.push(nums[dq[0]]);
+    if (i >= size - 1) {
+      result.push(nums[queue.front()]);
     }
   }
   return result;

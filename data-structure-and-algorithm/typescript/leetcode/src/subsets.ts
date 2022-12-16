@@ -22,18 +22,19 @@ Constraints:
 All the numbers of nums are unique.
 */
 
-function subsets(nums) {
-  const result = [];
+function subsets(nums: number[]): number[][] {
+  const result: number[][] = [];
   nums.sort((a, b) => a - b);
-  dfs(nums, 0, [], result);
+  const path: number[] = [];
+  subsetsDfs(0);
   return result;
-}
 
-function dfs(nums, left, curr, result) {
-  result.push([...curr]);
-  for (let i = left; i < nums.length; ++i) {
-    curr.push(nums[i]);
-    dfs(nums, i + 1, curr, result);
-    curr.pop();
+  function subsetsDfs(start: number): void {
+    result.push([...path]);
+    for (let i = start; i < nums.length; ++i) {
+      path.push(nums[i]);
+      subsetsDfs(i + 1);
+      path.pop();
+    }
   }
 }

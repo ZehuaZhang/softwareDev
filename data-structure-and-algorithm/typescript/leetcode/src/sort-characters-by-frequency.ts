@@ -29,19 +29,19 @@ Constraints:
 s consists of English letters and digits.
 */
 
-function frequencySort(s) {
-  const count = new Map();
-  for (const c of s) {
-    count.set(c, (count.has(c) ? count.get(c) : 0) + 1);
+function frequencySort(input: string): string {
+  const countMap = new Map<string, number>();
+  for (const char of input) {
+    countMap.set(char, (countMap.get(char) || 0) + 1);
   }
-  const bucket = [...Array(s.length + 1)].map(() => []);
-  for (const [char, c] of count.entries()) {
-    bucket[c].push(char);
+  const bucket: string[][] = [...Array(input.length + 1)].map(() => []);
+  for (const [char, count] of countMap.entries()) {
+    bucket[count].push(char);
   }
-  const result = [];
+  const result: string[] = [];
   for (let i = bucket.length - 1; i >= 0; --i) {
-    for (const c of bucket[i]) {
-      result.push(c.repeat(i));
+    for (const char of bucket[i]) {
+      result.push(char.repeat(i));
     }
   }
   return result.join('');

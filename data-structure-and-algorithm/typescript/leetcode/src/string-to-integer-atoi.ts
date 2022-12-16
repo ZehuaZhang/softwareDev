@@ -88,31 +88,28 @@ Constraints:
 s consists of English letters (lower-case and upper-case), digits (0-9), ' ', '+', '-', and '.'.
 */
 
-/**
- * @param { string } s
- * @return { number }
- */
-function myAtoi(s) {
+function myAtoi(input: string): number {
   const Max = Math.pow(2, 31) - 1;
   const Min = -1 * Math.pow(2, 31);
-  let sign = 1,
-    base = 0,
-    i = 0;
-  for (; s[i] === ' '; ++i);
-  if ('+-'.includes(s[i])) {
-    sign = 1 - 2 * (s[i++] === '-' ? 1 : 0);
+  let sign = 1;
+  let base = 0;
+  let i = 0;
+  for (; input[i] === ' '; ++i);
+  if ('+-'.includes(input[i])) {
+    sign = 1 - 2 * Number(input[i++] === '-');
   }
-  for (; s[i] >= '0' && s[i] <= '9'; ++i) {
+  for (; input[i] >= '0' && input[i] <= '9'; ++i) {
+    const digit = input[i].charCodeAt(0) - '0'.charCodeAt(0);
     if (
       base > Math.trunc(Max / 10) ||
-      (base === Math.trunc(Max / 10) && s[i] - '0' > 7)
+      (base === Math.trunc(Max / 10) && digit > Max % 10)
     ) {
       if (sign === 1) {
         return Max;
       }
       return Min;
     }
-    base = 10 * base + (s[i] - '0');
+    base = 10 * base + digit;
   }
   return base * sign;
 }

@@ -25,7 +25,7 @@ nums is sorted in non-decreasing order.
 Follow up: Squaring each element and sorting the new array is very trivial, could you find an O(n) solution using a different approach?
 */
 
-function sortedSquares(nums) {
+function sortedSquares(nums: number[]): number[] {
   const result = [...Array(nums.length)].fill(0);
   for (
     let left = 0, right = nums.length - 1, i = nums.length - 1;

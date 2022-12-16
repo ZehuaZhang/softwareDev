@@ -26,25 +26,25 @@ Note:
 1 <= k <= nums.length
 */
 
-function subarraysWithKDistinct(nums, k) {
-  let result = 0,
-    subCount = 0;
-  const map = new Map();
+function subarraysWithKDistinct(nums: number[], uniqueCount: number): number {
+  let result = 0;
+  let subCount = 0;
+  const numCountMap = new Map<number, number>();
   for (let left = 0, right = 0, count = 0; right < nums.length; ++right) {
-    map.set(nums[right], (map.get(nums[right]) || 0) + 1);
-    if (map.get(nums[right]) === 1) {
+    numCountMap.set(nums[right], (numCountMap.get(nums[right]) || 0) + 1);
+    if (numCountMap.get(nums[right]) === 1) {
       ++count;
     }
-    if (count > k) {
-      map.set(nums[left], map.get(nums[left]) - 1);
+    if (count > uniqueCount) {
+      numCountMap.set(nums[left], numCountMap.get(nums[left])! - 1);
       ++left;
       --count;
       subCount = 0;
     }
-    for (; map.get(nums[left]) > 1; ++subCount, ++left) {
-      map.set(nums[left], map.get(nums[left]) - 1);
+    for (; numCountMap.get(nums[left])! > 1; ++subCount, ++left) {
+      numCountMap.set(nums[left], numCountMap.get(nums[left])! - 1);
     }
-    if (count === k) {
+    if (count === uniqueCount) {
       result += subCount + 1;
     }
   }

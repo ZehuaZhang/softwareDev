@@ -37,22 +37,26 @@ Note:
 0 <= cStart < cols
 */
 
-function spiralMatrixIII(rows, cols, rStart, cStart) {
-  const result = [[rStart, cStart]];
-  let x = 0,
-    y = 1,
-    t = 0;
+function spiralMatrixIII(
+  rows: number,
+  cols: number,
+  row0: number,
+  col0: number
+): number[][] {
+  const result: number[][] = [[row0, col0]];
+  let [x, y] = [0, 1];
+  let prev = 0;
   for (let k = 0; result.length < rows * cols; ++k) {
     for (let i = 0; i < Math.trunc(k / 2) + 1; ++i) {
-      rStart += x;
-      cStart += y;
-      if (rStart >= 0 && rStart < rows && cStart >= 0 && cStart < cols) {
-        result.push([rStart, cStart]);
+      row0 += x;
+      col0 += y;
+      if (row0 >= 0 && row0 < rows && col0 >= 0 && col0 < cols) {
+        result.push([row0, col0]);
       }
     }
-    t = x;
+    prev = x;
     x = y;
-    y = -t;
+    y = -prev;
   }
   return result;
 }

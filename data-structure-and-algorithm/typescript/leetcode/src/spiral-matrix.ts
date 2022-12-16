@@ -23,8 +23,8 @@ n == matrix[i].length
 -100 <= matrix[i][j] <= 100
 */
 
-function spiralOrder(matrix) {
-  const result = [];
+function spiralOrder(matrix: number[][]): number[] {
+  const result: number[] = [];
   for (
     let left = 0,
       right = matrix[0].length - 1,

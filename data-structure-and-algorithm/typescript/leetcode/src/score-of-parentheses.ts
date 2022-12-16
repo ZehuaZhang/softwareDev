@@ -30,17 +30,17 @@ s is a balanced parentheses string, containing only ( and ).
 2 <= s.length <= 50
 */
 
-function scoreOfParentheses(s) {
-  let result = 0,
-    cnt = 0;
-  for (let i = 0; i < s.length; ++i) {
-    if (s[i] === '(') {
-      ++cnt;
+function scoreOfParentheses(input: string): number {
+  let result = 0;
+  let count = 0;
+  for (let i = 0; i < input.length; ++i) {
+    if (input[i] === '(') {
+      ++count;
     } else {
-      --cnt;
+      --count;
     }
-    if (s[i] === ')' && s[i - 1] === '(') {
-      result += Math.pow(2, cnt);
+    if (input[i] === ')' && input[i - 1] === '(') {
+      result += Math.pow(2, count);
     }
   }
   return result;

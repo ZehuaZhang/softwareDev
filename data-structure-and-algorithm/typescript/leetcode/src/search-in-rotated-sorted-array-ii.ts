@@ -30,9 +30,11 @@ nums is guaranteed to be rotated at some pivot.
 Follow up: This problem is similar to Search in Rotated Sorted Array, but nums may contain duplicates. Would this affect the runtime complexity? How and why?
 */
 
-function search(nums, target) {
-  let left = 0,
-    right = nums.length - 1;
+function searchRotatedSortedArrayDuplicates(
+  nums: number[],
+  target: number
+): boolean {
+  let [left, right] = [0, nums.length - 1];
   while (left <= right) {
     const mid = Math.trunc((left + right) / 2);
     if (nums[mid] === target) {

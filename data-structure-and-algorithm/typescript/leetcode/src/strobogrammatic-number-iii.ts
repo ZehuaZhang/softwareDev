@@ -12,33 +12,36 @@ Note:
 Because the range might be a large number, the low and high numbers are represented as string.
 */
 
-let count;
-function strobogrammaticInRange(low, high) {
-  count = 0;
-  for (const s of ['', '0', '1', '8']) {
-    dfs(low, high, s);
+function strobogrammaticInRange(low: string, high: string): number {
+  let result = 0;
+  for (const num of ['', '0', '1', '8']) {
+    strobogrammaticInRangeDfs(low, high, num);
   }
-  return count;
-}
+  return result;
 
-function dfs(low, high, s) {
-  if (
-    Number(s) >= Number(low) &&
-    Number(s) <= Number(high) &&
-    Number(s).toString() === s
-  ) {
-    ++count;
-  }
-  if (s.length + 2 > high.length) {
-    return;
-  }
-  for (const [left, right] of [
-    ['0', '0'],
-    ['1', '1'],
-    ['8', '8'],
-    ['6', '9'],
-    ['9', '6'],
-  ]) {
-    dfs(low, high, left + s + right);
+  function strobogrammaticInRangeDfs(
+    low: string,
+    high: string,
+    num: string
+  ): void {
+    if (
+      Number(num) >= Number(low) &&
+      Number(num) <= Number(high) &&
+      Number(num).toString() === num
+    ) {
+      ++result;
+    }
+    if (num.length + 2 > high.length) {
+      return;
+    }
+    for (const [left, right] of [
+      ['0', '0'],
+      ['1', '1'],
+      ['8', '8'],
+      ['6', '9'],
+      ['9', '6'],
+    ]) {
+      strobogrammaticInRangeDfs(low, high, left + num + right);
+    }
   }
 }

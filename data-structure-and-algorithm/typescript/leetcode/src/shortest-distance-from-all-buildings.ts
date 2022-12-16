@@ -23,62 +23,62 @@ Note:
 There will be at least one building. If it is not possible to build such house according to the above rules, return -1.
 */
 
-function shortestDistance(grid) {
+import {Queue} from './data-structure/Queue';
+
+function shortestDistance(grid: number[][]) {
   const [rows, cols] = [grid.length, grid[0].length];
   let count = 0;
-  const dist = [...Array(rows)].map(() => Array(cols).fill(0));
-  const cnts = [...Array(rows)].map(() => Array(cols).fill(0));
+  const distList = [...Array(rows)].map(() => Array(cols).fill(0));
+  const countList = [...Array(rows)].map(() => Array(cols).fill(0));
   for (let i = 0; i < rows; ++i) {
     for (let j = 0; j < cols; ++j) {
       if (grid[i][j] === 1) {
         ++count;
-        bfs(grid, i, j, dist, cnts);
+        shortestDistanceBfs(i, j);
       }
     }
   }
   let result = Infinity;
   for (let i = 0; i < rows; ++i) {
     for (let j = 0; j < cols; ++j) {
-      if (dist[i][j] < result && cnts[i][j] === count) {
-        result = dist[i][j];
+      if (distList[i][j] < result && countList[i][j] === count) {
+        result = distList[i][j];
       }
     }
   }
 
   return result === Infinity ? -1 : result;
-}
 
-function bfs(grid, i, j, dist, cnts) {
-  const [rows, cols] = [grid.length, grid[0].length];
-  const visited = [...Array(rows)].map(() => Array(cols).fill(false));
-  let q = [[i, j]];
-  visited[i][j] = true;
-  let curr = 1;
-  for (; q.length; ++curr) {
-    const next = [];
-    for (const [x, y] of q) {
-      for (const [dx, dy] of [
-        [1, 0],
-        [-1, 0],
-        [0, 1],
-        [0, -1],
-      ]) {
-        const [nx, ny] = [x + dx, y + dy];
-        if (
-          0 <= nx &&
-          nx < rows &&
-          0 <= ny &&
-          ny < cols &&
-          !grid[nx][ny] &&
-          !visited[nx][ny]
-        ) {
-          dist[nx][ny] += curr;
-          ++cnts[nx][ny];
-          next.push([nx, ny]);
-          visited[nx][ny] = true;
+  function shortestDistanceBfs(i: number, j: number): void {
+    const visited = [...Array(rows)].map(() => Array(cols).fill(false));
+    const queue = new Queue<number[]>();
+    queue.push([i, j]);
+    visited[i][j] = true;
+    for (let dist = 1; !queue.isEmpty(); ++dist) {
+      for (let {size} = queue; size; --size) {
+        const [x, y] = queue.pop();
+        for (const [dx, dy] of [
+          [1, 0],
+          [-1, 0],
+          [0, 1],
+          [0, -1],
+        ]) {
+          const [nx, ny] = [x + dx, y + dy];
+          if (
+            0 <= nx &&
+            nx < rows &&
+            0 <= ny &&
+            ny < cols &&
+            !grid[nx][ny] &&
+            !visited[nx][ny]
+          ) {
+            distList[nx][ny] += dist;
+            ++countList[nx][ny];
+            queue.push([nx, ny]);
+            visited[nx][ny] = true;
+          }
         }
       }
     }
-    q = next;
   }
 }

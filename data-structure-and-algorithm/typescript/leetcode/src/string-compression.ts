@@ -40,16 +40,16 @@ Constraints:
 chars[i] is a lower-case English letter, upper-case English letter, digit, or symbol.
 */
 
-function compress(chars) {
+function compress(chars: string[]): number {
   let index = 0;
   for (let i = 0; i < chars.length; ) {
-    const curr = chars[i];
+    const char = chars[i];
     let count = 0;
-    for (; i < chars.length && chars[i] === curr; ++i, ++count);
-    chars[index++] = curr;
+    for (; i < chars.length && chars[i] === char; ++i, ++count);
+    chars[index++] = char;
     if (count > 1) {
-      for (const c of count.toString()) {
-        chars[index++] = c;
+      for (const countChar of count.toString()) {
+        chars[index++] = countChar;
       }
     }
   }

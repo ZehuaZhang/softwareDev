@@ -32,9 +32,8 @@ nums is guaranteed to be rotated at some pivot.
 -104 <= target <= 104
 */
 
-function search(nums, target) {
-  let left = 0,
-    right = nums.length - 1;
+function searchRotatedSortedArray(nums: number[], target: number): number {
+  let [left, right] = [0, nums.length - 1];
   while (left <= right) {
     const mid = Math.trunc((left + right) / 2);
     if (nums[mid] === target) {

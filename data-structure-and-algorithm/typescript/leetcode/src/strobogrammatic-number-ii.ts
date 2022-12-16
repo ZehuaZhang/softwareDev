@@ -9,32 +9,32 @@ Input:  n = 2
 Output: ["11","69","88","96"]
 */
 
-function findStrobogrammatic(n) {
-  const map = new Map([
+function findStrobogrammatic(size: number): string[] {
+  const pairMap = new Map<string, string>([
     ['0', '0'],
     ['1', '1'],
     ['8', '8'],
     ['6', '9'],
     ['9', '6'],
   ]);
-  return dfs(n, n);
-}
+  return findStrobogrammaticDfs(size, size);
 
-function dfs(n, k) {
-  if (!k) {
-    return [''];
-  }
-  if (k === 1) {
-    return ['0', '1', '8'];
-  }
+  function findStrobogrammaticDfs(size: number, count: number): string[] {
+    if (count === 0) {
+      return [''];
+    }
+    if (count === 1) {
+      return ['0', '1', '8'];
+    }
 
-  const path = [];
-  for (const mid of dfs(n, k - 2)) {
-    for (const [left, right] of map) {
-      if (k !== n || left !== '0') {
-        result.push(left + num + right);
+    const path: string[] = [];
+    for (const mid of findStrobogrammaticDfs(size, count - 2)) {
+      for (const [left, right] of pairMap) {
+        if (count !== size || left !== '0') {
+          path.push(left + mid + right);
+        }
       }
     }
+    return path;
   }
-  return result;
 }

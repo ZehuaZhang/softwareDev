@@ -30,18 +30,18 @@ Constraints:
 Follow up: Can you find an O(n) solution?
 */
 
-function thirdMax(nums) {
+function thirdMax(nums: number[]): number {
   let [first, second, third] = Array(3).fill(-Infinity);
-  for (const n of nums) {
-    if ([first, second, third].includes(n)) {
+  for (const num of nums) {
+    if ([first, second, third].includes(num)) {
       continue;
     }
-    if (n > first) {
-      [first, second, third] = [n, first, second];
-    } else if (n > second) {
-      [second, third] = [n, second];
-    } else if (n > third) {
-      third = n;
+    if (num > first) {
+      [first, second, third] = [num, first, second];
+    } else if (num > second) {
+      [second, third] = [num, second];
+    } else if (num > third) {
+      third = num;
     }
   }
   return third === -Infinity ? first : third;
