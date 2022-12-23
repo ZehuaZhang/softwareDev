@@ -1,4 +1,6 @@
 class Card {
+  Suit: Object;
+  Face: Object;
   constructor() {
     this.Suit = Object.freeze({
       Hearts: Symbol('Hearts'),

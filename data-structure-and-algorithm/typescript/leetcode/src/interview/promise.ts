@@ -1,326 +1,137 @@
+import {isFunction, Nullable} from '../util/object';
+
 enum States {
   PENDING = 'PENDING',
   RESOLVED = 'RESOLVED',
   REJECTED = 'REJECTED',
 }
 
-interface Handler<T, U> {
-  onSuccess: HandlerOnSuccess<T, U>;
-  onFail: HandlerOnFail<U>;
-}
+type ResolveFn<T> = (value: Nullable<T>) => MyPromise<unknown> | unknown;
+type RejectFn<T> = (reason: Nullable<T>) => MyPromise<unknown> | unknown;
 
-type HandlerOnSuccess<T, U = any> = (value: T) => U | Thenable<U>;
-type HandlerOnFail<U = any> = (reason: any) => U | Thenable<U>;
-type Finally<U> = () => U | Thenable<U>;
+type ResolveLikeFn<T> = ResolveFn<T> | T;
+type RejectLikeFn<T> = RejectFn<T> | T;
 
-interface Thenable<T> {
-  then<U>(
-    onSuccess?: HandlerOnSuccess<T, U>,
-    onFail?: HandlerOnFail<U>
-  ): Thenable<U>;
-  then<U>(
-    onSuccess?: HandlerOnSuccess<T, U>,
-    onFail?: (reason: any) => void
-  ): Thenable<U>;
-}
+class MyPromise<T> {
+  private status: States;
+  private value: Nullable<T>;
+  private reason: Nullable<unknown>;
+  private resolveFnList: ResolveFn<T>[];
+  private rejectFnList: RejectFn<unknown>[];
+  constructor(
+    executor: (resolve: ResolveFn<T>, reject: RejectFn<unknown>) => void
+  ) {
+    this.status = States.PENDING;
+    this.value = null;
+    this.reason = null;
+    this.resolveFnList = [];
+    this.rejectFnList = [];
 
-type Resolve<R> = (value?: R | Thenable<R>) => void;
-type Reject = (value?: any) => void;
-
-class TimeoutError extends Error {
-  constructor() {
-    super('TIMEOUT');
-  }
-}
-
-const errors = {
-  TimeoutError,
-};
-
-class PQ<T> {
-  private state: States = States.PENDING;
-  private handlers: Handler<T, any>[] = [];
-  private value: T | any;
-  public static errors = errors;
-
-  public constructor(callback: (resolve: Resolve<T>, reject: Reject) => void) {
-    try {
-      callback(this.resolve, this.reject);
-    } catch (e) {
-      this.reject(e);
-    }
-  }
-
-  private resolve = (value: T) => {
-    return this.setResult(value, States.RESOLVED);
-  };
-
-  private reject = (reason: any) => {
-    return this.setResult(reason, States.REJECTED);
-  };
-
-  private setResult = (value: T | any, state: States) => {
-    const set = () => {
-      if (this.state !== States.PENDING) {
-        return null;
+    const resolve = (value: Nullable<T>) => {
+      if (this.status !== States.PENDING) {
+        return;
       }
-
-      if (isThenable(value)) {
-        return (value as Thenable<T>).then(this.resolve, this.reject);
-      }
-
+      this.status = States.RESOLVED;
       this.value = value;
-      this.state = state;
 
-      return this.executeHandlers();
+      this.resolveFnList.forEach(resolveFn => {
+        resolveFn(this.value);
+      });
     };
 
-    setTimeout(set, 0);
-  };
+    const reject = (reason: unknown) => {
+      if (this.status !== States.PENDING) {
+        return;
+      }
+      this.status = States.REJECTED;
+      this.reason = reason;
 
-  private executeHandlers = () => {
-    if (this.state === States.PENDING) {
-      return null;
+      this.rejectFnList.forEach(rejectFn => {
+        rejectFn(this.reason);
+      });
+    };
+
+    try {
+      executor(resolve, reject);
+    } catch (err) {
+      reject(err);
+    }
+  }
+
+  catch(rejectFn: RejectLikeFn<unknown>) {
+    return this.then(() => {}, rejectFn);
+  }
+
+  then(resolveFn: ResolveLikeFn<T>, rejectFn: RejectLikeFn<unknown>) {
+    // If the two arguments passed in are not functions, the result is returned directly
+
+    if (!isFunction(resolveFn)) {
+      resolveFn = value => {
+        return value;
+      };
     }
 
-    this.handlers.forEach(handler => {
-      if (this.state === States.REJECTED) {
-        return handler.onFail(this.value);
-      }
-
-      return handler.onSuccess(this.value);
-    });
-
-    this.handlers = [];
-  };
-
-  private attachHandler = (handler: Handler<T, any>) => {
-    this.handlers = [...this.handlers, handler];
-
-    this.executeHandlers();
-  };
-
-  public then<U>(
-    onSuccess?: HandlerOnSuccess<T, U>,
-    onFail?: HandlerOnFail<U>
-  ) {
-    return new PQ<U | T>((resolve, reject) => {
-      return this.attachHandler({
-        onSuccess: result => {
-          if (!onSuccess) {
-            return resolve(result);
-          }
-
-          try {
-            return resolve(onSuccess(result));
-          } catch (e) {
-            return reject(e);
-          }
-        },
-        onFail: reason => {
-          if (!onFail) {
-            return reject(reason);
-          }
-
-          try {
-            return resolve(onFail(reason));
-          } catch (e) {
-            return reject(e);
-          }
-        },
-      });
-    });
-  }
-
-  public catch<U>(onFail: HandlerOnFail<U>) {
-    return this.then<U>(identity, onFail);
-  }
-
-  // methods
-
-  public toString() {
-    return `[object PQ]`;
-  }
-
-  public finally<U>(cb: Finally<U>) {
-    return new PQ<U>((resolve, reject) => {
-      let val: U | any;
-      let isRejected: boolean;
-
-      return this.then(
-        value => {
-          isRejected = false;
-          val = value;
-          return cb();
-        },
-        reason => {
-          isRejected = true;
-          val = reason;
-          return cb();
-        }
-      ).then(() => {
-        if (isRejected) {
-          return reject(val);
-        }
-
-        return resolve(val);
-      });
-    });
-  }
-
-  public spread<U>(handler: (...args: any[]) => U) {
-    return this.then<U>(collection => {
-      if (Array.isArray(collection)) {
-        return handler(...collection);
-      }
-
-      return handler(collection);
-    });
-  }
-
-  public timeout(timeInMs: number) {
-    return new PQ<T>((resolve, reject) => {
-      const timeoutCb = () => {
-        return reject(new PQ.errors.TimeoutError());
+    if (!isFunction(rejectFn)) {
+      rejectFn = (reason: unknown) => {
+        return MyPromise.reject(reason);
       };
+    }
 
-      setTimeout(timeoutCb, timeInMs);
+    return new MyPromise((nxtResolveFn, nxtRejectFn) => {
+      this.resolveFnList.push(value => {
+        try {
+          const nxtValue = (resolveFn as ResolveFn<T>)(value);
 
-      return this.then(resolve);
-    });
-  }
-
-  // static
-
-  public static resolve<U = any>(value?: U | Thenable<U>) {
-    return new PQ<U>(resolve => {
-      return resolve(value);
-    });
-  }
-
-  public static reject<U>(reason?: any) {
-    return new PQ<U>((resolve, reject) => {
-      return reject(reason);
-    });
-  }
-
-  public static props<U = any>(obj: object) {
-    return new PQ<U>((resolve, reject) => {
-      if (!isObject(obj)) {
-        return reject(new TypeError('An object must be provided.'));
-      }
-
-      const resolvedObject = {};
-
-      const keys = Object.keys(obj);
-      const resolvedValues = PQ.all<string>(keys.map(key => obj[key]));
-
-      return resolvedValues
-        .then(collection => {
-          return collection.map((value, index) => {
-            resolvedObject[keys[index]] = value;
-          });
-        })
-        .then(() => resolve(resolvedObject as U))
-        .catch(reject);
-    });
-  }
-
-  public static all<U = any>(collection: (U | Thenable<U>)[]) {
-    return new PQ<U[]>((resolve, reject) => {
-      if (!Array.isArray(collection)) {
-        return reject(new TypeError('An array must be provided.'));
-      }
-
-      let counter = collection.length;
-      const resolvedCollection: U[] = [];
-
-      const tryResolve = (value: U, index: number) => {
-        counter -= 1;
-        resolvedCollection[index] = value;
-
-        if (counter !== 0) {
-          return null;
+          if (nxtValue instanceof MyPromise) {
+            nxtValue.then(nxtResolveFn, nxtRejectFn);
+          } else {
+            nxtResolveFn(nxtValue);
+          }
+        } catch (err) {
+          nxtRejectFn(err);
         }
+      });
 
-        return resolve(resolvedCollection);
-      };
+      this.rejectFnList.push(reason => {
+        try {
+          const nxtValue = (rejectFn as RejectFn<unknown>)(reason);
 
-      return collection.forEach((item, index) => {
-        return PQ.resolve(item)
-          .then(value => {
-            return tryResolve(value, index);
-          })
-          .catch(reject);
+          if (nxtValue instanceof MyPromise) {
+            nxtValue.then(nxtResolveFn, nxtRejectFn);
+          } else {
+            nxtResolveFn(nxtValue);
+          }
+        } catch (err) {
+          nxtRejectFn(err);
+        }
       });
     });
   }
 
-  public static spread<U extends any[]>(
-    collection: U,
-    handler: HandlerOnSuccess<any[]>
-  ) {
-    return PQ.all(collection).spread(handler);
+  finally(finalFn: ResolveFn<void> | RejectFn<void>) {
+    return this.then(
+      value =>
+        MyPromise.resolve(finalFn()).then(
+          () => value,
+          () => {}
+        ),
+      (reason: unknown) =>
+        MyPromise.reject(finalFn()).then(
+          () => {},
+          () => reason
+        )
+    );
   }
 
-  public static any<U = any>(collection: (U | Thenable<U>)[]) {
-    return new PQ<U>((resolve, reject) => {
-      return collection.forEach(item => {
-        return PQ.resolve(item).then(resolve).catch(reject);
-      });
+  static resolve(value: unknown) {
+    return new MyPromise(resolveFn => {
+      resolveFn(value);
     });
   }
 
-  public static delay(timeInMs: number) {
-    return new PQ(resolve => {
-      return setTimeout(resolve, timeInMs);
+  static reject(reason: unknown) {
+    return new MyPromise((_, rejectFn) => {
+      rejectFn(reason);
     });
-  }
-
-  public static promisify<U = any>(
-    fn: (...args: any[]) => void,
-    context = null
-  ) {
-    return (...args: any[]) => {
-      return new PQ<U>((resolve, reject) => {
-        return fn.apply(context, [
-          ...args,
-          (err: any, result: U) => {
-            if (err) {
-              return reject(err);
-            }
-
-            return resolve(result);
-          },
-        ]);
-      });
-    };
-  }
-
-  public static promisifyAll<U>(obj: any): U {
-    return Object.keys(obj).reduce((result, key) => {
-      let prop = obj[key];
-
-      if (isFunction(prop)) {
-        prop = PQ.promisify(prop, obj);
-      }
-
-      result[`${key}Async`] = prop;
-
-      return result;
-    }, {}) as U;
   }
 }
-
-const isFunction = (func: any) => typeof func === 'function';
-
-const isObject = (supposedObject: any) =>
-  typeof supposedObject === 'object' &&
-  supposedObject !== null &&
-  !Array.isArray(supposedObject);
-
-const isThenable = (obj: any) => isObject(obj) && isFunction(obj.then);
-
-const identity = (val: any) => val;
-
-export {isObject, isThenable, identity, isFunction};

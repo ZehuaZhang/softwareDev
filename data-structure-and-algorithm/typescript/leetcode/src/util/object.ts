@@ -16,3 +16,27 @@ export function isEqual(x: any, y: any): boolean {
   }
   return x === y;
 }
+
+export function isBoolean(item: unknown) {
+  return typeof item === 'boolean';
+}
+
+export function isNumber(item: unknown) {
+  return typeof item === 'number';
+}
+
+export function isString(item: unknown) {
+  return typeof item === 'string';
+}
+
+export function isArray(item: unknown) {
+  return Array.isArray(item);
+}
+
+export function isObject(item: unknown) {
+  return typeof item === 'object' && !isArray(item);
+}
+
+export function isFunction(item: unknown) {
+  return typeof item === 'function';
+}
