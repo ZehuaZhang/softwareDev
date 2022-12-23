@@ -74,7 +74,7 @@ function getFormalizedStringFromMarkup(text: string) {
 
   result += text.substring(prevIndex, text.length);
 
-  return result.trim();
+  return result;
 }
 
 // tests
