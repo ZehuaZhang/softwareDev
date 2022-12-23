@@ -35,8 +35,6 @@ function getFormalizedStringFromMarkup(text: string) {
     const subText = match[0];
     const {length} = subText;
 
-    console.log('index', index, 'subtext', subText, 'length', length);
-
     result += text.substring(prevIndex, index);
 
     let plain;
