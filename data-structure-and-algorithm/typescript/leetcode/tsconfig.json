@@ -4,8 +4,10 @@
     "rootDir": ".",
     "outDir": "build",
     "lib": [
-      "es2020"
-    ]
+      "ESNext"
+    ],
+    "module": "ESNext",
+    "target": "ESNext"
   },
   "include": [
     "src/**/*.ts",
