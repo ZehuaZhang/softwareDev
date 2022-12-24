@@ -4,7 +4,9 @@ dungeon grid
 reconstruct iternary
 timestamp log
 google number jump
-topology - from one to the other vertex
+topology - dfs & iterative - from one to the other vertex
+Dijkstra's Algorithm
+Detect Cycle in Graphs
 cpp misc
 
 implement getelements
