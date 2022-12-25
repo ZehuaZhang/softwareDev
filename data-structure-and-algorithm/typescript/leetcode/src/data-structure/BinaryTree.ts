@@ -189,3 +189,20 @@ export class TreeNode<T> {
     this.right = right;
   }
 }
+
+export class ParentTreeNode<T> extends TreeNode<T> {
+  parent: Nullable<ParentTreeNode<T>>;
+  left: Nullable<ParentTreeNode<T>>;
+  right: Nullable<ParentTreeNode<T>>;
+  constructor(
+    data: T,
+    left: Nullable<ParentTreeNode<T>> = null,
+    right: Nullable<ParentTreeNode<T>> = null,
+    parent: Nullable<ParentTreeNode<T>> = null
+  ) {
+    super(data);
+    this.left = left;
+    this.right = right;
+    this.parent = parent;
+  }
+}

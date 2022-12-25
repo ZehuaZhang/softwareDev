@@ -1,4 +1,4 @@
-function selectionSort(array) {
+function selectionSort(array: number[]): void {
   for (let i = 0; i < array.length - 1; ++i) {
     let min = i;
     for (let j = i + 1; j < array.length; ++j)
@@ -12,7 +12,7 @@ function selectionSort(array) {
   }
 }
 
-function insertionSort(array) {
+function insertionSort(array: number[]): void {
   for (let i = 1; i < array.length; ++i) {
     const element = array[i];
     let j = i;
@@ -24,7 +24,7 @@ function insertionSort(array) {
   }
 }
 
-function bubbleSort(array) {
+function bubbleSort(array: number[]): void {
   for (let i = 0; i < array.length - 1; ++i) {
     for (let j = 0; j < array.length - 1 - i; ++j) {
       if (array[j] > array[j + 1]) {
@@ -36,17 +36,17 @@ function bubbleSort(array) {
   }
 }
 
-function mergeSort(array) {
-  return sort(array, 0, array.length - 1);
+function mergeSort(array: number[]): void {
+  return sort(0, array.length - 1);
 
-  function sort(array, left, right) {
+  function sort(left: number, right: number): void {
     if (left >= right) {
       return;
     }
     const mid = (left + right) >> 1;
-    sort(array, left, mid);
-    sort(array, mid + 1, right);
-    const temp = [];
+    sort(left, mid);
+    sort(mid + 1, right);
+    const temp: number[] = [];
     for (let i = left, j = mid + 1; i <= mid; ++i) {
       for (; j <= right && array[j] < array[i]; ++j) {
         temp.push(array[j]);
@@ -57,36 +57,10 @@ function mergeSort(array) {
   }
 }
 
-function heapSort(array) {
-  function heapify(array, n, i) {
-    let largest = i;
-    const left = 2 * i + 1;
-    const right = 2 * i + 2;
-
-    // if left child is larger than root
-    if (left < n && arr[left] > arr[largest]) {
-      largest = left;
-    }
-
-    // if right child is larger than root
-    if (right < n && arr[right] > arr[largest]) {
-      largest = right;
-    }
-
-    // if largest is not root
-    if (largest != i) {
-      const swap = array[i];
-      array[i] = array[largest];
-      array[largest] = swap;
-
-      // heapify affected sub-tree
-      heapify(array, n, largest);
-    }
-  }
-
+function heapSort(array: number[]): void {
   // build heap
   for (let i = Math.trunc(array.length / 2) - 1; i >= 0; --i) {
-    heapify(array, array.length, i);
+    heapify(array.length, i);
   }
 
   // extract element from heap one by one
@@ -95,40 +69,66 @@ function heapSort(array) {
     array[0] = array[i];
     array[i] = swap;
 
-    heapify(array, i, 0);
+    heapify(i, 0);
+  }
+
+  function heapify(length: number, i: number): void {
+    let largest = i;
+    const left = 2 * i + 1;
+    const right = 2 * i + 2;
+
+    // if left child is larger than root
+    if (left < length && array[left] > array[largest]) {
+      largest = left;
+    }
+
+    // if right child is larger than root
+    if (right < length && array[right] > array[largest]) {
+      largest = right;
+    }
+
+    // if largest is not root
+    if (largest !== i) {
+      const swap = array[i];
+      array[i] = array[largest];
+      array[largest] = swap;
+
+      // heapify affected sub-tree
+      heapify(length, largest);
+    }
   }
 }
 
-function quickSort(array) {
-  function quickSortHelper(array, leftIndex, rightIndex) {
-    if (leftIndex > rightIndex) {
+function quickSort(array: number[]): void {
+  quickSortHelper(0, array.length - 1);
+
+  function quickSortHelper(left: number, right: number) {
+    if (left > right) {
       return;
     }
 
-    const partitionIndex = partition(array, leftIndex, rightIndex);
+    const partitionIndex = partition(left, right);
 
-    quickSortHelper(array, leftIndex, partitionIndex - 1);
-    quickSortHelper(array, partitionIndex + 1, rightIndex);
+    quickSortHelper(left, partitionIndex - 1);
+    quickSortHelper(partitionIndex + 1, right);
   }
 
-  function partition(array, leftIndex, rightIndex) {
-    const pivot = array[rightIndex];
-    let i = leftIndex;
-    for (let j = leftIndex; j < rightIndex; ++j) {
+  function partition(left: number, right: number) {
+    const pivot = array[right];
+    let i = left;
+    for (let j = left; j < right; ++j) {
       if (array[j] <= pivot) {
-        swap(array, i++, j);
+        swap(i++, j);
       }
     }
 
-    swap(array, i, rightIndex);
+    swap(i, right);
     return i;
   }
 
-  function swap(array, i, j) {
+  function swap(i: number, j: number): void {
     const swap = array[i];
     array[i] = array[j];
     array[j] = swap;
   }
-
-  quickSortHelper(array, 0, array.length - 1);
 }

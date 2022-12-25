@@ -1,3 +1,4 @@
+import {ParentTreeNode} from '../data-structure/BinaryTree';
 import {Nullable} from '../util/object';
 
 function lcaHeight(
@@ -48,22 +49,4 @@ function lcaSet(
     node2 = node2.parent;
   }
   return node2;
-}
-
-class ParentTreeNode<T> {
-  data: T;
-  left: Nullable<ParentTreeNode<T>>;
-  right: Nullable<ParentTreeNode<T>>;
-  parent: Nullable<ParentTreeNode<T>>;
-  constructor(
-    data: T,
-    left: Nullable<ParentTreeNode<T>> = null,
-    right: Nullable<ParentTreeNode<T>> = null,
-    parent: Nullable<ParentTreeNode<T>> = null
-  ) {
-    this.data = data;
-    this.left = left;
-    this.right = right;
-    this.parent = parent;
-  }
 }

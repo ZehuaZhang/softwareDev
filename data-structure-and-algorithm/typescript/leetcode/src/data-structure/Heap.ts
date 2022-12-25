@@ -1,3 +1,5 @@
+import {Nullable} from '../util/object';
+
 export class Heap<T> {
   dataList: T[];
   dataIndexSetMap: Map<T, Set<number>>;
@@ -53,7 +55,17 @@ export class Heap<T> {
     const swapSet = this.dataIndexSetMap.get(swapData)!;
     swapSet.delete(this.dataList.length);
     swapSet.add(i);
-    this.heapifyDown(this.heapifyUp(i));
+    this.heapifyUp(this.heapifyDown(i));
+  }
+
+  heapify(data: Nullable<T> = null): void {
+    let i = 0;
+    if (data !== null) {
+      const dataSet = this.dataIndexSetMap.get(data)!;
+      i = dataSet.values().next().value;
+    }
+
+    this.heapifyUp(this.heapifyDown(i));
   }
 
   heapifyDown(parent: number): number {

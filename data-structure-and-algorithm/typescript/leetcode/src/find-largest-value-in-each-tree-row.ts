@@ -38,12 +38,15 @@ The number of nodes in the tree will be in the range [0, 104].
 import {TreeNode} from './data-structure/BinaryTree';
 import {Nullable} from './util/object';
 
-function largestValues(root: Nullable<TreeNode>): number[] {
+function largestValues(root: Nullable<TreeNode<number>>): number[] {
   const result: number[] = [];
-  dfs(root, 0);
+  largestValuesDfs(root, 0);
   return result;
 
-  function largestValuesDfs(node: Nullable<TreeNode>, level: number): void {
+  function largestValuesDfs(
+    node: Nullable<TreeNode<number>>,
+    level: number
+  ): void {
     if (!node) {
       return;
     }
