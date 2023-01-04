@@ -6,8 +6,8 @@
     "lib": [
       "ESNext"
     ],
-    "module": "ESNext",
-    "target": "ESNext"
+    // "module": "ESNext",
+    // "target": "ESNext"
   },
   "include": [
     "src/**/*.ts",
