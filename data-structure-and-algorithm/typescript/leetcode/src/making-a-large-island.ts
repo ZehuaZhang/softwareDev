@@ -46,7 +46,7 @@ function largestIsland(grid: number[][]): number {
           [0, 1],
         ]) {
           const [x, y] = [i + dx, j + dy];
-          if (isValid(grid, x, y)) {
+          if (isValid(x, y)) {
             union(id(i, j), id(x, y));
           }
         }
@@ -67,7 +67,7 @@ function largestIsland(grid: number[][]): number {
           [0, 1],
         ]) {
           const [x, y] = [i + dx, j + dy];
-          if (isValid(grid, x, y)) {
+          if (isValid(x, y)) {
             const root = find(id(x, y));
             if (!visited.has(root)) {
               curr += areaList[root];
@@ -85,8 +85,8 @@ function largestIsland(grid: number[][]): number {
     return i * cols + j;
   }
 
-  function isValid(grid: number[][], i: number, j: number): boolean {
-    return i >= 0 && i < rows && j >= 0 && j < cols;
+  function isValid(i: number, j: number): boolean {
+    return i >= 0 && i < rows && j >= 0 && j < cols && grid[i][j] === 1;
   }
 
   function find(x: number): number {

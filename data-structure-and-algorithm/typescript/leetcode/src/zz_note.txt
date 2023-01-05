@@ -1,11 +1,4 @@
 cpp misc
-price, currency weight converter fb interview
-827
-829
-975
-420
-2286
-1622
 
 implement getelements
 subscribe unscribe
