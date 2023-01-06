@@ -8,7 +8,7 @@ function lcaHeight(
   let height1 = getHeight(node1);
   let height2 = getHeight(node2);
 
-  if (height2 > height1) {
+  if (height2 < height1) {
     lcaHeight(node2, node1);
   }
 

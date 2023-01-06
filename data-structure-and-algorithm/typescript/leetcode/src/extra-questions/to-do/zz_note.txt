@@ -1,5 +1,3 @@
-cpp misc
-
 implement getelements
 subscribe unscribe
 set timeout

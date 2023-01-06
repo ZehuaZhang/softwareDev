@@ -1,21 +1,18 @@
 /*
-300. Longest Increasing Subsequence
+Construct Longest Increasing Subsequence
 
-Given an unsorted array of integers, find the length of longest increasing subsequence.
+Given an unsorted array of integers, construct longest increasing subsequence.
 
 Example:
 
 Input: [10,9,2,5,3,7,101,18]
-Output: 4
-Explanation: The longest increasing subsequence is [2,3,7,101], therefore the length is 4.
-Note:
+Output: [2,3,7,101], or [2,3,7,18].
 
-There may be more than one LIS combination, it is only necessary for you to return the length.
-Your algorithm should run in O(n2) complexity.
-Follow up: Could you improve it to O(n log n) time complexity?
+Time:  O(nlogn)
+Space: O(n)
 */
 
-function lengthOfLIS(nums: number[]): number {
+function constructLIS(nums: number[]): number[] {
   const result: number[] = [];
   for (const num of nums) {
     const i = findGreaterEqual(result, num);
@@ -25,7 +22,7 @@ function lengthOfLIS(nums: number[]): number {
       result[i] = num;
     }
   }
-  return result.length;
+  return result;
 
   function findGreaterEqual(nums: number[], target: number): number {
     let left = 0;
@@ -41,3 +38,5 @@ function lengthOfLIS(nums: number[]): number {
     return left;
   }
 }
+
+console.log(constructLIS([10, 9, 2, 5, 3, 7, 101, 18]));

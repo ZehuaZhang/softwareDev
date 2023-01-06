@@ -25,8 +25,9 @@ If the given node has no in-order successor in the tree, return null.
 It's guaranteed that the values of the tree are unique.
 */
 
-import {TreeNode} from './data-structure/BinaryTree';
+import {BinaryTree, TreeNode} from './data-structure/BinaryTree';
 import {Nullable} from './util/object';
+import {runTestCaseList} from './util/test';
 
 function inorderSuccessor(
   root: Nullable<TreeNode<number>>,
@@ -43,3 +44,20 @@ function inorderSuccessor(
   }
   return result;
 }
+
+// tests
+
+const tree1 = new BinaryTree(2, 1, 3);
+const tree2 = new BinaryTree(5, 3, 6, 2, 4, null, null, 1);
+
+tree1.printLevel();
+tree2.printLevel();
+
+const testInputListCollection = [
+  [tree1.root, tree1.root!.left],
+  [tree2.root, tree2.root!.right],
+];
+
+const expectedResultList = [tree1.root, null];
+
+runTestCaseList(testInputListCollection, expectedResultList, inorderSuccessor);
