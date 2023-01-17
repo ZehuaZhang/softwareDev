@@ -49,17 +49,17 @@ function calcEquation(
   values: number[],
   queries: string[][]
 ): number[] {
-  const map = new Map<string, [string, number][]>();
+  const graph = new Map<string, [string, number][]>();
   for (let i = 0; i < equations.length; i++) {
     const [src, dst] = equations[i];
-    if (!map.has(src)) {
-      map.set(src, []);
+    if (!graph.has(src)) {
+      graph.set(src, []);
     }
-    if (!map.has(dst)) {
-      map.set(dst, []);
+    if (!graph.has(dst)) {
+      graph.set(dst, []);
     }
-    map.get(src)!.push([dst, values[i]]);
-    map.get(dst)!.push([src, 1 / values[i]]);
+    graph.get(src)!.push([dst, values[i]]);
+    graph.get(dst)!.push([src, 1 / values[i]]);
   }
 
   const resultList: number[] = [];
@@ -70,17 +70,17 @@ function calcEquation(
     let result = -1;
     queue.push([src, 1]);
     visited.add(src);
-    if (map.has(dst)) {
+    if (graph.has(dst)) {
       while (!queue.isEmpty()) {
         const [node, value] = queue.pop();
         if (node === dst) {
           result = value;
           break;
         }
-        if (!map.has(node)) {
+        if (!graph.has(node)) {
           break;
         }
-        for (const [nextNode, nextValue] of map.get(node)!) {
+        for (const [nextNode, nextValue] of graph.get(node)!) {
           if (!visited.has(nextNode)) {
             visited.add(nextNode);
             queue.push([nextNode, value * nextValue]);

@@ -33,8 +33,8 @@ import {TreeNode} from './data-structure/BinaryTree';
 import {Nullable} from './util/object';
 
 function distanceK(
-  node: Nullable<TreeNode>,
-  target: Nullable<TreeNode>,
+  node: Nullable<TreeNode<number>>,
+  target: Nullable<TreeNode<number>>,
   k: number
 ): number[] {
   const nodeDistMap = new Map();
@@ -45,9 +45,9 @@ function distanceK(
 }
 
 function find(
-  node: Nullable<TreeNode>,
-  target: Nullable<TreeNode>,
-  nodeDistMap: Map<TreeNode, number>
+  node: Nullable<TreeNode<number>>,
+  target: Nullable<TreeNode<number>>,
+  nodeDistMap: Map<TreeNode<number>, number>
 ): void {
   if (!node) {
     return;
@@ -69,9 +69,9 @@ function find(
 }
 
 function search(
-  node: Nullable<TreeNode>,
+  node: Nullable<TreeNode<number>>,
   k: number,
-  nodeDistMap: Map<TreeNode, number>,
+  nodeDistMap: Map<TreeNode<number>, number>,
   dist: number,
   result: number[]
 ) {
