@@ -1,5 +1,4 @@
 export type Nullable<T> = T | null;
-export type Data = any;
 
 export function isEqual(x: any, y: any): boolean {
   if (

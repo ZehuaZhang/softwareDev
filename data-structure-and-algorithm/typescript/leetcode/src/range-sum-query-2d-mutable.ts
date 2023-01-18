@@ -29,12 +29,8 @@ class NumMatrix {
   cols: number;
   constructor(matrix: number[][]) {
     [this.rows, this.cols] = [matrix.length + 1, matrix[0].length + 1];
-    this.numList = [...Array(this.rows + 1)].map(() =>
-      Array(this.cols + 1).fill(0)
-    );
-    this.bitList = [...Array(this.rows + 1)].map(() =>
-      Array(this.cols + 1).fill(0)
-    );
+    this.numList = [...Array(this.rows)].map(() => Array(this.cols).fill(0));
+    this.bitList = [...Array(this.rows)].map(() => Array(this.cols).fill(0));
     for (let i = 0; i < this.rows - 1; ++i) {
       for (let j = 0; j < this.cols - 1; ++j) {
         this.update(i, j, matrix[i][j]);
@@ -54,17 +50,17 @@ class NumMatrix {
 
   sumRegion(row1: number, col1: number, row2: number, col2: number): number {
     return (
-      this.getSum(row2 + 1, col2 + 1) -
-      this.getSum(row1, col2 + 1) -
-      this.getSum(row2 + 1, col1) +
-      this.getSum(row1, col1)
+      this.getSum(row2, col2) -
+      this.getSum(row1 - 1, col2) -
+      this.getSum(row2, col1 - 1) +
+      this.getSum(row1 - 1, col1 - 1)
     );
   }
 
   getSum(row: number, col: number): number {
     let result = 0;
-    for (let i = row; i > 0; i -= this.leastBit(i)) {
-      for (let j = col; j > 0; j -= this.leastBit(j)) {
+    for (let i = row + 1; i > 0; i -= this.leastBit(i)) {
+      for (let j = col + 1; j > 0; j -= this.leastBit(j)) {
         result += this.bitList[i][j];
       }
     }

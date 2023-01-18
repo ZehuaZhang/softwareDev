@@ -2,9 +2,10 @@ export class BinaryIndexTree {
   numList: number[];
   bitList: number[];
   constructor(numList: number[]) {
-    this.numList = Array(numList.length + 1).fill(0);
-    this.bitList = Array(numList.length + 1).fill(0);
-    for (let i = 0; i < numList.length; ++i) {
+    const {length} = numList;
+    this.numList = Array(length + 1).fill(0);
+    this.bitList = Array(length + 1).fill(0);
+    for (let i = 0; i < length; ++i) {
       this.update(i, numList[i]);
     }
   }
@@ -18,7 +19,7 @@ export class BinaryIndexTree {
     for (let j = i + 1; j < this.bitList.length; j += this.leastBit(j)) {
       this.bitList[j] += delta;
     }
-    this.numList[i + 1] = delta + this.numList[i + 1];
+    this.numList[i + 1] += delta;
   }
 
   sumRange(i: number, j: number): number {
