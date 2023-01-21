@@ -38,60 +38,6 @@ Constraints:
 
 import {runTestCaseList} from './util/test';
 
-class RangeQueryMatrix {
-  numList: number[][];
-  bitList: number[][];
-  rows: number;
-  cols: number;
-  constructor(matrix: number[][]) {
-    [this.rows, this.cols] = [matrix.length + 1, matrix[0].length + 1];
-    this.numList = [...Array(this.rows)].map(() => Array(this.cols).fill(0));
-    this.bitList = [...Array(this.rows)].map(() => Array(this.cols).fill(0));
-    for (let i = 0; i < this.rows - 1; ++i) {
-      for (let j = 0; j < this.cols - 1; ++j) {
-        this.update(i, j, matrix[i][j]);
-      }
-    }
-  }
-
-  update(row: number, col: number, data: number): void {
-    const diff = data - this.numList[row + 1][col + 1];
-    this.updateDelta(row, col, diff);
-  }
-
-  updateDelta(row: number, col: number, delta: number): void {
-    for (let i = row + 1; i < this.rows; i += this.leastBit(i)) {
-      for (let j = col + 1; j < this.cols; j += this.leastBit(j)) {
-        this.bitList[i][j] += delta;
-      }
-    }
-    this.numList[row + 1][col + 1] += delta;
-  }
-
-  sumRegion(row1: number, col1: number, row2: number, col2: number): number {
-    return (
-      this.getSum(row2, col2) -
-      this.getSum(row1 - 1, col2) -
-      this.getSum(row2, col1 - 1) +
-      this.getSum(row1 - 1, col1 - 1)
-    );
-  }
-
-  getSum(row: number, col: number): number {
-    let result = 0;
-    for (let i = row + 1; i > 0; i -= this.leastBit(i)) {
-      for (let j = col + 1; j > 0; j -= this.leastBit(j)) {
-        result += this.bitList[i][j];
-      }
-    }
-    return result;
-  }
-
-  leastBit(num: number): number {
-    return num & -num;
-  }
-}
-
 function rangeAddQueries(size: number, queries: number[][]): number[][] {
   const matrix = [...Array(size)].map(() => Array(size).fill(0));
   for (const [row0, col0, row1, col1] of queries) {
