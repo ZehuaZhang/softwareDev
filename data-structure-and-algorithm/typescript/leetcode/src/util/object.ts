@@ -16,26 +16,30 @@ export function isEqual(x: any, y: any): boolean {
   return x === y;
 }
 
-export function isBoolean(item: unknown) {
+export function isBoolean(item: unknown): boolean {
   return typeof item === 'boolean';
 }
 
-export function isNumber(item: unknown) {
+export function isNumber(item: unknown): boolean {
   return typeof item === 'number';
 }
 
-export function isString(item: unknown) {
+export function isString(item: unknown): boolean {
   return typeof item === 'string';
 }
 
-export function isArray(item: unknown) {
+export function isArray(item: unknown): boolean {
   return Array.isArray(item);
 }
 
-export function isObject(item: unknown) {
+export function isObject(item: unknown): boolean {
   return typeof item === 'object' && !isArray(item);
 }
 
-export function isFunction(item: unknown) {
+export function isFunction(item: unknown): boolean {
   return typeof item === 'function';
+}
+
+export function isNull(item: unknown): boolean {
+  return item === null;
 }

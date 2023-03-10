@@ -1,4 +1,3 @@
 black jack
 vending machine
 rover
-undo and redo

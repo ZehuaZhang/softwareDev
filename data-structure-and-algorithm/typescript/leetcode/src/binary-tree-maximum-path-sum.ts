@@ -30,12 +30,12 @@ The number of nodes in the tree is in the range [1, 3 * 104].
 import {Nullable} from './util/object';
 import {TreeNode} from './data-structure/BinaryTree';
 
-function maxPathSum(root: Nullable<TreeNode>): number {
+function maxPathSum(root: Nullable<TreeNode<number>>): number {
   let max = -Infinity;
   maxPathSumDfs(root);
   return max;
 
-  function maxPathSumDfs(node: Nullable<TreeNode>): number {
+  function maxPathSumDfs(node: Nullable<TreeNode<number>>): number {
     if (node === null) {
       return 0;
     }
