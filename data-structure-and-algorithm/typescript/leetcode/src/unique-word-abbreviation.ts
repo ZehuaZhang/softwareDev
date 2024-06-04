@@ -43,11 +43,15 @@ class ValidWordAbbreviation {
     const abbr = this.getAbbreviation(word);
     return (
       !this.abbrWordSetMap.has(abbr) ||
-      this.abbrWordSetMap.get(abbr)!.size === 1
+      (this.abbrWordSetMap.get(abbr)!.size === 1 &&
+        this.abbrWordSetMap.get(abbr)!.has(word))
     );
   }
 
   getAbbreviation(word: string): string {
+    if (word.length <= 2) {
+      return word;
+    }
     return word[0] + (word.length - 2).toString() + word[word.length - 1];
   }
 }

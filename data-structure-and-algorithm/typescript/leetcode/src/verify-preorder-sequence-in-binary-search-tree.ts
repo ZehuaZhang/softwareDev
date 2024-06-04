@@ -29,3 +29,18 @@ function verifyPreorder(preorder: number[]): boolean {
   }
   return true;
 }
+
+function verifyPreorderII(preorder: number[]) {
+  let low = Infinity;
+  let i = -1;
+  for (const a of preorder) {
+    if (a < low) {
+      return false;
+    }
+    while (i >= 0 && a > preorder[i]) {
+      low = preorder[i--];
+    }
+    preorder[++i] = a;
+  }
+  return true;
+}

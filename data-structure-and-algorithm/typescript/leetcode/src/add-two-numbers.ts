@@ -31,7 +31,10 @@ It is guaranteed that the list represents a number that does not have leading ze
 import {ListNode} from './data-structure/LinkedList';
 import {Nullable} from './util/object';
 
-function addTwoNumbers(l1: Nullable<ListNode>, l2: Nullable<ListNode>) {
+function addTwoNumbers(
+  l1: Nullable<ListNode<number>>,
+  l2: Nullable<ListNode<number>>
+) {
   const dummy = new ListNode(0);
 
   let carry = 0;

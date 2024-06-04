@@ -44,6 +44,5 @@ function multiply(num1: string, num2: string): string {
       }
       return !zero || i === result.length - 1;
     })
-    .join('')
-    .toString();
+    .join('');
 }

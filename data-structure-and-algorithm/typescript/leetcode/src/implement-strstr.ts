@@ -19,10 +19,12 @@
 // For the purpose of this problem, we will return 0 when needle is an empty string. This is consistent to C's strstr() and Java's indexOf().
 
 function strStr(haystack: string, needle: string): number {
-  for (let end = needle.length; end <= haystack.length; ++end) {
-    const substring = haystack.substring(end - needle.length, end);
-    if (substring === needle) {
-      return end - needle.length;
+  const len = needle.length;
+  for (let right = len; right <= haystack.length; ++right) {
+    const left = right - len;
+    const sub = haystack.substring(left, right);
+    if (sub === needle) {
+      return left;
     }
   }
   return -1;

@@ -27,23 +27,22 @@ strs[i] consists of lower-case English letters.
 */
 function groupAnagrams(inputList: string[]): string[][] {
   const result: string[][] = [];
-  const anagramListMap = new Map<string, string[]>();
-  for (const input of inputList) {
-    const countList = Array(26).fill(0);
-    for (const char of input) {
-      ++countList[char.charCodeAt(0) - 'a'.charCodeAt(0)];
+  const ngrmRsltIdxMap = new Map<string, number>();
+  for (const str of inputList) {
+    const cntList = Array(26).fill(0);
+    for (const c of str) {
+      ++cntList[c.charCodeAt(0) - 'a'.charCodeAt(0)];
     }
-    const key = countList
+    const key = cntList
+      .map((cnt, i) => (cnt ? `${cnt}:${i}` : ''))
       .filter(Boolean)
-      .map((count, i) => `${count}:${i}`)
       .join('_');
-    if (!anagramListMap.has(key)) {
-      anagramListMap.set(key, []);
+    if (!ngrmRsltIdxMap.has(key)) {
+      ngrmRsltIdxMap.set(key, result.length);
+      result.push([]);
     }
-    anagramListMap.get(key)!.push(input);
+    result[ngrmRsltIdxMap.get(key)!].push(str);
   }
-  result.push(...anagramListMap.values());
-
   return result;
 }
 

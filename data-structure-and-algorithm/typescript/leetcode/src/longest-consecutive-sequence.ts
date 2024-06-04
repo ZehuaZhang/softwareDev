@@ -37,7 +37,7 @@ function longest(nums: number[]): number {
     for (; set.has(right); ++right) {
       set.delete(right);
     }
-    result = Math.max(result, right - left + 1);
+    result = Math.max(result, right - left - 1);
   }
   return result;
 }

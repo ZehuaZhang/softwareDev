@@ -19,19 +19,18 @@ Can you do it in O(n) time?
 */
 
 function maxSubArrayLen(nums: number[], target: number): number {
-  let sum = 0;
-  let result = 0;
-  const sumIndexMap = new Map<number, number>();
-  for (let i = 0; i < nums.length; ++i) {
+  let rslt = 0;
+  const sumIdxMap = new Map<number, number>();
+  for (let i = 0, sum = 0; i < nums.length; ++i) {
     sum += nums[i];
     if (sum === target) {
-      result = i + 1;
-    } else if (sumIndexMap.has(sum - target)) {
-      result = Math.max(result, i - sumIndexMap.get(sum - target)!);
+      rslt = i + 1;
+    } else if (sumIdxMap.has(sum - target)) {
+      rslt = Math.max(rslt, i - sumIdxMap.get(sum - target)!);
     }
-    if (!sumIndexMap.has(sum)) {
-      sumIndexMap.set(sum, i);
+    if (!sumIdxMap.has(sum)) {
+      sumIdxMap.set(sum, i);
     }
   }
-  return result;
+  return rslt;
 }

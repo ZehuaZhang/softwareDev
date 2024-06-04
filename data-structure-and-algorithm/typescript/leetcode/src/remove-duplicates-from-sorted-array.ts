@@ -39,7 +39,7 @@ function removeDuplicatesSorted(nums: number[]): number {
   const kth = 1;
   let index = kth;
   for (let i = kth; i < nums.length; ++i) {
-    if (nums[i - kth] === nums[i]) {
+    if (nums[index - kth] === nums[i]) {
       continue;
     }
     nums[index++] = nums[i];

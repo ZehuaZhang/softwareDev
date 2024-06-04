@@ -18,7 +18,7 @@ function minCost(costs: number[][]): number {
   const [rows, cols] = [costs.length, costs[0].length];
   const result: number[][] = [...costs].map(cost => [...cost]);
   for (let i = 1; i < rows; ++i) {
-    for (let j = 0; j < result[0].length; ++j) {
+    for (let j = 0; j < cols; ++j) {
       result[i][j] += Math.min(
         ...result[i - 1].filter((_, index) => j !== index)
       );

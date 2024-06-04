@@ -96,7 +96,7 @@ function myAtoi(input: string): number {
   let i = 0;
   for (; input[i] === ' '; ++i);
   if ('+-'.includes(input[i])) {
-    sign = 1 - 2 * Number(input[i++] === '-');
+    sign = input[i++] === '-' ? -1 : 1;
   }
   for (; input[i] >= '0' && input[i] <= '9'; ++i) {
     const digit = input[i].charCodeAt(0) - '0'.charCodeAt(0);

@@ -20,131 +20,56 @@ Note: Do not use the eval built-in library function.
 
 import {runTestCaseList} from './util/test';
 
-// method - dfs
-function calculateIII_Dfs(input: string): number {
-  let i = 0;
-  return calculateDfs(input);
+function calculate(s: string): number {
+  const n = s.length;
+  let rslt = 0;
 
-  function calculateDfs(input: string): number {
-    if (i === input.length) {
-      return 0;
-    }
-    const sum: number[] = [];
-    let op = '+';
-    let num = 0;
-    for (; i < input.length; ) {
-      const char = input[i++];
-      if (char >= '0' && char <= '9') {
-        num = num * 10 + Number(char);
-      }
-      if (char === '(') {
-        num = calculateDfs(input);
-      }
-      if (
-        i === input.length ||
-        ['+', '-', '*', '/', ')'].find(c => c === char)
-      ) {
-        switch (op) {
-          case '+':
-            sum.push(num);
-            break;
-          case '-':
-            sum.push(-num);
-            break;
-          case '*':
-            sum.push(sum.pop()! * num);
-            break;
-          case '/':
-            sum.push(Math.trunc(sum.pop()! / num));
-            break;
+  for (let i = 0, op = '+', num = 0, sum = 0; i < n; ++i) {
+    const c = s[i];
+    if (c >= '0' && c <= '9') {
+      num = num * 10 + c.charCodeAt(0) - '0'.charCodeAt(0);
+    } else if (c === '(') {
+      const j = i;
+      for (let cnt = 0; i < n; ++i) {
+        if (s[i] === '(') {
+          ++cnt;
+        } else if (s[i] === ')') {
+          --cnt;
         }
-        op = char;
-        num = 0;
-        if (op === ')') {
+        if (cnt === 0) {
           break;
         }
       }
+      num = calculate(s.substring(j + 1, i));
     }
-    return sum.reduce((a, b) => a + b, 0);
-  }
-}
-
-// iterative
-function calculateIII_Iterative(input: string): number {
-  const [operands, operators]: [number[], string[]] = [[], []];
-  let num = 0;
-  for (let i = 0; i < input.length; ++i) {
-    const char = input[i];
-    if (isDigit(char)) {
-      num = num * 10 + Number(char);
-      if (i === input.length - 1 || !isDigit(input[i + 1])) {
-        operands.push(num);
-        num = 0;
+    if ('+-*/'.includes(c) || i === n - 1) {
+      switch (op) {
+        case '+': {
+          sum += num;
+          break;
+        }
+        case '-': {
+          sum -= num;
+          break;
+        }
+        case '*': {
+          sum *= num;
+          break;
+        }
+        case '/': {
+          sum = Math.trunc(sum / num);
+          break;
+        }
       }
-    } else if (isOp(char)) {
-      while (
-        operators.length !== 0 &&
-        getPrecendence(char) <= getPrecendence(operators[operators.length - 1])
-      ) {
-        compute(operands, operators);
+      if ('+-'.includes(c) || i === n - 1) {
+        rslt += sum;
+        sum = 0;
       }
-      operators.push(char);
-    } else if (char === '(') {
-      operators.push(char);
-    } else if (char === ')') {
-      while (operators[operators.length - 1] !== '(') {
-        compute(operands, operators);
-      }
-      operators.pop();
+      op = c;
+      num = 0;
     }
   }
-  while (operators.length !== 0) {
-    compute(operands, operators);
-  }
-  return operands.pop()!;
-
-  function isDigit(char: string): boolean {
-    return char >= '0' && char <= '9';
-  }
-
-  function isOp(char: string): boolean {
-    return Boolean(['+', '-', '*', '/'].find(c => c === char));
-  }
-
-  function getPrecendence(char: string): number {
-    switch (char) {
-      case '+':
-        return 1;
-      case '-':
-        return 1;
-      case '*':
-        return 2;
-      case '/':
-        return 2;
-    }
-    return 0;
-  }
-
-  function compute(operands: number[], operators: string[]): void {
-    const x = operands.pop()!;
-    const y = operands.pop()!;
-    const op = operators.pop();
-
-    switch (op) {
-      case '+':
-        operands.push(x + y);
-        break;
-      case '-':
-        operands.push(y - x);
-        break;
-      case '*':
-        operands.push(x * y);
-        break;
-      case '/':
-        operands.push(Math.trunc(y / x));
-        break;
-    }
-  }
+  return rslt;
 }
 
 // tests
@@ -158,9 +83,4 @@ const testInputListCollection = [
 
 const expectedResultList = [2, 4, 21, -12];
 
-runTestCaseList(testInputListCollection, expectedResultList, calculateIII_Dfs);
-runTestCaseList(
-  testInputListCollection,
-  expectedResultList,
-  calculateIII_Iterative
-);
+runTestCaseList(testInputListCollection, expectedResultList, calculate);
