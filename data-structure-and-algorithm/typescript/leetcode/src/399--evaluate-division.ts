@@ -42,53 +42,51 @@ queries[i].length == 2
 Ai, Bi, Cj, Dj consist of lower case English letters and digits.
  */
 
-import {Queue} from './data-structure/Queue';
-
 function calcEquation(
   equations: string[][],
   values: number[],
   queries: string[][]
 ): number[] {
-  const graph = new Map<string, [string, number][]>();
+  const map = new Map<string, [string, number][]>();
   for (let i = 0; i < equations.length; i++) {
     const [src, dst] = equations[i];
-    if (!graph.has(src)) {
-      graph.set(src, []);
+    if (!map.has(src)) {
+      map.set(src, []);
     }
-    if (!graph.has(dst)) {
-      graph.set(dst, []);
+    if (!map.has(dst)) {
+      map.set(dst, []);
     }
-    graph.get(src)!.push([dst, values[i]]);
-    graph.get(dst)!.push([src, 1 / values[i]]);
+    map.get(src)!.push([dst, values[i]]);
+    map.get(dst)!.push([src, 1 / values[i]]);
   }
 
-  const resultList: number[] = [];
+  const rslt: number[] = [];
 
   for (const [src, dst] of queries) {
-    const queue = new Queue<[string, number]>();
+    const q: [string, number][] = [];
     const visited = new Set<string>();
     let result = -1;
-    queue.push([src, 1]);
+    q.push([src, 1]);
     visited.add(src);
-    if (graph.has(dst)) {
-      while (!queue.isEmpty()) {
-        const [node, value] = queue.pop();
+    if (map.has(dst)) {
+      while (q.length) {
+        const [node, value] = q.shift();
         if (node === dst) {
           result = value;
           break;
         }
-        if (!graph.has(node)) {
+        if (!map.has(node)) {
           break;
         }
-        for (const [nextNode, nextValue] of graph.get(node)!) {
+        for (const [nextNode, nextValue] of map.get(node)!) {
           if (!visited.has(nextNode)) {
             visited.add(nextNode);
-            queue.push([nextNode, value * nextValue]);
+            q.push([nextNode, value * nextValue]);
           }
         }
       }
     }
-    resultList.push(result);
+    rslt.push(result);
   }
-  return resultList;
+  return rslt;
 }

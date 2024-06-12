@@ -5,13 +5,6 @@ function querySelectorAll(selector: string): any[] {
   traverse(document.documentElement); // document.documentElement points root Element(the html element)
   return result;
 
-  function isMatch(element: any, selector: string): boolean {
-    return (
-      element.tagName === selector.toUpperCase() ||
-      element.classList.contains(selector)
-    );
-  }
-
   function traverse(node: any): void {
     if (node === null) {
       return;
@@ -22,5 +15,19 @@ function querySelectorAll(selector: string): any[] {
     for (const child of node.children) {
       traverse(child);
     }
+  }
+
+  function isMatch(element: any, selector: string): boolean {
+    const qry = selector.split(/[^a-zA-Z0-9-]/).filter(Boolean)[0];
+
+    if (selector.startsWith('.')) {
+      return element.classList.contains(qry);
+    }
+
+    if (selector.startsWith('#')) {
+      return element.getAttribute('id') === qry;
+    }
+
+    return element.tagName === qry.toUpperCase();
   }
 }
