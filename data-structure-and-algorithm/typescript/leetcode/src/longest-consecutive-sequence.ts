@@ -1,9 +1,11 @@
 /*
+128. Longest Consecutive Sequence
+
 Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence.
 
 You must write an algorithm that runs in O(n) time.
 
-
+ 
 
 Example 1:
 
@@ -14,7 +16,7 @@ Example 2:
 
 Input: nums = [0,3,7,2,5,8,4,6,0,1]
 Output: 9
-
+ 
 
 Constraints:
 
@@ -22,22 +24,22 @@ Constraints:
 -109 <= nums[i] <= 109
 */
 
-function longest(nums: number[]): number {
+function longestConsecutive(nums: number[]): number {
   let result = 0;
-  const set = new Set(nums);
+  const set = new Set<number>(nums);
   for (const num of nums) {
     if (!set.has(num)) {
       continue;
     }
     set.delete(num);
-    let [left, right] = [num - 1, num + 1];
-    for (; set.has(left); --left) {
-      set.delete(left);
+    let [l, r] = [num - 1, num + 1];
+    for (; set.has(l); --l) {
+      set.delete(l);
     }
-    for (; set.has(right); ++right) {
-      set.delete(right);
+    for (; set.has(r); ++r) {
+      set.delete(r);
     }
-    result = Math.max(result, right - left - 1);
+    result = Math.max(result, r - l - 1);
   }
   return result;
 }

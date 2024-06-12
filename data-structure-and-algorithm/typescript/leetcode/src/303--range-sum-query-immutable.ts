@@ -1,4 +1,6 @@
 /*
+303. Range Sum Query - Immutable
+
 Given an integer array nums, handle multiple queries of the following type:
 
 Calculate the sum of the elements of nums between indices left and right inclusive where left <= right.
@@ -33,11 +35,11 @@ At most 104 calls will be made to sumRange.
 
 class NumArray {
   nums: number[];
-  constructor(numList: number[]) {
+  constructor(nums: number[]) {
     this.nums = [];
     let sum = 0;
-    for (let i = 1; i < numList.length; ++i) {
-      sum += numList[i];
+    for (const n of nums) {
+      sum += n;
       this.nums.push(sum);
     }
   }

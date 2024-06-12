@@ -1,4 +1,6 @@
-/**
+/*
+224. Basic Calculator
+
 Given a string s representing a valid expression, implement a basic calculator to evaluate it, and return the result of the evaluation.
 
 Note: You are not allowed to use any built-in function which evaluates strings as mathematical expressions, such as eval().
@@ -32,41 +34,54 @@ s represents a valid expression.
 Every number and running calculation will fit in a signed 32-bit integer.
 */
 
-function calculateI(input: string): number {
-  let i = 0;
-  return calculateDFS(input);
+function calculate(s: string): number {
+  const n = s.length;
+  let rslt = 0;
 
-  function calculateDFS(input: string): number {
-    if (i === input.length) {
-      return 0;
-    }
-    const sum = [];
-    let op = '+';
-    let num = 0;
-    for (; i < input.length; ) {
-      const char = input[i++];
-      if (char >= '0' && char <= '9') {
-        num = num * 10 + Number(char);
-      }
-      if (char === '(') {
-        num = calculateDFS(input);
-      }
-      if (i === input.length || ['+', '-', ')'].find(c => c === char)) {
-        switch (op) {
-          case '+':
-            sum.push(num);
-            break;
-          case '-':
-            sum.push(-num);
-            break;
+  for (let i = 0, op = '+', num = 0, sum = 0; i < n; ++i) {
+    const c = s[i];
+    if (c >= '0' && c <= '9') {
+      num = num * 10 + c.charCodeAt(0) - '0'.charCodeAt(0);
+    } else if (c === '(') {
+      const j = i;
+      for (let cnt = 0; i < n; ++i) {
+        if (s[i] === '(') {
+          ++cnt;
+        } else if (s[i] === ')') {
+          --cnt;
         }
-        op = char;
-        num = 0;
-        if (op === ')') {
+        if (cnt === 0) {
           break;
         }
       }
+      num = calculate(s.substring(j + 1, i));
     }
-    return sum.reduce((a, b) => a + b, 0);
+    if ('+-*/'.includes(c) || i === n - 1) {
+      switch (op) {
+        case '+': {
+          sum += num;
+          break;
+        }
+        case '-': {
+          sum -= num;
+          break;
+        }
+        case '*': {
+          sum *= num;
+          break;
+        }
+        case '/': {
+          sum /= num;
+          break;
+        }
+      }
+      if ('+-'.includes(c) || i === n - 1) {
+        rslt += sum;
+        sum = 0;
+      }
+      op = c;
+      num = 0;
+    }
   }
+  return rslt;
 }

@@ -1,4 +1,6 @@
 /*
+323. Number of Connected Components in an Undirected Graph
+
 Given n nodes labeled from 0 to n - 1 and a list of undirected edges (each edge is a pair of nodes), write a function to find the number of connected components in an undirected graph.
 
 Example 1:
@@ -47,6 +49,6 @@ function countComponents(count: number, edges: number[][]): number {
   function union(x: number, y: number): void {
     const xParent = find(x);
     const yParent = find(y);
-    parentList[xParent] = parentList[yParent];
+    parentList[xParent] = yParent;
   }
 }

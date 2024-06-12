@@ -93,7 +93,7 @@ function verticalOrder(root: TreeNode | null): number[][] {
       q.push([i - 1, node.left]);
     }
     if (node.right) {
-      q.push([i - 1, node.right]);
+      q.push([i + 1, node.right]);
     }
   }
   const keys = [...m.keys()].sort((a, b) => a - b);

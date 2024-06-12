@@ -20,7 +20,7 @@ function topologicalSortDFS(graph: Graph<number, number>): GraphNode<number>[] {
 
     for (const [destination] of adjacentMap.get(node)!) {
       if (!visited.has(destination)) {
-        topologicalSortDFSHelper(node);
+        topologicalSortDFSHelper(destination);
       }
     }
 

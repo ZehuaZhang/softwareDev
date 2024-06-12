@@ -36,7 +36,7 @@ p != q
 */
 
 import {BinaryTree, TreeNode} from './data-structure/BinaryTree';
-import {lowestCommonAncestor} from './lowest-common-ancestor-of-a-binary-tree';
+import {lowestCommonAncestor} from './236--lowest-common-ancestor-of-a-binary-tree';
 import {Nullable} from './util/object';
 import {runTestCaseList} from './util/test';
 

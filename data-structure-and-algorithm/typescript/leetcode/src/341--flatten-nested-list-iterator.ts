@@ -1,4 +1,6 @@
 /*
+341. Flatten Nested List Iterator
+
 You are given a nested list of integers nestedList. Each element is either an integer or a list whose elements may also be integers or other lists. Implement an iterator to flatten it.
 
 Implement the NestedIterator class:

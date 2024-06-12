@@ -31,13 +31,11 @@ n == matrix[i].length
 0 <= matrix[i][j] <= 231 - 1
 */
 
-import {Queue} from './data-structure/Queue';
-
 function longestIncreasingPath(matrix: number[][]): number {
-  const [rows, cols] = [matrix.length, matrix[0].length];
-  const inDegree = [...Array(rows)].map(() => Array(cols).fill(0));
-  for (let i = 0; i < rows; ++i) {
-    for (let j = 0; j < cols; ++j) {
+  const [m, n] = [matrix.length, matrix[0].length];
+  const inDegree = [...Array(m)].map(() => Array(n).fill(0));
+  for (let i = 0; i < m; ++i) {
+    for (let j = 0; j < n; ++j) {
       for (const [dx, dy] of [
         [-1, 0],
         [1, 0],
@@ -45,28 +43,26 @@ function longestIncreasingPath(matrix: number[][]): number {
         [0, -1],
       ]) {
         const [x, y] = [i + dx, j + dy];
-        if (x >= 0 && x < rows && y >= 0 && y < cols) {
-          if (matrix[x][y] > matrix[i][j]) {
-            ++inDegree[x][y];
-          }
+        if (x >= 0 && x < m && y >= 0 && y < n && matrix[x][y] > matrix[i][j]) {
+          ++inDegree[x][y];
         }
       }
     }
   }
 
-  let queue = new Queue<number[]>();
-  for (let i = 0; i < rows; ++i) {
-    for (let j = 0; j < cols; ++j) {
+  let q: [number, number][] = [];
+  for (let i = 0; i < m; ++i) {
+    for (let j = 0; j < n; ++j) {
       if (inDegree[i][j] === 0) {
-        queue.push([i, j]);
+        q.push([i, j]);
       }
     }
   }
 
   let result = 0;
-  for (; queue.size; ++result) {
-    const next = new Queue<number[]>();
-    for (const [i, j] of queue.toArray()) {
+  for (; q.length; ++result) {
+    const next: [number, number][] = [];
+    for (const [i, j] of q) {
       for (const [dx, dy] of [
         [-1, 0],
         [1, 0],
@@ -74,7 +70,7 @@ function longestIncreasingPath(matrix: number[][]): number {
         [0, -1],
       ]) {
         const [x, y] = [i + dx, j + dy];
-        if (x >= 0 && x < rows && y >= 0 && y < cols) {
+        if (x >= 0 && x < m && y >= 0 && y < n) {
           if (matrix[x][y] > matrix[i][j]) {
             if (--inDegree[x][y] === 0) {
               next.push([x, y]);
@@ -83,47 +79,7 @@ function longestIncreasingPath(matrix: number[][]): number {
         }
       }
     }
-    queue = next;
+    q = next;
   }
   return result;
-}
-
-function longestIncreasingPathDFS(matrix: number[][]): number {
-  const [rows, cols] = [matrix.length, matrix[0].length];
-  const cache = [...Array(rows)].map(() => Array(cols).fill(0));
-  let result = 0;
-  for (let i = 0; i < rows; ++i) {
-    for (let j = 0; j < cols; ++j) {
-      const length = longestIncreasingPathDfsHelper(i, j);
-      result = Math.max(result, length);
-    }
-  }
-  return result;
-
-  function longestIncreasingPathDfsHelper(i: number, j: number): number {
-    if (cache[i][j]) {
-      return cache[i][j];
-    }
-    let max = 1;
-    for (const [dx, dy] of [
-      [-1, 0],
-      [1, 0],
-      [0, -1],
-      [0, 1],
-    ]) {
-      const [x, y] = [i + dx, j + dy];
-      if (
-        x >= 0 &&
-        x < rows &&
-        y >= 0 &&
-        y < cols &&
-        matrix[x][y] > matrix[i][j]
-      ) {
-        const length = 1 + longestIncreasingPathDfsHelper(x, y);
-        max = Math.max(max, length);
-      }
-    }
-    cache[i][j] = max;
-    return max;
-  }
 }
