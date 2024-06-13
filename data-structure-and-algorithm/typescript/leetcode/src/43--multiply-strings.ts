@@ -37,13 +37,13 @@ function multiply(num1: string, num2: string): string {
     }
   }
 
-  let firstZero = true;
+  let prefixZero = true;
   return result
     .filter((d, i) => {
       if (d) {
-        firstZero = false;
+        prefixZero = false;
       }
-      return !firstZero || i === result.length - 1;
+      return !prefixZero || i === result.length - 1;
     })
     .join('');
 }

@@ -50,16 +50,16 @@ Run through the frequency dictionary and for every element which has frequency =
 If we have more number of tasks than the max slots we need as computed above we will return the length of the tasks array as we need at least those many CPU cycles.
 */
 
-function leastInterval(tasks: string[], idleCount: number): number {
-  const countMap = new Map<string, number>();
-  let maxCount = 0;
+function leastInterval(tasks: string[], n: number): number {
+  const tskCntMap = new Map<string, number>();
+  let max = 0;
   for (const task of tasks) {
-    countMap.set(task, (countMap.get(task) || 0) + 1);
-    maxCount = Math.max(maxCount, countMap.get(task)!);
+    tskCntMap.set(task, (tskCntMap.get(task) || 0) + 1);
+    max = Math.max(max, tskCntMap.get(task)!);
   }
-  let result = (maxCount - 1) * (idleCount + 1);
-  for (const count of countMap.values()) {
-    if (count === maxCount) {
+  let result = (max - 1) * (n + 1);
+  for (const count of tskCntMap.values()) {
+    if (count === max) {
       ++result;
     }
   }

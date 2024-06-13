@@ -35,7 +35,7 @@ function reverse(x: number): number {
       result > Math.trunc(max / 10) ||
       (result === Math.trunc(max / 10) && num % 10 > max % 10) ||
       result < Math.trunc(min / 10) ||
-      (result === Math.trunc(max / 10) && num % 10 < min % 10)
+      (result === Math.trunc(min / 10) && num % 10 < min % 10)
     ) {
       return 0;
     }
