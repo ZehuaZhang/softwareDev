@@ -1,4 +1,6 @@
 /*
+409. Longest Palindrome
+
 Given a string s which consists of lowercase or uppercase letters, return the length of the longest palindrome that can be built with those letters.
 
 Letters are case sensitive, for example, "Aa" is not considered a palindrome here.
@@ -27,15 +29,15 @@ Constraints:
 s consists of lowercase and/or uppercase English letters only.
 */
 
-function longestPalindrome(input: string): number {
-  const letterSet = new Set<string>();
-  for (const char of input) {
-    if (letterSet.has(char)) {
-      letterSet.delete(char);
+function longestPalindrome(s: string): number {
+  const set = new Set<string>();
+  for (const c of s) {
+    if (set.has(c)) {
+      set.delete(c);
     } else {
-      letterSet.add(char);
+      set.add(c);
     }
   }
 
-  return letterSet.size - Math.max(0, letterSet.size - 1);
+  return set.size - Math.max(0, set.size - 1);
 }

@@ -54,7 +54,7 @@ function solve(board: string[][]): void {
     for (let j = 0; j < n; ++j) {
       if (board[i][j] === 'O') {
         board[i][j] = 'X';
-      } else if (board[i][j] === '1') {
+      } else if (board[i][j] === 'Z') {
         board[i][j] = 'O';
       }
     }
@@ -64,7 +64,7 @@ function solve(board: string[][]): void {
     if (i < 0 || i >= m || j < 0 || j >= n || board[i][j] !== 'O') {
       return;
     }
-    board[i][j] = '1';
+    board[i][j] = 'Z';
     for (const [dx, dy] of [
       [-1, 0],
       [1, 0],

@@ -28,9 +28,6 @@ Follow up: If the BST is modified often (i.e., we can do insert and delete opera
 */
 
 function kthSmallest(root: TreeNode | null, k: number): number {
-  if (root === null) {
-    return NaN;
-  }
   const stk: TreeNode[] = [];
 
   for (let node = root, n = 0; stk.length || node; ) {

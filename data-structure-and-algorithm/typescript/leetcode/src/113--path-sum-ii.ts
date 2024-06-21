@@ -45,12 +45,14 @@ function pathSum(root: TreeNode | null, targetSum: number): number[][] {
 
     path.push(node.val);
 
-    if (node.left === null && node.right === null && sum === node.val) {
-      result.push([...path]);
+    if (node.left === null && node.right === null) {
+      if (sum === node.val) {
+        result.push([...path]);
+      }
+    } else {
+      dfs(node.left, sum - node.val, path);
+      dfs(node.right, sum - node.val, path);
     }
-
-    dfs(node.left, sum - node.val, path);
-    dfs(node.right, sum - node.val, path);
     path.pop();
   }
 }

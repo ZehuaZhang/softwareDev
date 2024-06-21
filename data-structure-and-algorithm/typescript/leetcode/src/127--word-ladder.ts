@@ -43,8 +43,8 @@ function ladderLength(
     return 0;
   }
   const q: string[] = [beginWord];
-  let result = 1;
   set.delete(beginWord);
+  let result = 1;
   while (q.length) {
     for (let len = q.length; len; --len) {
       const from = q.shift();

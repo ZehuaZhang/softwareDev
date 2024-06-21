@@ -17,8 +17,8 @@ NOTE: input types have been changed on April 15, 2019. Please reset to default c
 function canAttendMeetings(intervals: number[][]): boolean {
   intervals.sort(([s1], [s2]) => s1 - s2);
   for (let i = 1; i < intervals.length; ++i) {
-    const [s] = intervals[i];
     const [_, e] = intervals[i - 1];
+    const [s] = intervals[i];
     if (s < e) {
       return false;
     }

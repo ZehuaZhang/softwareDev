@@ -21,15 +21,15 @@ Explanation: One 1 at depth 3, one 4 at depth 2, and one 6 at depth 1; 1*3 + 4*2
 
 function depthSumInverse(list: NestedInteger[]): number {
   const path: number[] = [];
-  depthSumInverseDfs(list, 0);
+  dfs(list, 0);
 
   let result = 0;
-  for (let i = path.length - 1; i >= 0; --i) {
+  for (let i = 0; i < path.length; ++i) {
     result += path[i] * (list.length - i);
   }
   return result;
 
-  function depthSumInverseDfs(list: NestedInteger[], depth: number) {
+  function dfs(list: NestedInteger[], depth: number) {
     if (path.length === depth) {
       path.push(0);
     }
@@ -37,7 +37,7 @@ function depthSumInverse(list: NestedInteger[]): number {
       if (l.isInteger()) {
         path[depth] += l.getInteger();
       } else {
-        depthSumInverseDfs(l.getList(), depth + 1);
+        dfs(l.getList(), depth + 1);
       }
     }
   }

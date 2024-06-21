@@ -31,12 +31,13 @@ Follow up: Could you optimize your algorithm to use only O(rowIndex) extra space
 */
 
 function getRow(rowIndex: number): number[] {
-  const result: number[] = Array(rowIndex + 1).fill(0);
-  result[0] = 1;
-  for (let i = 1; i <= rowIndex; ++i) {
-    for (let j = i; j >= 1; --j) {
-      result[j] += result[j - 1];
+  let rslt: number[] = [];
+  for (let i = 0; i <= rowIndex; ++i) {
+    const curr: number[] = Array(i + 1).fill(1);
+    for (let j = 1; j < i; ++j) {
+      curr[j] = rslt[j - 1] + rslt[j];
     }
+    rslt = curr;
   }
-  return result;
+  return rslt;
 }

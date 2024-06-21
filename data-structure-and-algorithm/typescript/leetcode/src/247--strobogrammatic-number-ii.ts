@@ -19,9 +19,9 @@ function findStrobogrammatic(size: number): string[] {
     ['6', '9'],
     ['9', '6'],
   ]);
-  return findStrobogrammaticDfs(size, size);
+  return dfs(size);
 
-  function findStrobogrammaticDfs(size: number, count: number): string[] {
+  function dfs(count: number): string[] {
     if (count === 0) {
       return [''];
     }
@@ -30,7 +30,7 @@ function findStrobogrammatic(size: number): string[] {
     }
 
     const rslt: string[] = [];
-    for (const mid of findStrobogrammaticDfs(size, count - 2)) {
+    for (const mid of dfs(count - 2)) {
       for (const [left, right] of pairMap) {
         if (count !== size || left !== '0') {
           rslt.push(left + mid + right);

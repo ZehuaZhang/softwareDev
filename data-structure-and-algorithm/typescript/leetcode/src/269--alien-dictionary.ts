@@ -45,7 +45,6 @@ There may be multiple valid order of letters, return any one of them is fine.
 */
 
 import {runTestCaseList} from './util/test';
-import {Queue} from './data-structure/Queue';
 
 function alienOrder(words: string[]): string {
   const baseCode = 'a'.charCodeAt(0);
@@ -59,8 +58,8 @@ function alienOrder(words: string[]): string {
   const graph = [...Array(26)].map(() => new Set<number>());
   for (let i = 0; i < words.length - 1; ++i) {
     for (let j = 0; j < Math.min(words[i].length, words[i + 1].length); ++j) {
-      const prev = words[i][j].charCodeAt(0) - baseCode;
-      const curr = words[i + 1][j].charCodeAt(0) - baseCode;
+      const prev = words[i].charCodeAt(j) - baseCode;
+      const curr = words[i + 1].charCodeAt(j) - baseCode;
       if (prev !== curr) {
         graph[prev].add(curr);
         ++inDegree[curr];
@@ -69,23 +68,23 @@ function alienOrder(words: string[]): string {
     }
   }
 
-  const queue = new Queue();
+  const q: number[] = [];
   inDegree.forEach((degree, offset) => {
     if (
       degree === 0 &&
       uniqCharSet.has(String.fromCharCode(baseCode + offset))
     ) {
-      queue.push(offset);
+      q.push(offset);
     }
   });
 
   const result = [];
-  while (!queue.isEmpty()) {
-    const offset = queue.pop();
+  while (q.length) {
+    const offset = q.shift();
     result.push(String.fromCharCode(offset + baseCode));
     for (const next of graph[offset].values()) {
       if (--inDegree[next] === 0) {
-        queue.push(next);
+        q.push(next);
       }
     }
   }

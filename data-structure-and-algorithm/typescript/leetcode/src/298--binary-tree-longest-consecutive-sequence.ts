@@ -39,9 +39,6 @@ Explanation: Longest consecutive sequence path is 2-3, not 3-2-1, so return 2.
 */
 
 function longestConsecutive(root: TreeNode | null) {
-  if (root === null) {
-    return 0;
-  }
   let rslt = 0;
   dfs(root, root.val, 0);
   return rslt;

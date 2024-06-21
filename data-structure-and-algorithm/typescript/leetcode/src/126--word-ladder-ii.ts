@@ -46,6 +46,7 @@ function findLadders(
     return [];
   }
   const q: string[] = [beginWord];
+  set.delete(beginWord);
   const nodes: string[][] = [];
   let found = false;
   while (q.length && !found) {

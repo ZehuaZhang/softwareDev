@@ -43,14 +43,14 @@ s1 and s2 consist of lowercase English letters.
 */
 
 function isScramble(s1: string, s2: string): boolean {
-  const [m, n] = [s1.length, s2.length];
+  const m = s1.length;
   const memo = [...Array(m)].map(() =>
-    [...Array(n)].map(() => Array(m + 1).fill(null))
+    [...Array(m)].map(() => Array(m + 1).fill(null))
   );
   return dfs(0, 0, m);
 
   function dfs(i: number, j: number, len: number) {
-    if (memo[i][j][len] !== null) {
+    if (memo[i][j][len]) {
       return memo[i][j][len];
     }
     if (len === 1) {

@@ -40,7 +40,7 @@ function reverseBetween(
   let p = dummy;
 
   for (let i = 0; i < left - 1; ++i, p = p.next);
-  let t = p.next;
+  const t = p.next;
 
   for (let i = 0; i < right - left; ++i) {
     const n = p.next;

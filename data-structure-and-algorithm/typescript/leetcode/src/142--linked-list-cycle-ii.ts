@@ -44,11 +44,7 @@ function detectCycle(head: ListNode | null): ListNode | null {
     return null;
   }
 
-  for (
-    let slow = head, fast = head, orgn = head;
-    fast.next && fast.next.next;
-
-  ) {
+  for (let slow = head, fast = head, orgn = head; fast && fast.next; ) {
     slow = slow.next;
     fast = fast.next.next;
     if (slow === fast) {

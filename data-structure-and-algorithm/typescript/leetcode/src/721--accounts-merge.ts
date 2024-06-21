@@ -1,4 +1,6 @@
 /*
+721. Accounts Merge
+
 Given a list of accounts where each element accounts[i] is a list of strings, where the first element accounts[i][0] is a name, and the rest of the elements are emails representing emails of the account.
 
 Now, we would like to merge these accounts. Two accounts definitely belong to the same person if there is some common email to both accounts. Note that even if two accounts have the same name, they may belong to different people as people could have the same name. A person can have any number of accounts initially, but all of their accounts definitely have the same name.
@@ -34,50 +36,51 @@ accounts[i][j] (for j > 0) is a valid email.
 import {runTestCaseList} from './util/test';
 
 function accountsMerge(accounts: string[][]): string[][] {
-  const users = [...Array(accounts.length)].map((_, i) => i);
-  const emailUserMap = new Map();
-  for (let user = 0; user < accounts.length; ++user) {
-    const [_, ...emails] = accounts[user];
+  const n = accounts.length;
+  const set = [...Array(n)].map((_, i) => i);
+  const map = new Map<string, number>();
+  for (let i = 0; i < n; ++i) {
+    const [_, ...emails] = accounts[i];
     for (const email of emails) {
-      if (!emailUserMap.has(email)) {
-        emailUserMap.set(email, user);
+      if (!map.has(email)) {
+        map.set(email, i);
       } else {
-        const x = find(user, users);
-        const y = find(emailUserMap.get(email), users);
+        const x = find(i);
+        const y = find(map.get(email));
         if (x !== y) {
-          union(x, y, users);
+          union(x, y);
         }
       }
     }
   }
 
   const result = new Map<number, Set<string>>();
-  for (let user = 0; user < accounts.length; ++user) {
-    const [_, ...emails] = accounts[user];
-    const origUser = find(user, users);
+  for (let i = 0; i < n; ++i) {
+    const [_, ...emails] = accounts[i];
+    const origUser = find(i);
     if (!result.has(origUser)) {
       result.set(origUser, new Set<string>());
     }
     emails.forEach(email => result.get(origUser)!.add(email));
   }
 
-  return [...result.entries()].map(([user, set]) => [
-    accounts[user][0],
+  return [...result.entries()].map(([i, set]) => [
+    accounts[i][0],
     ...[...set].sort(),
   ]);
-}
 
-function find(x: number, set: number[]): number {
-  while (x !== set[x]) {
-    x = set[x];
+  function find(x: number): number {
+    while (x !== set[x]) {
+      x = set[x];
+    }
+    return x;
   }
-  return x;
-}
 
-function union(x: number, y: number, set: number[]): void {
-  const root1 = find(x, set);
-  const root2 = find(y, set);
-  set[Math.min(root1, root2)] = Math.max(root1, root2);
+  function union(x: number, y: number) {
+    const root1 = find(x);
+    const root2 = find(y);
+    set[Math.min(root1, root2)] = Math.max(root1, root2);
+  }
 }
 
 // tests

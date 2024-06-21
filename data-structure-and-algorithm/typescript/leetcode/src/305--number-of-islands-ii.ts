@@ -33,17 +33,18 @@ Operation #4: addLand(2, 1) turns the water at grid[2][1] into a land.
 We return the result as an array: [1, 1, 2, 3]
 */
 
-function numIslands2(
-  rows: number,
-  cols: number,
-  posList: number[][]
-): number[] {
-  const result: number[] = [];
-  let count = posList.length;
+function numIslands2(m: number, n: number, posList: number[][]): number[] {
+  const rslt: number[] = [];
+  let cnt = 0;
   const parentMap = new Map<number, number>();
   for (const [x, y] of posList) {
     const id = getId(x, y);
+    if (parentMap.has(id)) {
+      rslt.push(cnt);
+      continue;
+    }
     parentMap.set(id, id);
+    ++cnt;
 
     for (const [dx, dy] of [
       [0, -1],
@@ -55,22 +56,22 @@ function numIslands2(
       const idNext = getId(xNext, yNext);
       if (
         xNext >= 0 &&
-        xNext < rows &&
+        xNext < m &&
         yNext >= 0 &&
-        yNext < cols &&
+        yNext < n &&
         parentMap.has(idNext) &&
         find(id) !== find(idNext)
       ) {
         union(id, idNext);
-        --count;
+        --cnt;
       }
     }
-    result.push(count);
+    rslt.push(cnt);
   }
-  return result;
+  return rslt;
 
-  function getId(row: number, col: number): number {
-    return row * cols + col;
+  function getId(i: number, j: number): number {
+    return i * n + j;
   }
 
   function find(x: number): number {

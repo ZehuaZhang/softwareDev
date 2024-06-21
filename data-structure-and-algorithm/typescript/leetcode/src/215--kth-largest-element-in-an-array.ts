@@ -49,10 +49,10 @@ function findKthLargest(nums: number[], k: number): number {
     let i = l;
     let j = r - 1;
     while (i <= j) {
-      while (nums[i] > nums[r]) {
+      while (i <= j && nums[i] > nums[r]) {
         ++i;
       }
-      while (nums[j] < nums[r]) {
+      while (i <= j && nums[j] < nums[r]) {
         --j;
       }
       if (i <= j) {

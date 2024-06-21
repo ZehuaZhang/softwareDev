@@ -32,11 +32,11 @@ Follow up: Could you write a solution that works in logarithmic time complexity?
 */
 
 function trailingZeroes(n: number): number {
-  let count = 0;
+  let rslt = 0;
   while (n) {
-    const tmp = Math.trunc(n / 5);
-    count += tmp;
-    n = tmp;
+    const cnt = Math.trunc(n / 5);
+    rslt += cnt;
+    n = cnt;
   }
-  return count;
+  return rslt;
 }

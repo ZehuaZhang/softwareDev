@@ -26,29 +26,26 @@ Constraints:
 s and p consist of lowercase English letters.
 */
 
-function findAnagrams(string: string, anagram: string): number[] {
-  const result: number[] = [];
-  const charCountList = Array(256).fill(0);
-  for (const char of anagram) {
-    ++charCountList[char.charCodeAt(0)];
+function findAnagrams(s: string, a: string): number[] {
+  const [m, n] = [s.length, a.length];
+  const rslt: number[] = [];
+  const cnts = Array(256).fill(0);
+  for (const c of a) {
+    ++cnts[c.charCodeAt(0)];
   }
-  for (
-    let left = 0, right = 0, count = anagram.length;
-    right < string.length;
-    ++right
-  ) {
-    if (--charCountList[string[right].charCodeAt(0)] >= 0) {
-      --count;
+  for (let l = 0, r = 0, cnt = n; r < m; ++r) {
+    if (--cnts[s.charCodeAt(r)] >= 0) {
+      --cnt;
     }
-    if (!count) {
-      result.push(left);
+    if (!cnt) {
+      rslt.push(l);
     }
-    if (right - left + 1 === anagram.length) {
-      if (++charCountList[string[left].charCodeAt(0)] >= 1) {
-        ++count;
+    if (r - l + 1 === n) {
+      if (++cnts[s.charCodeAt(l)] >= 1) {
+        ++cnt;
       }
-      ++left;
+      ++l;
     }
   }
-  return result;
+  return rslt;
 }

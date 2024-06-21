@@ -43,7 +43,7 @@ function hasCycle(head: ListNode | null): boolean {
   if (head === null) {
     return false;
   }
-  for (let slow = head, fast = head; fast.next && fast.next.next; ) {
+  for (let slow = head, fast = head; fast && fast.next; ) {
     slow = slow.next;
     fast = fast.next.next;
     if (slow === fast) {

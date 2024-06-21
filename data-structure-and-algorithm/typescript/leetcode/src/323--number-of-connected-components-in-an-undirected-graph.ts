@@ -27,17 +27,17 @@ You can assume that no duplicate edges will appear in edges. Since all edges are
 
 function countComponents(count: number, edges: number[][]): number {
   const parentList = [...Array(count)].map((_, i) => i);
-  let result = count;
+  let rslt = count;
   for (const [src, dst] of edges) {
     const x = find(src);
     const y = find(dst);
 
     if (x !== y) {
       union(x, y);
-      --result;
+      --rslt;
     }
   }
-  return result;
+  return rslt;
 
   function find(node: number): number {
     while (parentList[node] !== node) {

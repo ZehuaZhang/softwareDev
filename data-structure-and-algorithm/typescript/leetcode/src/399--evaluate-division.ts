@@ -75,9 +75,6 @@ function calcEquation(
           result = value;
           break;
         }
-        if (!map.has(node)) {
-          break;
-        }
         for (const [nextNode, nextValue] of map.get(node)!) {
           if (!visited.has(nextNode)) {
             visited.add(nextNode);

@@ -3,14 +3,13 @@
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "build",
-    "lib": [
-      "ESNext"
-    ],
+    "lib": ["ESNext"],
     // "module": "ESNext",
     "target": "ESNext"
   },
   "include": [
     "src/**/*.ts",
-    "test/**/*.ts"
+    "test/**/*.ts",
+    "src/extra-questions/frontend-quiz.js"
   ]
 }

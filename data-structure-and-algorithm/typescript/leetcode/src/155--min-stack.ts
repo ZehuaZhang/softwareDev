@@ -58,10 +58,12 @@ class MinStack {
     this.stk.push(val);
   }
 
-  pop(): void {
-    if (this.stk.pop() === this.min) {
+  pop(): number {
+    const val = this.stk.pop();
+    if (val === this.min) {
       this.min = this.stk.pop();
     }
+    return val;
   }
 
   top(): number {

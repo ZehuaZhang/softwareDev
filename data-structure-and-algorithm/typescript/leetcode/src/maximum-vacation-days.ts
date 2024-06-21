@@ -58,13 +58,8 @@ import {runTestCaseList} from './util/test';
 
 function maxVacationDays(flights: number[][], days: number[][]): number {
   const [cityCount, weekCount] = [days.length, days[0].length];
-  const dp = [...Array(weekCount)].map(() => Array(cityCount).fill(0));
+  const dp = [...Array(weekCount)].map(() => Array(cityCount).fill(-1));
 
-  for (let i = 0; i < weekCount; ++i) {
-    for (let j = 0; j < cityCount; ++j) {
-      dp[i][j] = -1;
-    }
-  }
   dp[0][0] = days[0][0];
   for (let i = 1; i < cityCount; ++i) {
     if (flights[0][i] === 1) {

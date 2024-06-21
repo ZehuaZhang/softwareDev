@@ -32,7 +32,7 @@ denominator != 0
 */
 
 function fractionToDecimal(numerator: number, denominator: number): string {
-  let result: string[] = [];
+  const result: string[] = [];
   if ((numerator ^ denominator) >> 31 && numerator !== 0) {
     result.push('-');
   }

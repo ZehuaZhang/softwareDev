@@ -44,10 +44,6 @@ Follow up:
 Could you implement next() and hasNext() to run in average O(1) time and use O(h) memory, where h is the height of the tree?
 */
 
-import {Nullable} from './util/object';
-import {TreeNode} from './data-structure/BinaryTree';
-import {Stack} from './data-structure/Stack';
-
 class BSTIterator {
   stk: TreeNode[];
 

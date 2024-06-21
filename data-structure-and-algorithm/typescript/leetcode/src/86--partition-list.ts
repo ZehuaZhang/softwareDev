@@ -27,20 +27,20 @@ The number of nodes in the list is in the range [0, 200].
 
 function partition(head: ListNode | null, x: number): ListNode | null {
   const dummy = new ListNode(0, head);
-  const sHead = new ListNode(0);
-  let s = sHead;
+  const dummy2 = new ListNode(0);
+  let n = dummy2;
 
   for (let p = dummy; p.next; ) {
     if (p.next.val < x) {
-      s.next = p.next;
-      s = p.next;
+      n.next = p.next;
+      n = p.next;
       p.next = p.next.next;
     } else {
-      s.next = null;
+      n.next = null;
       p = p.next;
     }
   }
 
-  s.next = dummy.next;
-  return sHead.next;
+  n.next = dummy.next;
+  return dummy2.next;
 }

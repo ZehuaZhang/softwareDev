@@ -18,7 +18,7 @@ function generatePalindromes(input: string): string[] {
   for (const char of input) {
     letterCountMap.set(char, (letterCountMap.get(char) || 0) + 1);
   }
-  const letterList: string[] = [];
+  let cnt = 0;
   let midChar = '';
   for (const [char, count] of letterCountMap.entries()) {
     if (count & 1) {
@@ -28,25 +28,21 @@ function generatePalindromes(input: string): string[] {
       midChar = char;
     }
     letterCountMap.set(char, count >> 1);
-    letterList.push(char.repeat(count >> 1));
+    cnt += count >> 1;
   }
   const result: string[] = [];
-  generatePalindromesDfs(letterList.join(''), midChar, '');
+  generatePalindromesDfs(midChar, '');
   return result;
 
-  function generatePalindromesDfs(
-    input: string,
-    midChar: string,
-    path: string
-  ): void {
-    if (path.length === input.length) {
+  function generatePalindromesDfs(midChar: string, path: string): void {
+    if (path.length === cnt) {
       result.push([path, midChar, ...[...path].reverse()].join(''));
       return;
     }
     for (const [char, count] of letterCountMap.entries()) {
       if (count > 0) {
         letterCountMap.set(char, count - 1);
-        generatePalindromesDfs(input, midChar, path + char);
+        generatePalindromesDfs(midChar, path + char);
         letterCountMap.set(char, count);
       }
     }

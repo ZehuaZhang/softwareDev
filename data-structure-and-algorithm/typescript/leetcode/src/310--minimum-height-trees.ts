@@ -59,7 +59,7 @@ function findMinHeightTrees(n: number, edges: number[][]): number[] {
     ++outDegree[y];
   }
   for (let i = 0; i < n; ++i) {
-    if (outDegree[i] == 1) {
+    if (outDegree[i] === 1) {
       q.push(i);
     }
   }

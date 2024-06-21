@@ -43,22 +43,22 @@ function minWindow(s: string, t: string): string {
   for (let i = 0; i < t.length; ++i) {
     ++cnts[t.charCodeAt(i)];
   }
-  let rL = -1,
-    rR = s.length;
+  let l = -1,
+    r = s.length;
   let cnt = t.length;
   for (let left = 0, right = 0; right < s.length; ++right) {
     if (--cnts[s.charCodeAt(right)] >= 0) {
       --cnt;
     }
     for (; cnt === 0; ++left) {
-      if (right - left + 1 < rR - rL) {
-        rL = left;
-        rR = right + 1;
+      if (right - left + 1 < r - l) {
+        l = left;
+        r = right + 1;
       }
       if (++cnts[s.charCodeAt(left)] >= 1) {
         ++cnt;
       }
     }
   }
-  return rL === -1 ? '' : s.substring(rL, rR);
+  return l === -1 ? '' : s.substring(l, r);
 }

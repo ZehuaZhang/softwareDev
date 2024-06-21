@@ -57,7 +57,7 @@ function getFactors(num: number): number[][] {
       result.push([...path]);
       return;
     }
-    for (let i = start; i <= target; ++i) {
+    for (let i = start; i < target; ++i) {
       if (target % i === 0) {
         path.push(i);
         getFactorsDfs(target / i, i);

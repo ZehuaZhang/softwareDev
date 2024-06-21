@@ -1,4 +1,6 @@
 /**
+456. 132 Pattern
+
 Given an array of n integers nums, a 132 pattern is a subsequence of three integers nums[i], nums[j] and nums[k] such that i < j < k and nums[i] < nums[k] < nums[j].
 
 Return true if there is a 132 pattern in nums, otherwise, return false.
@@ -29,24 +31,23 @@ n == nums.length
 -109 <= nums[i] <= 109
 */
 
-import {Stack} from './data-structure/Stack';
 import {runTestCaseList} from './util/test';
 
 function find132pattern(nums: number[]): boolean {
   if (nums.length < 3) {
     return false;
   }
-  let medium = -Infinity;
-  const stack = new Stack();
+  let mid = -Infinity;
+  const stk: number[] = [];
   for (let i = nums.length - 1; i >= 0; --i) {
-    if (nums[i] < medium) {
+    if (nums[i] < mid) {
       return true;
     } else {
-      while (!stack.isEmpty() && nums[i] > stack.peek()) {
-        medium = stack.pop();
+      while (stk.length && nums[i] > stk[stk.length - 1]) {
+        mid = stk.pop();
       }
     }
-    stack.push(nums[i]);
+    stk.push(nums[i]);
   }
   return false;
 }

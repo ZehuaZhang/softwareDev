@@ -28,9 +28,9 @@ function deleteDuplicates(head: ListNode | null): ListNode | null {
   for (let node = head; node; ) {
     if (node.next && node.val === node.next.val) {
       node.next = node.next.next;
-      continue;
+    } else {
+      node = node.next;
     }
-    node = node.next;
   }
   return head;
 }

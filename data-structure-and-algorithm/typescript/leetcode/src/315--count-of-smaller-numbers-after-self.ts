@@ -1,4 +1,6 @@
 /*
+315. Count of Smaller Numbers After Self
+
 You are given an integer array nums and you have to return a new counts array. The counts array has the property where counts[i] is the number of smaller elements to the right of nums[i].
 
 
@@ -29,12 +31,12 @@ Constraints:
 */
 
 function countSmaller(nums: number[]): number[] {
-  const numIdxList: number[][] = [];
+  const numIdx: number[][] = [];
   for (let i = 0; i < nums.length; ++i) {
-    numIdxList.push([nums[i], i]);
+    numIdx.push([nums[i], i]);
   }
   const result = Array(nums.length).fill(0);
-  mergeSort(0, numIdxList.length - 1);
+  mergeSort(0, numIdx.length - 1);
   return result;
 
   function mergeSort(left: number, right: number): void {
@@ -46,12 +48,12 @@ function countSmaller(nums: number[]): number[] {
     mergeSort(mid + 1, right);
     const temp = [];
     for (let i = left, j = mid + 1; i <= mid; ++i) {
-      for (; j <= right && numIdxList[j][0] < numIdxList[i][0]; ++j) {
-        temp.push(numIdxList[j]);
+      for (; j <= right && numIdx[j][0] < numIdx[i][0]; ++j) {
+        temp.push(numIdx[j]);
       }
-      temp.push(numIdxList[i]);
-      result[numIdxList[i][1]] += j - (mid + 1);
+      temp.push(numIdx[i]);
+      result[numIdx[i][1]] += j - (mid + 1);
     }
-    numIdxList.splice(left, temp.length, ...temp);
+    numIdx.splice(left, temp.length, ...temp);
   }
 }

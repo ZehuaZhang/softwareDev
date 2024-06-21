@@ -54,10 +54,10 @@ class LRUCache {
   }
 
   get(key: number): number {
-    const val = this.map.get(key);
-    if (val === undefined) {
+    if (!this.map.has(key)) {
       return -1;
     }
+    const val = this.map.get(key);
 
     this.map.delete(key);
     this.map.set(key, val);

@@ -13,7 +13,7 @@ Output: true
 
 Example 2:
 
-Input: pattern = pattern = "aaaa", str = "asdasdasdasd"
+Input:  pattern = "aaaa", str = "asdasdasdasd"
 Output: true
 
 Example 3:
