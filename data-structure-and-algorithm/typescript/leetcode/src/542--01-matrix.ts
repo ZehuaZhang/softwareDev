@@ -48,8 +48,8 @@ function updateMatrix(mat: number[][]): number[][] {
     }
   }
 
-  for (let i = m - 1; i >= 0; i--) {
-    for (let j = n - 1; j >= 0; j--) {
+  for (let i = m - 1; i >= 0; --i) {
+    for (let j = n - 1; j >= 0; --j) {
       if (i < m - 1) {
         rslt[i][j] = Math.min(rslt[i + 1][j] + 1, rslt[i][j]);
       }

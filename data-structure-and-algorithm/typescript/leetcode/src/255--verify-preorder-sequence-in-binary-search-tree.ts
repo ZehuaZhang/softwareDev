@@ -10,7 +10,7 @@ Could you do it using only constant space complexity?
 */
 
 function verifyPreorder(preorder: number[]) {
-  let low = Infinity;
+  let low = -Infinity;
   let i = -1;
   for (const a of preorder) {
     if (a < low) {

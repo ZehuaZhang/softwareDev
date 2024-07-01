@@ -43,18 +43,17 @@ type IData = {
 };
 
 class TimeMap {
-  map: Map<string, IData[]>;
+  map: Map<string, [string, number][]>;
 
   constructor() {
-    this.map = new Map<string, IData[]>();
+    this.map = new Map<string, [string, number][]>();
   }
 
   set(key: string, val: string, ts: number): void {
-    const data: IData = {val, ts};
     if (!this.map.has(key)) {
       this.map.set(key, []);
     }
-    this.map.get(key).push(data);
+    this.map.get(key).push([val, ts]);
   }
 
   get(key: string, ts: number): string {
@@ -68,16 +67,16 @@ class TimeMap {
       return '';
     }
 
-    return list[idx].val;
+    return list[idx][0];
   }
 
-  lessEqual(list: IData[], tgt: number) {
+  lessEqual(list: [string, number][], tgt: number) {
     let l = 0,
       r = list.length - 1;
 
     while (l <= r) {
       const mid = l + Math.trunc((r - l) / 2);
-      const {ts} = list[mid];
+      const [_, ts] = list[mid];
       if (ts > tgt) {
         r = mid - 1;
       } else {

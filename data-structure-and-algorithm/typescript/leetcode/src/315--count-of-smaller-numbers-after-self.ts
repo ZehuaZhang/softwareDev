@@ -31,7 +31,7 @@ Constraints:
 */
 
 function countSmaller(nums: number[]): number[] {
-  const numIdx: number[][] = [];
+  const numIdx: [number, number][] = [];
   for (let i = 0; i < nums.length; ++i) {
     numIdx.push([nums[i], i]);
   }
@@ -46,7 +46,7 @@ function countSmaller(nums: number[]): number[] {
     const mid = (left + right) >> 1;
     mergeSort(left, mid);
     mergeSort(mid + 1, right);
-    const temp = [];
+    const temp: [number, number][] = [];
     for (let i = left, j = mid + 1; i <= mid; ++i) {
       for (; j <= right && numIdx[j][0] < numIdx[i][0]; ++j) {
         temp.push(numIdx[j]);

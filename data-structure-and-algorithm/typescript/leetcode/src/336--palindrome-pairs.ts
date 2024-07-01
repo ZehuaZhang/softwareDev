@@ -26,13 +26,9 @@ function palindromePairs(words: string[]) {
       if (
         m.has(t) &&
         i !== m.get(t) &&
-        isValid(words[i].substring(l ? 0 : r, l ? l : undefined))
+        isValid(words[i].substring(l ? 0 : r, l ?  l : undefined))
       ) {
-        if (l) {
-          rslt.push([m.get(t)!, i]);
-        } else {
-          rslt.push([i, m.get(t)!]);
-        }
+        rslt.push(l ? [m.get(t)!, i] : [i, m.get(t)!]);
       }
       if (r < words[i].length) {
         ++r;

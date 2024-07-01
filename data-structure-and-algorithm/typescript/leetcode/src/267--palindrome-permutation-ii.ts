@@ -31,10 +31,10 @@ function generatePalindromes(input: string): string[] {
     cnt += count >> 1;
   }
   const result: string[] = [];
-  generatePalindromesDfs(midChar, '');
+  generatePalindromesDfs('');
   return result;
 
-  function generatePalindromesDfs(midChar: string, path: string): void {
+  function generatePalindromesDfs(path: string): void {
     if (path.length === cnt) {
       result.push([path, midChar, ...[...path].reverse()].join(''));
       return;
@@ -42,7 +42,7 @@ function generatePalindromes(input: string): string[] {
     for (const [char, count] of letterCountMap.entries()) {
       if (count > 0) {
         letterCountMap.set(char, count - 1);
-        generatePalindromesDfs(midChar, path + char);
+        generatePalindromesDfs(path + char);
         letterCountMap.set(char, count);
       }
     }

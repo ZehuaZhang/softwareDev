@@ -38,31 +38,6 @@ function closestValueIterative(
   return result;
 }
 
-function closestValue(node: Nullable<TreeNode>, target: number): number {
-  let result = 0;
-  let min = Infinity;
-  closestValueDfs(node, target);
-  return result;
-
-  function closestValueDfs(node: Nullable<TreeNode>, target: number): void {
-    if (!node) {
-      return;
-    }
-
-    const diff = Math.abs(node.data - target);
-    if (diff < min) {
-      min = diff;
-      result = node.data;
-    }
-
-    if (target < node.data) {
-      closestValueDfs(node.left, target);
-    } else {
-      closestValueDfs(node.right, target);
-    }
-  }
-}
-
 // test
 const tree = new BinaryTree(4, 2, 5, 1, 3);
 
@@ -78,4 +53,4 @@ runTestCaseList(
   closestValueIterative
 );
 
-runTestCaseList(testInputListCollection, expectedResultList, closestValue);
+runTestCaseList(testInputListCollection, expectedResultList, closestValueIterative);
