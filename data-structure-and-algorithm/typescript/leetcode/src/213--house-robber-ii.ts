@@ -31,22 +31,23 @@ Constraints:
 */
 
 function rob(nums: number[]): number {
-  if (nums.length === 0) {
-    return 0;
-  }
-  if (nums.length === 1) {
-    return nums[0];
-  }
-  return Math.max(helper(0, nums.length - 1), helper(1, nums.length));
+  const n = nums.length;
 
-  function helper(i: number, j: number) {
-    let a = 0,
-      b = 0;
-    for (let k = i; k < j; ++k) {
-      const tmp = Math.max(a + nums[k], b);
-      a = b;
-      b = tmp;
-    }
-    return b;
+  if (n === 1) {
+      return nums[0];
   }
-}
+
+  return Math.max(find(0, n - 2), find(1, n - 1));
+
+  function find(l: number, r: number) {
+      let a = 0;
+      let b = 0;
+      for (let i = l; i <= r; ++i) {
+          const tmp = Math.max(a + nums[i], b);
+          a = b;
+          b = tmp;
+      }
+
+      return b;
+  }
+};

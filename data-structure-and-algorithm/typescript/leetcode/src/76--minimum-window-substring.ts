@@ -39,26 +39,30 @@ Follow up: Could you find an algorithm that runs in O(m + n) time?
 */
 
 function minWindow(s: string, t: string): string {
-  const cnts = Array(128).fill(0);
-  for (let i = 0; i < t.length; ++i) {
-    ++cnts[t.charCodeAt(i)];
+  const n = s.length;
+
+  let cnts = Array(256).fill(0);
+  for (const c of t) {
+      ++cnts[c.charCodeAt(0)];
   }
-  let l = -1,
-    r = s.length;
+
+  let [rL, rR] = [-1, n];
   let cnt = t.length;
-  for (let left = 0, right = 0; right < s.length; ++right) {
-    if (--cnts[s.charCodeAt(right)] >= 0) {
-      --cnt;
-    }
-    for (; cnt === 0; ++left) {
-      if (right - left + 1 < r - l) {
-        l = left;
-        r = right + 1;
+  for (let l = 0, r = 0; r < n; ++r) {
+      if (--cnts[s.charCodeAt(r)] >= 0) {
+          --cnt;
       }
-      if (++cnts[s.charCodeAt(left)] >= 1) {
-        ++cnt;
+
+      for (; !cnt; ++l) {
+          if (r - l < rR - rL) {
+              [rL, rR] = [l, r];
+
+          }
+          if (++cnts[s.charCodeAt(l)] >= 1) {
+              ++cnt;
+          }
       }
-    }
   }
-  return l === -1 ? '' : s.substring(l, r);
-}
+
+  return rL === -1 ? '' : s.substring(rL, rR + 1);
+};

@@ -33,13 +33,14 @@ Follow up: A linked list can be reversed either iteratively or recursively. Coul
 */
 
 function reverseList(head: ListNode | null): ListNode | null {
-  let prev = null,
-    curr = head;
-  while (curr) {
-    const next = curr.next;
-    curr.next = prev;
-    prev = curr;
-    curr = next;
+  let prev = null;
+
+  while (head) {
+      const next = head.next;
+      head.next = prev;
+      prev = head;
+      head = next;
   }
+
   return prev;
-}
+};

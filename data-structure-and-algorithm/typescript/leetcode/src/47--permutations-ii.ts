@@ -25,29 +25,30 @@ Constraints:
 */
 
 function permuteUnique(nums: number[]): number[][] {
-  const result: number[][] = [];
-  const visited = new Set<number>();
+  const n = nums.length;
+  const path: number[] = [];
+  const rslt: number[][] = [];
+  const seen: boolean[] = Array(n).fill(false);
+
   nums.sort((a, b) => a - b);
-  dfs([]);
-  return result;
 
-  function dfs(path: number[]) {
-    if (path.length === nums.length) {
-      result.push([...path]);
-      return;
-    }
+  dfs();
+  
+  return rslt;
 
-    for (let i = 0; i < nums.length; ++i) {
-      if (
-        !visited.has(i) &&
-        (i === 0 || nums[i] !== nums[i - 1] || visited.has(i - 1))
-      ) {
-        visited.add(i);
-        path.push(nums[i]);
-        dfs(path);
-        path.pop();
-        visited.delete(i);
+  function dfs() {
+      if (path.length === n) {
+          return rslt.push([...path]);
       }
-    }
+
+      for (let i = 0; i < n; ++i) {
+          if (!seen[i] && (i === 0 || seen[i - 1] || nums[i] !== nums[i - 1])) {
+              seen[i] = true;
+              path.push(nums[i]);
+              dfs();
+              path.pop();
+              seen[i] = false;
+          }
+      }
   }
-}
+};

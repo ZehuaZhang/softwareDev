@@ -46,26 +46,25 @@ Could you implement next() and hasNext() to run in average O(1) time and use O(h
 
 class BSTIterator {
   stk: TreeNode[];
-
   constructor(root: TreeNode | null) {
     this.stk = [];
     while (root) {
-      this.stk.push(root);
-      root = root.left;
+        this.stk.push(root);
+        root = root.left;
     }
   }
 
   next(): number {
     const node = this.stk.pop();
-    let r = node.right;
-    while (r) {
-      this.stk.push(r);
-      r = r.left;
+    for (let curr = node.right; curr;) {
+        this.stk.push(curr);
+        curr = curr.left;
     }
+
     return node.val;
   }
 
   hasNext(): boolean {
-    return Boolean(this.stk.length);
+    return Boolean(this.stk.length); 
   }
 }

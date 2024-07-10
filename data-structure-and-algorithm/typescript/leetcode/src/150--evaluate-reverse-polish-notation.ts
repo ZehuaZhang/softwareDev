@@ -45,22 +45,23 @@ tokens[i] is either an operator: "+", "-", "*", or "/", or an integer in the ran
 */
 
 function evalRPN(tokens: string[]): number {
-  const ops = {
-    '+': (a: number, b: number) => a + b,
-    '-': (a: number, b: number) => a - b,
-    '*': (a: number, b: number) => a * b,
-    '/': (a: number, b: number) => Math.trunc(a / b),
-  };
+  const cal = {
+      '+': (a, b) => a + b,
+      '-': (a, b) => a - b,
+      '*': (a, b) => a * b,
+      '/': (a, b) => Math.trunc(a / b),
+  }
 
   const stk: number[] = [];
-  for (const token of tokens) {
-    if (ops[token]) {
-      const b = stk.pop();
-      const a = stk.pop();
-      stk.push(ops[token](a, b));
-    } else {
-      stk.push(Number(token));
-    }
+  for (const t of tokens) {
+      if (cal[t]) {
+          const b = stk.pop();
+          const a = stk.pop();
+          stk.push(cal[t](a, b));
+      } else {
+          stk.push(Number(t));
+      }
   }
+
   return stk.pop();
-}
+};

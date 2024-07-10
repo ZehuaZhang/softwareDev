@@ -33,19 +33,13 @@ Follow up: Could you solve it without converting the integer to a string?
 */
 
 function isPalindrome(x: number): boolean {
-  if (Math.sign(x) < 0) {
-    return false;
-  }
-  const max = Math.pow(2, 31) - 1;
-  let reversed = 0;
-  for (let num = x; num; num = Math.trunc(num / 10)) {
-    if (
-      reversed > Math.trunc(max / 10) ||
-      (reversed === Math.trunc(max / 10) && num % 10 > max % 10)
-    ) {
+  if (x < 0) {
       return false;
-    }
-    reversed = reversed * 10 + (num % 10);
   }
-  return reversed === x;
-}
+  
+  let rslt = 0;
+  for (let num = x; num; num = Math.trunc(num / 10)) {
+      rslt = rslt * 10 + num % 10;
+  }
+  return rslt === x;
+};

@@ -28,12 +28,13 @@ Constraints:
 */
 
 function rob(nums: number[]): number {
-  let a = 0,
-    b = 0;
+  let a = 0;
+  let b = 0;
   for (const num of nums) {
-    const tmp = Math.max(a + num, b);
-    a = b;
-    b = tmp;
+      const tmp = Math.max(a + num, b);
+      a = b;
+      b = tmp;
   }
+
   return b;
-}
+};

@@ -20,19 +20,25 @@ Output: 4
 
 function countUnivalSubtrees(root: TreeNode | null) {
   let rslt = 0;
-  isUnival(root, -1);
+
+  dfs(root, NaN);
+
   return rslt;
 
-  function isUnival(root: TreeNode | null, val: number) {
-    if (root === null) {
+  function dfs(node: TreeNode | null, v: number) {
+    if (!node) {
       return true;
     }
-    const l = isUnival(root.left, root.val);
-    const r = isUnival(root.right, root.val);
+
+    const l = dfs(node.left, node.val);
+    const r = dfs(node.right, node.val);
+
     if (!l || !r) {
       return false;
     }
+
     ++rslt;
-    return root.val === val;
+
+    return root.val === v;
   }
 }

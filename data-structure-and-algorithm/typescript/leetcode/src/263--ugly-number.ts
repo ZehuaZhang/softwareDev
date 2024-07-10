@@ -30,14 +30,11 @@ Constraints:
 */
 
 function isUgly(n: number): boolean {
-  if (n === 0) {
-    return false;
+  for (const a of [2, 3, 5]) {
+      while (n && n % a === 0) {
+          n /= a;
+      }
   }
 
-  for (const d of [2, 3, 5]) {
-    while (n % d === 0) {
-      n /= d;
-    }
-  }
   return n === 1;
-}
+};

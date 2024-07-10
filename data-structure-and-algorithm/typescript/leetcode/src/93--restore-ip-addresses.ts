@@ -28,30 +28,33 @@ s consists of digits only.
 */
 
 function restoreIpAddresses(s: string): string[] {
-  const result: string[] = [];
-  dfs(0, 0, '');
-  return result;
+  const n = s.length;
+  const path: string[] = [];
+  const rslt: string[] = [];
 
-  function dfs(i: number, j: number, path: string) {
-    if (s.length - i > 3 * (4 - j)) {
-      return;
-    }
-    if (i === s.length && j === 4) {
-      result.push(path);
-      return;
-    }
-    for (let k = 1; k <= 3; ++k) {
-      if (i + k > s.length) {
-        return;
+  dfs(0, 0);
+
+  return rslt;
+
+  function dfs(i0: number, j0: number) {
+      if (i0 === n && j0 === 4) {
+          return rslt.push(path.join('.'));
       }
-      const seg = s.substring(i, i + k);
-      if (
-        (seg.length > 1 && seg.startsWith('0')) ||
-        (k === 3 && Number(seg) > 255)
-      ) {
-        continue;
+
+      if (n - i0 > 3 * (4 - j0)) {
+          return;
       }
-      dfs(i + k, j + 1, j ? path + '.' + seg : seg);
-    }
+
+      for (let k = 1; k <= 3; ++k) {
+          if (i0 + k <= n) {
+              const seg = s.substring(i0, i0 + k);
+              const ip = Number(seg);
+              if (ip <= 255 && String(ip) === seg) {
+                  path.push(seg);
+                  dfs(i0 + k, j0 + 1);
+                  path.pop();
+              }
+          }
+      }
   }
-}
+};

@@ -20,37 +20,18 @@ Input: root = [4,2,5,1,3], target = 3.714286
 Output: 4
 */
 
-import {Nullable} from './util/object';
-import {runTestCaseList} from './util/test';
-import {TreeNode, BinaryTree} from './data-structure/BinaryTree';
-
 function closestValueIterative(
-  node: Nullable<TreeNode>,
+  node: TreeNode,
   target: number
 ): number {
-  let result = node?.data;
+  let rslt = node.val;
+
   while (node) {
-    if (Math.abs(result - target) >= Math.abs(node.data - target)) {
-      result = node.data;
+    if (Math.abs(rslt - target) > Math.abs(node.val - target)) {
+      rslt = node.val;
     }
-    node = target < node.data ? node.left : node.right;
+    node = node.val < target ? node.right : node.left;
   }
-  return result;
+
+  return rslt;
 }
-
-// test
-const tree = new BinaryTree(4, 2, 5, 1, 3);
-
-tree.printLevel();
-
-const testInputListCollection = [[tree.root, 3.714286]];
-
-const expectedResultList = [4];
-
-runTestCaseList(
-  testInputListCollection,
-  expectedResultList,
-  closestValueIterative
-);
-
-runTestCaseList(testInputListCollection, expectedResultList, closestValueIterative);

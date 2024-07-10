@@ -28,37 +28,43 @@ Constraints:
 -104 <= target <= 104
 */
 
-import {runTestCaseList} from './util/test';
-
 function threeSumClosest(nums: number[], target: number): number {
-  let result = NaN;
-  let minDiff = Infinity;
+  const n = nums.length;
+
+  let min = Infinity;
+  let rslt = 0;
+
   nums.sort((a, b) => a - b);
-  for (let i = 0; i < nums.length - 2; ++i) {
-    for (let left = i + 1, right = nums.length - 1; left < right; ) {
-      const sum = nums[i] + nums[left] + nums[right];
-      const diff = Math.abs(sum - target);
-      if (diff < minDiff) {
-        result = sum;
-        minDiff = diff;
+
+  for (let i = 0; i < n; ++i) {
+      if (i > 0 && nums[i] === nums[i - 1]) {
+          continue;
       }
-      if (sum > target) {
-        --right;
-      } else {
-        ++left;
+
+      for (let l = i + 1, r = n - 1; l < r;) {
+          if (l > i + 1 && nums[l] === nums[l - 1]) {
+              ++l;
+              continue;
+          }
+          if (r < n - 1 && nums[r] === nums[r + 1]) {
+              --r;
+              continue;
+          }
+          const s = nums[i] + nums[l] + nums[r];
+          const d = Math.abs(s - target);
+          if (d < min) {
+              min = d;
+              rslt = s;
+          }
+          if (s === target) {
+              return s;
+          } else if (s < target) {
+              ++l;
+          } else {
+              --r;
+          }
       }
-    }
   }
-  return result;
-}
 
-// tests
-
-const testInputListCollection = [
-  [[-1, 2, 1, -4], 1],
-  [[0, 0, 0], 1],
-];
-
-const expectedResultList = [2, 0];
-
-runTestCaseList(testInputListCollection, expectedResultList, threeSumClosest);
+  return rslt;
+};

@@ -28,14 +28,16 @@ Constraints:
 
 function containsNearbyDuplicate(nums: number[], k: number): boolean {
   const set = new Set<number>();
-  for (let i = 0; i < nums.length; ++i) {
-    if (i > k) {
-      set.delete(nums[i - k - 1]);
-    }
-    if (set.has(nums[i])) {
-      return true;
-    }
-    set.add(nums[i]);
+  for (let l = 0, r = 0; r < nums.length; ++r) {
+      const a = nums[r];
+      if (set.has(a)) {
+          return true;
+      }
+      set.add(a);
+      if (set.size === k + 1) {
+          set.delete(nums[l++]);
+      }
   }
+
   return false;
-}
+};

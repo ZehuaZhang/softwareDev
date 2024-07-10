@@ -27,25 +27,28 @@ All the integers of nums are unique.
 */
 
 function permute(nums: number[]): number[][] {
-  const result: number[][] = [];
-  const visited = new Set<number>();
-  dfs([]);
-  return result;
+  const n = nums.length;
+  const path: number[] = [];
+  const rslt: number[][] = [];
+  const seen: boolean[] = Array(n).fill(false);
 
-  function dfs(path: number[]) {
-    if (path.length === nums.length) {
-      result.push([...path]);
-      return;
-    }
+  dfs();
 
-    for (let i = 0; i < nums.length; ++i) {
-      if (!visited.has(nums[i])) {
-        visited.add(nums[i]);
-        path.push(nums[i]);
-        dfs(path);
-        path.pop();
-        visited.delete(nums[i]);
+  return rslt;
+
+  function dfs() {
+      if (path.length === n) {
+          return rslt.push([...path]);
       }
-    }
+
+      for (let i = 0; i < n; ++i) {
+          if (!seen[i]) {
+              seen[i] = true;
+              path.push(nums[i]);
+              dfs();
+              path.pop();
+              seen[i] = false;
+          }
+      }
   }
-}
+};

@@ -15,21 +15,24 @@ Note: you can assume that no duplicate edges will appear in edges. Since all edg
 */
 
 function validTree(n: number, edges: number[][]) {
-  const roots = Array(n).fill(-1);
+  const m = edges.length;
+  const set = Array(n).fill(-1);
   for (const [a, b] of edges) {
-    const x = find(roots, a);
-    const y = find(roots, b);
+    const x = find(a);
+    const y = find(b);
     if (x === y) {
       return false;
     }
-    roots[x] = y;
+    set[x] = y;
   }
-  return edges.length === n - 1;
 
-  function find(roots: number[], i: number) {
-    while (roots[i] !== -1) {
-      i = roots[i];
+  return n === m + 1;
+
+  function find(i) {
+    while (set[i] !== -1) {
+      i = set[i];
     }
+
     return i;
   }
 }

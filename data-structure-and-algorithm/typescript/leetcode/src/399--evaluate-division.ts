@@ -42,48 +42,49 @@ queries[i].length == 2
 Ai, Bi, Cj, Dj consist of lower case English letters and digits.
  */
 
-function calcEquation(
-  equations: string[][],
-  values: number[],
-  queries: string[][]
-): number[] {
+function calcEquation(equations: string[][], values: number[], queries: string[][]): number[] {
   const map = new Map<string, [string, number][]>();
-  for (let i = 0; i < equations.length; i++) {
-    const [src, dst] = equations[i];
-    if (!map.has(src)) {
-      map.set(src, []);
-    }
-    if (!map.has(dst)) {
-      map.set(dst, []);
-    }
-    map.get(src)!.push([dst, values[i]]);
-    map.get(dst)!.push([src, 1 / values[i]]);
+  for (let i = 0; i < equations.length; ++i) {
+      const [s, d] = equations[i];
+      const v = values[i];
+      if (!map.has(s)) {
+          map.set(s, []);
+      }
+      if (!map.has(d)) {
+          map.set(d, []);
+      }
+
+      map.get(s).push([d, v]);
+      map.get(d).push([s, 1 / v]);
   }
 
   const rslt: number[] = [];
+  for (const [s, d] of queries) {
+      let val = -1;
+      if (map.has(s) && map.has(d)) {
+          const q: [string, number][] = [];
+          const seen = new Set<string>();
 
-  for (const [src, dst] of queries) {
-    const q: [string, number][] = [];
-    const visited = new Set<string>();
-    let result = -1;
-    q.push([src, 1]);
-    visited.add(src);
-    if (map.has(dst)) {
-      while (q.length) {
-        const [node, value] = q.shift();
-        if (node === dst) {
-          result = value;
-          break;
-        }
-        for (const [nextNode, nextValue] of map.get(node)!) {
-          if (!visited.has(nextNode)) {
-            visited.add(nextNode);
-            q.push([nextNode, value * nextValue]);
+          q.push([s, 1]);
+          seen.add(s);
+
+          while (q.length) {
+              const [a, v] = q.shift();
+              if (a === d) {
+                  val = v;
+                  break;
+              }
+
+              for (const [na, nv] of map.get(a)) {
+                  if (!seen.has(na)) {
+                      q.push([na, nv * v]);
+                      seen.add(na);
+                  }
+              }
           }
-        }
       }
-    }
-    rslt.push(result);
+      rslt.push(val);
   }
+
   return rslt;
-}
+};

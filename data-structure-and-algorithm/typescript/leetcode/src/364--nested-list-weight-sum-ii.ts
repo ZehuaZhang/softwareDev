@@ -23,21 +23,23 @@ function depthSumInverse(list: NestedInteger[]): number {
   const path: number[] = [];
   dfs(list, 0);
 
-  let result = 0;
+  let rslt = 0;
   for (let i = 0; i < path.length; ++i) {
-    result += path[i] * (list.length - i);
+    rslt += path[i] * (path.length - i);
   }
-  return result;
 
-  function dfs(list: NestedInteger[], depth: number) {
-    if (path.length === depth) {
+  return rslt;
+
+  function dfs(l: NestedInteger[], lvl: number) {
+    if (lvl === path.length) {
       path.push(0);
     }
-    for (const l of list) {
-      if (l.isInteger()) {
-        path[depth] += l.getInteger();
+
+    for (const n of l) {
+      if (n.isInteger()) {
+        path[lvl] += n.getInteger();
       } else {
-        dfs(l.getList(), depth + 1);
+        dfs(n.getList(), lvl + 1);
       }
     }
   }

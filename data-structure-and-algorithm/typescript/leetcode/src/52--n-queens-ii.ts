@@ -25,27 +25,27 @@ Constraints:
 */
 
 function totalNQueens(n: number): number {
-  let result = 0;
-
-  const col = Array(n).fill(false);
+  const cols = Array(n).fill(false);
   const diag1 = Array(2 * n - 1).fill(false);
   const diag2 = Array(2 * n - 1).fill(false);
 
+  let rslt = 0;
+
   dfs(0);
 
-  return result;
+  return rslt;
 
   function dfs(row: number) {
-    if (row === n) {
-      ++result;
-      return;
-    }
-    for (let i = 0; i < n; ++i) {
-      if (!col[i] && !diag1[row - i + n - 1] && !diag2[row + i]) {
-        col[i] = diag1[row - i + n - 1] = diag2[row + i] = true;
-        dfs(row + 1);
-        col[i] = diag1[row - i + n - 1] = diag2[row + i] = false;
+      if (row === n) {
+          return ++rslt;
       }
-    }
+
+      for (let i = 0; i < n; ++i) {
+          if (!cols[i] && !diag1[row + i] && !diag2[i - row + n - 1]) {
+              cols[i] = diag1[row + i] = diag2[i - row + n - 1] = true;
+              dfs(row + 1);
+              cols[i] = diag1[row + i] = diag2[i - row + n - 1] = false;
+          }
+      }
   }
-}
+};

@@ -36,11 +36,14 @@ Follow up: Could you do this using only O(n) extra space, where n is the total n
 
 function minimumTotal(triangle: number[][]): number {
   const m = triangle.length;
-  const rslt = [...triangle[m - 1]];
+  const n = triangle[m - 1].length;
+  const dp = [...triangle[m - 1]];
+
   for (let i = m - 2; i >= 0; --i) {
-    for (let j = 0; j <= i; ++j) {
-      rslt[j] = Math.min(rslt[j], rslt[j + 1]) + triangle[i][j];
-    }
+      for (let j = 0; j <= i ; ++j) {
+          dp[j] = triangle[i][j] + Math.min(dp[j], dp[j + 1]);
+      }
   }
-  return rslt[0];
-}
+
+  return dp[0];
+};

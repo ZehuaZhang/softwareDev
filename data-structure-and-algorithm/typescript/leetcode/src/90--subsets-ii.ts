@@ -26,19 +26,24 @@ Constraints:
 */
 
 function subsetsWithDup(nums: number[]): number[][] {
-  const result: number[][] = [];
-  nums.sort((a, b) => a - b);
-  dfs(0, []);
-  return result;
+  const path: number[] = [];
+  const rslt: number[][] = [];
 
-  function dfs(start: number, path: number[]) {
-    result.push([...path]);
-    for (let i = start; i < nums.length; ++i) {
-      if (i === start || nums[i] !== nums[i - 1]) {
-        path.push(nums[i]);
-        dfs(i + 1, path);
-        path.pop();
+  nums.sort((a, b) => a - b);
+
+  dfs(0);
+
+  return rslt;
+
+  function dfs(i0: number) {
+      rslt.push([...path]);
+
+      for (let i = i0; i < nums.length; ++i) {
+          if (i === i0 || nums[i] !== nums[i - 1]) {
+              path.push(nums[i]);
+              dfs(i + 1);
+              path.pop();
+          }
       }
-    }
   }
-}
+};

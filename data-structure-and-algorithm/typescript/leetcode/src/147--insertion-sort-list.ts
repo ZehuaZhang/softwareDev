@@ -32,23 +32,23 @@ The number of nodes in the list is in the range [1, 5000].
 */
 
 function insertionSortList(head: ListNode | null): ListNode | null {
-  const dummy = new ListNode(NaN);
+  const dummy = new ListNode(0);
   let prev = dummy;
 
-  for (let node = head; node; ) {
-    const next = node.next;
+  for (let node = head; node;) {
+      const next = node.next;
 
-    if (prev.val >= node.val) {
-      prev = dummy;
-    }
+      if (prev.val >= node.val) {
+          prev = dummy;
+      }
 
-    for (; prev.next && prev.next.val < node.val; prev = prev.next);
+      for (; prev.next && prev.next !== node && prev.next.val < node.val; prev = prev.next);
 
-    node.next = prev.next;
-    prev.next = node;
+      node.next = prev.next;
+      prev.next = node;
 
-    node = next;
+      node = next;
   }
 
   return dummy.next;
-}
+};

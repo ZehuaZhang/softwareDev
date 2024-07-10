@@ -31,36 +31,20 @@ n == nums.length
 -109 <= nums[i] <= 109
 */
 
-import {runTestCaseList} from './util/test';
-
 function find132pattern(nums: number[]): boolean {
-  if (nums.length < 3) {
-    return false;
-  }
-  let mid = -Infinity;
+  let m = -Infinity;
   const stk: number[] = [];
   for (let i = nums.length - 1; i >= 0; --i) {
-    if (nums[i] < mid) {
-      return true;
-    } else {
-      while (stk.length && nums[i] > stk[stk.length - 1]) {
-        mid = stk.pop();
+      const n = nums[i];
+      if (n < m) {
+          return true;
       }
-    }
-    stk.push(nums[i]);
+
+      while (stk.length && n > stk[stk.length - 1]) {
+          m = stk.pop();
+      }
+      stk.push(n);
   }
+
   return false;
 }
-
-// tests
-
-const testInputListCollection = [
-  [[1, 2, 3, 4]],
-  [[3, 1, 4, 2]],
-  [[-1, 3, 2, 0]],
-  [[1, 0, 1, -4, -3]],
-];
-
-const expectedResultList = [false, true, true, false];
-
-runTestCaseList(testInputListCollection, expectedResultList, find132pattern);

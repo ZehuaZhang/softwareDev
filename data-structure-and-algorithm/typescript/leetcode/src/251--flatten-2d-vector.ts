@@ -30,32 +30,27 @@ As an added challenge, try to code it using only iterators in C++ or iterators i
 */
 
 class Vector2D {
-  row: number;
-  col: number;
-  array: number[][];
+  i: number;
+  j: number;
+  arr: number[][]
   constructor(array: number[][]) {
-    this.row = 0;
-    this.col = 0;
-    this.array = array;
+    this.i = 0;
+    this.j = 0;
+    this.arr = array;
     this.adjust();
   }
 
   next(): number {
-    const data = this.array[this.row][this.col++];
+    const val = this.arr[this.i][this.j++];
     this.adjust();
-    return data;
+    return val;
   }
 
   hasNext(): boolean {
-    return this.row !== this.array.length;
+    return this.i !== this.arr.length;
   }
 
   adjust(): void {
-    for (
-      ;
-      this.row !== this.array.length &&
-      this.col === this.array[this.row].length;
-      ++this.row, this.col = 0
-    );
+    for (;this.i !== this.arr.length && this.j === this.arr[this.i].length; ++this.i, this.j = 0);
   }
 }

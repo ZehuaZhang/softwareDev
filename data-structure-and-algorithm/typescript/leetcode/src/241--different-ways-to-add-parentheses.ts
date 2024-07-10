@@ -31,43 +31,49 @@ expression consists of digits and the operator '+', '-', and '*'.
 */
 
 function diffWaysToCompute(expression: string): number[] {
-  const map = new Map<string, number[]>();
+  const memo = new Map<string, number[]>();
   return dfs(expression);
 
-  function dfs(e: string) {
-    if (map.has(e)) {
-      return map.get(e);
-    }
-
-    const result: number[] = [];
-
-    for (let i = 0; i < e.length; ++i) {
-      if ('+-*'.includes(e[i])) {
-        for (const a of dfs(e.substring(0, i))) {
-          for (const b of dfs(e.substring(i + 1))) {
-            switch (e[i]) {
-              case '+': {
-                result.push(a + b);
-                break;
-              }
-              case '-': {
-                result.push(a - b);
-                break;
-              }
-              case '*': {
-                result.push(a * b);
-                break;
-              }
-            }
-          }
-        }
+  function dfs(exp: string) {
+      if (memo.has(exp)) {
+          return memo.get(exp);
       }
-    }
 
-    if (result.length === 0) {
-      result.push(Number(e));
-    }
-    map.set(e, result);
-    return result;
+      const rslt: number[] = [];
+
+      for (let i = 0; i < exp.length; ++i) {
+          const op = exp[i];
+          if ("+-*/".includes(op)) {
+              for (const a of dfs(exp.substring(0, i))) {
+                  for (const b of dfs(exp.substring(i + 1))) {
+                      switch (op) {
+                          case '+': {
+                              rslt.push(a + b);
+                              break;
+                          }
+                          case '-': {
+                              rslt.push(a - b);
+                              break;
+                          }
+                          case '*': {
+                              rslt.push(a * b);
+                              break;
+                          }
+                          case '/': {
+                              rslt.push(a / b);
+                              break;
+                          }
+                      }
+                  }
+              }
+          }
+      }
+
+      if (!rslt.length) {
+          rslt.push(Number(exp));
+      }
+
+      memo.set(exp, rslt);
+      return memo.get(exp);
   }
-}
+};

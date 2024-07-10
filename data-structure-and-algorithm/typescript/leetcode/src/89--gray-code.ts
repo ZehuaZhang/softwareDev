@@ -39,12 +39,14 @@ Constraints:
 */
 
 function grayCode(n: number): number[] {
-  const result = [0, 1];
-  for (let i = 0; i < n - 1; ++i) {
-    const len = result.length;
-    for (let j = len - 1; j >= 0; --j) {
-      result.push(result[j] + len);
-    }
+  const rslt = [0, 1];
+
+  for (let i = 2; i <= n; ++i) {
+      const len = rslt.length;
+      for (let j = len - 1; j >= 0; --j) {
+          rslt.push(rslt[j] + len);
+      }
   }
-  return result;
-}
+
+  return rslt;
+};

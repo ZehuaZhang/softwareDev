@@ -49,19 +49,18 @@ function maxSlidingWindow(nums: number[], k: number): number[] {
   const n = nums.length;
   const dq: number[] = [];
   const rslt: number[] = [];
-
   for (let i = 0; i < n; ++i) {
-    while (dq.length && nums[i] >= nums[dq[dq.length - 1]]) {
-      dq.pop();
-    }
-    dq.push(i);
-    if (dq.length && dq[0] === i - k) {
-      dq.shift();
-    }
-    if (i >= k - 1) {
-      rslt.push(nums[dq[0]]);
-    }
+      while (dq.length && nums[i] >= nums[dq[dq.length - 1]]) {
+          dq.pop();
+      }
+      dq.push(i);
+      if (i - dq[0] === k) {
+          dq.shift();
+      }
+      if (i >= k - 1) {
+          rslt.push(nums[dq[0]]);
+      }
   }
 
   return rslt;
-}
+};

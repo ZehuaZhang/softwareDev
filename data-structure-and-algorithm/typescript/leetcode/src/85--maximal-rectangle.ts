@@ -32,45 +32,32 @@ matrix[i][j] is '0' or '1'.
 function maximalRectangle(matrix: string[][]): number {
   const [m, n] = [matrix.length, matrix[0].length];
   const hghts = Array(n).fill(0);
-  let result = 0;
-  for (let i = 0; i < m; ++i) {
-    for (let j = 0; j < n; ++j) {
-      hghts[j] = matrix[i][j] === '1' ? hghts[j] + 1 : 0;
-    }
-    result = Math.max(result, hist(hghts));
-  }
-  return result;
+  let rslt = 0;
 
-  function hist(hghts: number[]) {
-    const list = [...hghts, 0];
-    const idx: number[] = [];
-    let area = 0;
-    for (let i = 0; i < list.length; ) {
-      if (idx.length === 0 || list[i] > list[idx[idx.length - 1]]) {
-        idx.push(i++);
-      } else {
-        const hght = list[idx.pop()];
-        const wdth = idx.length ? i - idx[idx.length - 1] - 1 : i;
-        area = Math.max(area, hght * wdth);
+  for (let i = 0; i < m; ++i) {
+      for (let j = 0; j < n; ++j) {
+          hghts[j] = matrix[i][j] === '1' ? hghts[j] + 1 : 0;
       }
-    }
-    return area;
+      rslt = Math.max(rslt, hist());
+  }
+
+  return rslt;
+
+  function hist() {
+      const h = [...hghts, 0];
+      const idx: number[] = [];
+      let area = 0;
+
+      for (let i = 0; i < h.length;) {
+          if (!idx.length || h[i] > h[idx[idx.length - 1]]) {
+              idx.push(i++);
+          } else {
+              const l = h[idx.pop()];
+              const w = idx.length ? i - idx[idx.length - 1] - 1 : i;
+              area = Math.max(area, l * w);
+          }
+      }
+
+      return area;
   }
 }
-
-// tests
-
-const testInputListCollection = [
-  [
-    [
-      ['1', '0', '1', '0', '0'],
-      ['1', '0', '1', '1', '1'],
-      ['1', '1', '1', '1', '1'],
-      ['1', '0', '0', '1', '0'],
-    ],
-  ],
-];
-
-const expectedResultList = [6];
-
-runTestCaseList(testInputListCollection, expectedResultList, maximalRectangle);

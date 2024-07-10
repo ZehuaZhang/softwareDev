@@ -26,19 +26,20 @@ The number of nodes in head is in the range [0, 2 * 104].
 */
 
 function sortedListToBST(head: ListNode | null): TreeNode | null {
-  if (head === null) {
-    return null;
+  if (!head) {
+      return null;
   }
-  if (head.next === null) {
-    return new TreeNode(head.val);
+
+  if (!head.next) {
+      return new TreeNode(head.val);
   }
+
   let slow = head;
   let fast = head;
-  let prev = slow;
-  while (fast && fast.next) {
-    prev = slow;
-    slow = slow.next;
-    fast = fast.next.next;
+  let prev = head;
+
+  for (; fast && fast.next; fast = fast.next.next, slow = slow.next) {
+      prev = slow;
   }
   prev.next = null;
 
@@ -47,4 +48,4 @@ function sortedListToBST(head: ListNode | null): TreeNode | null {
   node.right = sortedListToBST(slow.next);
 
   return node;
-}
+};

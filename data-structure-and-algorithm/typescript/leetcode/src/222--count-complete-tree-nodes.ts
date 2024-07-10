@@ -32,18 +32,18 @@ The tree is guaranteed to be complete.
 */
 
 function countNodes(root: TreeNode | null): number {
-  if (root === null) {
-    return 0;
+  if (!root) {
+      return 0;
   }
 
-  let hl = 0,
-    hr = 0;
+  let [hl, hr] = [0, 0];
+
   for (let l = root; l; l = l.left, ++hl);
   for (let r = root; r; r = r.right, ++hr);
 
   if (hl === hr) {
-    return Math.pow(2, hl) - 1;
+      return Math.pow(2, hl) - 1;
   }
 
   return 1 + countNodes(root.left) + countNodes(root.right);
-}
+};

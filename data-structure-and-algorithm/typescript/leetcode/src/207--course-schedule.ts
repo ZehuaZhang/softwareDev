@@ -33,31 +33,30 @@ All the pairs prerequisites[i] are unique.
 
 function canFinish(numCourses: number, prerequisites: number[][]): boolean {
   const graph: number[][] = [...Array(numCourses)].map(() => []);
-  const inDegree: number[] = Array(numCourses).fill(0);
+  const inDgr: number[] = Array(numCourses).fill(0);
 
-  for (const [adv, pre] of prerequisites) {
-    graph[pre].push(adv);
-    ++inDegree[adv];
+  for (const [adv, bsc] of prerequisites) {
+      graph[bsc].push(adv);
+      ++inDgr[adv];
   }
 
   const q: number[] = [];
   for (let i = 0; i < numCourses; ++i) {
-    if (inDegree[i] === 0) {
-      q.push(i);
-    }
+      if (!inDgr[i]) {
+          q.push(i);
+      }
   }
 
   let rslt = 0;
-
   while (q.length) {
-    ++rslt;
-    const pre = q.shift();
-    for (const adv of graph[pre]) {
-      if (--inDegree[adv] === 0) {
-        q.push(adv);
+      const c = q.shift();
+      ++rslt;
+      for (const a of graph[c]) {
+          if (--inDgr[a] === 0) {
+              q.push(a);
+          }
       }
-    }
   }
 
   return rslt === numCourses;
-}
+};

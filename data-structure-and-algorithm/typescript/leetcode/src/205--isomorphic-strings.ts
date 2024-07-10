@@ -30,16 +30,17 @@ t.length == s.length
 s and t consist of any valid ascii character.
 */
 
-function isIsomorphic(s: string, t: string): boolean {
-  const map1 = Array(256).fill(undefined);
-  const map2 = Array(256).fill(undefined);
+function isIsomorphic(s: string, t: string) {
+  const m1 = Array(256).fill(undefined);
+  const m2 = Array(256).fill(undefined);
+
   for (let i = 0; i < s.length; ++i) {
-    const c1 = s.charCodeAt(i);
-    const c2 = t.charCodeAt(i);
-    if (map1[c1] !== map2[c2]) {
-      return false;
+    const [a, b] = [s[i], t[i]];
+    if (m1[a] !== m2[b]) {
+        return false;
     }
-    map1[c1] = map2[c2] = i;
+    m1[a] = m2[b] = i;
   }
-  return s.length === t.length;
+
+  return true;
 }

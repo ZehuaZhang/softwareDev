@@ -27,10 +27,12 @@ The number of nodes in the tree is in the range [0, 105].
 */
 
 function minDepth(root: TreeNode | null): number {
-  if (root === null) {
-    return 0;
+  if (!root) {
+      return 0;
   }
-  let l = minDepth(root.left);
-  let r = minDepth(root.right);
+
+  const l = minDepth(root.left);
+  const r = minDepth(root.right);
+
   return l && r ? Math.min(l, r) + 1 : l + r + 1;
-}
+};

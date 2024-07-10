@@ -27,18 +27,21 @@ Follow up: Could you solve it both recursively and iteratively?
 */
 
 function isSymmetric(root: TreeNode | null): boolean {
-  if (root === null) {
-    return true;
+  if (!root) {
+      return true;
   }
+
   return dfs(root.left, root.right);
 
-  function dfs(l: TreeNode | null, r: TreeNode | null) {
-    if (l === null || r === null) {
-      return l === r;
-    }
-    if (l.val !== r.val) {
-      return false;
-    }
-    return dfs(l.right, r.left) && dfs(l.left, r.right);
+  function dfs(a: TreeNode | null, b: TreeNode | null) {
+      if (!a || !b) {
+          return a === b;
+      }
+
+      if (a.val !== b.val) {
+          return false;
+      }
+
+      return dfs(a.left, b.right) && dfs(a.right, b.left);
   }
-}
+};

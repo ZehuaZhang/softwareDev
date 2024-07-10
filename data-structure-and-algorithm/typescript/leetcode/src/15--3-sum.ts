@@ -35,43 +35,38 @@ Constraints:
 -105 <= nums[i] <= 105
 */
 
-import {runTestCaseList} from './util/test';
-
 function threeSum(nums: number[]): number[][] {
-  const result = [];
+  const n = nums.length;
+  const rslt: number[][] = [];
+  const tgt = 0;
+
   nums.sort((a, b) => a - b);
-  for (let i = 0; i < nums.length - 2; ++i) {
-    if (i > 0 && nums[i] === nums[i - 1]) {
-      continue;
-    }
-    for (let left = i + 1, right = nums.length - 1; left < right; ) {
-      if (left > i + 1 && nums[left] === nums[left - 1]) {
-        ++left;
-        continue;
+
+  for (let i = 0; i < n; ++i) {
+      if (i > 0 && nums[i] === nums[i - 1]) {
+          continue;
       }
-      if (right < nums.length - 1 && nums[right] === nums[right + 1]) {
-        --right;
-        continue;
+      for (let l = i + 1, r = n - 1; l < r;) {
+          if (l > i + 1 && nums[l] === nums[l - 1]) {
+              ++l;
+              continue;
+          }
+          if (r < n - 1 && nums[r] === nums[r + 1]) {
+              --r;
+              continue;
+          }
+          const s = nums[i] + nums[l] + nums[r];
+          if (s === tgt) {
+              rslt.push([nums[i], nums[l], nums[r]]);
+              ++l;
+              --r;
+          } else if (s < tgt) {
+              ++l;
+          } else {
+              --r;
+          }
       }
-      const sum = nums[i] + nums[left] + nums[right];
-      if (sum === 0) {
-        result.push([nums[i], nums[left], nums[right]]);
-        ++left;
-        --right;
-      } else if (sum < 0) {
-        ++left;
-      } else {
-        --right;
-      }
-    }
   }
-  return result;
+
+  return rslt;
 }
-
-// tests
-
-const testInputListCollection = [[[0, 1, 1]], [[0, 0, 0]]];
-
-const expectedResultList = [[], [[0, 0, 0]]];
-
-runTestCaseList(testInputListCollection, expectedResultList, threeSum);

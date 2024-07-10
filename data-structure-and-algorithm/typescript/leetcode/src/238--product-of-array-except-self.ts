@@ -31,15 +31,17 @@ Follow up: Can you solve the problem in O(1) extra space complexity? (The output
 
 function productExceptSelf(nums: number[]): number[] {
   const n = nums.length;
-  const rslt = Array(n).fill(0);
+  const rslt: number[] = Array(n).fill(0);
   rslt[0] = 1;
   for (let i = 1; i < n; ++i) {
-    rslt[i] = rslt[i - 1] * nums[i - 1];
+      rslt[i] = rslt[i - 1] * nums[i - 1];
   }
+
   let r = 1;
   for (let i = n - 1; i >= 0; --i) {
-    rslt[i] *= r;
-    r *= nums[i];
+      rslt[i] *= r;
+      r *= nums[i];
   }
+
   return rslt;
-}
+};

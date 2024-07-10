@@ -25,15 +25,16 @@ Explanation: Take c1 as color 1, c2 as color 2. All possible ways are:
 */
 
 function numWays(n: number, k: number) {
-  if (n === 0) {
+  if (!n) {
     return 0;
   }
-  let same = 0;
-  let diff = k;
+
+  let s = 0, d = k;
   for (let i = 2; i <= n; ++i) {
-    const t = diff;
-    diff = (same + diff) * (k - 1);
-    same = t;
+    const t = d;
+    d = (s + d) * (k - 1);
+    s = t;
   }
-  return same + diff;
+
+  return s + d;
 }

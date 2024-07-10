@@ -32,35 +32,35 @@ nums is a non-decreasing array.
 */
 
 function searchRange(nums: number[], target: number): number[] {
-  const left = firstGreaterEqual(nums, target);
-  const right = firstGreater(nums, target) - 1;
-  return nums[left] === target ? [left, right] : [-1, -1];
+  const n = nums.length;
+  const [a, b] = [greaterEq(target), greater(target)];
+  return nums[a] === target ? [a, b - 1] : [-1, -1];
 
-  function firstGreater(nums: number[], target: number) {
-    let left = 0,
-      right = nums.length - 1;
-    while (left <= right) {
-      const mid = left + Math.trunc((right - left) / 2);
-      if (nums[mid] > target) {
-        right = mid - 1;
-      } else {
-        left = mid + 1;
+  function greater(tgt: number) {
+      let [l, r] = [0, n - 1];
+      while (l <= r) {
+          const m = l + Math.trunc((r - l) / 2);
+          if (nums[m] > tgt) {
+              r = m - 1;
+          } else {
+              l = m + 1;
+          }
       }
-    }
-    return left;
+
+      return l;
   }
 
-  function firstGreaterEqual(nums: number[], target: number) {
-    let left = 0,
-      right = nums.length - 1;
-    while (left <= right) {
-      const mid = left + Math.trunc((right - left) / 2);
-      if (nums[mid] >= target) {
-        right = mid - 1;
-      } else {
-        left = mid + 1;
+  function greaterEq(tgt: number) {
+      let [l, r] = [0, n - 1];
+      while (l <= r) {
+          const m = l + Math.trunc((r - l) / 2);
+          if (nums[m] >= tgt) {
+              r = m - 1;
+          } else {
+              l = m + 1;
+          }
       }
-    }
-    return left;
+
+      return l;
   }
-}
+};

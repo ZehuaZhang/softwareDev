@@ -26,16 +26,16 @@ Constraints:
 */
 
 function mySqrt(x: number): number {
-  let left = 0,
-    right = x;
-  while (left <= right) {
-    const mid = left + Math.trunc((right - left) / 2);
-    const sqr = mid * mid;
-    if (sqr > x) {
-      right = mid - 1;
-    } else {
-      left = mid + 1;
-    }
+  let [l, r] = [0, x];
+
+  while (l <= r) {
+      const m = l + Math.trunc((r - l) / 2);
+      if (m * m > x) {
+          r = m - 1;
+      } else {
+          l = m + 1; 
+      }
   }
-  return right;
-}
+
+  return r;
+};

@@ -61,3 +61,43 @@ function wordPatternMatch(pattern: string, str: string) {
     return false;
   }
 }
+
+
+function wordPatternMatch(pattern: string, str: string) {
+  const [m, n] = [pattern.length, str.length];
+  const mp = new Map<string, string>();
+  const st = new Set<string>();
+
+  return dfs(0, 0);
+
+  function dfs(i0: number, j0: number) {
+    if (i0 === m && j0 === n) {
+      return true;
+    }
+    if (i0 === m || j0 === n) {
+      return false;
+    }
+    const c = pattern[i0];
+    for(let j = j0; j < n; ++j) {
+      const w = str.substring(j0, j + 1);
+      if (mp.get(c) === w) {
+        if (dfs(i0 + 1, j + 1)) {
+          return true;
+        }
+      } else if (!mp.has(c)) {
+        if (st.has(w)) {
+          continue;
+        }
+        mp.set(c, w);
+        st.add(w);
+        if (dfs(i0 + 1, j + 1)) {
+          return true;
+        }
+        st.delete(w);
+        mp.delete(c);
+      }
+    }
+
+    return false;
+  }
+}

@@ -46,29 +46,33 @@ Follow up: Could you solve it using only O(s2.length) additional memory space?
 */
 
 function isInterleave(s1: string, s2: string, s3: string): boolean {
-  const [l1, l2, l3] = [s1.length, s2.length, s3.length];
-  if (l1 + l2 !== l3) {
-    return false;
+  const [m, n, k] = [s1.length, s2.length, s3.length];
+
+  if (m + n !== k) {
+      return false;
   }
 
-  const visited = [...Array(l1 + 1)].map(() => Array(l2 + 1).fill(false));
+  const seen = [...Array(m + 1)].map(() => Array(n + 1).fill(false));
   const q: [number, number][] = [[0, 0]];
+  seen[0][0] = true;
 
   while (q.length) {
-    const [a, b] = q.shift();
-    if (a === l1 && b === l2) {
-      return true;
-    }
-    if (visited[a][b]) {
-      continue;
-    }
-    if (a < l1 && s1[a] === s3[a + b]) {
-      q.push([a + 1, b]);
-    }
-    if (b < l2 && s2[b] === s3[a + b]) {
-      q.push([a, b + 1]);
-    }
-    visited[a][b] = true;
+      const [a, b] = q.shift();
+      if (a === m && b === n) {
+          return true;
+      }
+      
+      if (a < m && s1[a] === s3[a + b] && !seen[a + 1][b]) {
+          q.push([a + 1, b]);
+          seen[a + 1][b] = true;
+      }
+
+      if (b < n && s2[b] === s3[a + b] && !seen[a][b + 1]) {
+          q.push([a, b + 1]);
+          seen[a][b + 1] = true;
+      }
+
   }
+
   return false;
-}
+};

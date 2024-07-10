@@ -35,34 +35,35 @@ The number of nodes in the tree is in the range [0, 104].
 */
 
 function serialize(root: TreeNode | null): string {
-  const result: string[] = [];
+  const rslt: (string | number)[] = [];
   dfs(root);
-  return result.join(' ');
+  return rslt.join(' ');
 
   function dfs(node: TreeNode | null) {
-    if (node === null) {
-      result.push('#');
-      return;
-    }
-    result.push(String(node.val));
-    dfs(node.left);
-    dfs(node.right);
+      if (!node) {
+          return rslt.push('#');
+      }
+
+      rslt.push(node.val);
+      dfs(node.left);
+      dfs(node.right);
   }
-}
+};
 
 function deserialize(data: string): TreeNode | null {
-  const iter = data.split(' ').values();
+  const it = data.split(' ').values();
   return dfs();
 
   function dfs() {
-    const {value, done} = iter.next();
-    if (done || value === '#') {
-      return null;
-    }
+      const {value, done} = it.next();
+      if (done || value === '#') {
+          return null;
+      }
 
-    const node = new TreeNode(value);
-    node.left = dfs();
-    node.right = dfs();
-    return node;
+      const node = new TreeNode(value);
+      node.left = dfs();
+      node.right = dfs();
+
+      return node;
   }
-}
+};

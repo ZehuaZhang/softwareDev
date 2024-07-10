@@ -77,28 +77,32 @@ Output:
 
 function verticalOrder(root: TreeNode | null): number[][] {
   const rslt: number[][] = [];
-  if (root === null) {
+  if (!root) {
     return rslt;
   }
+
   const m = new Map<number, number[]>();
   const q: [number, TreeNode][] = [];
   q.push([0, root]);
   while (q.length) {
     const [i, node] = q.shift();
-    if (!m.has(i)) {
+    if (m.has(i)) {
       m.set(i, []);
     }
-    m.get(i)?.push(node.val);
+    m.get(i).push(node.val);
+
     if (node.left) {
       q.push([i - 1, node.left]);
     }
+
     if (node.right) {
       q.push([i + 1, node.right]);
     }
   }
-  const keys = [...m.keys()].sort((a, b) => a - b);
-  for (const k of keys) {
+
+  for (const k of [...m.keys()].sort((a, b) => a - b)) {
     rslt.push(m.get(k));
   }
+
   return rslt;
 }

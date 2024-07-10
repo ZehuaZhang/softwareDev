@@ -22,43 +22,30 @@ Output: [4,3]
 Follow up:
 Assume that the BST is balanced, could you solve it in less than O(n) runtime (where n = total nodes)?
 */
-import {Nullable} from './util/object';
-import {runTestCaseList} from './util/test';
-import {TreeNode, BinaryTree} from './data-structure/BinaryTree';
-
 function closestKValues(
-  node: Nullable<TreeNode>,
+  node: TreeNode,
   target: number,
   k: number
-): Set<number> {
+): number[] {
   const q: number[] = [];
   dfs(node);
-  return new Set(q);
+  return q;
 
-  function dfs(node: Nullable<TreeNode>): void {
+  function dfs(node: TreeNode | null) {
     if (!node) {
       return;
     }
     dfs(node.left);
+
     if (q.length < k) {
-      q.push(node.data);
-    } else if (Math.abs(node.data - target) < Math.abs(q[0] - target)) {
+      q.push(node.val);
+    } else if (Math.abs(q[0] - target) > Math.abs(node.val - target)) {
       q.shift();
-      q.push(node.data);
+      q.push(node.val);
     } else {
       return;
     }
+
     dfs(node.right);
   }
 }
-
-// test
-const tree = new BinaryTree(4, 2, 5, 1, 3);
-
-tree.printLevel();
-
-const testInputListCollection = [[tree.root, 3.714286, 2]];
-
-const expectedResultList = [new Set([4, 3])];
-
-runTestCaseList(testInputListCollection, expectedResultList, closestKValues);

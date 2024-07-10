@@ -89,28 +89,29 @@ s consists of English letters (lower-case and upper-case), digits (0-9), ' ', '+
 */
 
 function myAtoi(s: string): number {
-  const max = Math.pow(2, 31) - 1;
-  const min = -1 * Math.pow(2, 31);
-
   let i = 0;
   for (; s[i] === ' '; ++i);
 
   let sign = 1;
   if ('+-'.includes(s[i])) {
-    sign = s[i++] === '-' ? -1 : 1;
+      sign = s[i++] === '+' ? 1 : -1;
   }
 
-  let result = 0;
-  for (; s[i] >= '0' && s[i] <= '9'; ++i) {
-    const digit = s.charCodeAt(i) - '0'.charCodeAt(0);
-    if (
-      result > Math.trunc(max / 10) ||
-      (result === Math.trunc(max / 10) && digit > max % 10)
-    ) {
-      return sign === 1 ? max : min;
-    }
-    result = result * 10 + digit;
+  const max = Math.pow(2, 31) - 1;
+  const min = -Math.pow(2, 31);
+
+  let rslt = 0;
+
+  for (; i < s.length && s[i] >= '0' && s[i] <= '9'; ++i) {
+      const d = Number(s[i]);
+      if (
+          (sign === 1 && (rslt > Math.trunc(max / 10) || (rslt === Math.trunc(max / 10) && d > max % 10))) ||
+          (sign === -1 && (-rslt < Math.trunc(min / 10) || (-rslt === Math.trunc(min / 10) && d > Math.abs(min % 10))))
+      ) {
+          return sign === -1 ? min : max;
+      }
+      rslt = rslt * 10 + d;
   }
 
-  return result * sign;
-}
+  return sign * rslt;
+};

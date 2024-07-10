@@ -63,7 +63,6 @@ class SearchFileSystem {
 
   addPath(path: string, size?: number): void {
     const list = path.split('/').filter(Boolean);
-    console.log(list);
     addPathDfs(this.root, size);
 
     function addPathDfs(folder: Folder, size?: number): void {

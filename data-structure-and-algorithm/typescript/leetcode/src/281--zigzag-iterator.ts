@@ -28,23 +28,23 @@ Output: [1,4,8,2,5,9,3,6,7].
 
 class ZigZagIterator {
   q: [number[], number][];
-  constructor(list1: number[], list2: number[]) {
+  constructor(l1: number[], l2: number[]) {
     this.q = [];
-    if (list1.length) {
-      this.q.push([list1, 0]);
+    if (l1.length) {
+      this.q.push([l1, 0]);
     }
-    if (list2.length) {
-      this.q.push([list2, 0]);
+    if (l2.length) {
+      this.q.push([l2, 0]);
     }
   }
 
   next() {
-    const [list, index] = this.q.shift();
-    const data = list[index];
-    if (index !== list.length - 1) {
-      this.q.push([list, index + 1]);
+    let [l, i] = this.q.shift();
+    const val = l[i++];
+    if (i !== l.length) {
+      this.q.push([l, i]);
     }
-    return data;
+    return val;
   }
 
   hasNext() {

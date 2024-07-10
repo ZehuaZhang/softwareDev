@@ -35,40 +35,45 @@ num consists of only digits.
 */
 
 function addOperators(num: string, target: number): string[] {
+  const n = num.length;
   const rslt: string[] = [];
-  for (let i = 0; i < num.length; ++i) {
-    const op = num.substring(0, i + 1);
-    const val = Number(op);
-    if (op !== String(val)) {
-      break;
-    }
-    dfs(i + 1, 0, val, [op]);
+  let path: (string | number)[] = [];
+  for (let i = 0; i < n; ++i) {
+      const sub = num.substring(0, i + 1);
+      const op = Number(sub);
+      if (String(op) !== sub) {
+          break;
+      }
+
+      path = [op];
+      dfs(i + 1, 0, op);
   }
+
   return rslt;
 
-  function dfs(start: number, op1: number, op2: number, path: string[]) {
-    if (start === num.length && op1 + op2 === target) {
-      rslt.push(path.join(''));
-      return;
-    }
-
-    for (let i = start; i < num.length; ++i) {
-      const op = num.substring(start, i + 1);
-      const val = Number(op);
-      if (op !== String(val)) {
-        break;
+  function dfs(i0: number, op1: number, op2: number) {
+      if (i0 === n && op1 + op2 === target) {
+          return rslt.push(path.join(''));
       }
-      path.push('+' + op);
-      dfs(i + 1, op1 + op2, val, path);
-      path.pop();
 
-      path.push('-' + op);
-      dfs(i + 1, op1 + op2, -val, path);
-      path.pop();
+      for (let i = i0; i < n; ++i) {
+          const sub = num.substring(i0, i + 1);
+          const op = Number(sub);
+          if (String(op) !== sub) {
+              break;
+          }
 
-      path.push('*' + op);
-      dfs(i + 1, op1, op2 * val, path);
-      path.pop();
-    }
+          path.push('+' + op);
+          dfs(i + 1, op1 + op2, op);
+          path.pop();
+
+          path.push('-' + op);
+          dfs(i + 1, op1 + op2, -op);
+          path.pop();
+
+          path.push('*' + op);
+          dfs(i + 1, op1, op2 * op);
+          path.pop();
+      }
   }
-}
+};

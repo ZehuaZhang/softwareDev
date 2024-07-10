@@ -23,30 +23,36 @@ s contains only lowercase English letters.
 */
 
 function partition(s: string): string[][] {
-  const result: string[][] = [];
-  dfs(0, []);
-  return result;
+  const n = s.length;
+  const path: string[] = [];
+  const rslt: string[][] = [];
 
-  function dfs(start: number, path: string[]) {
-    if (start === s.length) {
-      result.push([...path]);
-      return;
-    }
-    for (let i = start; i < s.length; ++i) {
-      if (isPalindrome(s, start, i)) {
-        path.push(s.substring(start, i + 1));
-        dfs(i + 1, path);
-        path.pop();
+  dfs(0);
+
+  return rslt;
+
+  function dfs(i0: number) {
+      if (i0 === n) {
+          return rslt.push([...path]);
       }
-    }
+
+      for (let i = i0; i < n; ++i) {
+          const sub = s.substring(i0, i + 1);
+          if (isPalindrome(i0, i)) {
+              path.push(sub);
+              dfs(i + 1);
+              path.pop();
+          }
+      }
   }
 
-  function isPalindrome(s: string, l: number, r: number) {
-    for (; l < r; ++l, --r) {
-      if (s[l] !== s[r]) {
-        return false;
+  function isPalindrome(l: number, r: number) {
+      for (; l < r; ++l, --r) {
+          if (s[l] !== s[r]) {
+              return false;
+          }
       }
-    }
-    return true;
+
+      return true;
   }
-}
+};

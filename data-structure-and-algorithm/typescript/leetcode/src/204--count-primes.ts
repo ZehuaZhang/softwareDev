@@ -27,19 +27,20 @@ Constraints:
 
 function countPrimes(n: number): number {
   if (n < 3) {
-    return 0;
+      return 0;
   }
 
-  const seen = Array(n).fill(false);
+  const seen = new Set<number>();
+
   let rslt = 1;
-
   for (let i = 3; i < n; i += 2) {
-    if (!seen[i]) {
-      ++rslt;
-      for (let j = i * i; j < n; j += 2 * i) {
-        seen[j] = true;
+      if (!seen.has(i)) {
+          ++rslt;
+          for (let j = i * i; j < n; j += 2 * i) {
+              seen.add(j);
+          }
       }
-    }
   }
+
   return rslt;
-}
+};

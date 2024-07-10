@@ -28,13 +28,15 @@ Follow-up: Could you solve the problem in linear time and in O(1) space?
 */
 
 function majorityElement(nums: number[]): number {
-  let rslt;
+  let rslt = 0;
   let cnt = 0;
   for (const num of nums) {
-    if (cnt === 0) {
-      rslt = num;
-    }
-    cnt += num === rslt ? 1 : -1;
+      if (!cnt) {
+          rslt = num;
+      }
+
+      cnt += rslt === num ? 1 : -1;
   }
+
   return rslt;
-}
+};

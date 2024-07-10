@@ -37,52 +37,46 @@ All the timestamps timestamp of set are strictly increasing.
 At most 2 * 105 calls will be made to set and get.
 */
 
-type IData = {
-  val: string;
-  ts: number;
-};
-
 class TimeMap {
   map: Map<string, [string, number][]>;
-
   constructor() {
-    this.map = new Map<string, [string, number][]>();
+      this.map = new Map();
   }
 
-  set(key: string, val: string, ts: number): void {
-    if (!this.map.has(key)) {
-      this.map.set(key, []);
-    }
-    this.map.get(key).push([val, ts]);
-  }
-
-  get(key: string, ts: number): string {
-    if (!this.map.has(key)) {
-      return '';
-    }
-
-    const list = this.map.get(key);
-    const idx = this.lessEqual(list, ts);
-    if (idx === -1) {
-      return '';
-    }
-
-    return list[idx][0];
-  }
-
-  lessEqual(list: [string, number][], tgt: number) {
-    let l = 0,
-      r = list.length - 1;
-
-    while (l <= r) {
-      const mid = l + Math.trunc((r - l) / 2);
-      const [_, ts] = list[mid];
-      if (ts > tgt) {
-        r = mid - 1;
-      } else {
-        l = mid + 1;
+  set(key: string, value: string, timestamp: number): void {
+      if (!this.map.has(key)) {
+          this.map.set(key, []);
       }
-    }
-    return r < 0 ? -1 : r;
+      this.map.get(key).push([value, timestamp]);
+  }
+
+  get(key: string, timestamp: number): string {
+      if (!this.map.has(key)) {
+          return "";
+      }
+
+      const list = this.map.get(key);
+
+      const i = lsEq(timestamp);
+
+      if (i < 0) {
+          return "";
+      }
+
+      return list[i][0];
+
+      function lsEq(tgt: number) {
+          let [l, r] = [0, list.length - 1];
+          while (l <= r) {
+              const m = l + Math.trunc((r - l) / 2);
+              if (list[m][1] <= tgt) {
+                  l = m + 1;
+              } else {
+                  r = m - 1;
+              }
+          }
+
+          return r;
+      }
   }
 }

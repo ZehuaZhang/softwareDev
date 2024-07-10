@@ -31,42 +31,42 @@ It is guaranteed that the input board has only one solution.
 */
 
 function solveSudoku(board: string[][]): void {
-  dfs(board);
+  const [m, n] = [board.length, board[0].length];
+  dfs();
 
-  function dfs(board: string[][]) {
-    for (let i = 0; i < 9; ++i) {
-      for (let j = 0; j < 9; ++j) {
-        if (board[i][j] !== '.') {
-          continue;
-        }
-        for (const c of ['1', '2', '3', '4', '5', '6', '7', '8', '9']) {
-          if (!isValid(board, i, j, c)) {
-            continue;
+  function dfs() {
+      for (let i = 0; i < m; ++i) {
+          for (let j = 0; j < n; ++j) {
+              if (board[i][j] === '.') {
+                  for (const c of ['1', '2', '3', '4', '5', '6', '7', '8', '9']) {
+                      if (isValid(i, j, c)) {
+                          board[i][j] = c;
+                          if (dfs()) {
+                              return true;
+                          }
+                          board[i][j] = '.';
+                      }
+                  }
+                  return false;
+              }
           }
-          board[i][j] = c;
-          if (dfs(board)) {
-            return true;
-          }
-          board[i][j] = '.';
-        }
-        return false;
       }
-    }
-    return true;
+      return true;
   }
 
-  function isValid(board: string[][], i: number, j: number, val: string) {
-    for (let k = 0; k < 9; ++k) {
-      const row = Math.trunc(i / 3) * 3 + Math.trunc(k / 3);
-      const col = Math.trunc(j / 3) * 3 + Math.trunc(k % 3);
-      if (
-        board[k][j] === val ||
-        board[i][k] === val ||
-        board[row][col] === val
-      ) {
-        return false;
+  function isValid(x: number, y: number, val: string) {
+      for (let k = 0; k < 9; ++k) {
+          const br = Math.trunc(x / 3) * 3 + Math.trunc(k / 3);
+          const bc = Math.trunc(y / 3) * 3 + Math.trunc(k % 3);
+          if (
+              board[x][k] === val ||
+              board[k][y] === val ||
+              board[br][bc] === val
+          ) {
+              return false;
+          }
       }
-    }
-    return true;
+
+      return true;
   }
-}
+};

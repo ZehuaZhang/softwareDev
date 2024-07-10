@@ -29,14 +29,15 @@ The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit int
 */
 
 function maxProduct(nums: number[]): number {
-  let result = -Infinity;
-  let max = 1,
-    min = 1;
+  let rslt = -Infinity;
+  let max = 1;
+  let min = 1;
   for (const num of nums) {
     const [pMax, pMin] = [max, min];
-    max = Math.max(num, pMax * num, pMin * num);
-    min = Math.min(num, pMax * num, pMin * num);
-    result = Math.max(result, max);
+    max = Math.max(pMax * num, pMin * num, num);
+    min = Math.min(pMin * num, pMax * num, num);
+    rslt = Math.max(rslt, max);
   }
-  return result;
+
+  return rslt;
 }

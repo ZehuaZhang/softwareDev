@@ -30,15 +30,15 @@ nums contains distinct values sorted in ascending order.
 */
 
 function searchInsert(nums: number[], target: number): number {
-  let left = 0,
-    right = nums.length - 1;
-  while (left <= right) {
-    const mid = left + Math.trunc((right - left) / 2);
-    if (nums[mid] >= target) {
-      right = mid - 1;
-    } else {
-      left = mid + 1;
-    }
+  let [l, r] = [0, nums.length - 1];
+  while (l <= r) {
+      const m = l + Math.trunc((r - l) / 2);
+      if (nums[m] >= target) {
+          r = m - 1;
+      } else {
+          l = m + 1;
+      }
   }
-  return left;
-}
+
+  return l;
+};

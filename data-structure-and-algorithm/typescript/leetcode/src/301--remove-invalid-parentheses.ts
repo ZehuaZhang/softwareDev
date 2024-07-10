@@ -28,43 +28,36 @@ s consists of lowercase English letters and parentheses '(' and ')'.
 There will be at most 20 parentheses in s.
 */
 
-function removeInvalidParentheses(input: string): string[] {
-  const result: string[] = [];
-  removeInvalidParenthesesDfs(input, 0, 0, ['(', ')']);
-  return result;
+function removeInvalidParentheses(s: string): string[] {
+  const rslt: string[] = [];
+  dfs(s, 0, 0, ['(', ')']);
 
-  function removeInvalidParenthesesDfs(
-    input: string,
-    i0: number,
-    j0: number,
-    pair: string[]
-  ): void {
-    let count = 0;
-    for (let i = i0; i < input.length; ++i) {
-      if (input[i] === pair[0]) {
-        ++count;
-      } else if (input[i] === pair[1]) {
-        --count;
-      }
-      if (count < 0) {
-        for (let j = j0; j <= i; ++j) {
-          if (input[j] === pair[1] && (j === j0 || input[j] !== input[j - 1])) {
-            removeInvalidParenthesesDfs(
-              input.substring(0, j) + input.substring(j + 1),
-              i,
-              j,
-              pair
-            );
+  return rslt;
+
+  function dfs(ss: string, i0: number, j0: number, pr: [string, string]) {
+      let cnt = 0;
+      for (let i = i0; i < ss.length; ++i) {
+          if (ss[i] === pr[0]) {
+              ++cnt;
+          } else if (ss[i] === pr[1]) {
+              --cnt;
           }
-        }
-        return;
+
+          if (cnt < 0) {
+              for (let j = j0; j <= i; ++j) {
+                  if (ss[j] === pr[1] && (j === j0 || ss[j] !== ss[j - 1])) {
+                      dfs(ss.substring(0, j) + ss.substring(j + 1), i, j, pr);
+                  }
+              }
+              return;
+          }
       }
-    }
-    const reversed = [...input].reverse().join('');
-    if (pair[0] === '(') {
-      removeInvalidParenthesesDfs(reversed, 0, 0, [')', '(']);
-    } else {
-      result.push(reversed);
-    }
+
+
+      const rs = [...ss].reverse().join('');
+      if (pr[0] === '(') {
+          return dfs(rs, 0, 0, [')', '(']);
+      }
+      return rslt.push(rs);
   }
-}
+};

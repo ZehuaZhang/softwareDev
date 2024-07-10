@@ -40,20 +40,23 @@ Explanation: Longest consecutive sequence path is 2-3, not 3-2-1, so return 2.
 
 function longestConsecutive(root: TreeNode | null) {
   let rslt = 0;
-  dfs(root, root.val, 0);
+  dfs(root, NaN, 0);
+
   return rslt;
 
-  function dfs(root: TreeNode | null, v: number, len: number) {
-    if (root === null) {
+  function dfs(node: TreeNode| null, v: number, l: number) {
+    if (!node) {
       return;
     }
-    if (root.val === v + 1) {
-      ++len;
+
+    if (node.val === v + 1) {
+      ++l;
     } else {
-      len = 1;
+      l = 1;
     }
-    rslt = Math.max(rslt, len);
-    dfs(root.left, root.val, len);
-    dfs(root.right, root.val, len);
+
+    rslt = Math.max(rslt, l);
+    dfs(node.left, root.val, l);
+    dfs(node.right, root.val, l);
   }
 }

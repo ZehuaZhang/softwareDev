@@ -38,13 +38,13 @@ digits does not contain any leading 0's.
 */
 
 function plusOne(digits: number[]): number[] {
-  const n = digits.length;
-  const result = Array(n).fill(0);
-  let carry = 1;
-  for (let i = n - 1; i >= 0; --i) {
-    const sum = digits[i] + carry;
-    result[i] = sum % 10;
-    carry = Math.trunc(sum / 10);
+  const rslt: number[] = [];
+  for (let i = digits.length - 1, c = 1; i >= 0 || c;) {
+      const d = i >= 0 ? digits[i--] : 0;
+      const s = c + d;
+      rslt.push(s % 10);
+      c = Math.trunc(s / 10);
   }
-  return carry ? [1, ...result] : result;
-}
+
+  return rslt.reverse();
+};

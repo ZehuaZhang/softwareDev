@@ -26,16 +26,15 @@ strs[i] consists of only lowercase English letters.
 */
 
 function longestCommonPrefix(strs: string[]): string {
-  let result = '';
-  strs.sort();
-  const first = strs[0];
-  const last = strs[strs.length - 1];
-  for (let i = 0; i < first.length; ++i) {
-    if (first[i] !== last[i]) {
-      return result;
+  const m = strs.length;
+  const n = Math.min(...strs.map(s => s.length));
+  for (let j = 0; j < n; ++j) {
+    const c = strs[0][j];
+    for (let i = 1; i < m; ++i) {
+      if (strs[i][j] !== c) {
+          return strs[0].substring(0, j);
+      }
     }
-    result += first[i];
   }
-
-  return result;
-}
+  return strs[0].substring(0, n);
+};

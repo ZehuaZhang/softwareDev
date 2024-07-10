@@ -31,29 +31,36 @@ Constraints:
 */
 
 function countSmaller(nums: number[]): number[] {
-  const numIdx: [number, number][] = [];
-  for (let i = 0; i < nums.length; ++i) {
-    numIdx.push([nums[i], i]);
+  const n = nums.length;
+  const ni: [number, number][] = [];
+  for (let i = 0; i < n; ++i) {
+      ni.push([nums[i], i]);
   }
-  const result = Array(nums.length).fill(0);
-  mergeSort(0, numIdx.length - 1);
-  return result;
 
-  function mergeSort(left: number, right: number): void {
-    if (left >= right) {
-      return;
-    }
-    const mid = (left + right) >> 1;
-    mergeSort(left, mid);
-    mergeSort(mid + 1, right);
-    const temp: [number, number][] = [];
-    for (let i = left, j = mid + 1; i <= mid; ++i) {
-      for (; j <= right && numIdx[j][0] < numIdx[i][0]; ++j) {
-        temp.push(numIdx[j]);
+  const rslt = Array(n).fill(0);
+  mergeSort(0, n - 1);
+
+  return rslt;
+
+  function mergeSort(l: number, r: number) {
+      if (r <= l) {
+          return;
       }
-      temp.push(numIdx[i]);
-      result[numIdx[i][1]] += j - (mid + 1);
-    }
-    numIdx.splice(left, temp.length, ...temp);
+
+      const m = l + Math.trunc((r - l) / 2);
+      mergeSort(l, m);
+      mergeSort(m + 1, r);
+
+      const t: [number, number][] = [];
+
+      for (let i = l, j = m + 1; i <= m; ++i) {
+          for (; j <= r && ni[j][0] < ni[i][0]; ++j) {
+              t.push(ni[j]);
+          }
+          t.push(ni[i]);
+          rslt[ni[i][1]] += j - (m + 1);
+      }
+
+      ni.splice(l, t.length, ...t);
   }
-}
+};

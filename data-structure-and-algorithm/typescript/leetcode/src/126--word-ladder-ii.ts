@@ -36,63 +36,63 @@ All the words in wordList are unique.
 The sum of all shortest transformation sequences does not exceed 105.
 */
 
-function findLadders(
-  beginWord: string,
-  endWord: string,
-  wordList: string[]
-): string[][] {
-  const set = new Set<string>(wordList);
-  if (!set.has(endWord)) {
-    return [];
-  }
+function findLadders(beginWord: string, endWord: string, wordList: string[]): string[][] {
+  const set = new Set(wordList);
   const q: string[] = [beginWord];
-  set.delete(beginWord);
-  const nodes: string[][] = [];
-  let found = false;
-  while (q.length && !found) {
-    nodes.push([...q]);
-    for (let len = q.length; len && !found; --len) {
-      const w = q.shift();
-      for (const word of set) {
-        if (isConnected(w, word)) {
-          if (word === endWord) {
-            found = true;
-            break;
+  const rslt: string[][] = [];
+  if (!set.has(endWord)) {
+      return rslt;
+  }
+
+  let fnd = false;
+  const lvls: string[][] = [];
+  while (q.length && !fnd) {
+      lvls.push([...q]);
+      for (let l = q.length; l && !fnd; --l) {
+          const w = q.shift();
+          for (const word of set) {
+              if (isOneCharDiff(w, word)) {
+                  if (word === endWord) {
+                      fnd = true;
+                      break;
+                  } else {
+                      q.push(word);
+                      set.delete(word);
+                  }
+              }
           }
-          q.push(word);
-          set.delete(word);
-        }
       }
-    }
   }
 
-  if (!found) {
-    return [];
+  if (!fnd) {
+      return rslt;
   }
 
-  const result: string[][] = [[endWord]];
-  for (let lvl = nodes.length - 1; lvl >= 0; --lvl) {
-    const len = result.length;
-    for (let i = 0; i < len; ++i) {
-      const list = result.shift();
-      const last = list[0];
-      for (const word of nodes[lvl]) {
-        if (isConnected(last, word)) {
-          result.push([word, ...list]);
-        }
+  rslt.push([endWord]);
+
+  for (let i = lvls.length - 1; i >= 0; --i) {
+      const l = rslt.length;
+      for (let j = 0; j < l; ++j) {
+          const list = rslt.shift();
+          const w = list[0];
+          for (const word of lvls[i]) {
+              if (isOneCharDiff(w, word)) {
+                  rslt.push([word, ...list]);
+              }
+          }
       }
-    }
   }
 
-  return result;
+  return rslt;
 
-  function isConnected(a: string, b: string) {
-    let cnt = 0;
-    for (let i = 0; i < a.length && cnt < 2; ++i) {
-      if (a[i] !== b[i]) {
-        ++cnt;
+  function isOneCharDiff(a: string, b: string) {
+      let cnt = 0;
+      for (let i = 0; i < a.length && cnt < 2; ++i) {
+          if (a[i] !== b[i]) {
+              ++cnt;
+          }
       }
-    }
-    return cnt === 1;
+
+      return cnt === 1;
   }
-}
+};

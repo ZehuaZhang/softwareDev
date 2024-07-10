@@ -36,32 +36,33 @@ All the pairs [ai, bi] are distinct.
 */
 
 function findOrder(numCourses: number, prerequisites: number[][]): number[] {
-  const graph: number[][] = [...Array(numCourses)].map(() => []);
-  const inD: number[] = Array(numCourses).fill(0);
+  const n = numCourses;
+  const graph: number[][] = [...Array(n)].map(() => []);
+  const inDgr: number[] = Array(n).fill(0);
 
-  for (const [adv, org] of prerequisites) {
-    graph[org].push(adv);
-    ++inD[adv];
+  for (const [adv, bsc] of prerequisites) {
+      graph[bsc].push(adv);
+      ++inDgr[adv];
   }
 
+  const rslt: number[] = [];
   const q: number[] = [];
-  inD.forEach((d, i) => {
-    if (d === 0) {
-      q.push(i);
-    }
-  });
 
-  let rslt: number[] = [];
+  for (let i = 0; i < n; ++i) {
+      if (!inDgr[i]) {
+          q.push(i);
+      }
+  }
 
   while (q.length) {
-    const pre = q.shift();
-    rslt.push(pre);
-    for (const adv of graph[pre]) {
-      if (--inD[adv] === 0) {
-        q.push(adv);
+      const c = q.shift();
+      rslt.push(c);
+      for (const a of graph[c]) {
+          if (--inDgr[a] === 0) {
+              q.push(a);
+          }
       }
-    }
   }
 
-  return rslt.length === numCourses ? rslt : [];
-}
+  return rslt.length === n ? rslt : [];
+};

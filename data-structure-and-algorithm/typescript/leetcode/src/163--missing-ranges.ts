@@ -14,18 +14,17 @@ function findMissingRanges(
   lower: number,
   upper: number
 ): string[] {
-  const result: string[] = [];
-  for (
-    let i = 0, prev = lower - 1, curr = 0;
-    i <= nums.length;
-    ++i, prev = curr
-  ) {
-    curr = i === nums.length ? upper + 1 : nums[i];
-
+  const n = nums.length;
+  const rslt: string[] = [];
+  let prev = lower - 1;
+  for (let i = 0; i <= n; ++i) {
+    const curr = i === n ? upper + 1 : nums[i];
     if (curr - prev >= 2) {
-      const [left, right] = [prev + 1, curr - 1];
-      result.push(left === right ? left.toString() : [left, right].join('->'));
+      const [l, r] = [prev + 1, curr - 1];
+      rslt.push(l === r ? String(l) : [l, r].join('->')); 
     }
+    prev = curr;
   }
-  return result;
+
+  return rslt;
 }

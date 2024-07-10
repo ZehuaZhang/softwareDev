@@ -33,10 +33,11 @@ function minPathSum(grid: number[][]): number {
   const dp = Array(n).fill(Infinity);
   dp[0] = 0;
   for (let i = 0; i < m; ++i) {
-    dp[0] += grid[i][0];
-    for (let j = 1; j < n; ++j) {
-      dp[j] = Math.min(dp[j - 1], dp[j]) + grid[i][j];
-    }
+      dp[0] += grid[i][0];
+      for (let j = 1; j < n; ++j) {
+          dp[j] = Math.min(dp[j], dp[j - 1]) + grid[i][j];
+      }
   }
+
   return dp[n - 1];
-}
+};

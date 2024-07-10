@@ -31,16 +31,23 @@ Explanation: We can replace '0' with '1' to get  _t._
 */
 
 function isOneEditDistance(s: string, t: string) {
-  for (let i = 0; i < Math.min(s.length, t.length); ++i) {
+  const [m, n] = [s.length, t.length];
+
+  if (Math.abs(m - n) <= 1) {
+    return false;
+  }
+
+  for (let i = 0; i < Math.min(m, n); ++i) {
     if (s[i] !== t[i]) {
-      if (s.length === t.length) {
+      if (m === n) {
         return s.substring(i + 1) === t.substring(i + 1);
-      } else if (s.length < t.length) {
-        return s.substring(i) === t.substring(i + 1);
+      } else if (m < n) {
+        return s.substring(i) === t.substring(i + 1); 
       } else {
         return s.substring(i + 1) === t.substring(i);
       }
     }
   }
-  return Math.abs(s.length - t.length) === 1;
+
+  return true;
 }

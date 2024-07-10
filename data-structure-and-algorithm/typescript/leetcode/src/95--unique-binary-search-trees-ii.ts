@@ -22,26 +22,25 @@ Constraints:
 */
 
 function generateTrees(n: number): Array<TreeNode | null> {
-  if (n === 0) {
-    return [];
-  }
   return dfs(1, n);
-
-  function dfs(s: number, e: number) {
-    if (s > e) {
-      return [null];
-    }
-    const result: (TreeNode | null)[] = [];
-    for (let i = s; i <= e; ++i) {
-      for (const l of dfs(s, i - 1)) {
-        for (const r of dfs(i + 1, e)) {
-          const node = new TreeNode(i);
-          node.left = l;
-          node.right = r;
-          result.push(node);
-        }
+  
+  function dfs(i0: number, i1: number) {
+      if (i1 < i0) {
+          return [null];
       }
-    }
-    return result;
+
+      const rslt: (TreeNode | null)[] = [];
+      for (let i = i0; i <= i1; ++i) {
+          for (const l of dfs(i0, i - 1)) {
+              for (const r of dfs(i + 1, i1)) {
+                  const node = new TreeNode(i);
+                  node.left = l;
+                  node.right = r;
+                  rslt.push(node);
+              }
+          }
+      }
+
+      return rslt;
   }
-}
+};

@@ -41,37 +41,24 @@ function numIslands(grid: string[][]): number {
   let rslt = 0;
 
   for (let i = 0; i < m; ++i) {
-    for (let j = 0; j < n; ++j) {
-      if (grid[i][j] === '1' && !seen[i][j]) {
-        dfs(i, j);
-        ++rslt;
+      for (let j = 0; j < n; ++j) {
+          if (grid[i][j] === '1' && !seen[i][j]) {
+              dfs(i, j);
+              ++rslt;
+          }
       }
-    }
   }
 
   return rslt;
 
   function dfs(x: number, y: number) {
-    if (
-      x < 0 ||
-      x >= m ||
-      y < 0 ||
-      y >= n ||
-      grid[x][y] !== '1' ||
-      seen[x][y]
-    ) {
-      return;
-    }
+      if (x < 0 || x >= m || y < 0 || y >= n || seen[x][y] || grid[x][y] !== '1') {
+          return;
+      }
 
-    seen[x][y] = true;
-
-    for (const [dx, dy] of [
-      [-1, 0],
-      [0, -1],
-      [1, 0],
-      [0, 1],
-    ]) {
-      dfs(x + dx, y + dy);
-    }
+      seen[x][y] = true;
+      for (const [dx, dy] of [[0, 1], [0, -1], [1, 0], [-1, 0]]) {
+          dfs(x + dx, y + dy);
+      }
   }
-}
+};

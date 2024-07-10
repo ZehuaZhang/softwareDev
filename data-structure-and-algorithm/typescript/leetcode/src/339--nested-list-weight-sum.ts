@@ -18,17 +18,18 @@ Explanation: One 1 at depth 1, one 4 at depth 2, and one 6 at depth 3; 1 + 4*2 +
 */
 
 function depthSum(list: NestedInteger[]): number {
-  return depthSumDfs(list, 1);
+  return dfs(list, 1);
 
-  function depthSumDfs(list: NestedInteger[], depth: number): number {
+  function dfs(list: NestedInteger[], lvl: number) {
     let sum = 0;
-    for (const nestedInteger of list) {
-      if (nestedInteger.isInteger()) {
-        sum += nestedInteger.getInteger() * depth;
+    for (const n of list) {
+      if (n.isInteger()) {
+        sum += n.getInteger() * lvl;
       } else {
-        sum += depthSumDfs(nestedInteger.getList(), depth + 1);
+        sum += dfs(n.getList(), lvl + 1);
       }
     }
+
     return sum;
   }
 }

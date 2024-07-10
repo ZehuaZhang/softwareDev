@@ -28,25 +28,27 @@ inorder is guaranteed to be the inorder traversal of the tree.
 */
 
 function buildTree(preorder: number[], inorder: number[]): TreeNode | null {
+  const m = inorder.length;
   const map = new Map<number, number>();
-
-  for (let i = 0; i < inorder.length; ++i) {
-    map.set(inorder[i], i);
+  for (let i = 0; i < m; ++i) {
+      map.set(inorder[i], i);
   }
 
-  return dfs(0, preorder.length - 1, 0, inorder.length - 1);
+  return dfs(0, m - 1, 0, m - 1);
 
   function dfs(pL: number, pR: number, iL: number, iR: number) {
-    if (pL > pR || iL > iR) {
-      return null;
-    }
-    const root = new TreeNode(preorder[pL]);
-    const iN = map.get(root.val);
-    const distL = iN - iL;
+      if (pR < pL || iR < iL) {
+          return null;
+      }
 
-    root.left = dfs(pL + 1, pL + distL, iL, iN - 1);
-    root.right = dfs(pL + distL + 1, pR, iN + 1, iR);
+      const val = preorder[pL];
+      const i = map.get(val);
+      const dist = i - iL;
 
-    return root;
+      const node = new TreeNode(val);
+      node.left = dfs(pL + 1, pL + dist, iL, i - 1);
+      node.right = dfs(pL + dist + 1, pR, i + 1, iR);
+
+      return node;
   }
-}
+};

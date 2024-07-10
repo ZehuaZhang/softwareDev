@@ -31,15 +31,11 @@ n == height.length
 */
 
 function maxArea(height: number[]): number {
-  let result = 0;
-  for (let left = 0, right = height.length - 1; left < right; ) {
-    const area = Math.min(height[left], height[right]) * (right - left);
-    result = Math.max(area, result);
-    if (height[left] < height[right]) {
-      ++left;
-    } else {
-      --right;
-    }
+  let rslt = 0;
+  for (let l = 0, r = height.length - 1; l < r;) {
+      const w = r - l;
+      const h = height[height[l] < height[r] ? l++ : r--];
+      rslt = Math.max(rslt, w * h);
   }
-  return result;
-}
+  return rslt;
+};

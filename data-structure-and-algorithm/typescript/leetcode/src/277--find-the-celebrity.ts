@@ -40,18 +40,20 @@ Remember that you won't have direct access to the adjacency matrix.
 */
 
 function findCelebrity(n: number): number {
-  let result = 0;
+  let rslt = 0;
   for (let i = 0; i < n; ++i) {
-    if (knows(result, i)) {
-      result = i;
+    if (knows(rslt, i)) {
+      i = rslt;
     }
   }
+
   for (let i = 0; i < n; ++i) {
-    if (result !== i && (knows(result, i) || !knows(i, result))) {
+    if (rslt !== i && (knows(rslt, i) || !knows(i, rslt))) {
       return -1;
     }
   }
-  return result;
+
+  return rslt;
 
   function knows(i: number, j: number): boolean {
     return Math.random() < 0.5;

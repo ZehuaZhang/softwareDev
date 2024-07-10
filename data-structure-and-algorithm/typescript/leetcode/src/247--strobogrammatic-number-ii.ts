@@ -12,31 +12,34 @@ Output: ["11","69","88","96"]
 */
 
 function findStrobogrammatic(size: number): string[] {
-  const pairMap = new Map<string, string>([
+  const map = new Map([
     ['0', '0'],
     ['1', '1'],
-    ['8', '8'],
     ['6', '9'],
+    ['8', '8'],
     ['9', '6'],
   ]);
+
   return dfs(size);
 
-  function dfs(count: number): string[] {
-    if (count === 0) {
+  function dfs(cnt: number) {
+    if (!cnt) {
       return [''];
     }
-    if (count === 1) {
+
+    if (cnt === 1) {
       return ['0', '1', '8'];
     }
 
     const rslt: string[] = [];
-    for (const mid of dfs(count - 2)) {
-      for (const [left, right] of pairMap) {
-        if (count !== size || left !== '0') {
-          rslt.push(left + mid + right);
+    for (const m of dfs(size - 2)) {
+      for (const [l, r] of map) {
+        if (l !== '0' || cnt !== size) {
+          rslt.push(l + m + r);
         }
       }
     }
+
     return rslt;
   }
 }

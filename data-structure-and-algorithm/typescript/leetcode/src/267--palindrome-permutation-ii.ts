@@ -13,37 +13,44 @@ Input: "abc"
 Output: []
 */
 
-function generatePalindromes(input: string): string[] {
-  const letterCountMap = new Map<string, number>();
-  for (const char of input) {
-    letterCountMap.set(char, (letterCountMap.get(char) || 0) + 1);
+function generatePalindromes(s: string): string[] {
+  const map = new Map<string, number>();
+  for (const c of s) {
+    map.set(c, (map.get(c) || 0) + 1);
   }
-  let cnt = 0;
-  let midChar = '';
-  for (const [char, count] of letterCountMap.entries()) {
-    if (count & 1) {
-      if (midChar.length !== 0) {
+
+  let ttl = 0;
+  let mc = '';
+  for (const [c, cnt] of map) {
+    if (cnt % 2) {
+      if (mc) {
         return [];
       }
-      midChar = char;
+      mc = c;
     }
-    letterCountMap.set(char, count >> 1);
-    cnt += count >> 1;
+    map.set(c, Math.trunc(cnt / 2));
+    ttl += Math.trunc(cnt / 2);
   }
-  const result: string[] = [];
-  generatePalindromesDfs('');
-  return result;
 
-  function generatePalindromesDfs(path: string): void {
-    if (path.length === cnt) {
-      result.push([path, midChar, ...[...path].reverse()].join(''));
-      return;
+  const path: string[] = [];
+  const rslt: string[] = [];
+  dfs();
+  return rslt;
+
+  function dfs() {
+    if (path.length === ttl) {
+      const s = path.join('');
+      const rs = path.reverse().join('');
+      return rslt.push([s, mc, rs].join(''));
     }
-    for (const [char, count] of letterCountMap.entries()) {
-      if (count > 0) {
-        letterCountMap.set(char, count - 1);
-        generatePalindromesDfs(path + char);
-        letterCountMap.set(char, count);
+
+    for (const [c, cnt] of map) {
+      if (cnt > 0) {
+        map.set(c, cnt - 1);
+        path.push(c);
+        dfs();
+        path.pop();
+        map.set(c, cnt);
       }
     }
   }

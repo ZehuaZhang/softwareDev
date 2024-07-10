@@ -20,37 +20,39 @@ The output list must be sorted by the x position.
 There must be no consecutive horizontal lines of equal height in the output skyline. For instance, [...[2 3], [4 5], [7 5], [11 5], [12 7]...] is not acceptable; the three lines of height 5 should be merged into one in the final output as such: [...[2 3], [4 5], [12 7], ...]
 */
 
-import {Heap} from './data-structure/Heap';
-
 function getSkyline(buildings: number[][]): number[][] {
-  const heights: number[][] = [];
-  buildings.forEach(building => {
-    heights.push([building[0], -building[2]]);
-    heights.push([building[1], building[2]]);
-  });
-
-  heights.sort(([x0, y0], [x1, y1]) => {
-    if (x0 !== x1) {
-      return x0 - x1;
-    }
-    return y0 - y1;
-  });
-
-  const result: number[][] = [];
-  const heap = new Heap<number>((a, b) => b - a);
-  heap.push(0);
-  let prev = 0;
-  for (const [x, y] of heights) {
-    if (y < 0) {
-      heap.push(-1 * y);
-    } else {
-      heap.remove(y);
-    }
-
-    if (prev !== heap.peek()) {
-      result.push([x, heap.peek()]);
-      prev = heap.peek();
-    }
+  const n = buildings.length;
+  const h: [number, number][] = [];
+  for (const [x1, x2, y] of buildings) {
+      h.push([x1, -y]);
+      h.push([x2, y]);
   }
-  return result;
-}
+
+  h.sort(([x1, y1], [x2, y2]) => {
+      if (x1 === x2) {
+          return y1 - y2;
+      }
+
+      return x1 - x2;
+  });
+
+  const rslt: number[][] = [];
+  const hp: number[] = [];
+  hp.push(0);
+  let prev = 0;
+
+  for (const [x, y] of h) {
+      if (y < 0) {
+          hp.push(-y);
+      } else {
+          hp.splice(hp.indexOf(y), 1);
+      }
+      hp.sort((a, b) => b - a);
+      if (prev !== hp[0]) {
+          rslt.push([x, hp[0]]);
+          prev = hp[0];
+      }
+  }
+
+  return rslt;
+};

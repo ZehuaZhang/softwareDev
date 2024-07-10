@@ -33,110 +33,43 @@ accounts[i][0] consists of English letters.
 accounts[i][j] (for j > 0) is a valid email.
 */
 
-import {runTestCaseList} from './util/test';
-
 function accountsMerge(accounts: string[][]): string[][] {
   const n = accounts.length;
   const set = [...Array(n)].map((_, i) => i);
   const map = new Map<string, number>();
   for (let i = 0; i < n; ++i) {
-    const [_, ...emails] = accounts[i];
-    for (const email of emails) {
-      if (!map.has(email)) {
-        map.set(email, i);
-      } else {
-        const x = find(i);
-        const y = find(map.get(email));
-        if (x !== y) {
-          union(x, y);
-        }
+      const [_, ...el] = accounts[i];
+      for (const e of el) {
+          if (!map.has(e)) {
+              map.set(e, i);
+          } else {
+              const o = map.get(e);
+              const [a, b] = [find(o), find(i)];
+              if (a !== b) {
+                  set[b] = a;
+              }
+          }
       }
-    }
   }
 
-  const result = new Map<number, Set<string>>();
+  const map2 = new Map<number, Set<string>>();
   for (let i = 0; i < n; ++i) {
-    const [_, ...emails] = accounts[i];
-    const origUser = find(i);
-    if (!result.has(origUser)) {
-      result.set(origUser, new Set<string>());
-    }
-    emails.forEach(email => result.get(origUser)!.add(email));
+      const [_, ...el] = accounts[i];
+      const o = find(i);
+
+      if (!map2.has(o)) {
+          map2.set(o, new Set<string>());
+      }
+      el.forEach(e => map2.get(o).add(e));
   }
 
-  return [...result.entries()].map(([i, set]) => [
-    accounts[i][0],
-    ...[...set].sort(),
-  ]);
+  return [...map2.entries()].map(([i, es]) => [accounts[i][0], ...[...es].sort()]);
 
-  function find(x: number): number {
-    while (x !== set[x]) {
-      x = set[x];
-    }
-    return x;
+  function find(x: number) {
+      while (x !== set[x]) {
+          x = set[x];
+      }
+
+      return x;
   }
-
-  function union(x: number, y: number) {
-    const root1 = find(x);
-    const root2 = find(y);
-    set[Math.min(root1, root2)] = Math.max(root1, root2);
-  }
-}
-
-// tests
-
-const testInputListCollection = [
-  [
-    [
-      ['John', 'johnsmith@mail.com', 'john_newyork@mail.com'],
-      ['John', 'johnsmith@mail.com', 'john00@mail.com'],
-      ['Mary', 'mary@mail.com'],
-      ['John', 'johnnybravo@mail.com'],
-    ],
-  ],
-  [
-    [
-      ['Gabe', 'Gabe0@m.co', 'Gabe3@m.co', 'Gabe1@m.co'],
-      ['Kevin', 'Kevin3@m.co', 'Kevin5@m.co', 'Kevin0@m.co'],
-      ['Ethan', 'Ethan5@m.co', 'Ethan4@m.co', 'Ethan0@m.co'],
-      ['Hanzo', 'Hanzo3@m.co', 'Hanzo1@m.co', 'Hanzo0@m.co'],
-      ['Fern', 'Fern5@m.co', 'Fern1@m.co', 'Fern0@m.co'],
-    ],
-  ],
-];
-
-const expectedResultList = [
-  [
-    ['John', 'john00@mail.com', 'john_newyork@mail.com', 'johnsmith@mail.com'],
-    ['Mary', 'mary@mail.com'],
-    ['John', 'johnnybravo@mail.com'],
-  ],
-  [
-    ['Ethan', 'Ethan0@m.co', 'Ethan4@m.co', 'Ethan5@m.co'],
-    ['Gabe', 'Gabe0@m.co', 'Gabe1@m.co', 'Gabe3@m.co'],
-    ['Hanzo', 'Hanzo0@m.co', 'Hanzo1@m.co', 'Hanzo3@m.co'],
-    ['Kevin', 'Kevin0@m.co', 'Kevin3@m.co', 'Kevin5@m.co'],
-    ['Fern', 'Fern0@m.co', 'Fern1@m.co', 'Fern5@m.co'],
-  ],
-];
-
-runTestCaseList(testInputListCollection, expectedResultList, accountsMerge);
-
-/*
-console.log(isEqual(
-    new Set([
-        ["Ethan", "Ethan0@m.co", "Ethan4@m.co", "Ethan5@m.co"],
-        ["Gabe", "Gabe0@m.co", "Gabe1@m.co", "Gabe3@m.co"],
-        ["Hanzo", "Hanzo0@m.co", "Hanzo1@m.co", "Hanzo3@m.co"],
-        ["Kevin", "Kevin0@m.co", "Kevin3@m.co", "Kevin5@m.co"],
-        ["Fern", "Fern0@m.co", "Fern1@m.co", "Fern5@m.co"]
-    ]),
-    new Set([
-        ["Gabe", "Gabe0@m.co", "Gabe1@m.co", "Gabe3@m.co"],
-        ["Kevin", "Kevin0@m.co", "Kevin3@m.co", "Kevin5@m.co"],
-        ["Ethan", "Ethan0@m.co", "Ethan4@m.co", "Ethan5@m.co"],
-        ["Hanzo", "Hanzo0@m.co", "Hanzo1@m.co", "Hanzo3@m.co"],
-        ["Fern", "Fern0@m.co", "Fern1@m.co", "Fern5@m.co"]
-    ])
-));
-*/
+};

@@ -30,16 +30,15 @@ Constraints:
 */
 
 function firstBadVersion(n: number): number {
-  let l = 1,
-    r = n;
+  let [l, r] = [1, n];
 
   while (l <= r) {
-    const mid = l + Math.trunc((r - l) / 2);
-    if (!isBadVersion(mid)) {
-      l = mid + 1;
-    } else {
-      r = mid - 1;
-    }
+      const m = l + Math.trunc((r - l) / 2);
+      if (isBadVersion(m)) {
+          r = m - 1;
+      } else {
+          l = m + 1;
+      }
   }
 
   return l;

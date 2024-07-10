@@ -2,7 +2,6 @@
 Binary Search Tree and Sorted Double Linked List
 */
 
-import {PerformanceObserver} from 'perf_hooks';
 import {TreeNode} from '../data-structure/BinaryTree';
 import {DoubleListNode} from '../data-structure/DoublyLinkedList';
 import {Nullable} from '../util/object';

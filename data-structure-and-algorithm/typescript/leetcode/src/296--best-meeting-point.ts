@@ -26,33 +26,35 @@ Try to solve it in one dimension first. How can this solution apply to the two d
 
 function minTotalDistance(grid: number[][]) {
   const [m, n] = [grid.length, grid[0].length];
-  const pos: [number, number][] = [];
-  const rows: number[] = [];
-  const cols: number[] = [];
-  
+  const pl: [number, number][] = [];
+  const rl: number[] = [];
+  const cl: number[] = [];
+
   for (let i = 0; i < m; ++i) {
     for (let j = 0; j < n; ++j) {
-      if (grid[i][j] === 1) {
-        pos.push([i, j]);
-        rows.push(i);
+      if (grid[i][j]) {
+        pl.push([i, j]);
+        rl.push(i);
       }
     }
   }
+
 
   for (let j = 0; j < n; ++j) {
     for (let i = 0; i < m; ++i) {
-      if (grid[i][j] === 1) {
-        cols.push(j);
+      if (grid[i][j]) {
+        cl.push(j);
       }
     }
   }
 
-  const k = pos.length;
-  const [medR, medC] = [rows[Math.trunc(k / 2)], cols[Math.trunc(k / 2)]];
+  const k = pl.length;
+  const [mr, mc] = [rl[Math.trunc(k / 2)], cl[Math.trunc(k / 2)]];
 
   let rslt = 0;
-  for (const [i, j] of pos) {
-    rslt += Math.abs(i - medR) + Math.abs(j - medC);
+  for (const [i, j] of pl) {
+    rslt += Math.abs(i - mr) + Math.abs(j - mc);
   }
+
   return rslt;
 }

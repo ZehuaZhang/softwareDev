@@ -18,22 +18,18 @@ Output:
 ]
 */
 
-function groupStrings(inputList: string[]): string[][] {
-  const map = new Map<string, Set<string>>();
-  for (const input of inputList) {
-    const hash = [...input]
-      .map(char =>
-        String.fromCharCode(
-          ((char.charCodeAt(0) - input.charCodeAt(0) + 26) % 26) +
-            'a'.charCodeAt(0)
-        )
-      )
+function groupStrings(strs: string[]): string[][] {
+  const map = new Map<string, string[]>();
+  const code = 'a'.charCodeAt(0);
+  for (const s of strs) {
+    const hash = [...s]
+      .map(c => String.fromCharCode((c.charCodeAt(0) - s.charCodeAt(0) + 26) % 26) + code)
       .join('');
     if (!map.has(hash)) {
-      map.set(hash, new Set<string>());
+      map.set(hash, []);
     }
-    map.get(hash)!.add(input);
+    map.get(hash).push(s);
   }
 
-  return [...map.values()].map(set => [...set].sort());
+  return [...map.values()].map(ss => ss.sort());
 }

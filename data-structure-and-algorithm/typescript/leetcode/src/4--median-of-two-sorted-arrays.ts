@@ -30,27 +30,29 @@ nums2.length == n
 */
 
 function findMedianSortedArrays(nums1: number[], nums2: number[]): number {
-  const [size1, size2] = [nums1.length, nums2.length];
-  const kth1 = (size1 + size2 + 1) >> 1;
-  const kth2 = (size1 + size2 + 2) >> 1;
-  return (findKth(0, 0, kth1) + findKth(0, 0, kth2)) / 2;
+  const [m, n] = [nums1.length, nums2.length];
+  const k1 = Math.trunc((m + n + 1) / 2);
+  const k2 = Math.trunc((m + n + 2) / 2);
 
-  function findKth(i1: number, i2: number, k: number) {
-    if (i1 >= size1) {
-      return nums2[i2 + k - 1];
-    }
-    if (i2 >= size2) {
-      return nums1[i1 + k - 1];
-    }
-    if (k === 1) {
-      return Math.min(nums1[i1], nums2[i2]);
-    }
+  return (findK(0, 0, k1) + findK(0, 0, k2)) / 2;
 
-    const k1 = Math.min(size1 - i1, k >> 1);
-    const k2 = Math.min(size2 - i2, k >> 1);
-    if (nums1[i1 + k1 - 1] > nums2[i2 + k2 - 1]) {
-      return findKth(i1, i2 + k2, k - k2);
-    }
-    return findKth(i1 + k1, i2, k - k1);
+  function findK(i: number, j: number, k: number) {
+      if (i >= m) {
+          return nums2[j + k - 1];
+      }
+      if (j >= n) {
+          return nums1[i + k - 1];
+      }
+      if (k === 1) {
+          return Math.min(nums1[i], nums2[j]);
+      }
+
+      const nK1 = Math.min(m - i, Math.trunc(k / 2));
+      const nK2 = Math.min(n - j, Math.trunc(k / 2));
+      if (nums1[i + nK1 - 1] > nums2[j + nK2 - 1]) {
+          return findK(i, j + nK2, k - nK2);
+      } else {
+          return findK(i + nK1, j, k - nK1);
+      }
   }
-}
+};

@@ -22,19 +22,21 @@ function shortestWordDistance(
   word1: string,
   word2: string
 ): number {
-  let result = Infinity;
-  for (let i = 0, i1 = -1, i2 = -1; i < words.length; ++i) {
-    if (words[i] === word1) {
-      if (i1 !== -1 && word2 === word1) {
-        result = Math.min(result, Math.abs(i1 - i));
+  let rslt = Infinity;
+  for (let i1 = -1, i2 = -1, i = 0; i < words.length; ++i) {
+    const w = words[i];
+    if (w === word1) {
+      if (i1 !== -1 && w === word2) {
+        rslt = Math.min(rslt, i - i1);
       }
       i1 = i;
-    } else if (words[i] === word2) {
+    } else if (w === word2) {
       i2 = i;
     }
     if (i1 !== -1 && i2 !== -1) {
-      result = Math.min(result, Math.abs(i1 - i2));
+      rslt = Math.min(rslt, Math.abs(i2 - i1));
     }
   }
-  return result;
+
+  return rslt;
 }

@@ -24,15 +24,17 @@ Constraints:
 */
 
 function generate(numRows: number): number[][] {
-  const result: number[][] = [];
+  const rslt: number[][] = [];
 
-  for (let i = 0, prev: number[] = []; i < numRows; ++i) {
-    const curr: number[] = Array(i + 1).fill(1);
-    for (let j = 1; j < i; ++j) {
-      curr[j] = prev[j - 1] + prev[j];
-    }
-    result.push(curr);
-    prev = curr;
+  let prev: number[] = [];
+  for (let i = 0; i < numRows; ++i) {
+      const curr = Array(i + 1).fill(1);
+      for (let j = 1; j < i; ++j) {
+          curr[j] = prev[j] + prev[j - 1];
+      }
+      rslt.push(curr);
+      prev = curr;
   }
-  return result;
-}
+
+  return rslt;
+};

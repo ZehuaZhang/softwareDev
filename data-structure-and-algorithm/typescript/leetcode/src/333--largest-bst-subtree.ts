@@ -23,44 +23,37 @@ Follow up:
 Can you figure out ways to solve it with O(n) time complexity?
 */
 
-import {TreeNode} from './data-structure/BinaryTree';
-import {Nullable} from './util/object';
-
-function largestBSTSubtree(root: Nullable<TreeNode<number>>): number {
+function largestBSTSubtree(root: TreeNode | null): number {
   if (!root) {
     return 0;
   }
-  let result = 1;
-  largestBSTSubtreeDfs(root);
-  return result;
 
-  function largestBSTSubtreeDfs(
-    node: TreeNode<number>
-  ): [number, number, number] {
+  let rslt = 1;
+  dfs(root);
+
+  return rslt;
+
+  function dfs(node: TreeNode) {
     if (!node.left && !node.right) {
-      return [1, node.data, node.data];
+      return [1, node.val, node.val];
     }
 
-    let [size1, min1, max1] = [0, node.data, node.data];
+    let [s1, mn1, mx1] = [0, node.val, node.val];
     if (node.left) {
-      [size1, min1, max1] = largestBSTSubtreeDfs(node.left);
+      [s1, mn1, mx1] = dfs(node.left);
     }
 
-    let [size2, min2, max2] = [0, node.data, node.data];
+    let [s2, mn2, mx2] = [0, node.val, node.val];
     if (node.right) {
-      [size2, min2, max2] = largestBSTSubtreeDfs(node.right);
+      [s2, mn2, mx2] = dfs(node.right);
     }
 
-    let size = 0;
-    if (
-      (!node.left || size1) &&
-      (!node.right || size2) &&
-      max1 <= node.data &&
-      node.data <= min2
-    ) {
-      size = 1 + size1 + size2;
-      result = Math.max(result, size);
+    let s = 0;
+    if ((!node.left || s1) && (!node.right || s2) && mx1 <= node.val && node.val <= mn2) {
+      s = 1 + s1 + s2;
+      rslt = Math.max(rslt, s);
     }
-    return [size, min1, max2];
+
+    return [s, mn1, mx2];
   }
 }

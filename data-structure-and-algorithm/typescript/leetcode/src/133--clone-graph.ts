@@ -56,24 +56,25 @@ The Graph is connected and all nodes can be visited starting from the given node
 */
 
 function cloneGraph(node: _Node | null): _Node | null {
-  if (node === null) {
-    return null;
+  if (!node) {
+      return null;
   }
 
-  const map = new Map<_Node, _Node>();
-  map.set(node, new _Node(node.val));
+const map = new Map<_Node, _Node>();
+  map.set(node, new Node(node.val));
+
   const q: _Node[] = [node];
-
   while (q.length) {
-    const curr = q.shift();
-    for (const n of curr.neighbors) {
-      if (!map.has(n)) {
-        map.set(n, new _Node(n.val));
-        q.push(n);
+      const curr = q.shift();
+      for (const n of curr.neighbors) {
+          if (!map.has(n)) {
+              map.set(n, new Node(n.val));
+              q.push(n);
+          }
+          map.get(curr).neighbors.push(map.get(n));
       }
-      map.get(curr).neighbors.push(map.get(n));
-    }
   }
+
 
   return map.get(node);
-}
+};

@@ -15,31 +15,31 @@ Because the range might be a large number, the low and high numbers are represen
 */
 
 function strobogrammaticInRange(low: string, high: string): number {
-  let result = 0;
-  for (const num of ['', '0', '1', '8']) {
-    dfs(num);
-  }
-  return result;
+  let rslt = 0;
 
-  function dfs(num: string): void {
-    if (
-      Number(num) >= Number(low) &&
-      Number(num) <= Number(high) &&
-      Number(num).toString() === num
-    ) {
-      ++result;
+  for (const m of ['', '0', '1', '8']) {
+    dfs(m);
+  }
+
+  return rslt;
+
+  function dfs(m: string) {
+    if (Number(m) >= Number(low) && Number(m) <= Number(high) && String(Number(m)) === m) {
+      ++rslt;
     }
-    if (num.length + 2 > high.length || Number(num) >= Number(high)) {
+
+    if (m.length + 2 > high.length || Number(m) >= Number(high)) {
       return;
     }
-    for (const [left, right] of [
+
+    for (const [l, r] of [
       ['0', '0'],
       ['1', '1'],
       ['8', '8'],
       ['6', '9'],
-      ['9', '6'],
+      ['9', '6']
     ]) {
-      dfs(left + num + right);
+      dfs(l + m + r);
     }
   }
 }

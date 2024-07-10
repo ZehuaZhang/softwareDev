@@ -40,20 +40,14 @@ Follow up: Can you solve it using O(1) (i.e. constant) memory?
 */
 
 function detectCycle(head: ListNode | null): ListNode | null {
-  if (head === null) {
-    return null;
-  }
-
-  for (let slow = head, fast = head, orgn = head; fast && fast.next; ) {
-    slow = slow.next;
-    fast = fast.next.next;
-    if (slow === fast) {
-      while (slow !== orgn) {
-        slow = slow.next;
-        orgn = orgn.next;
+  for (let slow = head, fast = head; fast && fast.next;) {
+      slow = slow.next;
+      fast = fast.next.next;
+      if (slow === fast) {
+          for (fast = head; slow !== fast; slow = slow.next, fast = fast.next);
+          return slow;
       }
-      return orgn;
-    }
   }
+  
   return null;
-}
+};

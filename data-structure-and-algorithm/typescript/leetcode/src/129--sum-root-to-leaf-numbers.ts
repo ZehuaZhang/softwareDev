@@ -43,16 +43,16 @@ The depth of the tree will not exceed 10.
 function sumNumbers(root: TreeNode | null): number {
   return dfs(root, 0);
 
-  function dfs(node: TreeNode | null, path: number) {
-    if (node === null) {
-      return 0;
-    }
+  function dfs(node: TreeNode | null, sum: number) {
+      if (!node) {
+          return 0;
+      }
 
-    path = path * 10 + node.val;
-    if (node.left === null && node.right === null) {
-      return path;
-    }
+      sum = sum * 10 + node.val;
+      if (!node.left && !node.right) {
+          return sum;
+      }
 
-    return dfs(node.left, path) + dfs(node.right, path);
+      return dfs(node.left, sum) + dfs(node.right, sum);
   }
-}
+};

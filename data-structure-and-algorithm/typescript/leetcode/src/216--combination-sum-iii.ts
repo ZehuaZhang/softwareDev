@@ -52,23 +52,25 @@ Constraints:
 */
 
 function combinationSum3(k: number, n: number): number[][] {
-  const result: number[][] = [];
-  dfs(n, 1, []);
-  return result;
+  const path: number[] = [];
+  const rslt: number[][] = [];
 
-  function dfs(tgt: number, start: number, path: number[]) {
-    if (tgt === 0 && path.length === k) {
-      result.push([...path]);
-      return;
-    }
+  dfs(1, n);
 
-    for (let i = start; i <= 9; ++i) {
-      const diff = tgt - i;
-      if (diff >= 0 && path.length < k) {
-        path.push(i);
-        dfs(diff, i + 1, path);
-        path.pop();
+  return rslt;
+
+  function dfs(i0: number, sum: number) {
+      if (!sum && path.length === k) {
+          return rslt.push([...path]);
       }
-    }
+
+      for (let i = i0; i <= 9; ++i) {
+          const diff = sum - i;
+          if (path.length < k && diff >= 0) {
+              path.push(i);
+              dfs(i + 1, diff);
+              path.pop();
+          } 
+      }
   }
-}
+};

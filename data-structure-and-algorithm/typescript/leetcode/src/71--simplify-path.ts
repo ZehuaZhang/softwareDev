@@ -79,23 +79,26 @@ path is a valid absolute Unix path.
 */
 
 function simplifyPath(path: string): string {
-  const segList: string[] = [];
-  for (const seg of path.split('/')) {
-    switch (seg) {
-      case '..': {
-        if (segList.length) {
-          segList.pop();
-        }
-        break;
+  const tokens = path.split('/');
+  const rslt: string[] = [];
+  for (const t of tokens) {
+      switch (t) {
+          case '': {
+              break;
+          }
+          case '.': {
+              break;
+          }
+          case '..': {
+              rslt.pop();
+              break;
+          }
+          default: {
+              rslt.push(t);
+              break;
+          }
       }
-      case '.':
-      case '':
-        break;
-      default:
-        segList.push(seg);
-        break;
-    }
   }
 
-  return `/${segList.join('/')}`;
-}
+  return '/' + rslt.join('/');
+};

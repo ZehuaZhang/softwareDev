@@ -27,16 +27,20 @@ All the numbers of nums are unique.
 */
 
 function subsets(nums: number[]): number[][] {
-  const result: number[][] = [];
-  dfs(0, []);
-  return result;
+  const path: number[] = [];
+  const rslt: number[][] = [];
 
-  function dfs(start: number, path: number[]) {
-    result.push([...path]);
-    for (let i = start; i < nums.length; ++i) {
-      path.push(nums[i]);
-      dfs(i + 1, path);
-      path.pop();
-    }
+  dfs(0);
+
+  return rslt;
+
+  function dfs(i0: number) {
+      rslt.push([...path]);
+
+      for (let i = i0; i < nums.length; ++i) {
+          path.push(nums[i]);
+          dfs(i + 1);
+          path.pop();
+      }
   }
-}
+};

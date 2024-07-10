@@ -43,32 +43,33 @@ Follow-up: Can you implement the queue such that each operation is amortized O(1
 */
 
 class MyQueue {
-  i: number[];
-  o: number[];
+  is: number[];
+  os: number[];
   constructor() {
-    this.i = [];
-    this.o = [];
+      this.is = [];
+      this.os = [];
   }
 
   push(x: number): void {
-    this.i.push(x);
+      this.is.push(x);
   }
 
   pop(): number {
-    this.peek();
-    return this.o.pop();
+      this.peek();
+      return this.os.pop();
   }
 
   peek(): number {
-    if (this.o.length === 0) {
-      while (this.i.length) {
-        this.o.push(this.i.pop());
+      if (!this.os.length) {
+          while (this.is.length) {
+              this.os.push(this.is.pop());
+          }
       }
-    }
-    return this.o[this.o.length - 1];
+      return this.os[this.os.length - 1];
   }
 
   empty(): boolean {
-    return this.i.length === 0 && this.o.length === 0;
+      return !this.is.length && !this.os.length;
   }
 }
+

@@ -26,18 +26,19 @@ Constraints:
 */
 
 function largestRectangleArea(heights: number[]): number {
-  const list = [...heights, 0];
+  const h = [...heights, 0];
   const idx: number[] = [];
-  let result = 0;
+  let rslt = 0;
 
-  for (let i = 0; i < list.length; ) {
-    if (idx.length === 0 || list[i] > list[idx[idx.length - 1]]) {
-      idx.push(i++);
-    } else {
-      const height = list[idx.pop()];
-      const width = idx.length ? i - idx[idx.length - 1] - 1 : i;
-      result = Math.max(result, height * width);
-    }
+  for (let i = 0; i < h.length;) {
+      if (!idx.length || h[i] > h[idx[idx.length - 1]]) {
+          idx.push(i++);
+      } else {
+          const l = h[idx.pop()];
+          const w = idx.length ? i - idx[idx.length - 1] - 1 : i;
+          rslt = Math.max(rslt, l * w);
+      }
   }
-  return result;
+
+  return rslt;
 }

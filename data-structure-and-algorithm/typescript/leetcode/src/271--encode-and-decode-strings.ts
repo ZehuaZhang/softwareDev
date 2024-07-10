@@ -34,24 +34,24 @@ Do not rely on any library method such as eval or serialize methods. You should 
 */
 
 class Codec {
-  encode(rawList: string[]): string {
-    const result: string[] = [];
-    for (const raw of rawList) {
-      result.push(raw.length.toString(), '/', raw);
+  encode(strs: string[]): string {
+    let rslt: string[] = [];
+    for (const s of strs) {
+      const l = s.length;
+      rslt.push(l + '/' + s);
     }
-    return result.join('');
+    return rslt.join('');
   }
 
-  decode(encoded: string): string[] {
-    const result: string[] = [];
-    for (let i = 0; i < encoded.length; ) {
-      const delimiterIndex = encoded.indexOf('/', i);
-      const length = Number(encoded.substring(i, delimiterIndex));
-      result.push(
-        encoded.substring(delimiterIndex + 1, delimiterIndex + 1 + length)
-      );
-      i = delimiterIndex + 1 + length;
+  decode(s: string): string[] {
+    const rslt: string[] = [];
+    for (let i = 0; i < s.length;) {
+      const idx = s.indexOf('/', i);
+      const l = Number(s.substring(i, idx));
+      rslt.push(s.substring(idx + 1, idx + 1 + l));
+      i = idx + 1 + l;
     }
-    return result;
+
+    return rslt;
   }
 }

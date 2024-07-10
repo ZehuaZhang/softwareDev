@@ -34,28 +34,31 @@ Input is generated in a way that the length of the answer doesn't exceed 105.
 
 function wordBreak(s: string, wordDict: string[]): string[] {
   const memo = new Map<string, string[]>();
+  const set = new Set(wordDict);
+
   return dfs(s);
 
-  function dfs(s: string) {
-    if (memo.has(s)) {
-      return memo.get(s);
-    }
-
-    const result: string[] = [];
-    if (s.length === 0) {
-      result.push(s);
-      memo.set(s, result);
-      return result;
-    }
-
-    for (const word of wordDict) {
-      if (s.startsWith(word)) {
-        for (const phrase of dfs(s.substring(word.length))) {
-          result.push([word, phrase].filter(Boolean).join(' '));
-        }
+  function dfs(str: string) {
+      if (memo.has(str)) {
+          return memo.get(str);
       }
-    }
-    memo.set(s, result);
-    return result;
+
+      if (!str.length) {
+          memo.set(str, ['']);
+          return memo.get(str);
+      }
+
+      const rslt: string[] = [];
+
+      for (const word of set) {
+          if (str.startsWith(word)) {
+              for (const phrase of dfs(str.substring(word.length))) {
+                  rslt.push([word, phrase].filter(Boolean).join(' '));
+              }
+          }
+      }
+
+      memo.set(str, rslt);
+      return memo.get(str);
   }
-}
+};

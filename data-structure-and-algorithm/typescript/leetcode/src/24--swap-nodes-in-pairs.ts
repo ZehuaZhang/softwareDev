@@ -27,19 +27,19 @@ The number of nodes in the list is in the range [0, 100].
 */
 
 function swapPairs(head: ListNode | null): ListNode | null {
-  const dummy = new ListNode(0);
-  dummy.next = head;
+  const dummy = new ListNode(0, head);
+  let prev = dummy;
+  let curr = head;
 
-  for (
-    let prev = dummy, curr = head;
-    curr && curr.next;
-    prev = curr, curr = curr.next
-  ) {
-    const next = curr.next;
-    prev.next = next;
-    curr.next = next.next;
-    next.next = curr;
+  while (curr && curr.next) {
+      const next = curr.next;
+      curr.next = next.next;
+      next.next = curr;
+      prev.next = next;
+
+      prev = curr;
+      curr = curr.next;
   }
 
   return dummy.next;
-}
+};

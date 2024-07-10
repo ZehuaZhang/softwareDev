@@ -32,15 +32,11 @@ Follow up: Could you do this in one pass?
 */
 
 function removeNthFromEnd(head: ListNode | null, n: number): ListNode | null {
-  const dummy = new ListNode(0);
-  dummy.next = head;
-
-  let fast = dummy;
-  for (; n >= 0; --n, fast = fast.next);
-
-  let slow = dummy;
-  for (; fast; fast = fast.next, slow = slow.next);
-
-  slow.next = slow.next.next;
-  return dummy.next;
+  const dummy = new ListNode(0, head);
+    let fast = dummy;
+    let slow = dummy;
+    for (; n >= 0; --n, fast = fast.next);
+    for (; fast; fast = fast.next, slow = slow.next);
+    slow.next = slow.next.next;
+    return dummy.next;
 }

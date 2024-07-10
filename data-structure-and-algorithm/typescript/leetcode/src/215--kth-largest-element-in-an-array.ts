@@ -27,48 +27,45 @@ Constraints:
 
 function findKthLargest(nums: number[], k: number): number {
   const n = nums.length;
-  let l = 0,
-    r = n - 1;
-  while (l <= r) {
-    const rI = l + Math.trunc(Math.random() * (r - l + 1));
-    const pI = partition(rI);
-
-    if (pI === k - 1) {
-      return nums[pI];
-    } else if (pI > k - 1) {
-      r = pI - 1;
-    } else {
-      l = pI + 1;
-    }
+  let [l, r] = [0, n - 1];
+  for (; l <= r;) {
+      const ri = l + Math.trunc(Math.random() * (r - l + 1));
+      const mi = partition(ri);
+      if (mi === k - 1) {
+          return nums[mi];
+      } else if (mi > k - 1){
+          r = mi - 1;
+      } else {
+          l = mi + 1;
+      }
   }
+
   return nums[l];
 
-  function partition(p: number) {
-    swap(p, r);
+  function partition(pi: number) {
+      swap(pi, r);
+      const p = nums[r];
 
-    let i = l;
-    let j = r - 1;
-    while (i <= j) {
-      while (i <= j && nums[i] > nums[r]) {
-        ++i;
+      let [i, j] = [l, r - 1];
+      while (i <= j) {
+          while (i <= j && nums[i] > p) {
+              ++i;
+          }
+          while (i <= j && nums[j] < p) {
+              --j;
+          }
+          if (i <= j) {
+              swap(i, j);
+              ++i;
+              --j;
+          }
       }
-      while (i <= j && nums[j] < nums[r]) {
-        --j;
-      }
-      if (i <= j) {
-        swap(i, j);
-        ++i;
-        --j;
-      }
-    }
 
-    swap(i, r);
-    return i;
+      swap(i, r);
+      return i;
   }
 
   function swap(i: number, j: number) {
-    const tmp = nums[i];
-    nums[i] = nums[j];
-    nums[j] = tmp;
+      [nums[i], nums[j]] = [nums[j], nums[i]];
   }
-}
+};

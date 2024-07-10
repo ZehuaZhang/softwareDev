@@ -27,21 +27,23 @@ The number of nodes in the tree is in the range [0, 2000].
 */
 
 function levelOrderBottom(root: TreeNode | null): number[][] {
-  const result: number[][] = [];
+  const rslt: number[][] = [];
+
   dfs(root, 0);
-  return result.reverse();
 
-  function dfs(node: TreeNode | null, level: number) {
-    if (node === null) {
-      return;
-    }
+  return rslt.reverse();
 
-    if (result.length === level) {
-      result.push([]);
-    }
-    result[level].push(node.val);
+  function dfs(node: TreeNode | null, lvl: number) {
+      if (!node) {
+          return;
+      }
 
-    dfs(node.left, level + 1);
-    dfs(node.right, level + 1);
+      if (rslt.length === lvl) {
+          rslt.push([]);
+      }
+
+      rslt[lvl].push(node.val);
+      dfs(node.left, lvl + 1);
+      dfs(node.right, lvl + 1);
   }
-}
+};

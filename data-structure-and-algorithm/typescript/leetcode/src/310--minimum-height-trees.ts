@@ -47,33 +47,36 @@ Note:
 
 function findMinHeightTrees(n: number, edges: number[][]): number[] {
   if (n === 1) {
-    return [0];
+      return [0];
   }
-  const outDegree = Array(n).fill(0);
-  const graph = [...Array(n)].map(() => Array(n).fill(0));
+
+  const oDgr = Array(n).fill(0);
+  const grph = [...Array(n)].map(() => []);
+  for (const [a, b] of edges) {
+      grph[a].push(b);
+      ++oDgr[b];
+      grph[b].push(a);
+      ++oDgr[a];
+  }
+
   const q: number[] = [];
-  for (const [x, y] of edges) {
-    graph[x].push(y);
-    ++outDegree[x];
-    graph[y].push(x);
-    ++outDegree[y];
-  }
   for (let i = 0; i < n; ++i) {
-    if (outDegree[i] === 1) {
-      q.push(i);
-    }
-  }
-  while (n > 2) {
-    for (let len = q.length; len; --len) {
-      const node = q.shift();
-      --n;
-      for (const nbr of graph[node!]) {
-        if (--outDegree[nbr] === 1) {
-          q.push(nbr);
-        }
+      if (oDgr[i] === 1) {
+          q.push(i);
       }
-    }
+  }
+
+  while (n > 2) {
+      for (let l = q.length; l; --l) {
+          --n;
+          const a = q.shift();
+          for (const b of grph[a]) {
+              if (--oDgr[b] === 1) {
+                  q.push(b);
+              }
+          }
+      }
   }
 
   return q;
-}
+};

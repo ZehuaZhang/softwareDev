@@ -28,14 +28,15 @@ The number of nodes in the tree is in the range [0, 100].
 */
 
 function invertTree(root: TreeNode | null): TreeNode | null {
-  if (root === null) {
-    return root;
+  if (!root) {
+      return null;
   }
 
-  const l = root.left,
-    r = root.right;
-  root.left = invertTree(r);
-  root.right = invertTree(l);
+  let l = invertTree(root.left);
+  let r = invertTree(root.right);
+
+  root.right = l;
+  root.left = r;
 
   return root;
-}
+};

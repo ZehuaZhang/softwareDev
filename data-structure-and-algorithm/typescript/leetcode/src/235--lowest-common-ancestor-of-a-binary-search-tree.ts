@@ -34,17 +34,13 @@ p != q
 p and q will exist in the BST.
 */
 
-function lowestCommonAncestor(
-  root: TreeNode | null,
-  p: TreeNode | null,
-  q: TreeNode | null
-): TreeNode | null {
-  const min = Math.min(p.val, q.val);
+function lowestCommonAncestor(root: TreeNode | null, p: TreeNode | null, q: TreeNode | null): TreeNode | null {
+	const min = Math.min(p.val, q.val);
   const max = Math.max(p.val, q.val);
 
   while (root.val < min || root.val > max) {
-    root = root.val < min ? root.right : root.left;
+      root = root.val < min ? root.right : root.left;
   }
 
   return root;
-}
+};

@@ -47,20 +47,22 @@ Output:
 */
 
 function getFactors(num: number): number[][] {
-  const result: number[][] = [];
   const path: number[] = [];
-  getFactorsDfs(num, 2);
-  return result;
+  const rslt: number[][] = [];
 
-  function getFactorsDfs(target: number, start: number) {
-    if (target === 1 && path.length > 1) {
-      result.push([...path]);
-      return;
+  dfs(2, num);
+
+  return rslt;
+
+  function dfs(i0: number, tgt: number) {
+    if (tgt === 1 && path.length > 1) {
+      return rslt.push([...path]);
     }
-    for (let i = start; i < target; ++i) {
-      if (target % i === 0) {
-        path.push(i);
-        getFactorsDfs(target / i, i);
+
+    for (let i = i0; i < tgt; ++i) {
+      if (tgt % i === 0) {
+        path.push(tgt / i);
+        dfs(i, tgt / i);
         path.pop();
       }
     }

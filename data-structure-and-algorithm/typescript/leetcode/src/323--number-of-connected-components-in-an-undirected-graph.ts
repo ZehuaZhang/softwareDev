@@ -26,29 +26,25 @@ You can assume that no duplicate edges will appear in edges. Since all edges are
 */
 
 function countComponents(count: number, edges: number[][]): number {
-  const parentList = [...Array(count)].map((_, i) => i);
+  const set = Array(count).fill(-1);
   let rslt = count;
-  for (const [src, dst] of edges) {
-    const x = find(src);
-    const y = find(dst);
+
+  for (const [a, b] of edges) {
+    const [x, y] = [find(a), find(b)];
 
     if (x !== y) {
-      union(x, y);
+      set[x] = y;
       --rslt;
     }
   }
+
   return rslt;
 
-  function find(node: number): number {
-    while (parentList[node] !== node) {
-      node = parentList[node];
+  function find(x: number) {
+    while (x !== -1) {
+      x = set[x];
     }
-    return node;
-  }
 
-  function union(x: number, y: number): void {
-    const xParent = find(x);
-    const yParent = find(y);
-    parentList[xParent] = yParent;
+    return x;
   }
 }

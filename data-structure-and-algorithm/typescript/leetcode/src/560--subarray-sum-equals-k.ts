@@ -14,15 +14,16 @@ The length of the array is in range [1, 20,000].
 The range of numbers in the array is [-1000, 1000] and the range of the integer k is [-1e7, 1e7].
 */
 
-function subarraySum(nums: number[], target: number) {
+function subarraySum(nums: number[], target: number): number {
     let rslt = 0;
     let sum = 0;
-    let n = nums.length;
     const map = new Map<number, number>([[0, 1]]);
-    for (let i = 0; i < n; ++i) {
-        sum += nums[i];
+
+    for (const n of nums) {
+        sum += n;
         rslt += map.get(sum - target) || 0;
-        map.set(sum, (map.get(sum) || 0 ) + 1);
+        map.set(sum, (map.get(sum) || 0) + 1);
     }
+
     return rslt;
-}
+};

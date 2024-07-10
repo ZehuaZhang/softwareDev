@@ -27,31 +27,27 @@ true
 */
 
 class ValidWordAbbreviation {
-  abbrWordSetMap: Map<string, Set<string>>;
-  constructor(wordList: string[]) {
-    this.abbrWordSetMap = new Map<string, Set<string>>();
-    for (const word of wordList) {
-      const abbr = this.getAbbreviation(word);
-      if (!this.abbrWordSetMap.has(abbr)) {
-        this.abbrWordSetMap.set(abbr, new Set());
+  map: Map<string, Set<string>>;
+  constructor(words: string[]) {
+    this.map = new Map();
+    for (const w of words) {
+      const a = this.abbr(w);
+      if (!this.map.has(a)) {
+        this.map.set(a, new Set());
       }
-      this.abbrWordSetMap.get(abbr)!.add(word);
+      this.map.get(a).add(w);
     }
   }
 
   isUnique(word: string): boolean {
-    const abbr = this.getAbbreviation(word);
-    return (
-      !this.abbrWordSetMap.has(abbr) ||
-      (this.abbrWordSetMap.get(abbr)!.size === 1 &&
-        this.abbrWordSetMap.get(abbr)!.has(word))
-    );
+    const a = this.abbr(word);
+    return !this.map.has(a) || (this.map.get(a).size === 1 && this.map.get(a).has(word));
   }
 
-  getAbbreviation(word: string): string {
-    if (word.length <= 2) {
-      return word;
+  abbr(w: string) {
+    if (w.length <= 2) {
+      return w;
     }
-    return word[0] + (word.length - 2).toString() + word[word.length - 1];
+    return w[0] + (w.length - 2) + w[w.length - 1];
   }
 }

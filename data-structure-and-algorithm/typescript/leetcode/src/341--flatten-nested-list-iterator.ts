@@ -37,40 +37,29 @@ Constraints:
 The values of the integers in the nested list is in the range [-106, 106].
 */
 
-import {Stack} from './data-structure/Stack';
-
-/**
- * Your NestedIterator will be called like this:
- * var i = new NestedIterator(nestedList), a = [];
- * while (i.hasNext()) a.push(i.next());
- */
-
 class NestedIterator {
-  stack: Stack<NestedInteger>;
-  constructor(list: Array<NestedInteger>) {
-    this.stack = new Stack<NestedInteger>();
-    list.reverse().forEach(entry => this.stack.push(entry));
+  stk: NestedInteger[];
+  constructor(list: NestedInteger[]) {
+      this.stk = [];
+      list.reverse().forEach(l => this.stk.push(l));
   }
 
-  hasNext() {
-    while (!this.stack.isEmpty()) {
-      const top = this.stack.peek();
-      if (top.isInteger()) {
-        return true;
+  hasNext(): boolean {
+      while (this.stk.length) {
+          const n = this.stk[this.stk.length - 1];
+          if (n.isInteger()) {
+              return true;
+          }
+
+          const list = this.stk.pop().getList();
+          list.reverse().forEach(l => this.stk.push(l));
       }
-      this.stack.pop();
 
-      top
-        .getList()
-        .reverse()
-        .forEach(entry => this.stack.push(entry));
-    }
-
-    return false;
+      return false;
   }
 
-  next() {
-    return this.stack.pop().getInteger();
+  next(): number {
+    return this.stk.pop().getInteger();
   }
 }
 

@@ -47,31 +47,31 @@ At most 2 * 105 calls will be made to get and put.
 class LRUCache {
   cap: number;
   map: Map<number, number>;
-
   constructor(capacity: number) {
-    this.cap = capacity;
-    this.map = new Map();
+      this.cap = capacity;
+      this.map = new Map<number, number>();
   }
 
   get(key: number): number {
-    if (!this.map.has(key)) {
-      return -1;
-    }
-    const val = this.map.get(key);
+      if (!this.map.has(key)) {
+          return -1;
+      }
 
-    this.map.delete(key);
-    this.map.set(key, val);
+      const val = this.map.get(key);
 
-    return val;
+      this.map.delete(key);
+      this.map.set(key, val);
+
+      return val;
   }
 
   put(key: number, val: number): void {
-    if (this.map.size >= this.cap && !this.map.has(key)) {
-      const delKey = this.map.keys().next().value;
-      this.map.delete(delKey);
-    }
+      if (this.map.size === this.cap && !this.map.has(key)) {
+          const keyDel = this.map.keys().next().value;
+          this.map.delete(keyDel);
+      }
 
-    this.map.delete(key);
-    this.map.set(key, val);
+      this.map.delete(key);
+      this.map.set(key, val);
   }
 }

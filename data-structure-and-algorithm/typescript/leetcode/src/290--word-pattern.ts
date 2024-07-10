@@ -32,18 +32,23 @@ All the words in s are separated by a single space.
 */
 
 function wordPattern(pattern: string, s: string): boolean {
-  const words = s.split(' ');
+  const m1 = new Map<string, number>();
+  const m2 = new Map<string, number>();
 
-  const pm = new Map<string, number>();
-  const wm = new Map<string, number>();
-
-  for (let i = 0; i < pattern.length; ++i) {
-    if (pm.get(pattern[i]) !== wm.get(words[i])) {
+  const ws = s.split(' ');
+  const n = pattern.length;
+  if (ws.length !== n) {
       return false;
-    }
-    pm.set(pattern[i], i);
-    wm.set(words[i], i);
   }
 
-  return pattern.length === words.length;
-}
+  for (let i = 0; i < n; ++i) {
+      if (m1.get(pattern[i]) !== m2.get(ws[i])) {
+          return false;
+      }
+
+      m1.set(pattern[i], i);
+      m2.set(ws[i], i);
+  }
+
+  return true;
+};

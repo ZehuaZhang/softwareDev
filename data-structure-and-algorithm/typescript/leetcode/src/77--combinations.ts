@@ -27,19 +27,23 @@ Constraints:
 */
 
 function combine(n: number, k: number): number[][] {
-  const result: number[][] = [];
-  dfs(1, []);
-  return result;
+  const path: number[] = [];
+  const rslt: number[][] = [];
 
-  function dfs(start: number, path: number[]) {
-    if (path.length === k) {
-      result.push([...path]);
-      return;
-    }
-    for (let i = start; i <= n; ++i) {
-      path.push(i);
-      dfs(i + 1, path);
-      path.pop();
-    }
+  dfs(1);
+
+  return rslt;
+
+  function dfs(i0: number) {
+      if (path.length === k) {
+          return rslt.push([...path]);
+      }
+      for (let i = i0; i <= n; ++i) {
+          if (path.length < k) {
+              path.push(i);
+              dfs(i + 1);
+              path.pop();
+          }
+      }
   }
-}
+};

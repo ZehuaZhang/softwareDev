@@ -29,11 +29,12 @@ Constraints:
 */
 
 function maxProfit(prices: number[]): number {
-  let result = 0;
-  let min = Infinity;
-  for (const price of prices) {
-    min = Math.min(min, price);
-    result = Math.max(result, price - min);
+  let rslt = 0;
+  let min = prices[0];
+  for (let i = 1; i < prices.length; ++i) {
+    min = Math.min(prices[i], min);
+    rslt = Math.max(prices[i] - min, rslt);
   }
-  return result;
+
+  return rslt;
 }

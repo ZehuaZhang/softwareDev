@@ -34,18 +34,16 @@ Return false
 */
 
 function isValidSerialization(preorder: string): boolean {
-  const tokenList = preorder.split(',');
-
-  let parents = 0;
-  for (const token of tokenList) {
-    // for full tree, leaves are always one more than parent nodes
-    if (token !== '#') {
-      ++parents;
-    } else if (parents-- === 0) {
-      // preorder, root is before leaf
-      return false;
-    }
+  const tl = preorder.split(',');
+  const last  = tl.pop();
+  let cnt = 0;
+  for (const t of tl) {
+      if (t !== '#') {
+          ++cnt;
+      } else if (cnt-- === 0) {
+          return false;
+      }
   }
-  // by this point - one leaf left, parents should match to leaves
-  return parents === 0 && tokenList[tokenList.length - 1] === '#'; // last one must be "#", leaf
-}
+
+  return !cnt && last === '#';
+};

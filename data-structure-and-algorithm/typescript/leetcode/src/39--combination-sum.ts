@@ -38,22 +38,24 @@ All elements of candidates are distinct.
 */
 
 function combinationSum(candidates: number[], target: number): number[][] {
-  const result: number[][] = [];
-  dfs(target, 0, []);
-  return result;
+  const n = candidates.length;
+  const path: number[] = [];
+  const rslt: number[][] = [];
+  dfs(0, target);
+  return rslt;
 
-  function dfs(sum: number, start: number, path: number[]) {
-    if (sum === 0) {
-      result.push([...path]);
-      return;
-    }
-    for (let i = start; i < candidates.length; ++i) {
-      const diff = sum - candidates[i];
-      if (diff >= 0) {
-        path.push(candidates[i]);
-        dfs(diff, i, path);
-        path.pop();
+  function dfs(i0: number, sum: number) {
+      if (sum === 0) {
+          return rslt.push([...path]);
       }
-    }
+
+      for (let i = i0; i < n; ++i) {
+          const d = sum - candidates[i];
+          if (d >= 0) {
+              path.push(candidates[i]);
+              dfs(i, d);
+              path.pop();
+          }
+      }
   }
-}
+};

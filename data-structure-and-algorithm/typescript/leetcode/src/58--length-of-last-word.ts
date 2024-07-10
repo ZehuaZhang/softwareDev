@@ -34,13 +34,14 @@ There will be at least one word in s.
 */
 
 function lengthOfLastWord(s: string): number {
-  let result = 0;
-  for (let i = s.length - 1; i >= 0; ) {
-    if (s[i--] !== ' ') {
-      ++result;
-    } else if (result > 0) {
-      return result;
-    }
+  let rslt = 0;
+  for (let i = s.length - 1; i >= 0;) {
+      if (s[i--] !== ' ') {
+          ++rslt;
+      } else if (rslt) {
+          return rslt;
+      }
   }
-  return result;
-}
+
+  return rslt;
+};

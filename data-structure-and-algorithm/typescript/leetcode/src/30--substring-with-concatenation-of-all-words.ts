@@ -54,36 +54,34 @@ s and words[i] consist of lowercase English letters.
 */
 
 function findSubstring(s: string, words: string[]): number[] {
-  const cntMap = new Map<string, number>();
-  for (const word of words) {
-    cntMap.set(word, (cntMap.get(word) || 0) + 1);
+  const [m, k] = [s.length, words[0].length];
+  const n = words.length * k;
+  const map = new Map<string, number>();
+  for (const w of words) {
+      map.set(w, (map.get(w) || 0) + 1)
   }
 
-  const result = [];
-  const len = words[0].length;
-  for (let i = len; i <= s.length; ++i) {
-    const a = s.substring(i - len, i);
-    if (!cntMap.has(a)) {
-      continue;
-    }
+  const rslt: number[] = [];
 
-    const tmpCntMap = new Map<string, number>(cntMap.entries());
-    for (let j = i; j <= s.length; j += len) {
-      const word = s.substring(j - len, j);
-      if (tmpCntMap.has(word)) {
-        tmpCntMap.set(word, tmpCntMap.get(word) - 1);
-      } else {
-        break;
+  for (let i = 0; i + n <= m; ++i) {
+      if (map.has(s.substring(i, i + k))) {
+          const m = new Map(map);
+          for (let j = i; j < i + n; j += k) {
+              const w = s.substring(j, j + k)
+              if (m.has(w)) {
+                  m.set(w, m.get(w) - 1);
+              } else {
+                  break;
+              }
+              if (m.get(w) === 0) {
+                  m.delete(w);
+              }
+          }
+          if (!m.size) {
+              rslt.push(i);
+          }
       }
-
-      if (tmpCntMap.get(word) === 0) {
-        tmpCntMap.delete(word);
-      }
-    }
-
-    if (tmpCntMap.size === 0) {
-      result.push(i - len);
-    }
   }
-  return result;
-}
+
+  return rslt;
+};

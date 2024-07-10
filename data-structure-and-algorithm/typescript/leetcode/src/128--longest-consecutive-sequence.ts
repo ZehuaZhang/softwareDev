@@ -25,21 +25,26 @@ Constraints:
 */
 
 function longestConsecutive(nums: number[]): number {
-  let result = 0;
-  const set = new Set<number>(nums);
+  const set = new Set(nums);
+  
+  let rslt = 0;
+
   for (const num of nums) {
-    if (!set.has(num)) {
-      continue;
-    }
-    set.delete(num);
-    let [l, r] = [num - 1, num + 1];
-    for (; set.has(l); --l) {
-      set.delete(l);
-    }
-    for (; set.has(r); ++r) {
-      set.delete(r);
-    }
-    result = Math.max(result, r - l - 1);
+      if (set.has(num)) {
+          set.delete(num);
+
+          let [l, r] = [num - 1, num + 1];
+
+          for (; set.has(l); --l) {
+              set.delete(l);
+          }
+          for (; set.has(r); ++r) {
+              set.delete(r);
+          }
+
+          rslt = Math.max(rslt, r - l - 1);
+      }
   }
-  return result;
-}
+
+  return rslt;
+};

@@ -44,33 +44,32 @@ At most 3 * 104 calls will be made to push, pop, top, and getMin.
 class MinStack {
   min: number;
   stk: number[];
-
   constructor() {
-    this.min = Infinity;
-    this.stk = [];
+      this.min = Infinity;
+      this.stk = [];
   }
 
   push(val: number): void {
-    if (val <= this.min) {
-      this.stk.push(this.min);
-      this.min = val;
-    }
-    this.stk.push(val);
+      if (val <= this.min) {
+          this.stk.push(this.min);
+          this.min = val;
+      }
+      this.stk.push(val);
   }
 
-  pop(): number {
-    const val = this.stk.pop();
-    if (val === this.min) {
-      this.min = this.stk.pop();
-    }
-    return val;
+  pop(): void {
+      const val = this.stk.pop();
+      if (val === this.min) {
+          this.min = this.stk.pop();
+      }
   }
 
   top(): number {
-    return this.stk[this.stk.length - 1];
+      return this.stk[this.stk.length - 1];
   }
 
   getMin(): number {
-    return this.min;
+      return this.min;
   }
 }
+

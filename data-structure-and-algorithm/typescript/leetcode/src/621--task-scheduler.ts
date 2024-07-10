@@ -51,17 +51,19 @@ If we have more number of tasks than the max slots we need as computed above we 
 */
 
 function leastInterval(tasks: string[], n: number): number {
-  const tskCntMap = new Map<string, number>();
+  const map = new Map<string, number>();
   let max = 0;
-  for (const task of tasks) {
-    tskCntMap.set(task, (tskCntMap.get(task) || 0) + 1);
-    max = Math.max(max, tskCntMap.get(task)!);
+  for (const t of tasks) {
+      map.set(t, (map.get(t) || 0) + 1);
+      max = Math.max(max, map.get(t));
   }
-  let result = (max - 1) * (n + 1);
-  for (const count of tskCntMap.values()) {
-    if (count === max) {
-      ++result;
-    }
+
+  let rslt = (max - 1) * (n + 1);
+  for (const cnt of map.values()) {
+      if (cnt === max) {
+          ++rslt;
+      }
   }
-  return Math.max(tasks.length, result);
-}
+
+  return Math.max(tasks.length, rslt);
+};

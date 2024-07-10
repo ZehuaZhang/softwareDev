@@ -12,16 +12,17 @@ Input: s = "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT"
 Output: ["AAAAACCCCC", "CCCCCAAAAA"]
 */
 
-function findRepeatedDnaSequences(s: string) {
+function findRepeatedDnaSequences(s: string): string[] {
   const set = new Set<string>();
   const rslt = new Set<string>();
   for (let i = 0; i + 9 < s.length; ++i) {
-    const t = s.substring(i, i + 10);
-    if (set.has(t)) {
-      rslt.add(t);
-    } else {
-      set.add(t);
-    }
+      const seq = s.substring(i, i + 10);
+      if (set.has(seq)) {
+          rslt.add(seq);
+      } else {
+          set.add(seq);
+      }
   }
+
   return [...rslt];
-}
+};

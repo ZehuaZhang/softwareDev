@@ -12,14 +12,17 @@ Could you do it using only constant space complexity?
 function verifyPreorder(preorder: number[]) {
   let low = -Infinity;
   let i = -1;
-  for (const a of preorder) {
-    if (a < low) {
+  for (const v of preorder) {
+    if (v < low) {
       return false;
     }
-    while (i >= 0 && a > preorder[i]) {
+
+    while (i >= 0 && v > preorder[i]) {
       low = preorder[i--];
     }
-    preorder[++i] = a;
+
+    preorder[++i] = v;
   }
+
   return true;
 }

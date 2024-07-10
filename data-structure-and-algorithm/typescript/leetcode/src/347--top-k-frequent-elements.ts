@@ -23,23 +23,27 @@ It is guaranteed that the answer is unique.
 Follow up: Your algorithm's time complexity must be better than O(n log n), where n is the array's size.
 */
 
-function topKFrequentInArray(nums: number[], kth: number): number[] {
-  const countMap = new Map<number, number>();
-  for (const num of nums) {
-    countMap.set(num, (countMap.get(num) || 0) + 1);
+function topKFrequent(nums: number[], k: number): number[] {
+  const n = nums.length;
+  const map = new Map<number, number>();
+  for (const n of nums) {
+      map.set(n, (map.get(n) || 0) + 1);
   }
-  const bucket: number[][] = [...Array(nums.length + 1)].map(() => []);
-  for (const [num, count] of countMap.entries()) {
-    bucket[count].push(num);
+
+  const bkt: number[][] = [...Array(n + 1)].map(() => []);
+  for (const [n, cnt] of map) {
+      bkt[cnt].push(n);
   }
-  const result = [];
-  for (let i = bucket.length - 1; i >= 0; --i) {
-    for (let j = 0; j < bucket[i].length; ++j) {
-      result.push(bucket[i][j]);
-      if (result.length === kth) {
-        return result;
+
+  const rslt: number[] = [];
+  for (let j = n; j >= 0; --j) {
+      for (const n of bkt[j]) {
+          if (rslt.length === k) {
+              return rslt;
+          }
+          rslt.push(n);
       }
-    }
-  }
-  return result;
-}
+  } 
+
+  return rslt;
+};

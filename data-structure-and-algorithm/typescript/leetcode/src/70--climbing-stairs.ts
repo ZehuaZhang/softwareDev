@@ -30,14 +30,12 @@ Constraints:
 */
 
 function climbStairs(n: number): number {
-  if (n <= 1) {
-    return 1;
+  let [a, b] = [1, 1];
+  let rslt = 1;
+  for (let i = 2; i <= n; ++i) {
+      rslt = a + b;
+      a = b;
+      b = rslt;
   }
-  let result = 0;
-  for (let a = 1, b = 1; n >= 2; --n) {
-    result = a + b;
-    a = b;
-    b = result;
-  }
-  return result;
-}
+  return rslt;
+};

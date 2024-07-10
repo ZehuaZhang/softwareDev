@@ -29,9 +29,11 @@ Each element in the array appears twice except for one element which appears onl
 */
 
 function singleNumber(nums: number[]): number {
-  let result = 0;
+  let rslt = 0;
+
   for (const num of nums) {
-    result ^= num;
+      rslt ^= num;
   }
-  return result;
-}
+
+  return rslt;
+};

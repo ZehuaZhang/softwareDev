@@ -23,5 +23,6 @@ function generatePossibleNextMoves(s: string) {
       rslt.push(s.substring(0, i - 1) + '--' + s.substring(i + 1));
     }
   }
+
   return rslt;
 }

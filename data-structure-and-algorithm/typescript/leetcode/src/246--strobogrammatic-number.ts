@@ -17,23 +17,25 @@ Example 3:
 
 Input:  "962"
 Output: false
+
+Note: Input length is greater than 1
 */
 
 function isStrobogrammatic(num: string): boolean {
-  const pairMap = new Map<string, string>([
+  const map = new Map([
     ['0', '0'],
     ['1', '1'],
-    ['8', '8'],
     ['6', '9'],
+    ['8', '8'],
     ['9', '6'],
   ]);
-  for (let i = 0; i <= num.length / 2; ++i) {
-    if (
-      !pairMap.has(num[i]) ||
-      pairMap.get(num[i]) !== num[num.length - 1 - i]
-    ) {
+
+  const n = num.length;
+  for (let i = 0; i <= n / 2; ++i) {
+    if (!map.has(num[i]) || map.get(num[i]) !== num[n - 1 - i]) {
       return false;
     }
   }
+
   return true;
 }

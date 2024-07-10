@@ -33,19 +33,19 @@ s consists only of printable ASCII characters.
 */
 
 function isPalindrome(s: string): boolean {
-  for (let left = 0, right = s.length - 1; left < right; ) {
-    if (!isAlphaNumeric(s[left])) {
-      ++left;
-    } else if (!isAlphaNumeric(s[right])) {
-      --right;
-    } else if (s[left++].toLowerCase() !== s[right--].toLowerCase()) {
-      return false;
+    for (let l = 0, r = s.length - 1; l < r;) {
+        if (!isAlphaNumeric(s[l])) {
+            ++l;
+        } else if (!isAlphaNumeric(s[r])) {
+            --r;
+        } else if (s[l++].toLowerCase() !== s[r--].toLowerCase()) {
+            return false;
+        }
     }
-  }
+    
+    return true;
 
-  return true;
-
-  function isAlphaNumeric(c: string) {
-    return Boolean(c.match(/[0-9a-zA-Z]/g));
-  }
+    function isAlphaNumeric(c: string) {
+        return /[a-zA-Z0-9]/.test(c);
+    }
 }

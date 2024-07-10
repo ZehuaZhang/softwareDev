@@ -21,28 +21,29 @@ return false.
 */
 
 function increasingTriplet(nums: number[]): boolean {
-  const result: number[] = [];
-  for (const num of nums) {
-    const i = findGreaterEqual(result, num);
-    if (i === result.length) {
-      result.push(num);
-    } else {
-      result[i] = num;
-    }
-  }
-  return result.length >= 3;
-
-  function findGreaterEqual(nums: number[], target: number): number {
-    let left = 0;
-    let right = nums.length - 1;
-    while (left <= right) {
-      const mid = left + Math.trunc((right - left) / 2);
-      if (nums[mid] >= target) {
-        right = mid - 1;
+  const rslt: number[] = [];
+  for (const n of nums) {
+      const i = gtEq(n);
+      if (i === rslt.length) {
+          rslt.push(n);
       } else {
-        left = mid + 1;
+          rslt[i] = n;
       }
-    }
-    return left;
   }
-}
+
+  return rslt.length >= 3;
+
+  function gtEq(tgt: number) {
+      let [l, r] = [0, rslt.length - 1];
+      for (; l <= r;) {
+          const m = l + Math.trunc((r - l) / 2);
+          if (rslt[m] >= tgt) {
+              r = m - 1;
+          } else {
+              l = m + 1;
+          }
+      }
+
+      return l;
+  }
+};

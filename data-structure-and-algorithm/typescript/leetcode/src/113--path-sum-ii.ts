@@ -34,25 +34,27 @@ The number of nodes in the tree is in the range [0, 5000].
 */
 
 function pathSum(root: TreeNode | null, targetSum: number): number[][] {
-  const result: number[][] = [];
-  dfs(root, targetSum, []);
-  return result;
+  const rslt: number[][] = [];
+  const path: number[] = [];
 
-  function dfs(node: TreeNode | null, sum: number, path: number[]) {
-    if (node === null) {
-      return;
-    }
+  dfs(root, targetSum);
 
-    path.push(node.val);
+  return rslt;
 
-    if (node.left === null && node.right === null) {
-      if (sum === node.val) {
-        result.push([...path]);
+  function dfs(node: TreeNode | null, sum: number) {
+      if (!node) {
+          return;
       }
-    } else {
-      dfs(node.left, sum - node.val, path);
-      dfs(node.right, sum - node.val, path);
-    }
-    path.pop();
+
+      path.push(node.val)
+      if (!node.left && !node.right) {
+          if (sum === node.val) {
+              rslt.push([...path]);
+          }
+      }
+
+      dfs(node.left, sum - node.val);
+      dfs(node.right, sum - node.val);
+      path.pop();
   }
-}
+};

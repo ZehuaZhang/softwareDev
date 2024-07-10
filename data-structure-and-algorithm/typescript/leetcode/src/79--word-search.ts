@@ -38,48 +38,38 @@ Follow up: Could you use search pruning to make your solution faster with a larg
 
 function exist(board: string[][], word: string): boolean {
   const [m, n] = [board.length, board[0].length];
-  const visited = [...Array(m)].map(() => Array(n).fill(false));
+  const seen = [...Array(m)].map(() => Array(n).fill(false));
+
   for (let i = 0; i < m; ++i) {
-    for (let j = 0; j < n; ++j) {
-      if (dfs(0, i, j)) {
-        return true;
+      for (let j = 0; j < n; ++j) {
+          if (dfs(i, j, 0)) {
+              return true;
+          }
       }
-    }
   }
+
   return false;
 
-  function dfs(idx: number, x: number, y: number) {
-    if (idx === word.length) {
-      return true;
-    }
-
-    if (
-      x < 0 ||
-      x >= m ||
-      y < 0 ||
-      y >= n ||
-      visited[x][y] ||
-      board[x][y] !== word[idx]
-    ) {
-      return false;
-    }
-
-    visited[x][y] = true;
-    let result = false;
-
-    for (const [dx, dy] of [
-      [-1, 0],
-      [0, -1],
-      [1, 0],
-      [0, 1],
-    ]) {
-      if (dfs(idx + 1, x + dx, y + dy)) {
-        result = true;
-        break;
+  function dfs(x: number, y: number, idx: number) {
+      if (idx === word.length) {
+          return true;
       }
-    }
 
-    visited[x][y] = false;
-    return result;
+      if (x < 0 || x >= m || y < 0 || y >= n || seen[x][y] || board[x][y] !== word[idx]) {
+          return false;
+      }
+
+      let fnd = false;
+      seen[x][y] = true;
+
+      for (const [dx, dy] of [[0, 1], [0, -1], [-1, 0], [1, 0]]) {
+          if (dfs(dx + x, dy + y, idx + 1)) {
+              fnd = true;
+              break;
+          }
+      }
+
+      seen[x][y] = false;
+      return fnd;
   }
-}
+};

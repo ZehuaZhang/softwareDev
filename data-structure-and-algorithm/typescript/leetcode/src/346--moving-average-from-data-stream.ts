@@ -14,21 +14,23 @@ m.next(5) = (10 + 3 + 5) / 3
 
 class MovingAverage {
   q: number[];
-  size: number;
   sum: number;
+  s: number;
 
   constructor(size: number) {
-    this.size = size;
-    this.sum = 0;
+    this.s = size;
     this.q = [];
+    this.sum = 0;
   }
 
   next(val: number) {
-    if (this.q.length >= size) {
-      this.sum -= this.q.shift()!;
+    if (this.q.length === this.s) {
+      this.sum -= this.q.shift();
     }
-    this.q.push(val);
+
     this.sum += val;
+    this.q.push(val);
+
     return this.sum / this.q.length;
   }
 }

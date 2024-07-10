@@ -41,35 +41,32 @@ If 99% of all integer numbers from the stream are in the range [0, 100], how wou
 */
 
 class MedianFinder {
-  minH: typeof PriorityQueue;
-  maxH: typeof PriorityQueue;
-
+  min: typeof PriorityQueue;
+  max: typeof PriorityQueue;
   constructor() {
-    this.minH = new PriorityQueue({
-      compare: (a, b) => a - b,
-    });
-    this.maxH = new PriorityQueue({
-      compare: (a, b) => b - a,
-    });
+      this.min = new PriorityQueue({
+          compare: (a, b) => a - b
+      });
+      this.max = new PriorityQueue({
+          compare: (a, b) => b - a
+      })
   }
 
   addNum(num: number): void {
-    if (this.minH.size() === 0 || num > this.minH.front()) {
-      this.minH.enqueue(num);
-      if (this.minH.size() > this.maxH.size() + 1) {
-        this.maxH.enqueue(this.minH.dequeue());
+      if (!this.min.size() || num > this.min.front()) {
+          this.min.enqueue(num);
+          if (this.min.size() > this.max.size() + 1) {
+              this.max.enqueue(this.min.dequeue());
+          }
+      } else {
+          this.max.enqueue(num);
+          if (this.max.size() > this.min.size()) {
+              this.min.enqueue(this.max.dequeue());
+          }
       }
-    } else {
-      this.maxH.enqueue(num);
-      if (this.maxH.size() > this.minH.size()) {
-        this.minH.enqueue(this.maxH.dequeue());
-      }
-    }
   }
 
   findMedian(): number {
-    return this.minH.size() === this.maxH.size()
-      ? (this.minH.front() + this.maxH.front()) / 2
-      : this.minH.front();
+      return this.min.size() === this.max.size() ? (this.min.front() + this.max.front()) / 2 : this.min.front();
   }
 }

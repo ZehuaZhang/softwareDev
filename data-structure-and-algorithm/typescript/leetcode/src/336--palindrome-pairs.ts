@@ -14,37 +14,40 @@ Return [[0, 1], [1, 0], [3, 2], [2, 4]]
 The palindromes are ["dcbaabcd", "abcddcba", "slls", "llssssll"]
 */
 
-function palindromePairs(words: string[]) {
+function palindromePairs(words: string[]): number[][] {
   const rslt: [number, number][] = [];
-  const m = new Map<string, number>();
+  const map = new Map<string, number>();
   for (let i = 0; i < words.length; ++i) {
-    m.set(words[i], i);
+      map.set(words[i], i);
   }
   for (let i = 0; i < words.length; ++i) {
-    for (let l = 0, r = 0; l <= r; ) {
-      const t = words[i].substring(l, r).split('').reverse().join('');
-      if (
-        m.has(t) &&
-        i !== m.get(t) &&
-        isValid(words[i].substring(l ? 0 : r, l ?  l : undefined))
-      ) {
-        rslt.push(l ? [m.get(t)!, i] : [i, m.get(t)!]);
+      const w = words[i];
+      const m = w.length;
+      const rs = [...w].reverse().join('');
+      for (let l = 0, r = 0; l <= r;) {
+          const s = rs.slice(m - r, m - l);
+          if (
+              map.has(s) &&
+              i !== map.get(s) &&
+              (l ? isValid(w, 0, l - 1) : isValid(w, r, m - 1))
+          ) {
+              rslt.push(l ? [map.get(s), i] : [i, map.get(s)]);
+          }
+          if (r < m) {
+              ++r;
+          } else {
+              ++l;
+          }
       }
-      if (r < words[i].length) {
-        ++r;
-      } else {
-        ++l;
-      }
-    }
   }
   return rslt;
 
-  function isValid(t: string) {
-    for (let i = 0; i < t.length / 2; ++i) {
-      if (t[i] !== t[t.length - 1 - i]) {
-        return false;
+  function isValid(s: string, l: number, r: number) {
+      for (; l < r; ++l, --r) {
+          if (s[l] !== s[r]) {
+              return false;
+          }
       }
-    }
-    return true;
+      return true;
   }
 }

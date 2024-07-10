@@ -24,19 +24,19 @@ Constraints:
 */
 
 function canPartition(nums: number[]): boolean {
-  let sum = nums.reduce((acc, i) => acc + i, 0);
+  let sum = nums.reduce((p, c) => p + c, 0);
   if (sum % 2) {
-    return false;
+      return false;
   }
+
   sum /= 2;
   const dp = Array(sum + 1).fill(false);
   dp[0] = true;
-
-  for (const num of nums) {
-    for (let i = sum; i >= num; --i) {
-      dp[i] = dp[i] || dp[i - num];
-    }
+  for (const n of nums) {
+      for (let i = sum; i >= n; --i) {
+          dp[i] = dp[i] || dp[i - n];
+      }
   }
 
   return dp[sum];
-}
+};

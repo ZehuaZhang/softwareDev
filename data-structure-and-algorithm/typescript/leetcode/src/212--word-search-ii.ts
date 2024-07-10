@@ -33,86 +33,41 @@ All the strings of words are unique.
 
 function findWords(board: string[][], words: string[]): string[] {
   const [m, n] = [board.length, board[0].length];
-  const seen = [...Array(m)].map(() => Array(n).fill(false));
   const trie = new Trie();
-
-  for (const word of words) {
-    trie.addWord(word);
+  for (const w of words) {
+      trie.addWord(w);
   }
-
+  
+  const seen = [...Array(m)].map(() => Array(n).fill(false));
   const rslt = new Set<string>();
-
   for (let i = 0; i < m; ++i) {
-    for (let j = 0; j < n; ++j) {
-      const c = board[i][j];
-      if (trie.root.leaves.has(c) && !seen[i][j]) {
-        dfs(trie.root.leaves.get(c), i, j);
+      for (let j = 0; j < n; ++j) {
+          const c = board[i][j];
+          if (trie.root.leaves.has(c)) {
+              dfs(trie.root.leaves.get(c), i, j);
+          }
       }
-    }
   }
 
   return [...rslt];
 
-  function dfs(node: TrieNode, i: number, j: number) {
-    if (node.isWord) {
-      rslt.add(node.word);
-    }
-
-    seen[i][j] = true;
-
-    for (const [dx, dy] of [
-      [-1, 0],
-      [0, -1],
-      [1, 0],
-      [0, 1],
-    ]) {
-      let x = i + dx,
-        y = j + dy;
-      if (
-        x >= 0 &&
-        x < m &&
-        y >= 0 &&
-        y < n &&
-        node.leaves.has(board[x][y]) &&
-        !seen[x][y]
-      ) {
-        dfs(node.leaves.get(board[x][y]), x, y);
+  function dfs(node: TrieNode, x: number, y: number) {
+      if (node.isWord) {
+          rslt.add(node.word);
       }
-    }
 
-    seen[i][j] = false;
-  }
-}
+      seen[x][y] = true;
 
-class Trie {
-  root: TrieNode;
-
-  constructor() {
-    this.root = new TrieNode();
-  }
-
-  addWord(word: string) {
-    let curr = this.root;
-
-    for (const c of word) {
-      if (!curr.leaves.has(c)) {
-        curr.leaves.set(c, new TrieNode());
+      for (const [dx, dy] of [[0, 1], [0, -1], [1, 0], [-1, 0]]) {
+          const [nx, ny] = [x + dx, y + dy];
+          if (nx >= 0 && nx < m && ny >= 0 && ny < n && !seen[nx][ny]) {
+              const c = board[nx][ny];
+              if (node.leaves.has(c)) {
+                  dfs(node.leaves.get(c), nx, ny);
+              }
+          }
       }
-      curr = curr.leaves.get(c);
-    }
-    curr.isWord = true;
-    curr.word = word;
-  }
-}
 
-class TrieNode {
-  leaves: Map<string, TrieNode>;
-  isWord: boolean;
-  word: string;
-
-  constructor() {
-    this.leaves = new Map<string, TrieNode>();
-    this.isWord = false;
-    this.word = '';
+      seen[x][y] = false;
   }
-}
+};

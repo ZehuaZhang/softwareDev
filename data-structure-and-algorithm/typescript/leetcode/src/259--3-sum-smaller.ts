@@ -10,32 +10,23 @@ Explanation: Because there are two triplets which sums are less than 2:
              [-2,0,3]
 */
 
-import {runTestCaseList} from './util/test';
-
 function threeSumSmaller(nums: number[], target: number): number {
+  const n = nums.length;
   nums.sort((a, b) => a - b);
 
-  let result = 0;
+  let rslt = 0;
 
-  for (let i = 0; i < nums.length - 2; ++i) {
-    for (let left = i + 1, right = nums.length - 1; left < right; ) {
-      const sum = nums[i] + nums[left] + nums[right];
+  for (let i = 0; i < n - 2; ++i) {
+    for (let l = i + 1, r = n - 1; l < r;) {
+      const sum = nums[i] + nums[l] + nums[r];
       if (sum < target) {
-        result += right - left;
-        ++left;
+        rslt += r - l;
+        ++l;
       } else {
-        --right;
+        --r;
       }
     }
   }
 
-  return result;
+  return rslt;
 }
-
-// tests
-
-const testInputListCollection = [[[-2, 0, 1, 3], 2]];
-
-const expectedResultList = [2];
-
-runTestCaseList(testInputListCollection, expectedResultList, threeSumSmaller);

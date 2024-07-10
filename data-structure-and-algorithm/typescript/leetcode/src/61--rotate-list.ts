@@ -26,21 +26,20 @@ The number of nodes in the list is in the range [0, 500].
 
 function rotateRight(head: ListNode | null, k: number): ListNode | null {
   if (!head) {
-    return head;
+      return head;
   }
-
   let len = 1;
-  let tmp = head;
-  while (tmp.next) {
-    ++len;
-    tmp = tmp.next;
-  }
-  tmp.next = head;
+  let curr = head;
+  for (; curr.next; curr = curr.next, ++len);
 
-  for (let i = 0; i < len - (k % len); ++i) {
-    tmp = tmp.next;
-  }
-  head = tmp.next;
-  tmp.next = null;
-  return head;
-}
+  curr.next = head;
+  k = len - k % len;
+
+  for (; k; --k, curr = curr.next);
+
+  const prev = curr;
+  curr = curr.next;
+  prev.next = null;
+
+  return curr;
+};

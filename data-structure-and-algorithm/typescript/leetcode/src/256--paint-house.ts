@@ -17,14 +17,13 @@ Explanation: Paint house 0 into blue, paint house 1 into green, paint house 2 in
 */
 
 function minCost(costs: number[][]): number {
-  const [rows, cols] = [costs.length, costs[0].length];
-  const result: number[][] = [...costs].map(cost => [...cost]);
-  for (let i = 1; i < rows; ++i) {
-    for (let j = 0; j < cols; ++j) {
-      result[i][j] += Math.min(
-        ...result[i - 1].filter((_, index) => j !== index)
-      );
+  const [m, n] = [costs.length, costs[0].length];
+  const rslt = [...Array(m)].map((_, i) => [...costs[i]]);
+  for (let i = 1; i < m; ++i) {
+    for (let j = 0; j < n; ++j) {
+      rslt[i][j] += Math.min(...rslt[i - 1].filter((_, idx) => j !== idx));
     }
   }
-  return Math.min(...result[rows - 1]);
+
+  return Math.min(...rslt[m - 1]);
 }

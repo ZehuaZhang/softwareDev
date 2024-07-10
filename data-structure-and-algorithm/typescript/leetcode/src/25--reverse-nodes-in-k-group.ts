@@ -32,20 +32,22 @@ Follow-up: Can you solve the problem in O(1) extra memory space?
 */
 
 function reverseKGroup(head: ListNode | null, k: number): ListNode | null {
-  let node = head;
-  let count = 0;
-  for (; count < k; ++count) {
-    if (!node) {
-      return head;
-    }
-    node = node.next;
+  let curr = head;
+  let cnt = 0;
+  for (; cnt < k; ++cnt) {
+      if (!curr) {
+          return head;
+      }
+      curr = curr.next;
   }
-  let curr = reverseKGroup(node, k);
-  for (; count; --count) {
-    const next = head.next;
-    head.next = curr;
-    curr = head;
-    head = next;
+  
+  let prev = reverseKGroup(curr, k);
+  for (; cnt; --cnt) {
+      const next = head.next;
+      head.next = prev;
+      prev = head;
+      head = next;
   }
-  return curr;
-}
+
+  return prev;
+};

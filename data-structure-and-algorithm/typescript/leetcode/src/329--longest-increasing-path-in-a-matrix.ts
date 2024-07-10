@@ -33,53 +33,44 @@ n == matrix[i].length
 
 function longestIncreasingPath(matrix: number[][]): number {
   const [m, n] = [matrix.length, matrix[0].length];
-  const inDegree = [...Array(m)].map(() => Array(n).fill(0));
-  for (let i = 0; i < m; ++i) {
-    for (let j = 0; j < n; ++j) {
-      for (const [dx, dy] of [
-        [-1, 0],
-        [1, 0],
-        [0, 1],
-        [0, -1],
-      ]) {
-        const [x, y] = [i + dx, j + dy];
-        if (x >= 0 && x < m && y >= 0 && y < n && matrix[x][y] > matrix[i][j]) {
-          ++inDegree[x][y];
-        }
-      }
-    }
-  }
+  const iDgr = [...Array(m)].map(() => Array(n).fill(0));
 
-  let q: [number, number][] = [];
-  for (let i = 0; i < m; ++i) {
-    for (let j = 0; j < n; ++j) {
-      if (inDegree[i][j] === 0) {
-        q.push([i, j]);
-      }
-    }
-  }
-
-  let result = 0;
-  for (; q.length; ++result) {
-    const next: [number, number][] = [];
-    for (const [i, j] of q) {
-      for (const [dx, dy] of [
-        [-1, 0],
-        [1, 0],
-        [0, 1],
-        [0, -1],
-      ]) {
-        const [x, y] = [i + dx, j + dy];
-        if (x >= 0 && x < m && y >= 0 && y < n) {
-          if (matrix[x][y] > matrix[i][j]) {
-            if (--inDegree[x][y] === 0) {
-              next.push([x, y]);
-            }
+  for (let i = 0; i < m; ++i){
+      for (let j = 0; j < n; ++j) {
+          for (const [dx, dy] of [[0, 1], [0, -1], [1, 0], [-1, 0]]) {
+              const [x, y] = [i + dx, j + dy];
+              if (x >= 0 && x < m && y >= 0 && y < n && matrix[x][y] > matrix[i][j]) {
+                  ++iDgr[x][y];
+              }
           }
-        }
       }
-    }
-    q = next;
   }
-  return result;
+
+  let rslt = 0;
+
+  const q: [number, number][] = [];
+  for (let i = 0; i < m; ++i){
+      for (let j = 0; j < n; ++j) {
+          if (!iDgr[i][j]) {
+              q.push([i, j])
+          }
+      }
+  }
+
+  while (q.length) {
+      for (let l = q.length; l; --l) {
+          const [i, j] = q.shift();
+          for (const [dx, dy] of [[0, 1], [0, -1], [1, 0], [-1, 0]]) {
+              const [x, y] = [i + dx, j + dy];
+              if (x >= 0 && x < m && y >= 0 && y < n && matrix[x][y] > matrix[i][j]) {
+                  if (--iDgr[x][y] === 0) {
+                      q.push([x, y]);
+                  }
+              }
+          } 
+      }
+      ++rslt;
+  }
+
+  return rslt;
 }

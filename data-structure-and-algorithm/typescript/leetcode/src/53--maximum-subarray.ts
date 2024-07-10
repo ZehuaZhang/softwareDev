@@ -32,11 +32,13 @@ Follow up: If you have figured out the O(n) solution, try coding another solutio
 */
 
 function maxSubArray(nums: number[]): number {
-  let result = -Infinity;
   let curr = 0;
+  let rslt = -Infinity;
+
   for (const num of nums) {
-    curr = Math.max(num + curr, num);
-    result = Math.max(result, curr);
+      curr = Math.max(num + curr, num);
+      rslt = Math.max(rslt, curr);
   }
-  return result;
-}
+
+  return rslt;
+};

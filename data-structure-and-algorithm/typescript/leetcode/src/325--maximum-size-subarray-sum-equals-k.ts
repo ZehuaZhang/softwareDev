@@ -36,3 +36,22 @@ function maxSubArrayLen(nums: number[], target: number): number {
   }
   return rslt;
 }
+
+function maxSubArrayLen(nums: number[], target: number): number {
+  const n = nums.length;
+  let rslt = 0;
+  const map = new Map<number, number>();
+  for (let i = 0, sum = 0; i < n; ++i) {
+    sum += nums[i];
+    if (sum === target) {
+      rslt = i + 1;
+    } else if (map.has(sum - target)) {
+      rslt = Math.max(rslt, i - map.get(sum - target));
+    }
+    if (!map.has(sum)) {
+      map.set(sum, i);
+    }
+  }
+
+  return rslt;
+}

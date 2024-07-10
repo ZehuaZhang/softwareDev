@@ -24,17 +24,15 @@ Constraints:
 */
 
 function largestNumber(nums: number[]): string {
-  const rslt: string[] = nums.map(n => String(n));
-  rslt.sort((a, b) => (b + a).localeCompare(a + b));
+  const rslt = nums.sort((a, b) => `${b}${a}`.localeCompare(`${a}${b}`));
 
-  let zero = true;
-  return rslt
-    .filter((c, i) => {
-      if (c !== '0') {
-        zero = false;
-        return true;
+  let leadZero = true;
+  return rslt.filter((d, i) => {
+      if (d) {
+          leadZero = false;
+          return true;
       }
-      return !zero || i === rslt.length - 1;
-    })
-    .join('');
-}
+
+      return !leadZero || i === rslt.length - 1;
+  }).join('');
+};

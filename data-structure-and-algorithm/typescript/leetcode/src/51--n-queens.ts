@@ -25,36 +25,37 @@ Constraints:
 */
 
 function solveNQueens(n: number): string[][] {
-  const result: string[][] = [];
-  const col: boolean[] = Array(n).fill(false);
-  const diag1: boolean[] = Array(2 * n - 1).fill(false);
-  const diag2: boolean[] = Array(2 * n - 1).fill(false);
+  const cols = Array(n).fill(false);
+  const diag1 = Array(2 * n - 1);
+  const diag2 = Array(2 * n - 1);
 
-  dfs([]);
+  const path: number[] = [];
+  const rslt: string[][] = [];
+  
+  dfs();
 
-  return result;
+  return rslt;
 
-  function dfs(path: number[]) {
-    const row = path.length;
-    if (row === n) {
-      result.push(
-        path.map(c => {
-          const arr = [...'.'.repeat(n)];
-          arr[c] = 'Q';
-          return arr.join('');
-        })
-      );
-      return;
-    }
-
-    for (let i = 0; i < n; ++i) {
-      if (!col[i] && !diag1[row - i + n - 1] && !diag2[row + i]) {
-        col[i] = diag1[row - i + n - 1] = diag2[row + i] = true;
-        path.push(i);
-        dfs(path);
-        path.pop();
-        col[i] = diag1[row - i + n - 1] = diag2[row + i] = false;
+  function dfs() {
+      const row = path.length;
+      if (row === n) {
+          return rslt.push(
+              path.map(r => {
+                  const a = [...'.'.repeat(n)];
+                  a[r] = 'Q';
+                  return a.join('');
+              })
+          )
       }
-    }
+
+      for (let i = 0; i < n; ++i) {
+          if (!cols[i] && !diag1[i + row] && !diag2[i - row + n - 1]) {
+              cols[i] = diag1[i + row] = diag2[i - row + n - 1] = true;
+              path.push(i);
+              dfs();
+              path.pop();
+              cols[i] = diag1[i + row] = diag2[i - row + n - 1] = false;
+          }
+      }
   }
-}
+};

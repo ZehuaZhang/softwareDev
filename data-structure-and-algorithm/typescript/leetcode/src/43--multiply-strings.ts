@@ -25,25 +25,24 @@ Both num1 and num2 do not contain any leading zero, except the number 0 itself.
 */
 
 function multiply(num1: string, num2: string): string {
-  const result: number[] = Array(num1.length + num2.length).fill(0);
+  const [m, n] = [num1.length, num2.length];
+  const rslt: number[] = Array(m + n).fill(0);
 
-  for (let i = num1.length - 1; i >= 0; --i) {
-    for (let j = num2.length - 1; j >= 0; --j) {
-      const [di, ci] = [i + j + 1, i + j];
-      const mul = Number(num1[i]) * Number(num2[j]);
-      const sum = mul + result[di];
-      result[di] = sum % 10;
-      result[ci] += Math.trunc(sum / 10);
-    }
+  for (let i = m - 1; i >= 0; --i) {
+      for (let j = n - 1; j >= 0; --j) {
+          const d = Number(num1[i]) * Number(num2[j]);
+          const s = d + rslt[i + j + 1];
+          rslt[i + j + 1] = s % 10;
+          rslt[i + j] += Math.trunc(s / 10);
+      }
   }
 
-  let prefixZero = true;
-  return result
-    .filter((d, i) => {
+  let leadZero = true;
+  return rslt.filter((d, i) => {
       if (d) {
-        prefixZero = false;
+          leadZero = false;
+          return true;
       }
-      return !prefixZero || i === result.length - 1;
-    })
-    .join('');
-}
+      return !leadZero || i === rslt.length - 1;
+  }).join('');
+};

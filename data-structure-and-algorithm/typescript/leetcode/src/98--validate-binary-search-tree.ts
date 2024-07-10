@@ -36,15 +36,14 @@ function isValidBST(root: TreeNode | null): boolean {
   return dfs(root, -Infinity, Infinity);
 
   function dfs(node: TreeNode | null, min: number, max: number) {
-    if (node === null) {
-      return true;
-    }
-    if (node.val <= min || node.val >= max) {
-      return false;
-    }
-    return (
-      dfs(node.left, min, Math.min(max, node.val)) &&
-      dfs(node.right, Math.max(min, node.val), max)
-    );
+      if (!node) {
+          return true;
+      }
+
+      if (node.val <= min || node.val >= max) {
+          return false;
+      }
+
+      return dfs(node.left, min, node.val) && dfs(node.right, node.val, max);
   }
-}
+};

@@ -22,18 +22,22 @@ Constraints:
 
 function generateParenthesis(n: number): string[] {
   if (n === 0) {
-    return [''];
+      return [''];
   }
+
   if (n === 1) {
-    return ['()'];
+      return ['()'];
   }
-  const result = [];
+
+  const rslt: string[] = [];
+
   for (let i = 0; i < n; ++i) {
-    for (const inner of generateParenthesis(i)) {
-      for (const outer of generateParenthesis(n - 1 - i)) {
-        result.push(`(${inner})${outer}`);
+      for (const a of generateParenthesis(i)) {
+          for (const b of generateParenthesis(n - i - 1)) {
+              rslt.push(`(${a})${b}`);
+          }
       }
-    }
   }
-  return result;
-}
+
+  return rslt;
+};

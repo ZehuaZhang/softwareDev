@@ -25,23 +25,26 @@ intervals[i].length == 2
 */
 
 function merge(intervals: number[][]): number[][] {
-  intervals.sort(([s1, e1], [s2, e2]) => {
-    if (s1 === s2) {
-      return e1 - e2;
-    }
-    return s1 - s2;
-  });
+  const n = intervals.length;
 
-  const result: number[][] = intervals.length ? [intervals[0]] : [];
-  for (let i = 1; i < intervals.length; ++i) {
-    const [s, e] = result[result.length - 1];
-    const [s1, e1] = intervals[i];
-    if (e < s1) {
-      result.push(intervals[i]);
-    } else {
-      result[result.length - 1][1] = Math.max(e, e1);
-    }
+  intervals.sort(([s1, e1], [s2, e2]) => {
+      if (s1 === s2) {
+          return e1 - e2;
+      }
+      return s1 - s2;
+  })
+
+  const rslt: number[][] = n ? [intervals[0]] : [];
+  for (let i = 1; i < n; ++i) {
+      const [s1, e1] = rslt[rslt.length - 1];
+      const [s2, e2] = intervals[i];
+
+      if (e1 < s2) {
+          rslt.push(intervals[i]);
+      } else {
+          rslt[rslt.length - 1][1] = Math.max(e1, e2);
+      }
   }
 
-  return result;
-}
+  return rslt;
+};

@@ -43,28 +43,29 @@ s1 and s2 consist of lowercase English letters.
 */
 
 function isScramble(s1: string, s2: string): boolean {
-  const m = s1.length;
-  const memo = [...Array(m)].map(() =>
-    [...Array(m)].map(() => Array(m + 1).fill(null))
-  );
-  return dfs(0, 0, m);
+    const m = s1.length;
+    const memo = [...Array(m)].map(() => [...Array(m)].map(() => Array(m + 1).fill(null)));
 
-  function dfs(i: number, j: number, len: number) {
-    if (memo[i][j][len]) {
-      return memo[i][j][len];
-    }
-    if (len === 1) {
-      return (memo[i][j][len] = s1.charCodeAt(i) === s2.charCodeAt(j));
-    }
+    return dfs(0, 0, m);
 
-    for (let k = 1; k < len; ++k) {
-      if (dfs(i, j, k) && dfs(i + k, j + k, len - k)) {
-        return (memo[i][j][len] = true);
-      }
-      if (dfs(i, j + len - k, k) && dfs(i + k, j, len - k)) {
-        return (memo[i][j][len] = true);
-      }
+    function dfs(i: number, j: number, l: number) {
+        if (memo[i][j][l] !== null) {
+            return memo[i][j][l];
+        }
+
+        if (l === 1) {
+            return (memo[i][j][l] = s1[i] === s2[j]);
+        }
+
+        for (let k = 1; k < l; ++k) {
+            if (dfs(i, j, k) && dfs(i + k, j + k, l - k)) {
+                return (memo[i][j][l] = true);
+            }
+            if (dfs(i, j + l - k, k) && dfs(i + k, j, l - k)) {
+                return (memo[i][j][l] = true);
+            }
+        }
+
+        return (memo[i][j][l] = false);
     }
-    return (memo[i][j][len] = false);
-  }
-}
+};

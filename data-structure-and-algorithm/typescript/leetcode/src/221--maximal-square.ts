@@ -31,35 +31,35 @@ matrix[i][j] is '0' or '1'.
 
 function maximalSquare(matrix: string[][]): number {
   const [m, n] = [matrix.length, matrix[0].length];
-  const h: number[] = Array(n).fill(0);
+  const h = Array(n).fill(0);
 
   let rslt = 0;
-
   for (let i = 0; i < m; ++i) {
-    for (let j = 0; j < n; ++j) {
-      h[j] = matrix[i][j] === '1' ? h[j] + 1 : 0;
-    }
-    rslt = Math.max(rslt, cal());
+      for (let j = 0; j < n; ++j) {
+          h[j] = matrix[i][j] === '1' ? h[j] + 1 : 0;
+      }
+      rslt = Math.max(rslt, hist());
   }
 
   return rslt;
 
-  function cal() {
-    const l = [...h, 0];
-    const idx: number[] = [];
-    let area = 0;
+  function hist() {
+      const l = [...h, 0];
+      const idx: number[] = [];
 
-    for (let i = 0; i < l.length; ) {
-      if (idx.length === 0 || l[i] > l[idx[idx.length - 1]]) {
-        idx.push(i++);
-      } else {
-        const hght = l[idx.pop()];
-        const w = idx.length ? i - idx[idx.length - 1] - 1 : i;
-        const e = Math.min(hght, w);
-        area = Math.max(area, e * e);
+      let area = 0;
+      for (let i = 0; i < l.length;) {
+          if (!idx.length || l[i] > l[idx[idx.length - 1]]) {
+              idx.push(i++);
+          } else {
+              const a = l[idx.pop()];
+              const b = idx.length ? i - idx[idx.length - 1] - 1 : i;
+              const w = Math.min(a, b);
+              area = Math.max(area, w * w);
+          }
       }
-    }
 
-    return area;
+      return area;
   }
 }
+

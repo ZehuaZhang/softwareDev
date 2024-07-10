@@ -31,13 +31,14 @@ s consists of lowercase and/or uppercase English letters only.
 
 function longestPalindrome(s: string): number {
   const set = new Set<string>();
+
   for (const c of s) {
-    if (set.has(c)) {
-      set.delete(c);
-    } else {
-      set.add(c);
-    }
+      if (set.has(c)) {
+          set.delete(c);
+      } else {
+          set.add(c);
+      }
   }
 
-  return set.size - Math.max(0, set.size - 1);
-}
+  return s.length - Math.max(0, set.size - 1);
+};

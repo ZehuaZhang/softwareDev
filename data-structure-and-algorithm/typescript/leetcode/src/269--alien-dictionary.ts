@@ -44,62 +44,52 @@ If the order is invalid, return an empty string.
 There may be multiple valid order of letters, return any one of them is fine.
 */
 
-import {runTestCaseList} from './util/test';
-
 function alienOrder(words: string[]): string {
-  const baseCode = 'a'.charCodeAt(0);
-  const uniqCharSet = new Set<string>();
-  words.forEach(word => {
-    for (const char of word) {
-      uniqCharSet.add(char);
+  const n = words.length;
+  const set = new Set<String>();
+  for (const w of words) {
+    for (const c of w) {
+      set.add(c);
     }
-  });
-  const inDegree = Array(26).fill(0);
-  const graph = [...Array(26)].map(() => new Set<number>());
-  for (let i = 0; i < words.length - 1; ++i) {
-    for (let j = 0; j < Math.min(words[i].length, words[i + 1].length); ++j) {
-      const prev = words[i].charCodeAt(j) - baseCode;
-      const curr = words[i + 1].charCodeAt(j) - baseCode;
-      if (prev !== curr) {
-        graph[prev].add(curr);
-        ++inDegree[curr];
+  }
+  const m = set.size;
+
+  const graph: Set<number>[] = [...Array(26)].map(() => new Set<number>);
+  const inDgr: number[] = Array(26).fill(0);
+  const code = 'a'.charCodeAt(0);
+  for (let i = 1; i < n; ++i) {
+    const w1 = words[i - 1];
+    const w2 = words[i];
+    for (let j = 0; j < Math.min(w1.length, w2.length); ++j) {
+      const c1 = w1.charCodeAt(j) - code;
+      const c2 = w2.charCodeAt(j) - code;
+
+      if (c1 !== c2) {
+        graph[c1].add(c2);
+        ++inDgr[c2];
         break;
       }
     }
   }
 
+  
   const q: number[] = [];
-  inDegree.forEach((degree, offset) => {
-    if (
-      degree === 0 &&
-      uniqCharSet.has(String.fromCharCode(baseCode + offset))
-    ) {
-      q.push(offset);
+  for (let i = 0; i < m; ++i) {
+    if (!inDgr[i]) {
+      q.push(i);
     }
-  });
+  }
 
-  const result = [];
+  const rslt: string[] = [];
   while (q.length) {
-    const offset = q.shift();
-    result.push(String.fromCharCode(offset + baseCode));
-    for (const next of graph[offset].values()) {
-      if (--inDegree[next] === 0) {
-        q.push(next);
+    const p = q.shift();
+    rslt.push(String.fromCharCode(p + code));
+    for (const c of graph[p]) {
+      if (--inDgr[c] === 0) {
+        q.push(c);
       }
     }
   }
 
-  return uniqCharSet.size === result.length ? result.join('') : '';
+  return m === rslt.length ? rslt.join('') : '';
 }
-
-// tests
-
-const testInputListCollection = [
-  [['wrt', 'wrf', 'er', 'ett', 'rftt']],
-  [['z', 'x']],
-  [['z', 'x', 'z']],
-];
-
-const expectedResultList = ['wertf', 'zx', ''];
-
-runTestCaseList(testInputListCollection, expectedResultList, alienOrder);

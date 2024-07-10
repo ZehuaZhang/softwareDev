@@ -50,22 +50,28 @@ board[i][j] is a digit 1-9 or '.'.
 */
 
 function isValidSudoku(board: string[][]): boolean {
+  const [m, n] = [board.length, board[0].length];
   const seen = new Set<string>();
-  for (let i = 0; i < 9; ++i) {
-    for (let j = 0; j < 9; ++j) {
-      if (board[i][j] !== '.') {
-        const a = '(' + board[i][j] + ')';
-        const row = i + a;
-        const col = a + j;
-        const box = Math.trunc(i / 3) + a + Math.trunc(j / 3);
-        if (seen.has(row) || seen.has(col) || seen.has(box)) {
-          return false;
-        }
-        seen.add(row);
-        seen.add(col);
-        seen.add(box);
+
+  for (let i = 0; i < m; ++i) {
+      for (let j = 0; j < n; ++j) {
+          const s = board[i][j];
+          if (s !== '.') {
+              const d = '(' + s + '}';
+              const r = i + d;
+              const c = d + j
+              const b = Math.trunc(i / 3) + d + Math.trunc(j / 3);
+
+              if (seen.has(r) || seen.has(c) || seen.has(b)) {
+                  return false;
+              }
+
+              seen.add(r);
+              seen.add(c);
+              seen.add(b);
+          }
       }
-    }
   }
+
   return true;
-}
+};

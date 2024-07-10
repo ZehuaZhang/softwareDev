@@ -40,37 +40,37 @@ The sum of lists[i].length will not exceed 104.
 */
 
 function mergeKLists(lists: Array<ListNode | null>): ListNode | null {
-  return dfs(lists, 0, lists.length - 1);
+  return sort(0, lists.length - 1);
 
-  function dfs(lists: (ListNode | null)[], left: number, right: number) {
-    if (left > right) {
-      return null;
-    }
-    if (left === right) {
-      return lists[left];
-    }
-    const mid = (left + right) >> 1;
-    const leftList = dfs(lists, left, mid);
-    const rightList = dfs(lists, mid + 1, right);
-
-    return mergeTwoLists(leftList, rightList);
-  }
-
-  function mergeTwoLists(l1: ListNode | null, l2: ListNode | null) {
-    const dummy = new ListNode(0);
-    let curr = dummy;
-
-    for (; l1 && l2; curr = curr.next) {
-      if (l1.val <= l2.val) {
-        curr.next = l1;
-        l1 = l1.next;
-      } else {
-        curr.next = l2;
-        l2 = l2.next;
+  function sort(l: number, r: number) {
+      if (l > r) {
+          return null;
       }
-    }
 
-    curr.next = l1 ?? l2;
-    return dummy.next;
+      if (l === r) {
+          return lists[l];
+      }
+
+      const m = l + Math.trunc((r - l) / 2);
+
+      return merge(sort(l, m), sort(m + 1, r));
   }
-}
+
+  function merge(l1: ListNode | null, l2: ListNode | null) {
+      const dummy = new ListNode(0);
+      let curr = dummy;
+
+      for (; l1 && l2; curr = curr.next) {
+          if (l1.val < l2.val) {
+              curr.next = l1;
+              l1 = l1.next;
+          } else {
+              curr.next = l2;
+              l2 = l2.next;
+          }
+      }
+
+      curr.next = l1 ? l1 : l2;
+      return dummy.next;
+  }
+};

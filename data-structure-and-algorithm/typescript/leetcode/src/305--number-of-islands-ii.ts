@@ -33,57 +33,48 @@ Operation #4: addLand(2, 1) turns the water at grid[2][1] into a land.
 We return the result as an array: [1, 1, 2, 3]
 */
 
-function numIslands2(m: number, n: number, posList: number[][]): number[] {
+function numIslands2(m: number, n: number, pl: number[][]): number[] {
   const rslt: number[] = [];
   let cnt = 0;
-  const parentMap = new Map<number, number>();
-  for (const [x, y] of posList) {
-    const id = getId(x, y);
-    if (parentMap.has(id)) {
+  const map = new Map<number, number>();
+  for (const [i, j] of pl) {
+    const id = getId(i, j);
+    if (map.has(id)) {
       rslt.push(cnt);
       continue;
     }
-    parentMap.set(id, id);
+
+    map.set(id, id);
     ++cnt;
 
-    for (const [dx, dy] of [
-      [0, -1],
-      [0, 1],
-      [-1, 0],
-      [1, 0],
-    ]) {
-      const [xNext, yNext] = [x + dx, y + dy];
-      const idNext = getId(xNext, yNext);
-      if (
-        xNext >= 0 &&
-        xNext < m &&
-        yNext >= 0 &&
-        yNext < n &&
-        parentMap.has(idNext) &&
-        find(id) !== find(idNext)
-      ) {
-        union(id, idNext);
-        --cnt;
+    for (const [dx, dy] of [[0, 1], [0, -1], [-1, 0], [1, 0]]) {
+      const [x, y] = [dx + i, dy + j];
+      if (x >= 0 && x < m && y >= 0 && y < n) {
+        const nid = getId(x, y);
+        if (map.has(nid)) {
+          const a = find(id);
+          const b = find(nid);
+          if (a !== b) {
+            map.set(a, b);
+            --cnt;
+          }
+        }
       }
     }
     rslt.push(cnt);
   }
+
   return rslt;
 
-  function getId(i: number, j: number): number {
+  function getId(i: number, j: number) {
     return i * n + j;
   }
 
-  function find(x: number): number {
-    while (parentMap.get(x) !== x) {
-      x = parentMap.get(x)!;
+  function find(x: number) {
+    while (x !== map.get(x)) {
+      x = map.get(x);
     }
-    return x;
-  }
 
-  function union(x: number, y: number): void {
-    const xParent = find(x);
-    const yParent = find(y);
-    parentMap.set(yParent, xParent);
+    return x;
   }
 }

@@ -32,16 +32,16 @@ s consists of English letters, digits, symbols and spaces.
 */
 
 function lengthOfLongestSubstring(s: string): number {
-  const idxMap = new Map<string, number>();
-  let result = 0;
-  for (let left = 0, right = 0; right < s.length; ++right) {
-    const char = s[right];
-    const prev = idxMap.get(char);
-    if (prev >= left) {
-      left = prev + 1;
+  let rslt = 0;
+    const map = new Map<string, number>();
+    for (let l = 0, r = 0; r < s.length; ++r) {
+        const c = s[r];
+        if (map.has(c) && map.get(c) >= l) {
+            l = map.get(c) + 1;
+        }
+        rslt = Math.max(r - l + 1, rslt);
+        map.set(c, r);
     }
-    result = Math.max(result, right - left + 1);
-    idxMap.set(char, right);
-  }
-  return result;
+
+    return rslt;
 }

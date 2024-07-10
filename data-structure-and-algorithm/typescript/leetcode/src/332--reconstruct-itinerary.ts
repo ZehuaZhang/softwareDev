@@ -33,97 +33,45 @@ fromi and toi consist of uppercase English letters.
 fromi != toi
 */
 
-import {runTestCaseList} from './util/test';
-
 function findItinerary(tickets: string[][]): string[] {
-  const graph = new Map<string, Map<string, number>>();
-  for (const [src, dst] of tickets) {
-    if (!graph.has(src)) {
-      graph.set(src, new Map<string, number>());
-    }
-    const srcMap = graph.get(src)!;
-    srcMap.set(dst, (srcMap.get(dst) || 0) + 1);
-  }
-  const from = 'JFK';
-  const result: string[] = [from];
-  findItineraryDfs(from, tickets.length);
-  return result;
-
-  function findItineraryDfs(from: string, ticketCount: number): boolean {
-    if (ticketCount === 0) {
-      return true;
-    }
-
-    if (graph.has(from)) {
-      const fromMap = graph.get(from)!;
-      const toCountList = [...fromMap.entries()].sort(([to1], [to2]) =>
-        to1.localeCompare(to2)
-      );
-      for (let [to, count] of toCountList) {
-        if (count > 0) {
-          fromMap.set(to, --count);
-          result.push(to);
-          if (findItineraryDfs(to, ticketCount - 1)) {
-            return true;
-          }
-          result.pop();
-          fromMap.set(to, ++count);
-        }
+  const map = new Map<string, Map<string, number>>();
+  for (const [s, d] of tickets) {
+      if (!map.has(s)) {
+          map.set(s, new Map<string, number>());
       }
-    }
-    return false;
+      const m = map.get(s);
+      m.set(d, (m.get(d) || 0) + 1);
   }
-}
 
-// tests
+  const rslt: string[] = ['JFK'];
+  dfs('JFK');
 
-const testInputListCollection = [
-  [
-    [
-      ['MEL', 'PER'],
-      ['SYD', 'CBR'],
-      ['AUA', 'DRW'],
-      ['JFK', 'EZE'],
-      ['PER', 'AXA'],
-      ['DRW', 'AUA'],
-      ['EZE', 'SYD'],
-      ['AUA', 'MEL'],
-      ['DRW', 'AUA'],
-      ['PER', 'ANU'],
-      ['CBR', 'EZE'],
-      ['EZE', 'PER'],
-      ['MEL', 'EZE'],
-      ['EZE', 'MEL'],
-      ['EZE', 'TBI'],
-      ['ADL', 'DRW'],
-      ['ANU', 'EZE'],
-      ['AXA', 'ADL'],
-    ],
-  ],
-];
+  return rslt;
 
-const expectedResultList = [
-  [
-    'JFK',
-    'EZE',
-    'MEL',
-    'EZE',
-    'PER',
-    'AXA',
-    'ADL',
-    'DRW',
-    'AUA',
-    'DRW',
-    'AUA',
-    'MEL',
-    'PER',
-    'ANU',
-    'EZE',
-    'SYD',
-    'CBR',
-    'EZE',
-    'TBI',
-  ],
-];
+  function dfs(s: string) {
+      if (rslt.length === tickets.length + 1) {
+          return true;
+      }
+      
+      if (!map.has(s)) {
+          return false;
+      }
 
-runTestCaseList(testInputListCollection, expectedResultList, findItinerary);
+      const m = map.get(s);
+      const kl = [...m.keys()].sort();
+      for (const k of kl) {
+          const cnt = m.get(k);
+          if (cnt > 0) {
+              m.set(k, cnt - 1);
+              rslt.push(k);
+              if (dfs(k)) {
+                  return true;
+              }
+              rslt.pop();
+              m.set(k, cnt);
+          }
+      }
+
+      return false;
+  }
+};

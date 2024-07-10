@@ -30,33 +30,28 @@ The number of nodes in the list is in the range [1, 5 * 104].
 */
 
 function reorderList(head: ListNode | null): void {
-  if (head === null) {
-    return;
+  if (!head) {
+      return;
   }
 
-  let slow = head,
-    fast = head;
-  while (fast.next && fast.next.next) {
-    slow = slow.next;
-    fast = fast.next.next;
-  }
+  let slow = head;
+  let fast = head;
+  for (; fast.next && fast.next.next; slow = slow.next, fast = fast.next.next);
 
-  let p = null,
-    c = slow.next;
-  while (c) {
-    const next = c.next;
-    c.next = p;
-    p = c;
-    c = next;
+  let head2 = null;
+  let node = slow.next;
+  while (node) {
+      const next= node.next;
+      node.next = head2;
+      head2 = node;
+      node = next;
   }
   slow.next = null;
 
-  let h1 = head,
-    h2 = p;
-  while (h2) {
-    const next = h1.next;
-    h1.next = h2;
-    h1 = h2;
-    h2 = next;
+  while (head2) {
+      const next = head.next;
+      head.next = head2;
+      head = head2;
+      head2 = next;
   }
-}
+};

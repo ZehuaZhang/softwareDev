@@ -39,39 +39,35 @@ board[i][j] is 'X' or 'O'.
 
 function solve(board: string[][]): void {
   const [m, n] = [board.length, board[0].length];
-
-  for (let i = 0; i < m; ++i) {
-    check(i, 0);
-    check(i, n - 1);
-  }
-
   for (let j = 0; j < n; ++j) {
-    check(0, j);
-    check(m - 1, j);
+      dfs(0, j);
+      dfs(m - 1, j);
   }
 
   for (let i = 0; i < m; ++i) {
-    for (let j = 0; j < n; ++j) {
-      if (board[i][j] === 'O') {
-        board[i][j] = 'X';
-      } else if (board[i][j] === 'Z') {
-        board[i][j] = 'O';
-      }
-    }
+      dfs(i, 0);
+      dfs(i, n - 1);
   }
 
-  function check(i: number, j: number) {
-    if (i < 0 || i >= m || j < 0 || j >= n || board[i][j] !== 'O') {
-      return;
-    }
-    board[i][j] = 'Z';
-    for (const [dx, dy] of [
-      [-1, 0],
-      [1, 0],
-      [0, -1],
-      [0, 1],
-    ]) {
-      check(i + dx, j + dy);
-    }
+  for (let i = 0; i < m; ++i) {
+      for (let j = 0; j < n; ++j) {
+          if (board[i][j] === 'O') {
+              board[i][j] = 'X';
+          } else if (board[i][j] === '_') {
+              board[i][j] = 'O'
+          }
+      }
   }
-}
+
+  function dfs(x: number, y: number) {
+      if (x < 0 || x >= m || y < 0 || y >= n || board[x][y] !== 'O') {
+          return;
+      }
+
+      board[x][y] = '_';
+
+      for (const [dx, dy] of [[0, 1], [0, -1], [1, 0], [-1, 0]]) {
+          dfs(x + dx, y + dy);
+      }
+  }
+};

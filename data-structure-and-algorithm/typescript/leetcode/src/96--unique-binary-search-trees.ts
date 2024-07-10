@@ -22,19 +22,22 @@ Constraints:
 */
 
 function numTrees(n: number): number {
-  const memo = Array(n + 1).fill(0);
+  const memo = Array(n + 1).fill(null);
   return dfs(n);
 
   function dfs(cnt: number) {
-    if (cnt <= 1) {
-      return 1;
-    }
-    if (memo[cnt]) {
+      if (memo[cnt] !== null) {
+          return memo[cnt];
+      }
+
+      if (cnt === 1 || !cnt) {
+          return (memo[cnt] = 1);
+      }
+
+      for (let i = 1; i <= cnt; ++i) {
+          memo[cnt] += dfs(i - 1) * dfs(cnt - i);
+      }
+
       return memo[cnt];
-    }
-    for (let i = 1; i <= cnt; ++i) {
-      memo[cnt] += dfs(i - 1) * dfs(cnt - i);
-    }
-    return memo[cnt];
   }
-}
+};

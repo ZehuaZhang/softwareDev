@@ -33,42 +33,43 @@ beginWord != endWord
 All the words in wordList are unique.
 */
 
-function ladderLength(
-  beginWord: string,
-  endWord: string,
-  wordList: string[]
-): number {
-  const set = new Set<string>(wordList);
+function ladderLength(beginWord: string, endWord: string, wordList: string[]): number {
+  const set = new Set(wordList);
+
   if (!set.has(endWord)) {
-    return 0;
+      return 0;
   }
+
   const q: string[] = [beginWord];
-  set.delete(beginWord);
-  let result = 1;
+  let rslt = 1;
+
   while (q.length) {
-    for (let len = q.length; len; --len) {
-      const from = q.shift();
-      for (const to of set) {
-        if (isConnected(from, to)) {
-          if (to === endWord) {
-            return ++result;
+      for (let l = q.length; l; --l) {
+          const w = q.shift();
+          for (const word of set) {
+              if (isOneCharDiff(w, word)) {
+                  if (word === endWord) {
+                      return ++rslt;
+                  }
+                  q.push(word);
+                  set.delete(word);
+              }
           }
-          q.push(to);
-          set.delete(to);
-        }
       }
-    }
-    ++result;
+      ++rslt;
   }
+
   return 0;
 
-  function isConnected(a: string, b: string) {
-    let cnt = 0;
-    for (let i = 0; i < a.length && cnt < 2; ++i) {
-      if (a[i] !== b[i]) {
-        ++cnt;
+  function isOneCharDiff(a: string, b: string) {
+      let cnt = 0;
+
+      for (let i = 0; i < a.length && cnt < 2; ++i) {
+          if (a[i] !== b[i]) {
+              ++cnt;
+          }
       }
-    }
-    return cnt === 1;
+
+      return cnt === 1;
   }
-}
+};

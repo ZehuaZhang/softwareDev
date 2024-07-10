@@ -37,51 +37,59 @@ Every number and running calculation will fit in a signed 32-bit integer.
 function calculate(s: string): number {
   const n = s.length;
   let rslt = 0;
+  let num = 0;
+  let op = '+';
+  let sum = 0;
+  for (let i = 0; i < n; ++i) {
+      const c = s[i]
+      if (c >= '0' && c <= '9') {
+          num = num * 10 + Number(c);
+      } else if (c === '(') {
+              let j = i;
+              let cnt = 0;
+              for (; i < n; ++i) {
+                  const cc = s[i];
+                  if (cc === '(') {
+                      ++cnt;
+                  } else if (cc === ')') {
+                      --cnt;
+                  }
+                  if (!cnt) {
+                      break;
+                  }
+              }
+              num = calculate(s.substring(j + 1, i));
+      }
 
-  for (let i = 0, op = '+', num = 0, sum = 0; i < n; ++i) {
-    const c = s[i];
-    if (c >= '0' && c <= '9') {
-      num = num * 10 + c.charCodeAt(0) - '0'.charCodeAt(0);
-    } else if (c === '(') {
-      const j = i;
-      for (let cnt = 0; i < n; ++i) {
-        if (s[i] === '(') {
-          ++cnt;
-        } else if (s[i] === ')') {
-          --cnt;
-        }
-        if (cnt === 0) {
-          break;
-        }
+      if ('+-*/'.includes(c) || i === n - 1) {
+          switch (op) {
+              case '+': {
+                  sum = sum + num;
+                  break;
+              }
+              case '-': {
+                  sum = sum - num;
+                  break;
+              }
+              case '*': {
+                  sum = sum * num;
+                  break;
+              }
+              case '/': {
+                  sum = Math.trunc(sum / num);
+                  break;
+              }
+          }
+
+          if ('+-'.includes(c) || i === n - 1) {
+              rslt += sum;
+              sum = 0;
+          }
+
+          op = c;
+          num = 0;
       }
-      num = calculate(s.substring(j + 1, i));
-    }
-    if ('+-*/'.includes(c) || i === n - 1) {
-      switch (op) {
-        case '+': {
-          sum += num;
-          break;
-        }
-        case '-': {
-          sum -= num;
-          break;
-        }
-        case '*': {
-          sum *= num;
-          break;
-        }
-        case '/': {
-          sum /= num;
-          break;
-        }
-      }
-      if ('+-'.includes(c) || i === n - 1) {
-        rslt += sum;
-        sum = 0;
-      }
-      op = c;
-      num = 0;
-    }
   }
+
   return rslt;
-}
+};

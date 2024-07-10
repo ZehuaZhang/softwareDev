@@ -44,7 +44,6 @@ At most 104 calls will be made to addWord and search.
 
 class WordDictionary {
   root: TrieNode;
-
   constructor() {
     this.root = new TrieNode();
   }
@@ -52,10 +51,10 @@ class WordDictionary {
   addWord(word: string): void {
     let curr = this.root;
     for (const c of word) {
-      if (!curr.leaves.has(c)) {
-        curr.leaves.set(c, new TrieNode());
-      }
-      curr = curr.leaves.get(c);
+        if (!curr.leaves.has(c)) {
+            curr.leaves.set(c, new TrieNode());
+        }
+        curr = curr.leaves.get(c);
     }
     curr.isWord = true;
   }
@@ -63,26 +62,26 @@ class WordDictionary {
   search(word: string): boolean {
     return dfs(this.root, 0);
 
-    function dfs(curr: TrieNode, i: number) {
-      if (i === word.length) {
-        return curr.isWord;
-      }
-
-      const c = word[i];
-      if (c !== '.') {
-        if (!curr.leaves.has(c)) {
-          return false;
+    function dfs(node: TrieNode, idx: number) {
+        if (idx === word.length) {
+            return node.isWord;
         }
-        return dfs(curr.leaves.get(c), i + 1);
-      }
 
-      for (const node of curr.leaves.values()) {
-        if (dfs(node, i + 1)) {
-          return true;
+        const c = word[idx];
+        if (c !== '.') {
+            if (!node.leaves.has(c)) {
+                return false;
+            }
+            return dfs(node.leaves.get(c), idx + 1);
         }
-      }
 
-      return false;
+        for (const leaf of node.leaves.values()) {
+            if (dfs(leaf, idx + 1)){ 
+                return true;
+            }
+        }
+
+        return false;
     }
   }
 }
@@ -92,7 +91,7 @@ class TrieNode {
   isWord: boolean;
 
   constructor() {
-    this.leaves = new Map<string, TrieNode>();
+    this.leaves = new Map();
     this.isWord = false;
   }
 }

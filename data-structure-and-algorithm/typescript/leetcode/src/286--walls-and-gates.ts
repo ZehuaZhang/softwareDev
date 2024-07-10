@@ -27,7 +27,7 @@ function wallsAndGates(rooms: number[][]) {
   const [m, n] = [rooms.length, rooms[0].length];
   for (let i = 0; i < m; ++i) {
     for (let j = 0; j < n; ++j) {
-      if (rooms[i][j] === 0) {
+      if (!rooms[i][j]) {
         dfs(i, j, 0);
       }
     }
@@ -37,10 +37,10 @@ function wallsAndGates(rooms: number[][]) {
     if (i < 0 || i >= m || j < 0 || j >= n || rooms[i][j] < val) {
       return;
     }
+
     rooms[i][j] = val;
-    dfs(i + 1, j, val + 1);
-    dfs(i - 1, j, val + 1);
-    dfs(i, j + 1, val + 1);
-    dfs(i, j - 1, val + 1);
+    for (const [dx, dy] of [[0, 1], [0, -1], [1, 0], [-1, 0]]) {
+      dfs(i + dx, j + dy, val + 1);
+    }
   }
 }

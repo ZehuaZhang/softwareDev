@@ -31,18 +31,20 @@ s[i] is '(', or ')'.
 
 function longestValidParentheses(s: string): number {
   const idx: number[] = [-1];
-  let result = 0;
+  let rslt = 0;
+
   for (let i = 0; i < s.length; ++i) {
-    if (s[i] === '(') {
-      idx.push(i);
-    } else {
-      idx.pop();
-      if (idx.length === 0) {
-        idx.push(i);
+      if (s[i] === '(') {
+          idx.push(i);
       } else {
-        result = Math.max(result, i - idx[idx.length - 1]);
+          idx.pop();
+          if (!idx.length) {
+              idx.push(i);
+          } else {
+              rslt = Math.max(rslt, i - idx[idx.length - 1]);
+          }
       }
-    }
   }
-  return result;
-}
+
+  return rslt;
+};

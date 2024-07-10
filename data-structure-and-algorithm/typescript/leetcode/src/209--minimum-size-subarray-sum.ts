@@ -34,14 +34,15 @@ Follow up: If you have figured out the O(n) solution, try coding another solutio
 
 function minSubArrayLen(target: number, nums: number[]): number {
   let rslt = Infinity;
+  let sum = 0;
+  for (let l = 0, r = 0; r < nums.length; ++r) {
+      sum += nums[r];
 
-  for (let sum = 0, l = 0, r = 0; r < nums.length; ++r) {
-    sum += nums[r];
-    for (; sum >= target; ++l) {
-      rslt = Math.min(rslt, r - l + 1);
-      sum -= nums[l];
-    }
+      for (; sum >= target; ++l) {
+          rslt = Math.min(rslt, r - l + 1);
+          sum -= nums[l];
+      }
   }
 
   return rslt === Infinity ? 0 : rslt;
-}
+};

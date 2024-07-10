@@ -41,23 +41,26 @@ The recursive approach is fine. You may assume implicit stack space does not cou
 
 function connect(root: _Node | null): _Node | null {
   for (let curr = root, next = null; curr; curr = next, next = null) {
-    for (let prev = null; curr; curr = curr.next) {
-      if (next === null) {
-        next = curr.left ? curr.left : curr.right;
+      for (let prev = null; curr; curr = curr.next) {
+          if (!next) {
+              next = curr.left ? curr.left : curr.right;
+          }
+
+          if (curr.left) {
+              if (prev) {
+                  prev.next = curr.left;
+              }
+              prev = curr.left;
+          }
+
+          if (curr.right) {
+              if (prev) {
+                  prev.next = curr.right;
+              }
+              prev = curr.right;
+          }
       }
-      if (curr.left) {
-        if (prev) {
-          prev.next = curr.left;
-        }
-        prev = curr.left;
-      }
-      if (curr.right) {
-        if (prev) {
-          prev.next = curr.right;
-        }
-        prev = curr.right;
-      }
-    }
   }
+
   return root;
-}
+};

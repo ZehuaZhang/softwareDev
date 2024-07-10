@@ -36,34 +36,33 @@ Constraints:
 */
 
 function getPermutation(n: number, k: number): string {
-  const result: number[] = [];
-  dfs(
-    0,
-    [...Array(n)].map((_, i) => i + 1)
-  );
-  return result.join('');
+  let rslt: string = '';
 
-  function dfs(start: number, path: number[]) {
-    if (k === 0) {
-      return;
-    }
-    if (start === n - 1) {
-      if (--k === 0) {
-        result.push(...path);
+  dfs(0, [...Array(n)].map((_, i) => i + 1));
+
+  return rslt;
+
+  function dfs(i0: number, path: number[]) {
+      if (!k) {
+          return;
       }
-      return;
-    }
-    path.splice(start, path.length, ...path.slice(start).sort((a, b) => a - b));
-    for (let i = start; i < n; ++i) {
-      swap(path, i, start);
-      dfs(start + 1, [...path]);
-      swap(path, i, start);
-    }
+
+      if (i0 === n - 1) {
+          if (--k === 0) {
+              rslt = path.join('');
+          }
+          return;
+      }
+
+      path.splice(i0, path.length, ...path.slice(i0).sort((a, b) => a - b));
+      for (let i = i0; i < n; ++i) {
+          swap(path, i, i0);
+          dfs(i0 + 1, [...path]);
+          swap(path, i, i0);
+      }
   }
 
-  function swap(nums: number[], i: number, j: number) {
-    const tmp = nums[i];
-    nums[i] = nums[j];
-    nums[j] = tmp;
+  function swap(num: number[], i: number, j: number) {
+      [num[i], num[j]] = [num[j], num[i]];
   }
-}
+};

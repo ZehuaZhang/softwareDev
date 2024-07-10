@@ -34,17 +34,13 @@ p != q
 p and q will exist in the tree.
 */
 
-function lowestCommonAncestor(
-  root: TreeNode | null,
-  p: TreeNode | null,
-  q: TreeNode | null
-): TreeNode | null {
-  if (root === null || root === p || root === q) {
-    return root;
-  }
+function lowestCommonAncestor(root: TreeNode | null, p: TreeNode | null, q: TreeNode | null): TreeNode | null {
+	if (!root || root === p || root === q) {
+        return root;
+    }
 
-  const l = lowestCommonAncestor(root.left, p, q);
-  const r = lowestCommonAncestor(root.right, p, q);
+    const l = lowestCommonAncestor(root.left, p, q);
+    const r = lowestCommonAncestor(root.right, p, q);
 
-  return l ? (r ? root : l) : r;
-}
+    return l ? (r ? root: l) : r;
+};

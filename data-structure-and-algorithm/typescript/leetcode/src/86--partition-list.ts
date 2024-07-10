@@ -26,21 +26,23 @@ The number of nodes in the list is in the range [0, 200].
 */
 
 function partition(head: ListNode | null, x: number): ListNode | null {
-  const dummy = new ListNode(0, head);
-  const dummy2 = new ListNode(0);
-  let n = dummy2;
+  const dummy = new ListNode(0);
+  let a = dummy;
 
-  for (let p = dummy; p.next; ) {
-    if (p.next.val < x) {
-      n.next = p.next;
-      n = p.next;
-      p.next = p.next.next;
-    } else {
-      n.next = null;
-      p = p.next;
-    }
+  const dummy2 = new ListNode(0, head);
+  let b = dummy2;
+
+  for (; b.next;) {
+      if (b.next.val < x) {
+          a.next = b.next;
+          a = b.next;
+          b.next = b.next.next;
+      } else {
+          a.next = null;
+          b = b.next;
+      }
   }
 
-  n.next = dummy.next;
-  return dummy2.next;
-}
+  a.next = dummy2.next;
+  return dummy.next;
+};

@@ -40,43 +40,37 @@ Constraints:
 1 <= profit[i] <= 104
 */
 
-function jobScheduling(
-  startTime: number[],
-  endTime: number[],
-  profit: number[]
-): number {
+function jobScheduling(startTime: number[], endTime: number[], profit: number[]): number {
   const n = profit.length;
-  const jobs = [...Array(n)].map((_, i) => [
-    endTime[i],
-    startTime[i],
-    profit[i],
-  ]);
+  const jl = [...Array(n)].map((_, i) => [
+      endTime[i],
+      startTime[i],
+      profit[i]
+  ])
+  
+  jl.sort(([e1], [e2]) => e1 - e2);
 
-  jobs.sort((a, b) => a[0] - b[0]);
-
-  const dp = new Array(n + 1).fill(0);
+  const dp = Array(n + 1).fill(0);
 
   for (let i = 0; i < n; ++i) {
-    const [end, start, profit] = jobs[i];
-
-    const idx = greater(i, start);
-    dp[i + 1] = Math.max(dp[i], dp[idx] + profit);
+      const [_, s, p] = jl[i];
+      const idx = gt(i, s);
+      dp[i + 1] = Math.max(dp[i], dp[idx] + p);
   }
 
   return dp[n];
 
-  function greater(r: number, tgt: number) {
-    let l = 0;
-
-    while (l <= r) {
-      const mid = l + Math.floor((r - l) / 2);
-      if (jobs[mid][0] > tgt) {
-        r = mid - 1;
-      } else {
-        l = mid + 1;
+  function gt(r: number, tgt: number) {
+      let l = 0;
+      for (; l <= r;) {
+          const m = l + Math.trunc((r - l) / 2);
+          if (jl[m][0] > tgt) {
+              r = m - 1;
+          } else {
+              l = m + 1;
+          }
       }
-    }
 
-    return l;
+      return l;
   }
-}
+};

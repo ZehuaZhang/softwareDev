@@ -28,19 +28,18 @@ Constraints:
 
 function reverse(x: number): number {
   const max = Math.pow(2, 31) - 1;
-  const min = -1 * Math.pow(2, 31);
-  let result = 0;
-  for (let num = x; num; num = Math.trunc(num / 10)) {
-    if (
-      result > Math.trunc(max / 10) ||
-      (result === Math.trunc(max / 10) && num % 10 > max % 10) ||
-      result < Math.trunc(min / 10) ||
-      (result === Math.trunc(min / 10) && num % 10 < min % 10)
-    ) {
-      return 0;
-    }
-    const digit = num % 10;
-    result = result * 10 + digit;
+  const min = -Math.pow(2, 31);
+
+  let rslt = 0;
+  for (; x; x = Math.trunc(x / 10)) {
+      if (
+          (rslt > Math.trunc(max / 10) || (rslt === Math.trunc(max / 10) && x % 10 > max % 10)) ||
+          (rslt < Math.trunc(min / 10) || (rslt === Math.trunc(min / 10) && x % 10 < min % 10))
+      ) {
+          return 0;
+      }
+      rslt = rslt * 10 + x % 10;
   }
-  return result;
-}
+
+  return rslt;
+};

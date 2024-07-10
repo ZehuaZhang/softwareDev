@@ -13,22 +13,19 @@
  */
 
 class TwoSum {
-  countMap: Map<number, number>;
+  map: Map<number, number>;
   constructor() {
-    this.countMap = new Map<number, number>();
+    this.map = new Map<number, number>();
   }
 
   add(num: number) {
-    this.countMap.set(num, (this.countMap.get(num) || 0) + 1);
+    this.map.set(num, (this.map.get(num) || 0) + 1);
   }
 
   find(sum: number): boolean {
-    for (const num of this.countMap.keys()) {
-      const num2 = sum - num;
-      if (
-        this.countMap.has(num2) &&
-        (num2 !== num || this.countMap.get(num)! > 1)
-      ) {
+    for (const num of this.map.keys()) {
+      const diff = sum - num;
+      if (this.map.has(diff) && (diff !== num || this.map.get(diff) > 1)) {
         return true;
       }
     }
@@ -36,3 +33,5 @@ class TwoSum {
     return false;
   }
 }
+
+

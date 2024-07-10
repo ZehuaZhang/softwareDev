@@ -29,27 +29,25 @@ Follow up: Could you solve the problem in linear time and in O(1) space?
 */
 
 function majorityElement(nums: number[]): number[] {
-  let c1 = 0,
-    c2 = 1,
-    cnt1 = 0,
-    cnt2 = 0;
-  for (let num of nums) {
-    if (num === c1) {
-      ++cnt1;
-    } else if (num === c2) {
-      ++cnt2;
-    } else if (cnt1 === 0) {
-      c1 = num;
-      cnt1 = 1;
-    } else if (cnt2 === 0) {
-      c2 = num;
-      cnt2 = 1;
-    } else {
-      --cnt1;
-      --cnt2;
-    }
+  let [c1, c2] = [0, 1];
+  let [cnt1, cnt2] = [0, 0];
+
+  for (const n of nums) {
+      if (c1 === n) {
+          ++cnt1;
+      } else if (c2 === n) {
+          ++cnt2;
+      } else if (!cnt1) {
+          c1 = n;
+          cnt1 = 1;
+      } else if (!cnt2) {
+          c2 = n;
+          cnt2 = 1;
+      } else {
+          --cnt1;
+          --cnt2;
+      }
   }
-  return [c1, c2].filter(
-    n => nums.filter(num => num === n).length > nums.length / 3
-  );
-}
+
+  return [c1, c2].filter(n => nums.filter(num => num === n).length > nums.length / 3);
+};

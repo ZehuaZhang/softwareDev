@@ -43,11 +43,7 @@ The node to be deleted is in the list and is not a tail node.
 */
 
 function deleteNode(node: ListNode | null): void {
-  if (node === null || node.next === null) {
-    return;
-  }
-
   const next = node.next;
   node.val = next.val;
   node.next = next.next;
-}
+};

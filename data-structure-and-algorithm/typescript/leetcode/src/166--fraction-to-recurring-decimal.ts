@@ -32,32 +32,28 @@ denominator != 0
 */
 
 function fractionToDecimal(numerator: number, denominator: number): string {
-  const result: string[] = [];
-  if ((numerator ^ denominator) >> 31 && numerator !== 0) {
-    result.push('-');
-  }
-
   let a = Math.abs(numerator);
-  const b = Math.abs(denominator);
-  result.push(String(Math.trunc(a / b)));
+  let b = Math.abs(denominator);
+
+  const rslt: (string | number)[] = [(numerator ^ denominator) >> 31 && numerator ? '-' : ''];
+  rslt.push(Math.trunc(a / b));
 
   a %= b;
-  if (a > 0) {
-    result.push('.');
+  if (a) {
+      rslt.push('.');
   }
 
   const map = new Map<number, number>();
-  while (a && !map.has(a)) {
-    map.set(a, result.length);
-    a *= 10;
-    result.push(String(Math.trunc(a / b)));
-    a %= b;
+  for (; a && !map.has(a); a %= b) {
+      map.set(a, rslt.length);
+      a *= 10; 
+      rslt.push(Math.trunc(a / b));
   }
 
-  if (map.has(a)) {
-    result.splice(map.get(a), 0, '(');
-    result.push(')');
+  if (a) {
+      rslt.splice(map.get(a), 0, '(');
+      rslt.push(')');
   }
 
-  return result.join('');
-}
+  return  rslt.join('');
+};

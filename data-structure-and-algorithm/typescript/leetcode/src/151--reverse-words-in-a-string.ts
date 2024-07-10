@@ -38,30 +38,16 @@ Follow-up: If the string data type is mutable in your language, can you solve it
 */
 
 function reverseWords(s: string): string {
-  const result: string[] = [];
-
-  for (let i = s.length - 1; i >= 0; --i) {
-    if (s[i] === ' ') {
-      continue;
-    }
-    let w = '';
-    let j = i;
-    for (; j >= 0 && s[j] !== ' '; --j) {
-      w += s[j];
-    }
-    result.push(reverse(w));
-    i = j;
+  const n = s.length;
+  const rslt: string[] = [];
+  for (let i = n - 1; i >= 0; --i) {
+      if (s[i] !== ' ') {
+          let j = i;
+          for (; j >= 0 && s[j] !== ' '; --j);
+          rslt.push(s.substring(j + 1, i + 1));
+          i = j;
+      }
   }
-
-  return result.join(' ');
-
-  function reverse(s: string) {
-    const rev = [...s];
-    for (let l = 0, r = s.length - 1; l < r; ++l, --r) {
-      const tmp = rev[l];
-      rev[l] = rev[r];
-      rev[r] = tmp;
-    }
-    return rev.join('');
-  }
-}
+  
+  return rslt.join(' ');
+};

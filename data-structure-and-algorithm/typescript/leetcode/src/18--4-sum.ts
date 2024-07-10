@@ -28,37 +28,45 @@ Constraints:
 */
 
 function fourSum(nums: number[], target: number): number[][] {
+  const n = nums.length;
+  const rslt: number[][] = [];
+
   nums.sort((a, b) => a - b);
-  const result = [];
-  for (let i = 0; i < nums.length - 3; ++i) {
-    if (i > 0 && nums[i] === nums[i - 1]) {
-      continue;
-    }
-    for (let j = i + 1; j < nums.length - 2; ++j) {
-      if (j > i + 1 && nums[j] === nums[j - 1]) {
-        continue;
-      }
-      for (let left = j + 1, right = nums.length - 1; left < right; ) {
-        if (left > j + 1 && nums[left] === nums[left - 1]) {
-          ++left;
+
+  for (let i = 0; i < n; ++i) {
+      if (i > 0 && nums[i] === nums[i - 1]) {
           continue;
-        }
-        if (right < nums.length - 1 && nums[right] === nums[right + 1]) {
-          --right;
-          continue;
-        }
-        const sum = nums[i] + nums[j] + nums[left] + nums[right];
-        if (sum === target) {
-          result.push([nums[i], nums[j], nums[left], nums[right]]);
-          ++left;
-          --right;
-        } else if (sum < target) {
-          ++left;
-        } else {
-          --right;
-        }
       }
-    }
+
+      for (let j = i + 1; j < n; ++j) {
+          if (j > i + 1 && nums[j] === nums[j - 1]) {
+              continue;
+          }
+
+          for (let l = j + 1, r = n - 1; l < r;) {
+              if (l > j + 1 && nums[l] === nums[l - 1]) {
+                  ++l;
+                  continue;
+              } 
+
+              if (r < n - 1 && nums[r] === nums[r + 1]) {
+                  --r;
+                  continue;
+              }
+
+              const s = nums[i] + nums[j] + nums[l] + nums[r];
+              if (s === target) {
+                  rslt.push([nums[i], nums[j], nums[l], nums[r]]);
+                  ++l;
+                  --r;
+              } else if (s < target) {
+                  ++l;
+              } else {
+                  --r;
+              }
+          }
+      }
   }
-  return result;
+
+  return rslt;
 }

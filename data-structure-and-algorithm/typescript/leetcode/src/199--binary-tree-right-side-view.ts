@@ -27,25 +27,28 @@ The number of nodes in the tree is in the range [0, 100].
 */
 
 function rightSideView(root: TreeNode | null): number[] {
-  if (root === null) {
-    return [];
-  }
-  const q: TreeNode[] = [root];
   const rslt: number[] = [];
+  const q: TreeNode[] = [];
+  if (root) {
+      q.push(root);
+  }
+
   while (q.length) {
-    for (let size = q.length; size > 0; --size) {
-      const node = q.shift();
-      if (size === 1) {
-        rslt.push(node.val);
+      for (let l = q.length; l; --l) {
+          const node = q.shift();
+          if (l === 1) {
+              rslt.push(node.val);
+          }
+
+          if (node.left) {
+              q.push(node.left);
+          }
+
+          if (node.right) {
+              q.push(node.right);
+          }
       }
-      if (node.left) {
-        q.push(node.left);
-      }
-      if (node.right) {
-        q.push(node.right);
-      }
-    }
   }
 
   return rslt;
-}
+};

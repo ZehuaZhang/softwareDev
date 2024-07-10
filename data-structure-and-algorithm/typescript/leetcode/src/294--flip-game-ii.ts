@@ -17,13 +17,10 @@ Derive your algorithm’s runtime complexity.
 
 function canWin(s: string) {
   for (let i = 1; i < s.length; ++i) {
-    if (
-      s[i] === '+' &&
-      s[i - 1] === '+' &&
-      !canWin(s.substring(0, i - 1) + '--' + s.substring(i + 1))
-    ) {
+    if (s[i] === '+' && s[i - 1] === '+' && !canWin(s.substring(0, i - 1) + '--' + s.substring(i + 1))) {
       return true;
     }
+
+    return false;
   }
-  return false;
 }

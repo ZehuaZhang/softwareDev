@@ -28,25 +28,27 @@ postorder is guaranteed to be the postorder traversal of the tree.
 */
 
 function buildTree(inorder: number[], postorder: number[]): TreeNode | null {
+  const m = inorder.length;
   const map = new Map<number, number>();
-  for (let i = 0; i < inorder.length; ++i) {
-    map.set(inorder[i], i);
+  for (let i = 0; i < m; ++i) {
+      map.set(inorder[i], i);
   }
 
-  return dfs(0, inorder.length - 1, 0, postorder.length - 1);
+  return dfs(0, m - 1, 0, m - 1);
 
   function dfs(iL: number, iR: number, pL: number, pR: number) {
-    if (iL > iR || pL > pR) {
-      return null;
-    }
+      if (iR < iL || pR < pL) {
+          return null;
+      }
 
-    const root = new TreeNode(postorder[pR]);
-    const iN = map.get(root.val);
-    const distL = iN - iL;
+      const val = postorder[pR];
+      const i = map.get(val);
+      const dist = i - iL;
 
-    root.left = dfs(iL, iN - 1, pL, pL + distL - 1);
-    root.right = dfs(iN + 1, iR, pL + distL, pR - 1);
+      const node = new TreeNode(val);
+      node.left = dfs(iL, i - 1, pL, pL + dist - 1);
+      node.right = dfs(i + 1, iR, pL + dist, pR - 1);
 
-    return root;
+      return node;
   }
-}
+};

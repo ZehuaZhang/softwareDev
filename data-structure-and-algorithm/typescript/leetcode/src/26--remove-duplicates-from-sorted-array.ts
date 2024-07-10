@@ -49,10 +49,9 @@ function removeDuplicates(nums: number[]): number {
   const k = 1;
   let idx = k;
   for (let i = k; i < nums.length; ++i) {
-    if (nums[idx - k] === nums[i]) {
-      continue;
-    }
-    nums[idx++] = nums[i];
+      if (nums[idx - k] !== nums[i]) {
+          nums[idx++] = nums[i];
+      }
   }
   return idx;
-}
+};
