@@ -40,7 +40,7 @@ function isAlienSorted(words: string[], order: string): boolean {
       return false;
     }
   }
-  return false;
+  return true;
 
   function bigger(word1: string, word2: string): boolean {
     for (let i = 0; i < word1.length && i < word2.length; ++i) {

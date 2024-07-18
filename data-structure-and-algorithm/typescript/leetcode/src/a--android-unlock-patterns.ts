@@ -45,13 +45,13 @@ import {runTestCaseList} from './util/test';
 function numberOfPatterns(minKeyCount: number, maxKeyCount: number): number {
   const skipover = [...Array(10)].map(() => Array(10).fill(0));
   skipover[1][3] = skipover[3][1] = 2;
-  skipover[1][7] = skipover[7][1] = 4;
-  skipover[3][9] = skipover[9][3] = 6;
-  skipover[7][9] = skipover[9][7] = 8;
-  skipover[1][9] = skipover[9][1] = 5;
-  skipover[2][8] = skipover[8][2] = 5;
-  skipover[3][7] = skipover[7][3] = 5;
   skipover[4][6] = skipover[6][4] = 5;
+  skipover[7][9] = skipover[9][7] = 8;
+  skipover[1][7] = skipover[7][1] = 4;
+  skipover[2][8] = skipover[8][2] = 5;
+  skipover[3][9] = skipover[9][3] = 6;
+  skipover[1][9] = skipover[9][1] = 5;
+  skipover[3][7] = skipover[7][3] = 5;
   const visited: boolean[] = Array(10).fill(false);
   let result = 0;
   for (let i = minKeyCount; i <= maxKeyCount; ++i) {

@@ -86,7 +86,7 @@ function verticalOrder(root: TreeNode | null): number[][] {
   q.push([0, root]);
   while (q.length) {
     const [i, node] = q.shift();
-    if (m.has(i)) {
+    if (!m.has(i)) {
       m.set(i, []);
     }
     m.get(i).push(node.val);
