@@ -37,18 +37,18 @@ function permute(nums: number[]): number[][] {
   return rslt;
 
   function dfs() {
-      if (path.length === n) {
-          return rslt.push([...path]);
-      }
+    if (path.length === n) {
+      return rslt.push([...path]);
+    }
 
-      for (let i = 0; i < n; ++i) {
-          if (!seen[i]) {
-              seen[i] = true;
-              path.push(nums[i]);
-              dfs();
-              path.pop();
-              seen[i] = false;
-          }
+    for (let i = 0; i < n; ++i) {
+      if (!seen[i]) {
+        seen[i] = true;
+        path.push(nums[i]);
+        dfs();
+        path.pop();
+        seen[i] = false;
       }
+    }
   }
-};
+}

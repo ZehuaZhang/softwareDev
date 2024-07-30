@@ -40,13 +40,13 @@ Follow up: Can you solve it using O(1) (i.e. constant) memory?
 */
 
 function hasCycle(head: ListNode | null): boolean {
-  for (let slow = head, fast = head; fast && fast.next;) {
-      slow = slow.next;
-      fast = fast.next.next;
-      if (slow === fast) {
-          return true;
-      }
+  for (let slow = head, fast = head; fast && fast.next; ) {
+    slow = slow.next;
+    fast = fast.next.next;
+    if (slow === fast) {
+      return true;
+    }
   }
 
   return false;
-};
+}

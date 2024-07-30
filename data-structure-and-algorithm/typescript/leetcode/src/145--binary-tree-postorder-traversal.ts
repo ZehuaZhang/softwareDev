@@ -33,16 +33,16 @@ function postorderTraversal(root: TreeNode | null): number[] {
   const rslt: number[] = [];
   const stk: TreeNode[] = [];
 
-  for (let node = root; node || stk.length;) {
-      if (node) {
-          stk.push(node);
-          rslt.push(node.val);
-          node = node.right;
-      } else {
-          node = stk.pop();
-          node = node.left;
-      }
+  for (let node = root; node || stk.length; ) {
+    if (node) {
+      stk.push(node);
+      rslt.push(node.val);
+      node = node.right;
+    } else {
+      node = stk.pop();
+      node = node.left;
+    }
   }
 
   return rslt.reverse();
-};
+}

@@ -19,8 +19,8 @@ If there is no valid move, return an empty list [].
 function generatePossibleNextMoves(s: string) {
   const rslt: string[] = [];
   for (let i = 1; i < s.length; ++i) {
-    if (s[i] === '+' && s[i - 1] === '+') {
-      rslt.push(s.substring(0, i - 1) + '--' + s.substring(i + 1));
+    if (s[i] === "+" && s[i - 1] === "+") {
+      rslt.push(s.substring(0, i - 1) + "--" + s.substring(i + 1));
     }
   }
 

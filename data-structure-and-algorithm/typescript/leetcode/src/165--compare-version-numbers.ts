@@ -53,20 +53,20 @@ All the given revisions in version1 and version2 can be stored in a 32-bit integ
 */
 
 function compareVersion(version1: string, version2: string): number {
-  const v1 = version1.split('.').map(Number);
-  const v2 = version2.split('.').map(Number);
+  const v1 = version1.split(".").map(Number);
+  const v2 = version2.split(".").map(Number);
 
-  const [m, n] = [v1.length, v2.length]
+  const [m, n] = [v1.length, v2.length];
 
   for (let i = 0; i < Math.max(m, n); ++i) {
-      const a = i < m ? v1[i] : 0;
-      const b = i < n ? v2[i] : 0;
-      if (a < b) {
-          return -1; 
-      } else if (a > b) {
-          return 1;
-      }
+    const a = i < m ? v1[i] : 0;
+    const b = i < n ? v2[i] : 0;
+    if (a < b) {
+      return -1;
+    } else if (a > b) {
+      return 1;
+    }
   }
 
   return 0;
-};
+}

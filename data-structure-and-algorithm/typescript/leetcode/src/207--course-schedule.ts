@@ -36,27 +36,27 @@ function canFinish(numCourses: number, prerequisites: number[][]): boolean {
   const inDgr: number[] = Array(numCourses).fill(0);
 
   for (const [adv, bsc] of prerequisites) {
-      graph[bsc].push(adv);
-      ++inDgr[adv];
+    graph[bsc].push(adv);
+    ++inDgr[adv];
   }
 
   const q: number[] = [];
   for (let i = 0; i < numCourses; ++i) {
-      if (!inDgr[i]) {
-          q.push(i);
-      }
+    if (!inDgr[i]) {
+      q.push(i);
+    }
   }
 
   let rslt = 0;
   while (q.length) {
-      const c = q.shift();
-      ++rslt;
-      for (const a of graph[c]) {
-          if (--inDgr[a] === 0) {
-              q.push(a);
-          }
+    const c = q.shift();
+    ++rslt;
+    for (const a of graph[c]) {
+      if (--inDgr[a] === 0) {
+        q.push(a);
       }
+    }
   }
 
   return rslt === numCourses;
-};
+}

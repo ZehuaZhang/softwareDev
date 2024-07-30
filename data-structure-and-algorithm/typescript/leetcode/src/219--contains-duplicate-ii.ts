@@ -29,15 +29,15 @@ Constraints:
 function containsNearbyDuplicate(nums: number[], k: number): boolean {
   const set = new Set<number>();
   for (let l = 0, r = 0; r < nums.length; ++r) {
-      const a = nums[r];
-      if (set.has(a)) {
-          return true;
-      }
-      set.add(a);
-      if (set.size === k + 1) {
-          set.delete(nums[l++]);
-      }
+    const a = nums[r];
+    if (set.has(a)) {
+      return true;
+    }
+    set.add(a);
+    if (set.size === k + 1) {
+      set.delete(nums[l++]);
+    }
   }
 
   return false;
-};
+}

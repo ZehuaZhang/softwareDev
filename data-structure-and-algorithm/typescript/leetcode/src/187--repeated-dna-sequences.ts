@@ -16,13 +16,13 @@ function findRepeatedDnaSequences(s: string): string[] {
   const set = new Set<string>();
   const rslt = new Set<string>();
   for (let i = 0; i + 9 < s.length; ++i) {
-      const seq = s.substring(i, i + 10);
-      if (set.has(seq)) {
-          rslt.add(seq);
-      } else {
-          set.add(seq);
-      }
+    const seq = s.substring(i, i + 10);
+    if (set.has(seq)) {
+      rslt.add(seq);
+    } else {
+      set.add(seq);
+    }
   }
 
   return [...rslt];
-};
+}

@@ -31,15 +31,19 @@ s consists of parentheses only '()[]{}'.
 */
 
 function isValid(s: string): boolean {
-  const l = new Map([[')', '('], [']','['], ['}','{']]);
+  const l = new Map([
+    [")", "("],
+    ["]", "["],
+    ["}", "{"],
+  ]);
   const stk: string[] = [];
   for (const c of s) {
-      if ('([{'.includes(c)) {
-          stk.push(c);
-      } else if (!stk.length || stk.pop() !== l.get(c)) {
-          return false;
-      }
+    if ("([{".includes(c)) {
+      stk.push(c);
+    } else if (!stk.length || stk.pop() !== l.get(c)) {
+      return false;
+    }
   }
 
   return !stk.length;
-};
+}

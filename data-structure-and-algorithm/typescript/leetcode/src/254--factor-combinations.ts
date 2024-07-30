@@ -61,7 +61,7 @@ function getFactors(num: number): number[][] {
 
     for (let i = i0; i < tgt; ++i) {
       if (tgt % i === 0) {
-        path.push(tgt / i);
+        path.push(i);
         dfs(i, tgt / i);
         path.pop();
       }

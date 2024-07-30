@@ -37,22 +37,22 @@ function findMedianSortedArrays(nums1: number[], nums2: number[]): number {
   return (findK(0, 0, k1) + findK(0, 0, k2)) / 2;
 
   function findK(i: number, j: number, k: number) {
-      if (i >= m) {
-          return nums2[j + k - 1];
-      }
-      if (j >= n) {
-          return nums1[i + k - 1];
-      }
-      if (k === 1) {
-          return Math.min(nums1[i], nums2[j]);
-      }
+    if (i >= m) {
+      return nums2[j + k - 1];
+    }
+    if (j >= n) {
+      return nums1[i + k - 1];
+    }
+    if (k === 1) {
+      return Math.min(nums1[i], nums2[j]);
+    }
 
-      const nK1 = Math.min(m - i, Math.trunc(k / 2));
-      const nK2 = Math.min(n - j, Math.trunc(k / 2));
-      if (nums1[i + nK1 - 1] > nums2[j + nK2 - 1]) {
-          return findK(i, j + nK2, k - nK2);
-      } else {
-          return findK(i + nK1, j, k - nK1);
-      }
+    const nK1 = Math.min(m - i, Math.trunc(k / 2));
+    const nK2 = Math.min(n - j, Math.trunc(k / 2));
+    if (nums1[i + nK1 - 1] > nums2[j + nK2 - 1]) {
+      return findK(i, j + nK2, k - nK2);
+    } else {
+      return findK(i + nK1, j, k - nK1);
+    }
   }
-};
+}

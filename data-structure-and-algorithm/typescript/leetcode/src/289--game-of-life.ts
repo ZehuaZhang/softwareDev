@@ -42,23 +42,23 @@ In this question, we represent the board using a 2D array. In principle, the boa
 function gameOfLife(board: number[][]): void {
   const [m, n] = [board.length, board[0].length];
   for (let i = 0; i < m; ++i) {
-      for (let j = 0; j < n; ++j) {
-          let cnt = 0;
-          for (let x = Math.max(0, i - 1); x < Math.min(m, i + 2); ++x) {
-              for (let y = Math.max(0, j - 1); y < Math.min(n, j + 2); ++y) {
-                  cnt += board[x][y] & 1;
-              }
-          }
-
-          if ((cnt === 4 && board[i][j]) || cnt == 3) {
-              board[i][j] |= 2;
-          }
+    for (let j = 0; j < n; ++j) {
+      let cnt = 0;
+      for (let x = Math.max(0, i - 1); x < Math.min(m, i + 2); ++x) {
+        for (let y = Math.max(0, j - 1); y < Math.min(n, j + 2); ++y) {
+          cnt += board[x][y] & 1;
+        }
       }
+
+      if ((cnt === 4 && board[i][j]) || cnt == 3) {
+        board[i][j] |= 2;
+      }
+    }
   }
-  
+
   for (let i = 0; i < m; ++i) {
-      for (let j = 0; j < n; ++j) {
-          board[i][j] >>= 1;
-     }
+    for (let j = 0; j < n; ++j) {
+      board[i][j] >>= 1;
+    }
   }
-};
+}

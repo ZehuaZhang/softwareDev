@@ -35,25 +35,27 @@ function fractionToDecimal(numerator: number, denominator: number): string {
   let a = Math.abs(numerator);
   let b = Math.abs(denominator);
 
-  const rslt: (string | number)[] = [(numerator ^ denominator) >> 31 && numerator ? '-' : ''];
+  const rslt: (string | number)[] = [
+    (numerator ^ denominator) >> 31 && numerator ? "-" : "",
+  ];
   rslt.push(Math.trunc(a / b));
 
   a %= b;
   if (a) {
-      rslt.push('.');
+    rslt.push(".");
   }
 
   const map = new Map<number, number>();
   for (; a && !map.has(a); a %= b) {
-      map.set(a, rslt.length);
-      a *= 10; 
-      rslt.push(Math.trunc(a / b));
+    map.set(a, rslt.length);
+    a *= 10;
+    rslt.push(Math.trunc(a / b));
   }
 
   if (a) {
-      rslt.splice(map.get(a), 0, '(');
-      rslt.push(')');
+    rslt.splice(map.get(a), 0, "(");
+    rslt.push(")");
   }
 
-  return  rslt.join('');
-};
+  return rslt.join("");
+}

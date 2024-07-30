@@ -20,7 +20,7 @@ function generatePalindromes(s: string): string[] {
   }
 
   let ttl = 0;
-  let mc = '';
+  let mc = "";
   for (const [c, cnt] of map) {
     if (cnt % 2) {
       if (mc) {
@@ -39,9 +39,9 @@ function generatePalindromes(s: string): string[] {
 
   function dfs() {
     if (path.length === ttl) {
-      const s = path.join('');
-      const rs = path.reverse().join('');
-      return rslt.push([s, mc, rs].join(''));
+      const s = path.join("");
+      const rs = path.reverse().join("");
+      return rslt.push([s, mc, rs].join(""));
     }
 
     for (const [c, cnt] of map) {

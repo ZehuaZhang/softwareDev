@@ -44,21 +44,21 @@ Follow up: Could you solve it iteratively?
 */
 
 function countAndSay(n: number): string {
-  let rslt = '1';
+  let rslt = "1";
 
   for (let i = 2; i <= n; ++i) {
-      let cnt = 1;
-      let curr = rslt;
-      rslt = '';
-      for (let j = 0; j < curr.length; ++j) {
-          if (j < curr.length - 1 && curr[j] === curr[j + 1]) {
-              ++cnt;
-          } else {
-              rslt += cnt + curr[j];
-              cnt = 1;
-          }
+    let cnt = 1;
+    let curr = rslt;
+    rslt = "";
+    for (let j = 0; j < curr.length; ++j) {
+      if (j < curr.length - 1 && curr[j] === curr[j + 1]) {
+        ++cnt;
+      } else {
+        rslt += cnt + curr[j];
+        cnt = 1;
       }
+    }
   }
 
   return rslt;
-};
+}

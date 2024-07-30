@@ -25,13 +25,13 @@ The list is guaranteed to be sorted in ascending order.
 */
 
 function deleteDuplicates(head: ListNode | null): ListNode | null {
-  for (let curr = head; curr;) {
-      if (curr.next && curr.next.val === curr.val) {
-          curr.next = curr.next.next;
-      } else {
-          curr = curr.next;
-      }
+  for (let curr = head; curr; ) {
+    if (curr.next && curr.next.val === curr.val) {
+      curr.next = curr.next.next;
+    } else {
+      curr = curr.next;
+    }
   }
 
   return head;
-};
+}

@@ -33,9 +33,9 @@ function climbStairs(n: number): number {
   let [a, b] = [1, 1];
   let rslt = 1;
   for (let i = 2; i <= n; ++i) {
-      rslt = a + b;
-      a = b;
-      b = rslt;
+    rslt = a + b;
+    a = b;
+    b = rslt;
   }
   return rslt;
-};
+}

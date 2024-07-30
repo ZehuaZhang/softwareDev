@@ -27,13 +27,13 @@ The number of nodes in the list is in the range [0, 104].
 
 function removeElements(head: ListNode | null, val: number): ListNode | null {
   const dummy = new ListNode(0, head);
-  for (let curr = dummy; curr;) {
-      if (curr.next && curr.next.val === val) {
-          curr.next = curr.next.next;
-      } else {
-          curr = curr.next;
-      }
+  for (let curr = dummy; curr; ) {
+    if (curr.next && curr.next.val === val) {
+      curr.next = curr.next.next;
+    } else {
+      curr = curr.next;
+    }
   }
 
   return dummy.next;
-};
+}

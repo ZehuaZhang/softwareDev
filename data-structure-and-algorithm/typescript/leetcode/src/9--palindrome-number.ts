@@ -34,12 +34,12 @@ Follow up: Could you solve it without converting the integer to a string?
 
 function isPalindrome(x: number): boolean {
   if (x < 0) {
-      return false;
+    return false;
   }
-  
+
   let rslt = 0;
   for (let num = x; num; num = Math.trunc(num / 10)) {
-      rslt = rslt * 10 + num % 10;
+    rslt = rslt * 10 + (num % 10);
   }
   return rslt === x;
-};
+}

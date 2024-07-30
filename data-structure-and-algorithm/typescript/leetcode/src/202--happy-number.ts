@@ -36,9 +36,13 @@ function isHappy(n: number): boolean {
   const seen = new Set<number>();
 
   while (n !== 1 && !seen.has(n)) {
-      seen.add(n);
-      n = n.toString().split('').map(Number).reduce((p, a) => a * a + p, 0);
+    seen.add(n);
+    n = n
+      .toString()
+      .split("")
+      .map(Number)
+      .reduce((p, a) => a * a + p, 0);
   }
 
   return n === 1;
-};
+}

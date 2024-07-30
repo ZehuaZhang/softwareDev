@@ -29,13 +29,13 @@ function deleteDuplicates(head: ListNode | null): ListNode | null {
   let prev = dummy;
 
   for (; head; head = head.next) {
-      if (head.next && head.next.val === head.val) {
-          for (; head.next && head.next.val === head.val; head = head.next);
-          prev.next = head.next;
-      } else {
-          prev = prev.next;
-      }
+    if (head.next && head.next.val === head.val) {
+      for (; head.next && head.next.val === head.val; head = head.next);
+      prev.next = head.next;
+    } else {
+      prev = prev.next;
+    }
   }
 
   return dummy.next;
-};
+}

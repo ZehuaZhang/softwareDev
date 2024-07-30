@@ -29,44 +29,6 @@ function wordPatternMatch(pattern: string, str: string) {
   const [m, n] = [pattern.length, str.length];
   const mp = new Map<string, string>();
   const st = new Set<string>();
-  return dfs(0, 0);
-
-  function dfs(p: number, s: number) {
-    if (p === m && s === n) {
-      return true;
-    }
-    if (p === m || s === n) {
-      return false;
-    }
-    const c = pattern[p];
-    for (let i = s; i < n; ++i) {
-      const t = str.substring(s, i + 1);
-      if (mp.has(c) && mp.get(c) === t) {
-        if (dfs(p + 1, i + 1)) {
-          return true;
-        }
-      } else if (!mp.has(c)) {
-        if (st.has(t)) {
-          continue;
-        }
-        mp.set(c, t);
-        st.add(t);
-        if (dfs(p + 1, i + 1)) {
-          return true;
-        }
-        mp.delete(c);
-        st.delete(t);
-      }
-    }
-    return false;
-  }
-}
-
-
-function wordPatternMatch(pattern: string, str: string) {
-  const [m, n] = [pattern.length, str.length];
-  const mp = new Map<string, string>();
-  const st = new Set<string>();
 
   return dfs(0, 0);
 
@@ -78,7 +40,7 @@ function wordPatternMatch(pattern: string, str: string) {
       return false;
     }
     const c = pattern[i0];
-    for(let j = j0; j < n; ++j) {
+    for (let j = j0; j < n; ++j) {
       const w = str.substring(j0, j + 1);
       if (mp.get(c) === w) {
         if (dfs(i0 + 1, j + 1)) {

@@ -31,7 +31,7 @@ The number of nodes in the list is in the range [1, 5 * 104].
 
 function reorderList(head: ListNode | null): void {
   if (!head) {
-      return;
+    return;
   }
 
   let slow = head;
@@ -41,17 +41,17 @@ function reorderList(head: ListNode | null): void {
   let head2 = null;
   let node = slow.next;
   while (node) {
-      const next= node.next;
-      node.next = head2;
-      head2 = node;
-      node = next;
+    const next = node.next;
+    node.next = head2;
+    head2 = node;
+    node = next;
   }
   slow.next = null;
 
   while (head2) {
-      const next = head.next;
-      head.next = head2;
-      head = head2;
-      head2 = next;
+    const next = head.next;
+    head.next = head2;
+    head = head2;
+    head2 = next;
   }
-};
+}

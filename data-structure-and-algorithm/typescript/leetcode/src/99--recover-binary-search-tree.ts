@@ -29,7 +29,7 @@ Follow up: A solution using O(n) space is pretty straight-forward. Could you dev
 */
 
 function recoverTree(root: TreeNode | null): void {
-  if (root === null) {
+  if (!root) {
     return;
   }
   let a: TreeNode | null = null;
@@ -43,16 +43,16 @@ function recoverTree(root: TreeNode | null): void {
   b.val = tmp;
 
   function dfs(node: TreeNode | null) {
-    if (node === null) {
+    if (!node) {
       return;
     }
     dfs(node.left);
 
-    if (a === null && p !== null && p.val >= node.val) {
+    if (!a && p && p.val >= node.val) {
       a = p;
     }
 
-    if (a !== null && p.val >= node.val) {
+    if (a && p.val >= node.val) {
       b = node;
     }
 

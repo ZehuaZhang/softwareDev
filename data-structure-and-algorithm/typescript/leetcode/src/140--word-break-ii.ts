@@ -39,26 +39,26 @@ function wordBreak(s: string, wordDict: string[]): string[] {
   return dfs(s);
 
   function dfs(str: string) {
-      if (memo.has(str)) {
-          return memo.get(str);
-      }
-
-      if (!str.length) {
-          memo.set(str, ['']);
-          return memo.get(str);
-      }
-
-      const rslt: string[] = [];
-
-      for (const word of set) {
-          if (str.startsWith(word)) {
-              for (const phrase of dfs(str.substring(word.length))) {
-                  rslt.push([word, phrase].filter(Boolean).join(' '));
-              }
-          }
-      }
-
-      memo.set(str, rslt);
+    if (memo.has(str)) {
       return memo.get(str);
+    }
+
+    if (!str.length) {
+      memo.set(str, [""]);
+      return memo.get(str);
+    }
+
+    const rslt: string[] = [];
+
+    for (const word of set) {
+      if (str.startsWith(word)) {
+        for (const phrase of dfs(str.substring(word.length))) {
+          rslt.push([word, phrase].filter(Boolean).join(" "));
+        }
+      }
+    }
+
+    memo.set(str, rslt);
+    return memo.get(str);
   }
-};
+}

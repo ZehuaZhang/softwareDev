@@ -17,7 +17,7 @@ function threeSumSmaller(nums: number[], target: number): number {
   let rslt = 0;
 
   for (let i = 0; i < n - 2; ++i) {
-    for (let l = i + 1, r = n - 1; l < r;) {
+    for (let l = i + 1, r = n - 1; l < r; ) {
       const sum = nums[i] + nums[l] + nums[r];
       if (sum < target) {
         rslt += r - l;

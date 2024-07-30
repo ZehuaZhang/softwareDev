@@ -49,22 +49,22 @@ class BSTIterator {
   constructor(root: TreeNode | null) {
     this.stk = [];
     while (root) {
-        this.stk.push(root);
-        root = root.left;
+      this.stk.push(root);
+      root = root.left;
     }
   }
 
   next(): number {
     const node = this.stk.pop();
-    for (let curr = node.right; curr;) {
-        this.stk.push(curr);
-        curr = curr.left;
+    for (let curr = node.right; curr; ) {
+      this.stk.push(curr);
+      curr = curr.left;
     }
 
     return node.val;
   }
 
   hasNext(): boolean {
-    return Boolean(this.stk.length); 
+    return Boolean(this.stk.length);
   }
 }

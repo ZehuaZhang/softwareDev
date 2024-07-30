@@ -49,7 +49,7 @@ function isInterleave(s1: string, s2: string, s3: string): boolean {
   const [m, n, k] = [s1.length, s2.length, s3.length];
 
   if (m + n !== k) {
-      return false;
+    return false;
   }
 
   const seen = [...Array(m + 1)].map(() => Array(n + 1).fill(false));
@@ -57,22 +57,21 @@ function isInterleave(s1: string, s2: string, s3: string): boolean {
   seen[0][0] = true;
 
   while (q.length) {
-      const [a, b] = q.shift();
-      if (a === m && b === n) {
-          return true;
-      }
-      
-      if (a < m && s1[a] === s3[a + b] && !seen[a + 1][b]) {
-          q.push([a + 1, b]);
-          seen[a + 1][b] = true;
-      }
+    const [a, b] = q.shift();
+    if (a === m && b === n) {
+      return true;
+    }
 
-      if (b < n && s2[b] === s3[a + b] && !seen[a][b + 1]) {
-          q.push([a, b + 1]);
-          seen[a][b + 1] = true;
-      }
+    if (a < m && s1[a] === s3[a + b] && !seen[a + 1][b]) {
+      q.push([a + 1, b]);
+      seen[a + 1][b] = true;
+    }
 
+    if (b < n && s2[b] === s3[a + b] && !seen[a][b + 1]) {
+      q.push([a, b + 1]);
+      seen[a][b + 1] = true;
+    }
   }
 
   return false;
-};
+}

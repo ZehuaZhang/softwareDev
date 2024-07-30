@@ -35,29 +35,29 @@ function maximalRectangle(matrix: string[][]): number {
   let rslt = 0;
 
   for (let i = 0; i < m; ++i) {
-      for (let j = 0; j < n; ++j) {
-          hghts[j] = matrix[i][j] === '1' ? hghts[j] + 1 : 0;
-      }
-      rslt = Math.max(rslt, hist());
+    for (let j = 0; j < n; ++j) {
+      hghts[j] = matrix[i][j] === "1" ? hghts[j] + 1 : 0;
+    }
+    rslt = Math.max(rslt, hist());
   }
 
   return rslt;
 
   function hist() {
-      const h = [...hghts, 0];
-      const idx: number[] = [];
-      let area = 0;
+    const h = [...hghts, 0];
+    const idx: number[] = [];
+    let area = 0;
 
-      for (let i = 0; i < h.length;) {
-          if (!idx.length || h[i] > h[idx[idx.length - 1]]) {
-              idx.push(i++);
-          } else {
-              const l = h[idx.pop()];
-              const w = idx.length ? i - idx[idx.length - 1] - 1 : i;
-              area = Math.max(area, l * w);
-          }
+    for (let i = 0; i < h.length; ) {
+      if (!idx.length || h[i] > h[idx[idx.length - 1]]) {
+        idx.push(i++);
+      } else {
+        const l = h[idx.pop()];
+        const w = idx.length ? i - idx[idx.length - 1] - 1 : i;
+        area = Math.max(area, l * w);
       }
+    }
 
-      return area;
+    return area;
   }
 }

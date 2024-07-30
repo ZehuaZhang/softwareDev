@@ -31,20 +31,20 @@ nums is sorted in a strictly increasing order.
 
 function sortedArrayToBST(nums: number[]): TreeNode | null {
   const n = nums.length;
-  
+
   return dfs(0, n - 1);
 
   function dfs(l: number, r: number) {
-      if (r < l) {
-          return null;
-      }
+    if (r < l) {
+      return null;
+    }
 
-      const m = l + Math.trunc((r - l) / 2);
+    const m = l + Math.trunc((r - l) / 2);
 
-      const node = new TreeNode(nums[m]);
-      node.left = dfs(l, m - 1);
-      node.right = dfs(m + 1, r);
+    const node = new TreeNode(nums[m]);
+    node.left = dfs(l, m - 1);
+    node.right = dfs(m + 1, r);
 
-      return node;
+    return node;
   }
-};
+}

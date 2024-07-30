@@ -39,56 +39,56 @@ At most 3 * 104 calls in total will be made to insert, search, and startsWith.
 class Trie {
   root: TrieNode;
   constructor() {
-      this.root = new TrieNode();
+    this.root = new TrieNode();
   }
 
   insert(word: string): void {
-      let curr = this.root;
-      for (const c of word) {
-          if (!curr.leaves.has(c)) {
-              curr.leaves.set(c, new TrieNode());
-          }
-          curr = curr.leaves.get(c);
+    let curr = this.root;
+    for (const c of word) {
+      if (!curr.leaves.has(c)) {
+        curr.leaves.set(c, new TrieNode());
       }
-      curr.isWord = true;
-      curr.word = word;
+      curr = curr.leaves.get(c);
+    }
+    curr.isWord = true;
+    curr.word = word;
   }
 
   search(word: string): boolean {
-      return dfs(this.root, 0);
+    return dfs(this.root, 0);
 
-      function dfs(node: TrieNode, idx: number) {
-          if (idx === word.length) {
-              return node.isWord;
-          }
-
-          const c = word[idx];
-          if (c !== '.') {
-              if (!node.leaves.has(c)) {
-                  return false;
-              }
-              return dfs(node.leaves.get(c), idx + 1);
-          }
-
-          for (const leaf of node.leaves.values()) {
-              if (dfs(leaf, idx + 1)) {
-                  return true;
-              }
-          }
-
-          return false;
+    function dfs(node: TrieNode, idx: number) {
+      if (idx === word.length) {
+        return node.isWord;
       }
+
+      const c = word[idx];
+      if (c !== ".") {
+        if (!node.leaves.has(c)) {
+          return false;
+        }
+        return dfs(node.leaves.get(c), idx + 1);
+      }
+
+      for (const leaf of node.leaves.values()) {
+        if (dfs(leaf, idx + 1)) {
+          return true;
+        }
+      }
+
+      return false;
+    }
   }
 
   startsWith(prefix: string): boolean {
-      let curr = this.root;
-      for (const c of prefix) {
-          if (!curr.leaves.has(c)) {
-              return false;
-          }
-          curr = curr.leaves.get(c);
+    let curr = this.root;
+    for (const c of prefix) {
+      if (!curr.leaves.has(c)) {
+        return false;
       }
-      return true;
+      curr = curr.leaves.get(c);
+    }
+    return true;
   }
 }
 
@@ -97,8 +97,8 @@ class TrieNode {
   word: string;
   leaves: Map<string, TrieNode>;
   constructor() {
-      this.isWord = false;
-      this.word = '';
-      this.leaves = new Map();
+    this.isWord = false;
+    this.word = "";
+    this.leaves = new Map();
   }
 }

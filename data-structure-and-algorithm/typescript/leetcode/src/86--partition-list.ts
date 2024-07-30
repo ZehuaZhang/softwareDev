@@ -32,17 +32,16 @@ function partition(head: ListNode | null, x: number): ListNode | null {
   const dummy2 = new ListNode(0, head);
   let b = dummy2;
 
-  for (; b.next;) {
-      if (b.next.val < x) {
-          a.next = b.next;
-          a = b.next;
-          b.next = b.next.next;
-      } else {
-          a.next = null;
-          b = b.next;
-      }
+  for (; b.next; ) {
+    if (b.next.val < x) {
+      a.next = b.next;
+      a = b.next;
+      b.next = b.next.next;
+    } else {
+      b = b.next;
+    }
   }
 
   a.next = dummy2.next;
   return dummy.next;
-};
+}

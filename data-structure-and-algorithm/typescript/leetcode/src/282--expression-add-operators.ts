@@ -39,41 +39,41 @@ function addOperators(num: string, target: number): string[] {
   const rslt: string[] = [];
   let path: (string | number)[] = [];
   for (let i = 0; i < n; ++i) {
-      const sub = num.substring(0, i + 1);
-      const op = Number(sub);
-      if (String(op) !== sub) {
-          break;
-      }
+    const sub = num.substring(0, i + 1);
+    const op = Number(sub);
+    if (String(op) !== sub) {
+      break;
+    }
 
-      path = [op];
-      dfs(i + 1, 0, op);
+    path = [op];
+    dfs(i + 1, 0, op);
   }
 
   return rslt;
 
   function dfs(i0: number, op1: number, op2: number) {
-      if (i0 === n && op1 + op2 === target) {
-          return rslt.push(path.join(''));
+    if (i0 === n && op1 + op2 === target) {
+      return rslt.push(path.join(""));
+    }
+
+    for (let i = i0; i < n; ++i) {
+      const sub = num.substring(i0, i + 1);
+      const op = Number(sub);
+      if (String(op) !== sub) {
+        break;
       }
 
-      for (let i = i0; i < n; ++i) {
-          const sub = num.substring(i0, i + 1);
-          const op = Number(sub);
-          if (String(op) !== sub) {
-              break;
-          }
+      path.push("+" + op);
+      dfs(i + 1, op1 + op2, op);
+      path.pop();
 
-          path.push('+' + op);
-          dfs(i + 1, op1 + op2, op);
-          path.pop();
+      path.push("-" + op);
+      dfs(i + 1, op1 + op2, -op);
+      path.pop();
 
-          path.push('-' + op);
-          dfs(i + 1, op1 + op2, -op);
-          path.pop();
-
-          path.push('*' + op);
-          dfs(i + 1, op1, op2 * op);
-          path.pop();
-      }
+      path.push("*" + op);
+      dfs(i + 1, op1, op2 * op);
+      path.pop();
+    }
   }
-};
+}

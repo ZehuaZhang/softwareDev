@@ -32,10 +32,10 @@ n == height.length
 
 function maxArea(height: number[]): number {
   let rslt = 0;
-  for (let l = 0, r = height.length - 1; l < r;) {
-      const w = r - l;
-      const h = height[height[l] < height[r] ? l++ : r--];
-      rslt = Math.max(rslt, w * h);
+  for (let l = 0, r = height.length - 1; l < r; ) {
+    const w = r - l;
+    const h = height[height[l] < height[r] ? l++ : r--];
+    rslt = Math.max(rslt, w * h);
   }
   return rslt;
-};
+}

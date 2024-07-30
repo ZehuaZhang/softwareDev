@@ -42,31 +42,31 @@ Follow up: How would you extend your design to be generic and work with all type
 class PeekingIterator {
   peeked: boolean;
   val: number;
-  iter: Iterator
+  iter: Iterator;
   constructor(iterator: Iterator) {
-      this.peeked = false;
-      this.val = NaN;
-      this.iter = iterator;
+    this.peeked = false;
+    this.val = NaN;
+    this.iter = iterator;
   }
 
   peek(): number {
-      if (!this.peeked) {
-          this.peeked = true;
-          this.val = this.iter.next();
-      }
+    if (!this.peeked) {
+      this.peeked = true;
+      this.val = this.iter.next();
+    }
 
-      return this.val;
+    return this.val;
   }
 
   next(): number {
-      if (this.peeked) {
-          this.peeked = false;
-          return this.val;
-      }
-      return this.iter.next();
+    if (this.peeked) {
+      this.peeked = false;
+      return this.val;
+    }
+    return this.iter.next();
   }
 
   hasNext(): boolean {
-      return this.peeked || this.iter.hasNext();
+    return this.peeked || this.iter.hasNext();
   }
 }

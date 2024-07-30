@@ -35,38 +35,34 @@ function solveSudoku(board: string[][]): void {
   dfs();
 
   function dfs() {
-      for (let i = 0; i < m; ++i) {
-          for (let j = 0; j < n; ++j) {
-              if (board[i][j] === '.') {
-                  for (const c of ['1', '2', '3', '4', '5', '6', '7', '8', '9']) {
-                      if (isValid(i, j, c)) {
-                          board[i][j] = c;
-                          if (dfs()) {
-                              return true;
-                          }
-                          board[i][j] = '.';
-                      }
-                  }
-                  return false;
+    for (let i = 0; i < m; ++i) {
+      for (let j = 0; j < n; ++j) {
+        if (board[i][j] === ".") {
+          for (const c of ["1", "2", "3", "4", "5", "6", "7", "8", "9"]) {
+            if (isValid(i, j, c)) {
+              board[i][j] = c;
+              if (dfs()) {
+                return true;
               }
+              board[i][j] = ".";
+            }
           }
+          return false;
+        }
       }
-      return true;
+    }
+    return true;
   }
 
   function isValid(x: number, y: number, val: string) {
-      for (let k = 0; k < 9; ++k) {
-          const br = Math.trunc(x / 3) * 3 + Math.trunc(k / 3);
-          const bc = Math.trunc(y / 3) * 3 + Math.trunc(k % 3);
-          if (
-              board[x][k] === val ||
-              board[k][y] === val ||
-              board[br][bc] === val
-          ) {
-              return false;
-          }
+    for (let k = 0; k < 9; ++k) {
+      const br = Math.trunc(x / 3) * 3 + Math.trunc(k / 3);
+      const bc = Math.trunc(y / 3) * 3 + Math.trunc(k % 3);
+      if (board[x][k] === val || board[k][y] === val || board[br][bc] === val) {
+        return false;
       }
+    }
 
-      return true;
+    return true;
   }
-};
+}

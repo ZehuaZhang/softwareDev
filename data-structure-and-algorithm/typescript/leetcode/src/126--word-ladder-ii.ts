@@ -36,63 +36,67 @@ All the words in wordList are unique.
 The sum of all shortest transformation sequences does not exceed 105.
 */
 
-function findLadders(beginWord: string, endWord: string, wordList: string[]): string[][] {
+function findLadders(
+  beginWord: string,
+  endWord: string,
+  wordList: string[]
+): string[][] {
   const set = new Set(wordList);
   const q: string[] = [beginWord];
   const rslt: string[][] = [];
   if (!set.has(endWord)) {
-      return rslt;
+    return rslt;
   }
 
   let fnd = false;
   const lvls: string[][] = [];
   while (q.length && !fnd) {
-      lvls.push([...q]);
-      for (let l = q.length; l && !fnd; --l) {
-          const w = q.shift();
-          for (const word of set) {
-              if (isOneCharDiff(w, word)) {
-                  if (word === endWord) {
-                      fnd = true;
-                      break;
-                  } else {
-                      q.push(word);
-                      set.delete(word);
-                  }
-              }
+    lvls.push([...q]);
+    for (let l = q.length; l && !fnd; --l) {
+      const w = q.shift();
+      for (const word of set) {
+        if (isOneCharDiff(w, word)) {
+          if (word === endWord) {
+            fnd = true;
+            break;
+          } else {
+            q.push(word);
+            set.delete(word);
           }
+        }
       }
+    }
   }
 
   if (!fnd) {
-      return rslt;
+    return rslt;
   }
 
   rslt.push([endWord]);
 
   for (let i = lvls.length - 1; i >= 0; --i) {
-      const l = rslt.length;
-      for (let j = 0; j < l; ++j) {
-          const list = rslt.shift();
-          const w = list[0];
-          for (const word of lvls[i]) {
-              if (isOneCharDiff(w, word)) {
-                  rslt.push([word, ...list]);
-              }
-          }
+    const l = rslt.length;
+    for (let j = 0; j < l; ++j) {
+      const list = rslt.shift();
+      const w = list[0];
+      for (const word of lvls[i]) {
+        if (isOneCharDiff(w, word)) {
+          rslt.push([word, ...list]);
+        }
       }
+    }
   }
 
   return rslt;
 
   function isOneCharDiff(a: string, b: string) {
-      let cnt = 0;
-      for (let i = 0; i < a.length && cnt < 2; ++i) {
-          if (a[i] !== b[i]) {
-              ++cnt;
-          }
+    let cnt = 0;
+    for (let i = 0; i < a.length && cnt < 2; ++i) {
+      if (a[i] !== b[i]) {
+        ++cnt;
       }
+    }
 
-      return cnt === 1;
+    return cnt === 1;
   }
-};
+}

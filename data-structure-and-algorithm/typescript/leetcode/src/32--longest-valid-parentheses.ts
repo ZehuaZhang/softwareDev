@@ -34,17 +34,17 @@ function longestValidParentheses(s: string): number {
   let rslt = 0;
 
   for (let i = 0; i < s.length; ++i) {
-      if (s[i] === '(') {
-          idx.push(i);
+    if (s[i] === "(") {
+      idx.push(i);
+    } else {
+      idx.pop();
+      if (!idx.length) {
+        idx.push(i);
       } else {
-          idx.pop();
-          if (!idx.length) {
-              idx.push(i);
-          } else {
-              rslt = Math.max(rslt, i - idx[idx.length - 1]);
-          }
+        rslt = Math.max(rslt, i - idx[idx.length - 1]);
       }
+    }
   }
 
   return rslt;
-};
+}

@@ -29,13 +29,13 @@ function mySqrt(x: number): number {
   let [l, r] = [0, x];
 
   while (l <= r) {
-      const m = l + Math.trunc((r - l) / 2);
-      if (m * m > x) {
-          r = m - 1;
-      } else {
-          l = m + 1; 
-      }
+    const m = l + Math.trunc((r - l) / 2);
+    if (m * m > x) {
+      r = m - 1;
+    } else {
+      l = m + 1;
+    }
   }
 
   return r;
-};
+}

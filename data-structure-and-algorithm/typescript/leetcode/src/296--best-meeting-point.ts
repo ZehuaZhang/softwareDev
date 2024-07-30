@@ -39,7 +39,6 @@ function minTotalDistance(grid: number[][]) {
     }
   }
 
-
   for (let j = 0; j < n; ++j) {
     for (let i = 0; i < m; ++i) {
       if (grid[i][j]) {

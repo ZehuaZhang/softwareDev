@@ -11,7 +11,10 @@ Output: One possible answer is [3,5,1,6,2,4]
 
 function wiggleSort(nums: number[]): void {
   for (let i = 1; i < nums.length; ++i) {
-    if ((i % 1 && nums[i] < nums[i - 1]) || (!(i % 1) && nums[i] > nums[i - 1])) {
+    if (
+      (i % 1 && nums[i] < nums[i - 1]) ||
+      (!(i % 1) && nums[i] > nums[i - 1])
+    ) {
       swap(i, i - 1);
     }
   }

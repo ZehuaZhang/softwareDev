@@ -28,11 +28,22 @@ Constraints:
 -104 <= by1 <= by2 <= 104
 */
 
-function computeArea(ax1: number, ay1: number, ax2: number, ay2: number, bx1: number, by1: number, bx2: number, by2: number): number {
+function computeArea(
+  ax1: number,
+  ay1: number,
+  ax2: number,
+  ay2: number,
+  bx1: number,
+  by1: number,
+  bx2: number,
+  by2: number
+): number {
   const l = Math.max(ax1, bx1);
   const b = Math.max(ay1, by1);
   const r = Math.max(Math.min(ax2, bx2), l);
   const t = Math.max(Math.min(ay2, by2), b);
 
-  return (ax2 - ax1) * (ay2 - ay1) + (bx2 - bx1) * (by2 - by1) - (r - l) * (t - b);
-};
+  return (
+    (ax2 - ax1) * (ay2 - ay1) + (bx2 - bx1) * (by2 - by1) - (r - l) * (t - b)
+  );
+}

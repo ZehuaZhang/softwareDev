@@ -44,7 +44,7 @@ function longestConsecutive(root: TreeNode | null) {
 
   return rslt;
 
-  function dfs(node: TreeNode| null, v: number, l: number) {
+  function dfs(node: TreeNode | null, v: number, l: number) {
     if (!node) {
       return;
     }

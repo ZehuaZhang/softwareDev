@@ -28,23 +28,23 @@ function merge(intervals: number[][]): number[][] {
   const n = intervals.length;
 
   intervals.sort(([s1, e1], [s2, e2]) => {
-      if (s1 === s2) {
-          return e1 - e2;
-      }
-      return s1 - s2;
-  })
+    if (s1 === s2) {
+      return e1 - e2;
+    }
+    return s1 - s2;
+  });
 
   const rslt: number[][] = n ? [intervals[0]] : [];
   for (let i = 1; i < n; ++i) {
-      const [s1, e1] = rslt[rslt.length - 1];
-      const [s2, e2] = intervals[i];
+    const [s1, e1] = rslt[rslt.length - 1];
+    const [s2, e2] = intervals[i];
 
-      if (e1 < s2) {
-          rslt.push(intervals[i]);
-      } else {
-          rslt[rslt.length - 1][1] = Math.max(e1, e2);
-      }
+    if (e1 < s2) {
+      rslt.push(intervals[i]);
+    } else {
+      rslt[rslt.length - 1][1] = Math.max(e1, e2);
+    }
   }
 
   return rslt;
-};
+}

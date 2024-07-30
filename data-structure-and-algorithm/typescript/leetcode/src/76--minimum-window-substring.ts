@@ -43,26 +43,25 @@ function minWindow(s: string, t: string): string {
 
   let cnts = Array(256).fill(0);
   for (const c of t) {
-      ++cnts[c.charCodeAt(0)];
+    ++cnts[c.charCodeAt(0)];
   }
 
   let [rL, rR] = [-1, n];
   let cnt = t.length;
   for (let l = 0, r = 0; r < n; ++r) {
-      if (--cnts[s.charCodeAt(r)] >= 0) {
-          --cnt;
-      }
+    if (--cnts[s.charCodeAt(r)] >= 0) {
+      --cnt;
+    }
 
-      for (; !cnt; ++l) {
-          if (r - l < rR - rL) {
-              [rL, rR] = [l, r];
-
-          }
-          if (++cnts[s.charCodeAt(l)] >= 1) {
-              ++cnt;
-          }
+    for (; !cnt; ++l) {
+      if (r - l < rR - rL) {
+        [rL, rR] = [l, r];
       }
+      if (++cnts[s.charCodeAt(l)] >= 1) {
+        ++cnt;
+      }
+    }
   }
 
-  return rL === -1 ? '' : s.substring(rL, rR + 1);
-};
+  return rL === -1 ? "" : s.substring(rL, rR + 1);
+}

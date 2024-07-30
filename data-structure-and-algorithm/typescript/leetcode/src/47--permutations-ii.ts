@@ -33,22 +33,22 @@ function permuteUnique(nums: number[]): number[][] {
   nums.sort((a, b) => a - b);
 
   dfs();
-  
+
   return rslt;
 
   function dfs() {
-      if (path.length === n) {
-          return rslt.push([...path]);
-      }
+    if (path.length === n) {
+      return rslt.push([...path]);
+    }
 
-      for (let i = 0; i < n; ++i) {
-          if (!seen[i] && (i === 0 || seen[i - 1] || nums[i] !== nums[i - 1])) {
-              seen[i] = true;
-              path.push(nums[i]);
-              dfs();
-              path.pop();
-              seen[i] = false;
-          }
+    for (let i = 0; i < n; ++i) {
+      if (!seen[i] && (i === 0 || seen[i - 1] || nums[i] !== nums[i - 1])) {
+        seen[i] = true;
+        path.push(nums[i]);
+        dfs();
+        path.pop();
+        seen[i] = false;
       }
+    }
   }
-};
+}

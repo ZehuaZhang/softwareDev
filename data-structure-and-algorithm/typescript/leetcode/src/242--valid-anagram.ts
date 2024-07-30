@@ -28,18 +28,18 @@ Follow up: What if the inputs contain Unicode characters? How would you adapt yo
 
 function isAnagram(s: string, t: string): boolean {
   if (s.length !== t.length) {
-      return false;
+    return false;
   }
   const cnts = Array(256).fill(0);
   for (const c of s) {
-      ++cnts[c.charCodeAt(0)];
+    ++cnts[c.charCodeAt(0)];
   }
 
   for (const c of t) {
-      if (--cnts[c.charCodeAt(0)] < 0) {
-          return false;
-      }
+    if (--cnts[c.charCodeAt(0)] < 0) {
+      return false;
+    }
   }
 
   return true;
-};
+}

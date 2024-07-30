@@ -29,7 +29,7 @@ The number of nodes in the tree is in the range [0, 100].
 
 function invertTree(root: TreeNode | null): TreeNode | null {
   if (!root) {
-      return null;
+    return null;
   }
 
   let l = invertTree(root.left);
@@ -39,4 +39,4 @@ function invertTree(root: TreeNode | null): TreeNode | null {
   root.left = r;
 
   return root;
-};
+}

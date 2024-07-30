@@ -50,9 +50,9 @@ Follow up: If this function is called many times, how would you optimize it?
 function hammingWeight(n: number): number {
   let rslt = 0;
   while (n) {
-      rslt += n & 1;
-      n >>= 1;
+    rslt += n & 1;
+    n >>= 1;
   }
 
   return rslt;
-};
+}

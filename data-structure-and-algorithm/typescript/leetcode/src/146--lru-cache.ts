@@ -48,30 +48,30 @@ class LRUCache {
   cap: number;
   map: Map<number, number>;
   constructor(capacity: number) {
-      this.cap = capacity;
-      this.map = new Map<number, number>();
+    this.cap = capacity;
+    this.map = new Map<number, number>();
   }
 
   get(key: number): number {
-      if (!this.map.has(key)) {
-          return -1;
-      }
+    if (!this.map.has(key)) {
+      return -1;
+    }
 
-      const val = this.map.get(key);
+    const val = this.map.get(key);
 
-      this.map.delete(key);
-      this.map.set(key, val);
+    this.map.delete(key);
+    this.map.set(key, val);
 
-      return val;
+    return val;
   }
 
   put(key: number, val: number): void {
-      if (this.map.size === this.cap && !this.map.has(key)) {
-          const keyDel = this.map.keys().next().value;
-          this.map.delete(keyDel);
-      }
+    if (this.map.size === this.cap && !this.map.has(key)) {
+      const keyDel = this.map.keys().next().value;
+      this.map.delete(keyDel);
+    }
 
-      this.map.delete(key);
-      this.map.set(key, val);
+    this.map.delete(key);
+    this.map.set(key, val);
   }
 }

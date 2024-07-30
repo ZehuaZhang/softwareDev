@@ -41,28 +41,28 @@ function findOrder(numCourses: number, prerequisites: number[][]): number[] {
   const inDgr: number[] = Array(n).fill(0);
 
   for (const [adv, bsc] of prerequisites) {
-      graph[bsc].push(adv);
-      ++inDgr[adv];
+    graph[bsc].push(adv);
+    ++inDgr[adv];
   }
 
   const rslt: number[] = [];
   const q: number[] = [];
 
   for (let i = 0; i < n; ++i) {
-      if (!inDgr[i]) {
-          q.push(i);
-      }
+    if (!inDgr[i]) {
+      q.push(i);
+    }
   }
 
   while (q.length) {
-      const c = q.shift();
-      rslt.push(c);
-      for (const a of graph[c]) {
-          if (--inDgr[a] === 0) {
-              q.push(a);
-          }
+    const c = q.shift();
+    rslt.push(c);
+    for (const a of graph[c]) {
+      if (--inDgr[a] === 0) {
+        q.push(a);
       }
+    }
   }
 
   return rslt.length === n ? rslt : [];
-};
+}

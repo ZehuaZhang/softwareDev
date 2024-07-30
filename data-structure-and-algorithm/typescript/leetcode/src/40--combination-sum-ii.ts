@@ -48,19 +48,19 @@ function combinationSum2(candidates: number[], target: number): number[][] {
   return rslt;
 
   function dfs(i0: number, sum: number) {
-      if (sum === 0) {
-          return rslt.push([...path]);
-      }
+    if (sum === 0) {
+      return rslt.push([...path]);
+    }
 
-      for (let i = i0; i < n; ++i) {
-          if (i === i0 || candidates[i] !== candidates[i - 1]) {
-              const d = sum - candidates[i];
-              if (d >= 0) {
-                  path.push(candidates[i]);
-                  dfs(i + 1, d);
-                  path.pop();
-              }
-          }
+    for (let i = i0; i < n; ++i) {
+      if (i === i0 || candidates[i] !== candidates[i - 1]) {
+        const d = sum - candidates[i];
+        if (d >= 0) {
+          path.push(candidates[i]);
+          dfs(i + 1, d);
+          path.pop();
+        }
       }
+    }
   }
-};
+}

@@ -31,12 +31,12 @@ function majorityElement(nums: number[]): number {
   let rslt = 0;
   let cnt = 0;
   for (const num of nums) {
-      if (!cnt) {
-          rslt = num;
-      }
+    if (!cnt) {
+      rslt = num;
+    }
 
-      cnt += rslt === num ? 1 : -1;
+    cnt += rslt === num ? 1 : -1;
   }
 
   return rslt;
-};
+}

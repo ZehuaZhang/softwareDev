@@ -35,9 +35,10 @@ function trailingZeroes(n: number): number {
   let rslt = 0;
 
   while (n) {
-      rslt += Math.trunc(n / 5);
-      n = Math.trunc(n / 5);
+    const cnt = Math.trunc(n / 5);
+    rslt += cnt;
+    n = cnt;
   }
 
   return rslt;
-};
+}

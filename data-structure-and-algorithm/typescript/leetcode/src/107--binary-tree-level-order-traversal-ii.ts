@@ -34,16 +34,16 @@ function levelOrderBottom(root: TreeNode | null): number[][] {
   return rslt.reverse();
 
   function dfs(node: TreeNode | null, lvl: number) {
-      if (!node) {
-          return;
-      }
+    if (!node) {
+      return;
+    }
 
-      if (rslt.length === lvl) {
-          rslt.push([]);
-      }
+    if (rslt.length === lvl) {
+      rslt.push([]);
+    }
 
-      rslt[lvl].push(node.val);
-      dfs(node.left, lvl + 1);
-      dfs(node.right, lvl + 1);
+    rslt[lvl].push(node.val);
+    dfs(node.left, lvl + 1);
+    dfs(node.right, lvl + 1);
   }
-};
+}

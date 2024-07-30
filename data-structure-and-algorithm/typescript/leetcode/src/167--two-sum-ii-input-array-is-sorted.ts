@@ -38,16 +38,16 @@ The tests are generated such that there is exactly one solution.
 */
 
 function twoSum(numbers: number[], target: number): number[] {
-  for (let l = 0, r = numbers.length - 1; l < r;) {
-      const [a, b] = [numbers[l], numbers[r]];
-      if (a + b === target) {
-          return [l + 1, r + 1];
-      } else if (a + b > target) {
-          --r;
-      } else {
-          ++l;
-      }
+  for (let l = 0, r = numbers.length - 1; l < r; ) {
+    const [a, b] = [numbers[l], numbers[r]];
+    if (a + b === target) {
+      return [l + 1, r + 1];
+    } else if (a + b > target) {
+      --r;
+    } else {
+      ++l;
+    }
   }
 
   return [-1, -1];
-};
+}

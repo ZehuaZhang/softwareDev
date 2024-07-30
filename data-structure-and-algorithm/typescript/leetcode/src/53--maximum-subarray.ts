@@ -36,9 +36,9 @@ function maxSubArray(nums: number[]): number {
   let rslt = -Infinity;
 
   for (const num of nums) {
-      curr = Math.max(num + curr, num);
-      rslt = Math.max(rslt, curr);
+    curr = Math.max(num + curr, num);
+    rslt = Math.max(rslt, curr);
   }
 
   return rslt;
-};
+}

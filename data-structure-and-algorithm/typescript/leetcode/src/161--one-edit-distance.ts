@@ -33,7 +33,7 @@ Explanation: We can replace '0' with '1' to get  _t._
 function isOneEditDistance(s: string, t: string) {
   const [m, n] = [s.length, t.length];
 
-  if (Math.abs(m - n) <= 1) {
+  if (Math.abs(m - n) > 1) {
     return false;
   }
 
@@ -42,7 +42,7 @@ function isOneEditDistance(s: string, t: string) {
       if (m === n) {
         return s.substring(i + 1) === t.substring(i + 1);
       } else if (m < n) {
-        return s.substring(i) === t.substring(i + 1); 
+        return s.substring(i) === t.substring(i + 1);
       } else {
         return s.substring(i + 1) === t.substring(i);
       }

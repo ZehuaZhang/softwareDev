@@ -29,20 +29,22 @@ function multiply(num1: string, num2: string): string {
   const rslt: number[] = Array(m + n).fill(0);
 
   for (let i = m - 1; i >= 0; --i) {
-      for (let j = n - 1; j >= 0; --j) {
-          const d = Number(num1[i]) * Number(num2[j]);
-          const s = d + rslt[i + j + 1];
-          rslt[i + j + 1] = s % 10;
-          rslt[i + j] += Math.trunc(s / 10);
-      }
+    for (let j = n - 1; j >= 0; --j) {
+      const d = Number(num1[i]) * Number(num2[j]);
+      const s = d + rslt[i + j + 1];
+      rslt[i + j + 1] = s % 10;
+      rslt[i + j] += Math.trunc(s / 10);
+    }
   }
 
   let leadZero = true;
-  return rslt.filter((d, i) => {
+  return rslt
+    .filter((d, i) => {
       if (d) {
-          leadZero = false;
-          return true;
+        leadZero = false;
+        return true;
       }
       return !leadZero || i === rslt.length - 1;
-  }).join('');
-};
+    })
+    .join("");
+}

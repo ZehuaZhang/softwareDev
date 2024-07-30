@@ -41,13 +41,13 @@ function reverseWords(s: string): string {
   const n = s.length;
   const rslt: string[] = [];
   for (let i = n - 1; i >= 0; --i) {
-      if (s[i] !== ' ') {
-          let j = i;
-          for (; j >= 0 && s[j] !== ' '; --j);
-          rslt.push(s.substring(j + 1, i + 1));
-          i = j;
-      }
+    if (s[i] !== " ") {
+      let j = i;
+      for (; j >= 0 && s[j] !== " "; --j);
+      rslt.push(s.substring(j + 1, i + 1));
+      i = j;
+    }
   }
-  
-  return rslt.join(' ');
-};
+
+  return rslt.join(" ");
+}

@@ -35,15 +35,15 @@ function combine(n: number, k: number): number[][] {
   return rslt;
 
   function dfs(i0: number) {
-      if (path.length === k) {
-          return rslt.push([...path]);
+    if (path.length === k) {
+      return rslt.push([...path]);
+    }
+    for (let i = i0; i <= n; ++i) {
+      if (path.length < k) {
+        path.push(i);
+        dfs(i + 1);
+        path.pop();
       }
-      for (let i = i0; i <= n; ++i) {
-          if (path.length < k) {
-              path.push(i);
-              dfs(i + 1);
-              path.pop();
-          }
-      }
+    }
   }
-};
+}

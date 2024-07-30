@@ -46,30 +46,29 @@ class MyQueue {
   is: number[];
   os: number[];
   constructor() {
-      this.is = [];
-      this.os = [];
+    this.is = [];
+    this.os = [];
   }
 
   push(x: number): void {
-      this.is.push(x);
+    this.is.push(x);
   }
 
   pop(): number {
-      this.peek();
-      return this.os.pop();
+    this.peek();
+    return this.os.pop();
   }
 
   peek(): number {
-      if (!this.os.length) {
-          while (this.is.length) {
-              this.os.push(this.is.pop());
-          }
+    if (!this.os.length) {
+      while (this.is.length) {
+        this.os.push(this.is.pop());
       }
-      return this.os[this.os.length - 1];
+    }
+    return this.os[this.os.length - 1];
   }
 
   empty(): boolean {
-      return !this.is.length && !this.os.length;
+    return !this.is.length && !this.os.length;
   }
 }
-

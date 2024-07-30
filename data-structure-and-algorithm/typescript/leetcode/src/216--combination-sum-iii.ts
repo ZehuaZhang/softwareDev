@@ -60,17 +60,17 @@ function combinationSum3(k: number, n: number): number[][] {
   return rslt;
 
   function dfs(i0: number, sum: number) {
-      if (!sum && path.length === k) {
-          return rslt.push([...path]);
-      }
+    if (!sum && path.length === k) {
+      return rslt.push([...path]);
+    }
 
-      for (let i = i0; i <= 9; ++i) {
-          const diff = sum - i;
-          if (path.length < k && diff >= 0) {
-              path.push(i);
-              dfs(i + 1, diff);
-              path.pop();
-          } 
+    for (let i = i0; i <= 9; ++i) {
+      const diff = sum - i;
+      if (path.length < k && diff >= 0) {
+        path.push(i);
+        dfs(i + 1, diff);
+        path.pop();
       }
+    }
   }
-};
+}

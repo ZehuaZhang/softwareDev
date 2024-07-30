@@ -54,24 +54,24 @@ function isValidSudoku(board: string[][]): boolean {
   const seen = new Set<string>();
 
   for (let i = 0; i < m; ++i) {
-      for (let j = 0; j < n; ++j) {
-          const s = board[i][j];
-          if (s !== '.') {
-              const d = '(' + s + '}';
-              const r = i + d;
-              const c = d + j
-              const b = Math.trunc(i / 3) + d + Math.trunc(j / 3);
+    for (let j = 0; j < n; ++j) {
+      const s = board[i][j];
+      if (s !== ".") {
+        const d = "(" + s + ")";
+        const r = i + d;
+        const c = d + j;
+        const b = Math.trunc(i / 3) + d + Math.trunc(j / 3);
 
-              if (seen.has(r) || seen.has(c) || seen.has(b)) {
-                  return false;
-              }
+        if (seen.has(r) || seen.has(c) || seen.has(b)) {
+          return false;
+        }
 
-              seen.add(r);
-              seen.add(c);
-              seen.add(b);
-          }
+        seen.add(r);
+        seen.add(c);
+        seen.add(b);
       }
+    }
   }
 
   return true;
-};
+}

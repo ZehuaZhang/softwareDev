@@ -50,13 +50,16 @@ intersectVal == listA[skipA + 1] == listB[skipB + 1] if listA and listB intersec
 Follow up: Could you write a solution that runs in O(n) time and use only O(1) memory?
 */
 
-function getIntersectionNode(headA: ListNode | null, headB: ListNode | null): ListNode | null {
+function getIntersectionNode(
+  headA: ListNode | null,
+  headB: ListNode | null
+): ListNode | null {
   let a = headA;
   let b = headB;
-  for (; a !== b;) {
-      a = a ? a.next : headB;
-      b = b ? b.next : headA;
+  for (; a !== b; ) {
+    a = a ? a.next : headB;
+    b = b ? b.next : headA;
   }
 
   return a;
-};
+}

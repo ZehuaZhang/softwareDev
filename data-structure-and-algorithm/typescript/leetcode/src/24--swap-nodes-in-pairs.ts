@@ -32,14 +32,14 @@ function swapPairs(head: ListNode | null): ListNode | null {
   let curr = head;
 
   while (curr && curr.next) {
-      const next = curr.next;
-      curr.next = next.next;
-      next.next = curr;
-      prev.next = next;
+    const next = curr.next;
+    curr.next = next.next;
+    next.next = curr;
+    prev.next = next;
 
-      prev = curr;
-      curr = curr.next;
+    prev = curr;
+    curr = curr.next;
   }
 
   return dummy.next;
-};
+}

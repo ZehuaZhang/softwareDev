@@ -31,31 +31,31 @@ function solveNQueens(n: number): string[][] {
 
   const path: number[] = [];
   const rslt: string[][] = [];
-  
+
   dfs();
 
   return rslt;
 
   function dfs() {
-      const row = path.length;
-      if (row === n) {
-          return rslt.push(
-              path.map(r => {
-                  const a = [...'.'.repeat(n)];
-                  a[r] = 'Q';
-                  return a.join('');
-              })
-          )
-      }
+    const row = path.length;
+    if (row === n) {
+      return rslt.push(
+        path.map((r) => {
+          const a = [...".".repeat(n)];
+          a[r] = "Q";
+          return a.join("");
+        })
+      );
+    }
 
-      for (let i = 0; i < n; ++i) {
-          if (!cols[i] && !diag1[i + row] && !diag2[i - row + n - 1]) {
-              cols[i] = diag1[i + row] = diag2[i - row + n - 1] = true;
-              path.push(i);
-              dfs();
-              path.pop();
-              cols[i] = diag1[i + row] = diag2[i - row + n - 1] = false;
-          }
+    for (let i = 0; i < n; ++i) {
+      if (!cols[i] && !diag1[i + row] && !diag2[i - row + n - 1]) {
+        cols[i] = diag1[i + row] = diag2[i - row + n - 1] = true;
+        path.push(i);
+        dfs();
+        path.pop();
+        cols[i] = diag1[i + row] = diag2[i - row + n - 1] = false;
       }
+    }
   }
-};
+}

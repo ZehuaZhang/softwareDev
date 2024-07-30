@@ -29,25 +29,36 @@ digits[i] is a digit in the range ['2', '9'].
 */
 
 function letterCombinations(digits: string): string[] {
-  const map = ['_', '', 'abc', 'def', 'ghi', 'jkl', 'mno', 'pqrs', 'tuv', 'wxyz'];
+  const map = [
+    "_",
+    "",
+    "abc",
+    "def",
+    "ghi",
+    "jkl",
+    "mno",
+    "pqrs",
+    "tuv",
+    "wxyz",
+  ];
   const n = digits.length;
 
   const rslt: string[] = [];
   const path: string[] = [];
   dfs(0);
 
-  return rslt.filter(Boolean)
+  return rslt.filter(Boolean);
 
   function dfs(i: number) {
-      if (i === n) {
-          rslt.push(path.join(''));
-          return;
-      }
-      const idx = Number(digits[i]);
-      for (const c of map[idx]) {
-          path.push(c);
-          dfs(i + 1);
-          path.pop();
-      }
+    if (i === n) {
+      rslt.push(path.join(""));
+      return;
+    }
+    const idx = Number(digits[i]);
+    for (const c of map[idx]) {
+      path.push(c);
+      dfs(i + 1);
+      path.pop();
+    }
   }
-};
+}

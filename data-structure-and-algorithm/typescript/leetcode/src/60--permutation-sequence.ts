@@ -36,33 +36,36 @@ Constraints:
 */
 
 function getPermutation(n: number, k: number): string {
-  let rslt: string = '';
+  let rslt: string = "";
 
-  dfs(0, [...Array(n)].map((_, i) => i + 1));
+  dfs(
+    0,
+    [...Array(n)].map((_, i) => i + 1)
+  );
 
   return rslt;
 
   function dfs(i0: number, path: number[]) {
-      if (!k) {
-          return;
-      }
+    if (!k) {
+      return;
+    }
 
-      if (i0 === n - 1) {
-          if (--k === 0) {
-              rslt = path.join('');
-          }
-          return;
+    if (i0 === n - 1) {
+      if (--k === 0) {
+        rslt = path.join("");
       }
+      return;
+    }
 
-      path.splice(i0, path.length, ...path.slice(i0).sort((a, b) => a - b));
-      for (let i = i0; i < n; ++i) {
-          swap(path, i, i0);
-          dfs(i0 + 1, [...path]);
-          swap(path, i, i0);
-      }
+    path.splice(i0, path.length, ...path.slice(i0).sort((a, b) => a - b));
+    for (let i = i0; i < n; ++i) {
+      swap(path, i, i0);
+      dfs(i0 + 1, [...path]);
+      swap(path, i, i0);
+    }
   }
 
   function swap(num: number[], i: number, j: number) {
-      [num[i], num[j]] = [num[j], num[i]];
+    [num[i], num[j]] = [num[j], num[i]];
   }
-};
+}

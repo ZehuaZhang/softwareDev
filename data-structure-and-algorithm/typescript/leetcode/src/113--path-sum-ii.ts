@@ -42,19 +42,19 @@ function pathSum(root: TreeNode | null, targetSum: number): number[][] {
   return rslt;
 
   function dfs(node: TreeNode | null, sum: number) {
-      if (!node) {
-          return;
-      }
+    if (!node) {
+      return;
+    }
 
-      path.push(node.val)
-      if (!node.left && !node.right) {
-          if (sum === node.val) {
-              rslt.push([...path]);
-          }
+    path.push(node.val);
+    if (!node.left && !node.right) {
+      if (sum === node.val) {
+        rslt.push([...path]);
       }
+    }
 
-      dfs(node.left, sum - node.val);
-      dfs(node.right, sum - node.val);
-      path.pop();
+    dfs(node.left, sum - node.val);
+    dfs(node.right, sum - node.val);
+    path.pop();
   }
-};
+}

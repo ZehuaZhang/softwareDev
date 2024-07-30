@@ -35,20 +35,20 @@ function wordPattern(pattern: string, s: string): boolean {
   const m1 = new Map<string, number>();
   const m2 = new Map<string, number>();
 
-  const ws = s.split(' ');
+  const ws = s.split(" ");
   const n = pattern.length;
   if (ws.length !== n) {
-      return false;
+    return false;
   }
 
   for (let i = 0; i < n; ++i) {
-      if (m1.get(pattern[i]) !== m2.get(ws[i])) {
-          return false;
-      }
+    if (m1.get(pattern[i]) !== m2.get(ws[i])) {
+      return false;
+    }
 
-      m1.set(pattern[i], i);
-      m2.set(ws[i], i);
+    m1.set(pattern[i], i);
+    m2.set(ws[i], i);
   }
 
   return true;
-};
+}

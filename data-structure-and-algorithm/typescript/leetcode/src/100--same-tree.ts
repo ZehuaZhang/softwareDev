@@ -32,12 +32,12 @@ The number of nodes in both trees is in the range [0, 100].
 
 function isSameTree(p: TreeNode | null, q: TreeNode | null): boolean {
   if (!p || !q) {
-      return p === q;
+    return p === q;
   }
 
   if (p.val !== q.val) {
-      return false;
+    return false;
   }
 
   return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
-};
+}

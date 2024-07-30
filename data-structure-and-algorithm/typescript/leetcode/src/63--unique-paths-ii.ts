@@ -44,13 +44,13 @@ function uniquePathsWithObstacles(obstacleGrid: number[][]): number {
   const dp = Array(n).fill(0);
 
   dp[0] = obstacleGrid[0][0] ? 0 : 1;
-  
+
   for (let i = 0; i < m; ++i) {
-      dp[0] = obstacleGrid[i][0] ? 0 : dp[0];
-      for (let j = 1; j < n; ++j) {
-          dp[j] = obstacleGrid[i][j] ? 0 : dp[j] + dp[j - 1];
-      }
+    dp[0] = obstacleGrid[i][0] ? 0 : dp[0];
+    for (let j = 1; j < n; ++j) {
+      dp[j] = obstacleGrid[i][j] ? 0 : dp[j] + dp[j - 1];
+    }
   }
 
   return dp[n - 1];
-};
+}

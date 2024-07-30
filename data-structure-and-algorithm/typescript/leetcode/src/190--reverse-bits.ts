@@ -32,9 +32,9 @@ Follow up: If this function is called many times, how would you optimize it?
 function reverseBits(n: number): number {
   let rslt = 0;
   for (let i = 0; i < 32; ++i) {
-      rslt = rslt << 1 | n & 1;
-      n >>= 1;
+    rslt = (rslt << 1) | (n & 1);
+    n >>= 1;
   }
 
   return rslt >>> 0;
-};
+}

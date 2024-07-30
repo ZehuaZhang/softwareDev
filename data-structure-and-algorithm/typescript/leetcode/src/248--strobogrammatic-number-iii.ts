@@ -17,14 +17,18 @@ Because the range might be a large number, the low and high numbers are represen
 function strobogrammaticInRange(low: string, high: string): number {
   let rslt = 0;
 
-  for (const m of ['', '0', '1', '8']) {
+  for (const m of ["", "0", "1", "8"]) {
     dfs(m);
   }
 
   return rslt;
 
   function dfs(m: string) {
-    if (Number(m) >= Number(low) && Number(m) <= Number(high) && String(Number(m)) === m) {
+    if (
+      Number(m) >= Number(low) &&
+      Number(m) <= Number(high) &&
+      String(Number(m)) === m
+    ) {
       ++rslt;
     }
 
@@ -33,11 +37,11 @@ function strobogrammaticInRange(low: string, high: string): number {
     }
 
     for (const [l, r] of [
-      ['0', '0'],
-      ['1', '1'],
-      ['8', '8'],
-      ['6', '9'],
-      ['9', '6']
+      ["0", "0"],
+      ["1", "1"],
+      ["8", "8"],
+      ["6", "9"],
+      ["9", "6"],
     ]) {
       dfs(l + m + r);
     }

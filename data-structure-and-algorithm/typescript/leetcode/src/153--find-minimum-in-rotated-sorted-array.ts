@@ -41,14 +41,14 @@ nums is sorted and rotated between 1 and n times.
 
 function findMin(nums: number[]): number {
   let [l, r] = [0, nums.length - 1];
-  for (; l < r;) {
-      const m = l + Math.trunc((r - l) / 2);
-      if (nums[m] < nums[r]) {
-          r = m;
-      } else {
-          l = m + 1;
-      }
+  for (; l < r; ) {
+    const m = l + Math.trunc((r - l) / 2);
+    if (nums[m] < nums[r]) {
+      r = m;
+    } else {
+      l = m + 1;
+    }
   }
 
   return nums[l];
-};
+}

@@ -25,7 +25,7 @@ Each string does not contain leading zeros except for the zero itself.
 function addBinary(a: string, b: string): string {
   const rslt: number[] = [];
 
-  for (let i = a.length - 1, j = b.length - 1, c = 0; i >= 0 || j >= 0 || c;) {
+  for (let i = a.length - 1, j = b.length - 1, c = 0; i >= 0 || j >= 0 || c; ) {
     const x = i >= 0 ? Number(a[i--]) : 0;
     const y = j >= 0 ? Number(b[j--]) : 0;
     const s = x + y + c;
@@ -33,5 +33,5 @@ function addBinary(a: string, b: string): string {
     c = Math.trunc(s / 2);
   }
 
-  return rslt.reverse().join('');
+  return rslt.reverse().join("");
 }

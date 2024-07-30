@@ -33,21 +33,23 @@ function majorityElement(nums: number[]): number[] {
   let [cnt1, cnt2] = [0, 0];
 
   for (const n of nums) {
-      if (c1 === n) {
-          ++cnt1;
-      } else if (c2 === n) {
-          ++cnt2;
-      } else if (!cnt1) {
-          c1 = n;
-          cnt1 = 1;
-      } else if (!cnt2) {
-          c2 = n;
-          cnt2 = 1;
-      } else {
-          --cnt1;
-          --cnt2;
-      }
+    if (c1 === n) {
+      ++cnt1;
+    } else if (c2 === n) {
+      ++cnt2;
+    } else if (!cnt1) {
+      c1 = n;
+      cnt1 = 1;
+    } else if (!cnt2) {
+      c2 = n;
+      cnt2 = 1;
+    } else {
+      --cnt1;
+      --cnt2;
+    }
   }
 
-  return [c1, c2].filter(n => nums.filter(num => num === n).length > nums.length / 3);
-};
+  return [c1, c2].filter(
+    (n) => nums.filter((num) => num === n).length > nums.length / 3
+  );
+}

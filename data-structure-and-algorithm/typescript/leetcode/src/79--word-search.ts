@@ -41,35 +41,45 @@ function exist(board: string[][], word: string): boolean {
   const seen = [...Array(m)].map(() => Array(n).fill(false));
 
   for (let i = 0; i < m; ++i) {
-      for (let j = 0; j < n; ++j) {
-          if (dfs(i, j, 0)) {
-              return true;
-          }
+    for (let j = 0; j < n; ++j) {
+      if (dfs(i, j, 0)) {
+        return true;
       }
+    }
   }
 
   return false;
 
   function dfs(x: number, y: number, idx: number) {
-      if (idx === word.length) {
-          return true;
+    if (idx === word.length) {
+      return true;
+    }
+
+    if (
+      x < 0 ||
+      x >= m ||
+      y < 0 ||
+      y >= n ||
+      seen[x][y] ||
+      board[x][y] !== word[idx]
+    ) {
+      return false;
+    }
+
+    seen[x][y] = true;
+
+    for (const [dx, dy] of [
+      [0, 1],
+      [0, -1],
+      [-1, 0],
+      [1, 0],
+    ]) {
+      if (dfs(dx + x, dy + y, idx + 1)) {
+        return true;
       }
+    }
 
-      if (x < 0 || x >= m || y < 0 || y >= n || seen[x][y] || board[x][y] !== word[idx]) {
-          return false;
-      }
-
-      let fnd = false;
-      seen[x][y] = true;
-
-      for (const [dx, dy] of [[0, 1], [0, -1], [-1, 0], [1, 0]]) {
-          if (dfs(dx + x, dy + y, idx + 1)) {
-              fnd = true;
-              break;
-          }
-      }
-
-      seen[x][y] = false;
-      return fnd;
+    seen[x][y] = false;
+    return false;
   }
-};
+}

@@ -34,20 +34,20 @@ function rob(nums: number[]): number {
   const n = nums.length;
 
   if (n === 1) {
-      return nums[0];
+    return nums[0];
   }
 
   return Math.max(find(0, n - 2), find(1, n - 1));
 
   function find(l: number, r: number) {
-      let a = 0;
-      let b = 0;
-      for (let i = l; i <= r; ++i) {
-          const tmp = Math.max(a + nums[i], b);
-          a = b;
-          b = tmp;
-      }
+    let a = 0;
+    let b = 0;
+    for (let i = l; i <= r; ++i) {
+      const tmp = Math.max(a + nums[i], b);
+      a = b;
+      b = tmp;
+    }
 
-      return b;
+    return b;
   }
-};
+}

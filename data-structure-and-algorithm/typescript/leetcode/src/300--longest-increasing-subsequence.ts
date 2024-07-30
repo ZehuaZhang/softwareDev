@@ -18,27 +18,27 @@ Follow up: Could you improve it to O(n log n) time complexity?
 function lengthOfLIS(nums: number[]): number {
   const rslt: number[] = [];
   for (const num of nums) {
-      const i = gtEq(num);
-      if (i === rslt.length) {
-          rslt.push(num);
-      } else {
-          rslt[i] = num;
-      }
+    const i = gtEq(num);
+    if (i === rslt.length) {
+      rslt.push(num);
+    } else {
+      rslt[i] = num;
+    }
   }
 
   return rslt.length;
 
   function gtEq(tgt: number) {
-      let [l, r] = [0, rslt.length - 1];
-      for (; l <= r;) {
-          const m = l + Math.trunc((r - l) / 2);
-          if (rslt[m] >= tgt) {
-              r = m - 1;
-          } else {
-              l = m + 1;
-          }
+    let [l, r] = [0, rslt.length - 1];
+    for (; l <= r; ) {
+      const m = l + Math.trunc((r - l) / 2);
+      if (rslt[m] >= tgt) {
+        r = m - 1;
+      } else {
+        l = m + 1;
       }
+    }
 
-      return l;
+    return l;
   }
-};
+}

@@ -32,17 +32,17 @@ Follow up: Recursive solution is trivial, could you do it iteratively?
 function inorderTraversal(root: TreeNode | null): number[] {
   const stk: TreeNode[] = [];
   const rslt: number[] = [];
-  
-  for (let curr = root; curr || stk.length;) {
-      if (curr) {
-          stk.push(curr);
-          curr = curr.left;
-      } else {
-          curr = stk.pop();
-          rslt.push(curr.val);
-          curr = curr.right;
-      }
+
+  for (let curr = root; curr || stk.length; ) {
+    if (curr) {
+      stk.push(curr);
+      curr = curr.left;
+    } else {
+      curr = stk.pop();
+      rslt.push(curr.val);
+      curr = curr.right;
+    }
   }
 
   return rslt;
-};
+}

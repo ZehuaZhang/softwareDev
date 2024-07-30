@@ -20,16 +20,20 @@ Output:
 
 function groupStrings(strs: string[]): string[][] {
   const map = new Map<string, string[]>();
-  const code = 'a'.charCodeAt(0);
+  const code = "a".charCodeAt(0);
   for (const s of strs) {
     const hash = [...s]
-      .map(c => String.fromCharCode((c.charCodeAt(0) - s.charCodeAt(0) + 26) % 26) + code)
-      .join('');
+      .map(
+        (c) =>
+          String.fromCharCode((c.charCodeAt(0) - s.charCodeAt(0) + 26) % 26) +
+          code
+      )
+      .join("");
     if (!map.has(hash)) {
       map.set(hash, []);
     }
     map.get(hash).push(s);
   }
 
-  return [...map.values()].map(ss => ss.sort());
+  return [...map.values()].map((ss) => ss.sort());
 }

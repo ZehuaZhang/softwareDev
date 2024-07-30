@@ -39,12 +39,12 @@ digits does not contain any leading 0's.
 
 function plusOne(digits: number[]): number[] {
   const rslt: number[] = [];
-  for (let i = digits.length - 1, c = 1; i >= 0 || c;) {
-      const d = i >= 0 ? digits[i--] : 0;
-      const s = c + d;
-      rslt.push(s % 10);
-      c = Math.trunc(s / 10);
+  for (let i = digits.length - 1, c = 1; i >= 0 || c; ) {
+    const d = i >= 0 ? digits[i--] : 0;
+    const s = c + d;
+    rslt.push(s % 10);
+    c = Math.trunc(s / 10);
   }
 
   return rslt.reverse();
-};
+}

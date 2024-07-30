@@ -27,12 +27,14 @@ function largestNumber(nums: number[]): string {
   const rslt = nums.sort((a, b) => `${b}${a}`.localeCompare(`${a}${b}`));
 
   let leadZero = true;
-  return rslt.filter((d, i) => {
+  return rslt
+    .filter((d, i) => {
       if (d) {
-          leadZero = false;
-          return true;
+        leadZero = false;
+        return true;
       }
 
       return !leadZero || i === rslt.length - 1;
-  }).join('');
-};
+    })
+    .join("");
+}

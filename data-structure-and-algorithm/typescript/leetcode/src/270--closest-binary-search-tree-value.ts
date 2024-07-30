@@ -20,10 +20,7 @@ Input: root = [4,2,5,1,3], target = 3.714286
 Output: 4
 */
 
-function closestValueIterative(
-  node: TreeNode,
-  target: number
-): number {
+function closestValueIterative(node: TreeNode, target: number): number {
   let rslt = node.val;
 
   while (node) {

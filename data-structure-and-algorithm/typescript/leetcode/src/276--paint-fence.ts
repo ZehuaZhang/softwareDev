@@ -29,7 +29,8 @@ function numWays(n: number, k: number) {
     return 0;
   }
 
-  let s = 0, d = k;
+  let s = 0,
+    d = k;
   for (let i = 2; i <= n; ++i) {
     const t = d;
     d = (s + d) * (k - 1);

@@ -30,14 +30,14 @@ function largestRectangleArea(heights: number[]): number {
   const idx: number[] = [];
   let rslt = 0;
 
-  for (let i = 0; i < h.length;) {
-      if (!idx.length || h[i] > h[idx[idx.length - 1]]) {
-          idx.push(i++);
-      } else {
-          const l = h[idx.pop()];
-          const w = idx.length ? i - idx[idx.length - 1] - 1 : i;
-          rslt = Math.max(rslt, l * w);
-      }
+  for (let i = 0; i < h.length; ) {
+    if (!idx.length || h[i] > h[idx[idx.length - 1]]) {
+      idx.push(i++);
+    } else {
+      const l = h[idx.pop()];
+      const w = idx.length ? i - idx[idx.length - 1] - 1 : i;
+      rslt = Math.max(rslt, l * w);
+    }
   }
 
   return rslt;

@@ -54,20 +54,20 @@ function summaryRanges(nums: number[]): string[] {
   const n = nums.length;
   const rslt: string[] = [];
   if (!n) {
-      return rslt;
+    return rslt;
   }
 
-  let [l, r] = [nums[0], nums[0]]
+  let [l, r] = [nums[0], nums[0]];
   for (let i = 1; i <= n; ++i) {
-      if (i < n && r + 1 === nums[i]) {
-          r = nums[i];
-      } else {
-          rslt.push(l === r ? String(l) : [l, r].join('->'));
-          if (i < n) {
-              l = r = nums[i];
-          }
+    if (i < n && r + 1 === nums[i]) {
+      r = nums[i];
+    } else {
+      rslt.push(l === r ? String(l) : [l, r].join("->"));
+      if (i < n) {
+        l = r = nums[i];
       }
+    }
   }
 
   return rslt;
-};
+}

@@ -32,7 +32,7 @@ As an added challenge, try to code it using only iterators in C++ or iterators i
 class Vector2D {
   i: number;
   j: number;
-  arr: number[][]
+  arr: number[][];
   constructor(array: number[][]) {
     this.i = 0;
     this.j = 0;
@@ -51,6 +51,10 @@ class Vector2D {
   }
 
   adjust(): void {
-    for (;this.i !== this.arr.length && this.j === this.arr[this.i].length; ++this.i, this.j = 0);
+    for (
+      ;
+      this.i !== this.arr.length && this.j === this.arr[this.i].length;
+      ++this.i, this.j = 0
+    );
   }
 }

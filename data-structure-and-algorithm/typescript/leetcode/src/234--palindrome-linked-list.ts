@@ -27,31 +27,31 @@ Follow up: Could you do it in O(n) time and O(1) space?
 */
 
 function isPalindrome(head: ListNode | null): boolean {
-  let slow  = head;
+  let slow = head;
   let fast = head;
   for (; fast && fast.next; slow = slow.next, fast = fast.next.next);
   if (fast) {
-      slow = slow.next;
+    slow = slow.next;
   }
 
   let head2 = reverse(slow);
 
   for (; head2; head = head.next, head2 = head2.next) {
-      if (head.val !== head2.val) {
-          return false;
-      }
+    if (head.val !== head2.val) {
+      return false;
+    }
   }
 
   return true;
 
   function reverse(node: ListNode | null) {
-      let prev = null;
-      while (node) {
-          const next = node.next;
-          node.next = prev;
-          prev = node;
-          node = next;
-      }
-      return prev;
+    let prev = null;
+    while (node) {
+      const next = node.next;
+      node.next = prev;
+      prev = node;
+      node = next;
+    }
+    return prev;
   }
-};
+}

@@ -35,19 +35,19 @@ function reverseKGroup(head: ListNode | null, k: number): ListNode | null {
   let curr = head;
   let cnt = 0;
   for (; cnt < k; ++cnt) {
-      if (!curr) {
-          return head;
-      }
-      curr = curr.next;
+    if (!curr) {
+      return head;
+    }
+    curr = curr.next;
   }
-  
+
   let prev = reverseKGroup(curr, k);
   for (; cnt; --cnt) {
-      const next = head.next;
-      head.next = prev;
-      prev = head;
-      head = next;
+    const next = head.next;
+    head.next = prev;
+    prev = head;
+    head = next;
   }
 
   return prev;
-};
+}

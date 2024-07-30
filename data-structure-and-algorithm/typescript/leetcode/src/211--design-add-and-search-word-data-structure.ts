@@ -51,10 +51,10 @@ class WordDictionary {
   addWord(word: string): void {
     let curr = this.root;
     for (const c of word) {
-        if (!curr.leaves.has(c)) {
-            curr.leaves.set(c, new TrieNode());
-        }
-        curr = curr.leaves.get(c);
+      if (!curr.leaves.has(c)) {
+        curr.leaves.set(c, new TrieNode());
+      }
+      curr = curr.leaves.get(c);
     }
     curr.isWord = true;
   }
@@ -63,25 +63,25 @@ class WordDictionary {
     return dfs(this.root, 0);
 
     function dfs(node: TrieNode, idx: number) {
-        if (idx === word.length) {
-            return node.isWord;
-        }
+      if (idx === word.length) {
+        return node.isWord;
+      }
 
-        const c = word[idx];
-        if (c !== '.') {
-            if (!node.leaves.has(c)) {
-                return false;
-            }
-            return dfs(node.leaves.get(c), idx + 1);
+      const c = word[idx];
+      if (c !== ".") {
+        if (!node.leaves.has(c)) {
+          return false;
         }
+        return dfs(node.leaves.get(c), idx + 1);
+      }
 
-        for (const leaf of node.leaves.values()) {
-            if (dfs(leaf, idx + 1)){ 
-                return true;
-            }
+      for (const leaf of node.leaves.values()) {
+        if (dfs(leaf, idx + 1)) {
+          return true;
         }
+      }
 
-        return false;
+      return false;
     }
   }
 }

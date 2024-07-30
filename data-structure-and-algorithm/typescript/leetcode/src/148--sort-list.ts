@@ -31,34 +31,38 @@ Follow up: Can you sort the linked list in O(n logn) time and O(1) memory (i.e. 
 */
 
 function sortList(head: ListNode | null): ListNode | null {
-    if (!head || !head.next) {
-        return head;
+  if (!head || !head.next) {
+    return head;
+  }
+
+  let slow = head;
+  let fast = head;
+  let prev = head;
+  for (
+    ;
+    fast && fast.next;
+    prev = slow, slow = slow.next, fast = fast.next.next
+  );
+  prev.next = null;
+
+  return merge(sortList(head), sortList(slow));
+
+  function merge(l1: ListNode | null, l2: ListNode | null) {
+    const dummy = new ListNode(0);
+    let curr = dummy;
+
+    for (; l1 && l2; curr = curr.next) {
+      if (l1.val < l2.val) {
+        curr.next = l1;
+        l1 = l1.next;
+      } else {
+        curr.next = l2;
+        l2 = l2.next;
+      }
     }
 
-    let slow = head;
-    let fast = head;
-    let prev = head;
-    for (; fast && fast.next; prev = slow, slow = slow.next, fast = fast.next.next);
-    prev.next = null;
+    curr.next = l1 ? l1 : l2;
 
-    return merge(sortList(head), sortList(slow));
-
-    function merge(l1: ListNode | null, l2: ListNode | null) {
-        const dummy = new ListNode(0);
-        let curr = dummy;
-
-        for (; l1 && l2; curr = curr.next) {
-            if (l1.val < l2.val) {
-                curr.next = l1;
-                l1 = l1.next;
-            } else {
-                curr.next = l2;
-                l2 = l2.next;
-            }
-        }
-
-        curr.next = l1 ? l1 : l2;
-
-        return dummy.next;
-    }
-};
+    return dummy.next;
+  }
+}

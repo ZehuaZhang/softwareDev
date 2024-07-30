@@ -28,13 +28,13 @@ function generate(numRows: number): number[][] {
 
   let prev: number[] = [];
   for (let i = 0; i < numRows; ++i) {
-      const curr = Array(i + 1).fill(1);
-      for (let j = 1; j < i; ++j) {
-          curr[j] = prev[j] + prev[j - 1];
-      }
-      rslt.push(curr);
-      prev = curr;
+    const curr = Array(i + 1).fill(1);
+    for (let j = 1; j < i; ++j) {
+      curr[j] = prev[j] + prev[j - 1];
+    }
+    rslt.push(curr);
+    prev = curr;
   }
 
   return rslt;
-};
+}

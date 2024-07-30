@@ -40,34 +40,39 @@ board[i][j] is 'X' or 'O'.
 function solve(board: string[][]): void {
   const [m, n] = [board.length, board[0].length];
   for (let j = 0; j < n; ++j) {
-      dfs(0, j);
-      dfs(m - 1, j);
+    dfs(0, j);
+    dfs(m - 1, j);
   }
 
   for (let i = 0; i < m; ++i) {
-      dfs(i, 0);
-      dfs(i, n - 1);
+    dfs(i, 0);
+    dfs(i, n - 1);
   }
 
   for (let i = 0; i < m; ++i) {
-      for (let j = 0; j < n; ++j) {
-          if (board[i][j] === 'O') {
-              board[i][j] = 'X';
-          } else if (board[i][j] === '_') {
-              board[i][j] = 'O'
-          }
+    for (let j = 0; j < n; ++j) {
+      if (board[i][j] === "O") {
+        board[i][j] = "X";
+      } else if (board[i][j] === "_") {
+        board[i][j] = "O";
       }
+    }
   }
 
   function dfs(x: number, y: number) {
-      if (x < 0 || x >= m || y < 0 || y >= n || board[x][y] !== 'O') {
-          return;
-      }
+    if (x < 0 || x >= m || y < 0 || y >= n || board[x][y] !== "O") {
+      return;
+    }
 
-      board[x][y] = '_';
+    board[x][y] = "_";
 
-      for (const [dx, dy] of [[0, 1], [0, -1], [1, 0], [-1, 0]]) {
-          dfs(x + dx, y + dy);
-      }
+    for (const [dx, dy] of [
+      [0, 1],
+      [0, -1],
+      [1, 0],
+      [-1, 0],
+    ]) {
+      dfs(x + dx, y + dy);
+    }
   }
-};
+}

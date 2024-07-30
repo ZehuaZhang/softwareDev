@@ -44,29 +44,31 @@ class MedianFinder {
   min: typeof PriorityQueue;
   max: typeof PriorityQueue;
   constructor() {
-      this.min = new PriorityQueue({
-          compare: (a, b) => a - b
-      });
-      this.max = new PriorityQueue({
-          compare: (a, b) => b - a
-      })
+    this.min = new PriorityQueue({
+      compare: (a, b) => a - b,
+    });
+    this.max = new PriorityQueue({
+      compare: (a, b) => b - a,
+    });
   }
 
   addNum(num: number): void {
-      if (!this.min.size() || num > this.min.front()) {
-          this.min.enqueue(num);
-          if (this.min.size() > this.max.size() + 1) {
-              this.max.enqueue(this.min.dequeue());
-          }
-      } else {
-          this.max.enqueue(num);
-          if (this.max.size() > this.min.size()) {
-              this.min.enqueue(this.max.dequeue());
-          }
+    if (!this.min.size() || num > this.min.front()) {
+      this.min.enqueue(num);
+      if (this.min.size() > this.max.size() + 1) {
+        this.max.enqueue(this.min.dequeue());
       }
+    } else {
+      this.max.enqueue(num);
+      if (this.max.size() > this.min.size()) {
+        this.min.enqueue(this.max.dequeue());
+      }
+    }
   }
 
   findMedian(): number {
-      return this.min.size() === this.max.size() ? (this.min.front() + this.max.front()) / 2 : this.min.front();
+    return this.min.size() === this.max.size()
+      ? (this.min.front() + this.max.front()) / 2
+      : this.min.front();
   }
 }

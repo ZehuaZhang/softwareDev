@@ -33,22 +33,22 @@ newInterval.length == 2
 */
 
 function insert(intervals: number[][], newInterval: number[]): number[][] {
-    const rslt: number[][] = [];
-    let curr = newInterval;
+  const rslt: number[][] = [];
+  let curr = newInterval;
 
-    for (const interval of intervals) {
-        const [s1, e1] = curr;
-        const [s2, e2] = interval;
-        if (e1 < s2) {
-            rslt.push(curr);
-            curr = interval;
-        } else if (e2 < s1) {
-            rslt.push(interval);
-        } else {
-            curr = [Math.min(s1, s2), Math.max(e1, e2)];
-        }
+  for (const interval of intervals) {
+    const [s1, e1] = curr;
+    const [s2, e2] = interval;
+    if (e1 < s2) {
+      rslt.push(curr);
+      curr = interval;
+    } else if (e2 < s1) {
+      rslt.push(interval);
+    } else {
+      curr = [Math.min(s1, s2), Math.max(e1, e2)];
     }
+  }
 
-    rslt.push(curr);
-    return rslt;
-};
+  rslt.push(curr);
+  return rslt;
+}

@@ -33,17 +33,17 @@ function isBalanced(root: TreeNode | null): boolean {
   return dfs(root) >= 0;
 
   function dfs(node: TreeNode | null) {
-      if (!node) {
-          return 0;
-      }
+    if (!node) {
+      return 0;
+    }
 
-      const l = dfs(node.left);
-      const r = dfs(node.right);
+    const l = dfs(node.left);
+    const r = dfs(node.right);
 
-      if (l < 0 || r < 0 || Math.abs(r - l) > 1) {
-          return -1;
-      }
+    if (l < 0 || r < 0 || Math.abs(r - l) > 1) {
+      return -1;
+    }
 
-      return Math.max(l, r) + 1;
+    return Math.max(l, r) + 1;
   }
-};
+}

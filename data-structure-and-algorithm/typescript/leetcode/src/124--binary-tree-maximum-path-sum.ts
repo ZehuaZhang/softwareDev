@@ -35,14 +35,15 @@ function maxPathSum(root: TreeNode | null): number {
   return rslt;
 
   function dfs(node: TreeNode | null) {
-      if (!node) {
-          return 0;
-      }
+    if (!node) {
+      return 0;
+    }
 
-      const l = Math.max(0, dfs(node.left));
-      const r = Math.max(0, dfs(node.right));
+    const l = Math.max(0, dfs(node.left));
+    const r = Math.max(0, dfs(node.right));
 
-      rslt = Math.max(rslt, l + r + node.val);
+    rslt = Math.max(rslt, l + r + node.val);
 
-      return Math.max(l, r) + node.val;
+    return Math.max(l, r) + node.val;
   }
+}

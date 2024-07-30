@@ -37,33 +37,33 @@ The number of nodes in the tree is in the range [0, 104].
 function serialize(root: TreeNode | null): string {
   const rslt: (string | number)[] = [];
   dfs(root);
-  return rslt.join(' ');
+  return rslt.join(" ");
 
   function dfs(node: TreeNode | null) {
-      if (!node) {
-          return rslt.push('#');
-      }
+    if (!node) {
+      return rslt.push("#");
+    }
 
-      rslt.push(node.val);
-      dfs(node.left);
-      dfs(node.right);
+    rslt.push(node.val);
+    dfs(node.left);
+    dfs(node.right);
   }
-};
+}
 
 function deserialize(data: string): TreeNode | null {
-  const it = data.split(' ').values();
+  const it = data.split(" ").values();
   return dfs();
 
   function dfs() {
-      const {value, done} = it.next();
-      if (done || value === '#') {
-          return null;
-      }
+    const { value, done } = it.next();
+    if (done || value === "#") {
+      return null;
+    }
 
-      const node = new TreeNode(value);
-      node.left = dfs();
-      node.right = dfs();
+    const node = new TreeNode(value);
+    node.left = dfs();
+    node.right = dfs();
 
-      return node;
+    return node;
   }
-};
+}

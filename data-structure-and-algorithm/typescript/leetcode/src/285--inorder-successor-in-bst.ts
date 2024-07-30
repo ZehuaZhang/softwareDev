@@ -32,7 +32,7 @@ function inorderSuccessor(
   node: TreeNode
 ): TreeNode | null {
   let rslt = null;
-  for (let curr = root; curr;) {
+  for (let curr = root; curr; ) {
     if (curr.val > node.val) {
       rslt = curr;
       curr = curr.left;

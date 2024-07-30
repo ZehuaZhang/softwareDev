@@ -31,24 +31,24 @@ function buildTree(inorder: number[], postorder: number[]): TreeNode | null {
   const m = inorder.length;
   const map = new Map<number, number>();
   for (let i = 0; i < m; ++i) {
-      map.set(inorder[i], i);
+    map.set(inorder[i], i);
   }
 
   return dfs(0, m - 1, 0, m - 1);
 
   function dfs(iL: number, iR: number, pL: number, pR: number) {
-      if (iR < iL || pR < pL) {
-          return null;
-      }
+    if (iR < iL || pR < pL) {
+      return null;
+    }
 
-      const val = postorder[pR];
-      const i = map.get(val);
-      const dist = i - iL;
+    const val = postorder[pR];
+    const i = map.get(val);
+    const dist = i - iL;
 
-      const node = new TreeNode(val);
-      node.left = dfs(iL, i - 1, pL, pL + dist - 1);
-      node.right = dfs(i + 1, iR, pL + dist, pR - 1);
+    const node = new TreeNode(val);
+    node.left = dfs(iL, i - 1, pL, pL + dist - 1);
+    node.right = dfs(i + 1, iR, pL + dist, pR - 1);
 
-      return node;
+    return node;
   }
-};
+}

@@ -35,39 +35,76 @@ function findWords(board: string[][], words: string[]): string[] {
   const [m, n] = [board.length, board[0].length];
   const trie = new Trie();
   for (const w of words) {
-      trie.addWord(w);
+    trie.addWord(w);
   }
-  
+
   const seen = [...Array(m)].map(() => Array(n).fill(false));
   const rslt = new Set<string>();
   for (let i = 0; i < m; ++i) {
-      for (let j = 0; j < n; ++j) {
-          const c = board[i][j];
-          if (trie.root.leaves.has(c)) {
-              dfs(trie.root.leaves.get(c), i, j);
-          }
+    for (let j = 0; j < n; ++j) {
+      const c = board[i][j];
+      if (trie.root.leaves.has(c)) {
+        dfs(trie.root.leaves.get(c), i, j);
       }
+    }
   }
 
   return [...rslt];
 
   function dfs(node: TrieNode, x: number, y: number) {
-      if (node.isWord) {
-          rslt.add(node.word);
+    if (node.isWord) {
+      rslt.add(node.word);
+    }
+
+    seen[x][y] = true;
+
+    for (const [dx, dy] of [
+      [0, 1],
+      [0, -1],
+      [1, 0],
+      [-1, 0],
+    ]) {
+      const [nx, ny] = [x + dx, y + dy];
+      if (nx >= 0 && nx < m && ny >= 0 && ny < n && !seen[nx][ny]) {
+        const c = board[nx][ny];
+        if (node.leaves.has(c)) {
+          dfs(node.leaves.get(c), nx, ny);
+        }
       }
+    }
 
-      seen[x][y] = true;
-
-      for (const [dx, dy] of [[0, 1], [0, -1], [1, 0], [-1, 0]]) {
-          const [nx, ny] = [x + dx, y + dy];
-          if (nx >= 0 && nx < m && ny >= 0 && ny < n && !seen[nx][ny]) {
-              const c = board[nx][ny];
-              if (node.leaves.has(c)) {
-                  dfs(node.leaves.get(c), nx, ny);
-              }
-          }
-      }
-
-      seen[x][y] = false;
+    seen[x][y] = false;
   }
-};
+}
+
+class Trie {
+  root: TrieNode;
+  constructor() {
+    this.root = new TrieNode();
+  }
+
+  addWord(word: string) {
+    let curr = this.root;
+
+    for (const c of word) {
+      if (!curr.leaves.has(c)) {
+        curr.leaves.set(c, new TrieNode());
+      }
+      curr = curr.leaves.get(c);
+    }
+
+    curr.isWord = true;
+    curr.word = word;
+  }
+}
+
+class TrieNode {
+  isWord: boolean;
+  word: string;
+  leaves: Map<string, TrieNode>;
+  constructor() {
+    this.isWord = false;
+    this.word = "";
+    this.leaves = new Map();
+  }
+}

@@ -37,7 +37,7 @@ function isIsomorphic(s: string, t: string) {
   for (let i = 0; i < s.length; ++i) {
     const [a, b] = [s[i], t[i]];
     if (m1[a] !== m2[b]) {
-        return false;
+      return false;
     }
     m1[a] = m2[b] = i;
   }

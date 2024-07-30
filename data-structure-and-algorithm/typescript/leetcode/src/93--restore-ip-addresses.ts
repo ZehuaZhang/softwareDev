@@ -37,24 +37,24 @@ function restoreIpAddresses(s: string): string[] {
   return rslt;
 
   function dfs(i0: number, j0: number) {
-      if (i0 === n && j0 === 4) {
-          return rslt.push(path.join('.'));
-      }
+    if (i0 === n && j0 === 4) {
+      return rslt.push(path.join("."));
+    }
 
-      if (n - i0 > 3 * (4 - j0)) {
-          return;
-      }
+    if (n - i0 > 3 * (4 - j0)) {
+      return;
+    }
 
-      for (let k = 1; k <= 3; ++k) {
-          if (i0 + k <= n) {
-              const seg = s.substring(i0, i0 + k);
-              const ip = Number(seg);
-              if (ip <= 255 && String(ip) === seg) {
-                  path.push(seg);
-                  dfs(i0 + k, j0 + 1);
-                  path.pop();
-              }
-          }
+    for (let k = 1; k <= 3; ++k) {
+      if (i0 + k <= n) {
+        const seg = s.substring(i0, i0 + k);
+        const ip = Number(seg);
+        if (ip <= 255 && String(ip) === seg) {
+          path.push(seg);
+          dfs(i0 + k, j0 + 1);
+          path.pop();
+        }
       }
+    }
   }
-};
+}

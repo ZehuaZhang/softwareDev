@@ -22,11 +22,7 @@ Output: [4,3]
 Follow up:
 Assume that the BST is balanced, could you solve it in less than O(n) runtime (where n = total nodes)?
 */
-function closestKValues(
-  node: TreeNode,
-  target: number,
-  k: number
-): number[] {
+function closestKValues(node: TreeNode, target: number, k: number): number[] {
   const q: number[] = [];
   dfs(node);
   return q;

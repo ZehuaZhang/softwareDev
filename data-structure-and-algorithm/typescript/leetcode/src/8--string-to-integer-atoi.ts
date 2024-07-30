@@ -90,11 +90,11 @@ s consists of English letters (lower-case and upper-case), digits (0-9), ' ', '+
 
 function myAtoi(s: string): number {
   let i = 0;
-  for (; s[i] === ' '; ++i);
+  for (; s[i] === " "; ++i);
 
   let sign = 1;
-  if ('+-'.includes(s[i])) {
-      sign = s[i++] === '+' ? 1 : -1;
+  if ("+-".includes(s[i])) {
+    sign = s[i++] === "+" ? 1 : -1;
   }
 
   const max = Math.pow(2, 31) - 1;
@@ -102,16 +102,20 @@ function myAtoi(s: string): number {
 
   let rslt = 0;
 
-  for (; i < s.length && s[i] >= '0' && s[i] <= '9'; ++i) {
-      const d = Number(s[i]);
-      if (
-          (sign === 1 && (rslt > Math.trunc(max / 10) || (rslt === Math.trunc(max / 10) && d > max % 10))) ||
-          (sign === -1 && (-rslt < Math.trunc(min / 10) || (-rslt === Math.trunc(min / 10) && d > Math.abs(min % 10))))
-      ) {
-          return sign === -1 ? min : max;
-      }
-      rslt = rslt * 10 + d;
+  for (; i < s.length && s[i] >= "0" && s[i] <= "9"; ++i) {
+    const d = Number(s[i]);
+    if (
+      (sign === 1 &&
+        (rslt > Math.trunc(max / 10) ||
+          (rslt === Math.trunc(max / 10) && d > max % 10))) ||
+      (sign === -1 &&
+        (-rslt < Math.trunc(min / 10) ||
+          (-rslt === Math.trunc(min / 10) && d > Math.abs(min % 10))))
+    ) {
+      return sign === -1 ? min : max;
+    }
+    rslt = rslt * 10 + d;
   }
 
   return sign * rslt;
-};
+}

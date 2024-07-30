@@ -34,38 +34,38 @@ function fourSum(nums: number[], target: number): number[][] {
   nums.sort((a, b) => a - b);
 
   for (let i = 0; i < n; ++i) {
-      if (i > 0 && nums[i] === nums[i - 1]) {
+    if (i > 0 && nums[i] === nums[i - 1]) {
+      continue;
+    }
+
+    for (let j = i + 1; j < n; ++j) {
+      if (j > i + 1 && nums[j] === nums[j - 1]) {
+        continue;
+      }
+
+      for (let l = j + 1, r = n - 1; l < r; ) {
+        if (l > j + 1 && nums[l] === nums[l - 1]) {
+          ++l;
           continue;
+        }
+
+        if (r < n - 1 && nums[r] === nums[r + 1]) {
+          --r;
+          continue;
+        }
+
+        const s = nums[i] + nums[j] + nums[l] + nums[r];
+        if (s === target) {
+          rslt.push([nums[i], nums[j], nums[l], nums[r]]);
+          ++l;
+          --r;
+        } else if (s < target) {
+          ++l;
+        } else {
+          --r;
+        }
       }
-
-      for (let j = i + 1; j < n; ++j) {
-          if (j > i + 1 && nums[j] === nums[j - 1]) {
-              continue;
-          }
-
-          for (let l = j + 1, r = n - 1; l < r;) {
-              if (l > j + 1 && nums[l] === nums[l - 1]) {
-                  ++l;
-                  continue;
-              } 
-
-              if (r < n - 1 && nums[r] === nums[r + 1]) {
-                  --r;
-                  continue;
-              }
-
-              const s = nums[i] + nums[j] + nums[l] + nums[r];
-              if (s === target) {
-                  rslt.push([nums[i], nums[j], nums[l], nums[r]]);
-                  ++l;
-                  --r;
-              } else if (s < target) {
-                  ++l;
-              } else {
-                  --r;
-              }
-          }
-      }
+    }
   }
 
   return rslt;

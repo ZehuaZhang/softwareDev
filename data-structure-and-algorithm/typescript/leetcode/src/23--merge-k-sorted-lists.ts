@@ -43,34 +43,34 @@ function mergeKLists(lists: Array<ListNode | null>): ListNode | null {
   return sort(0, lists.length - 1);
 
   function sort(l: number, r: number) {
-      if (l > r) {
-          return null;
-      }
+    if (l > r) {
+      return null;
+    }
 
-      if (l === r) {
-          return lists[l];
-      }
+    if (l === r) {
+      return lists[l];
+    }
 
-      const m = l + Math.trunc((r - l) / 2);
+    const m = l + Math.trunc((r - l) / 2);
 
-      return merge(sort(l, m), sort(m + 1, r));
+    return merge(sort(l, m), sort(m + 1, r));
   }
 
   function merge(l1: ListNode | null, l2: ListNode | null) {
-      const dummy = new ListNode(0);
-      let curr = dummy;
+    const dummy = new ListNode(0);
+    let curr = dummy;
 
-      for (; l1 && l2; curr = curr.next) {
-          if (l1.val < l2.val) {
-              curr.next = l1;
-              l1 = l1.next;
-          } else {
-              curr.next = l2;
-              l2 = l2.next;
-          }
+    for (; l1 && l2; curr = curr.next) {
+      if (l1.val < l2.val) {
+        curr.next = l1;
+        l1 = l1.next;
+      } else {
+        curr.next = l2;
+        l2 = l2.next;
       }
+    }
 
-      curr.next = l1 ? l1 : l2;
-      return dummy.next;
+    curr.next = l1 ? l1 : l2;
+    return dummy.next;
   }
-};
+}

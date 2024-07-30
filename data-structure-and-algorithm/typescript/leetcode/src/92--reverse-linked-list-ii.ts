@@ -27,20 +27,24 @@ The number of nodes in the list is n.
 Follow up: Could you do it in one pass?
 */
 
-function reverseBetween(head: ListNode | null, left: number, right: number): ListNode | null {
+function reverseBetween(
+  head: ListNode | null,
+  left: number,
+  right: number
+): ListNode | null {
   const dummy = new ListNode(0, head);
   let prev = dummy;
   for (let i = 1; i < left; ++i) {
-      prev = prev.next;
+    prev = prev.next;
   }
 
   let curr = prev.next;
   for (let i = 1; i <= right - left; ++i) {
-      const next = curr.next;
-      curr.next = next.next;
-      next.next = prev.next;
-      prev.next = next;
+    const next = curr.next;
+    curr.next = next.next;
+    next.next = prev.next;
+    prev.next = next;
   }
 
   return dummy.next;
-};
+}

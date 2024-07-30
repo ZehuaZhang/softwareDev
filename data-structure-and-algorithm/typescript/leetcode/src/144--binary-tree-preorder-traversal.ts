@@ -31,24 +31,24 @@ Follow up: Recursive solution is trivial, could you do it iteratively?
 
 function preorderTraversal(root: TreeNode | null): number[] {
   if (!root) {
-      return [];
+    return [];
   }
 
   const rslt: number[] = [];
   const stk: TreeNode[] = [root];
 
   while (stk.length) {
-      const node = stk.pop();
-      rslt.push(node.val);
+    const node = stk.pop();
+    rslt.push(node.val);
 
-      if (node.right) {
-          stk.push(node.right);
-      }
+    if (node.right) {
+      stk.push(node.right);
+    }
 
-      if (node.left) {
-          stk.push(node.left);
-      }
+    if (node.left) {
+      stk.push(node.left);
+    }
   }
 
   return rslt;
-};
+}

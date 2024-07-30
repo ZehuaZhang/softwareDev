@@ -27,16 +27,16 @@ Space: O(1)
 
 function searchMatrix(matrix: number[][], target: number): boolean {
   const [m, n] = [matrix.length, matrix[0].length];
-  for (let i = 0, j = n -1; i < m && j >= 0;) {
-      const v = matrix[i][j];
-      if (v === target) {
-          return true;
-      } else if (v > target) {
-          --j;
-      } else {
-          ++i;
-      }
+  for (let i = 0, j = n - 1; i < m && j >= 0; ) {
+    const v = matrix[i][j];
+    if (v === target) {
+      return true;
+    } else if (v > target) {
+      --j;
+    } else {
+      ++i;
+    }
   }
 
   return false;
-};
+}

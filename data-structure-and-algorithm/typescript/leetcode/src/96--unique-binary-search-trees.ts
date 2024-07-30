@@ -26,18 +26,18 @@ function numTrees(n: number): number {
   return dfs(n);
 
   function dfs(cnt: number) {
-      if (memo[cnt] !== null) {
-          return memo[cnt];
-      }
-
-      if (cnt === 1 || !cnt) {
-          return (memo[cnt] = 1);
-      }
-
-      for (let i = 1; i <= cnt; ++i) {
-          memo[cnt] += dfs(i - 1) * dfs(cnt - i);
-      }
-
+    if (memo[cnt] !== null) {
       return memo[cnt];
+    }
+
+    if (cnt === 1 || !cnt) {
+      return (memo[cnt] = 1);
+    }
+
+    for (let i = 1; i <= cnt; ++i) {
+      memo[cnt] += dfs(i - 1) * dfs(cnt - i);
+    }
+
+    return memo[cnt];
   }
-};
+}

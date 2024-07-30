@@ -32,13 +32,13 @@ nums contains distinct values sorted in ascending order.
 function searchInsert(nums: number[], target: number): number {
   let [l, r] = [0, nums.length - 1];
   while (l <= r) {
-      const m = l + Math.trunc((r - l) / 2);
-      if (nums[m] >= target) {
-          r = m - 1;
-      } else {
-          l = m + 1;
-      }
+    const m = l + Math.trunc((r - l) / 2);
+    if (nums[m] >= target) {
+      r = m - 1;
+    } else {
+      l = m + 1;
+    }
   }
 
   return l;
-};
+}

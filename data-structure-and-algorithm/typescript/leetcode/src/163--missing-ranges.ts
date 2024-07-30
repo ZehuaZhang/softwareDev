@@ -21,7 +21,7 @@ function findMissingRanges(
     const curr = i === n ? upper + 1 : nums[i];
     if (curr - prev >= 2) {
       const [l, r] = [prev + 1, curr - 1];
-      rslt.push(l === r ? String(l) : [l, r].join('->')); 
+      rslt.push(l === r ? String(l) : [l, r].join("->"));
     }
     prev = curr;
   }

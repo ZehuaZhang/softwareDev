@@ -31,21 +31,24 @@ The number of nodes in both lists is in the range [0, 50].
 Both list1 and list2 are sorted in non-decreasing order.
 */
 
-function mergeTwoLists(l1: ListNode | null, l2: ListNode | null): ListNode | null {
+function mergeTwoLists(
+  l1: ListNode | null,
+  l2: ListNode | null
+): ListNode | null {
   const dummy = new ListNode(0);
   let curr = dummy;
 
   for (; l1 && l2; curr = curr.next) {
-      if (l1.val < l2.val) {
-          curr.next = l1;
-          l1 = l1.next;
-      } else {
-          curr.next = l2;
-          l2 = l2.next;
-      }
+    if (l1.val < l2.val) {
+      curr.next = l1;
+      l1 = l1.next;
+    } else {
+      curr.next = l2;
+      l2 = l2.next;
+    }
   }
 
   curr.next = l1 ? l1 : l2;
 
   return dummy.next;
-};
+}

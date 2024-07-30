@@ -30,25 +30,25 @@ function rightSideView(root: TreeNode | null): number[] {
   const rslt: number[] = [];
   const q: TreeNode[] = [];
   if (root) {
-      q.push(root);
+    q.push(root);
   }
 
   while (q.length) {
-      for (let l = q.length; l; --l) {
-          const node = q.shift();
-          if (l === 1) {
-              rslt.push(node.val);
-          }
-
-          if (node.left) {
-              q.push(node.left);
-          }
-
-          if (node.right) {
-              q.push(node.right);
-          }
+    for (let l = q.length; l; --l) {
+      const node = q.shift();
+      if (l === 1) {
+        rslt.push(node.val);
       }
+
+      if (node.left) {
+        q.push(node.left);
+      }
+
+      if (node.right) {
+        q.push(node.right);
+      }
+    }
   }
 
   return rslt;
-};
+}

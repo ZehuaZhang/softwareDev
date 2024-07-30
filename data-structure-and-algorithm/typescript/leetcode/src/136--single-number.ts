@@ -32,8 +32,8 @@ function singleNumber(nums: number[]): number {
   let rslt = 0;
 
   for (const num of nums) {
-      rslt ^= num;
+    rslt ^= num;
   }
 
   return rslt;
-};
+}

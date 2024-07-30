@@ -32,27 +32,27 @@ function partition(s: string): string[][] {
   return rslt;
 
   function dfs(i0: number) {
-      if (i0 === n) {
-          return rslt.push([...path]);
-      }
+    if (i0 === n) {
+      return rslt.push([...path]);
+    }
 
-      for (let i = i0; i < n; ++i) {
-          const sub = s.substring(i0, i + 1);
-          if (isPalindrome(i0, i)) {
-              path.push(sub);
-              dfs(i + 1);
-              path.pop();
-          }
+    for (let i = i0; i < n; ++i) {
+      const sub = s.substring(i0, i + 1);
+      if (isPalindrome(i0, i)) {
+        path.push(sub);
+        dfs(i + 1);
+        path.pop();
       }
+    }
   }
 
   function isPalindrome(l: number, r: number) {
-      for (; l < r; ++l, --r) {
-          if (s[l] !== s[r]) {
-              return false;
-          }
+    for (; l < r; ++l, --r) {
+      if (s[l] !== s[r]) {
+        return false;
       }
+    }
 
-      return true;
+    return true;
   }
-};
+}

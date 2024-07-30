@@ -54,9 +54,9 @@ function alienOrder(words: string[]): string {
   }
   const m = set.size;
 
-  const graph: Set<number>[] = [...Array(26)].map(() => new Set<number>);
+  const graph: Set<number>[] = [...Array(26)].map(() => new Set<number>());
   const inDgr: number[] = Array(26).fill(0);
-  const code = 'a'.charCodeAt(0);
+  const code = "a".charCodeAt(0);
   for (let i = 1; i < n; ++i) {
     const w1 = words[i - 1];
     const w2 = words[i];
@@ -72,9 +72,8 @@ function alienOrder(words: string[]): string {
     }
   }
 
-  
   const q: number[] = [];
-  for (let i = 0; i < m; ++i) {
+  for (let i = 0; i < 26; ++i) {
     if (!inDgr[i]) {
       q.push(i);
     }
@@ -91,5 +90,5 @@ function alienOrder(words: string[]): string {
     }
   }
 
-  return m === rslt.length ? rslt.join('') : '';
+  return m === rslt.length ? rslt.join("") : "";
 }

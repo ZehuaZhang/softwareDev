@@ -58,30 +58,30 @@ function findSubstring(s: string, words: string[]): number[] {
   const n = words.length * k;
   const map = new Map<string, number>();
   for (const w of words) {
-      map.set(w, (map.get(w) || 0) + 1)
+    map.set(w, (map.get(w) || 0) + 1);
   }
 
   const rslt: number[] = [];
 
   for (let i = 0; i + n <= m; ++i) {
-      if (map.has(s.substring(i, i + k))) {
-          const m = new Map(map);
-          for (let j = i; j < i + n; j += k) {
-              const w = s.substring(j, j + k)
-              if (m.has(w)) {
-                  m.set(w, m.get(w) - 1);
-              } else {
-                  break;
-              }
-              if (m.get(w) === 0) {
-                  m.delete(w);
-              }
-          }
-          if (!m.size) {
-              rslt.push(i);
-          }
+    if (map.has(s.substring(i, i + k))) {
+      const m = new Map(map);
+      for (let j = i; j < i + n; j += k) {
+        const w = s.substring(j, j + k);
+        if (m.has(w)) {
+          m.set(w, m.get(w) - 1);
+        } else {
+          break;
+        }
+        if (m.get(w) === 0) {
+          m.delete(w);
+        }
       }
+      if (!m.size) {
+        rslt.push(i);
+      }
+    }
   }
 
   return rslt;
-};
+}

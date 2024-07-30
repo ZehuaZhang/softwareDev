@@ -38,15 +38,15 @@ class Codec {
     let rslt: string[] = [];
     for (const s of strs) {
       const l = s.length;
-      rslt.push(l + '/' + s);
+      rslt.push(l + "/" + s);
     }
-    return rslt.join('');
+    return rslt.join("");
   }
 
   decode(s: string): string[] {
     const rslt: string[] = [];
-    for (let i = 0; i < s.length;) {
-      const idx = s.indexOf('/', i);
+    for (let i = 0; i < s.length; ) {
+      const idx = s.indexOf("/", i);
       const l = Number(s.substring(i, idx));
       rslt.push(s.substring(idx + 1, idx + 1 + l));
       i = idx + 1 + l;

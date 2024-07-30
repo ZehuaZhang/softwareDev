@@ -34,14 +34,14 @@ function getRow(rowIndex: number): number[] {
   let prev: number[] = [];
   let rslt: number[] = [];
   for (let i = 0; i <= rowIndex; ++i) {
-      rslt = Array(i + 1).fill(1);
+    rslt = Array(i + 1).fill(1);
 
-      for (let j = 1; j < i; ++j) {
-          rslt[j] = prev[j] + prev[j - 1];
-      }
+    for (let j = 1; j < i; ++j) {
+      rslt[j] = prev[j] + prev[j - 1];
+    }
 
-      prev = rslt;
+    prev = rslt;
   }
-  
+
   return rslt;
-};
+}

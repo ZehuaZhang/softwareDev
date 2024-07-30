@@ -29,25 +29,24 @@ function maxPoints(points: number[][]): number {
   const n = points.length;
   let rslt = 0;
   for (let i = 0; i < n; ++i) {
-      const [x1, y1] = points[i];
-      let same = 1;
-      let map = new Map<number, number>();
-      for (let j = i + 1; j < n; ++j) {
-          const [x2, y2] = points[j];
-          if (x1 === x2 && y1 === y2) {
-              ++same;
-          } else {
-              let slope = x1 === x2 ? Infinity : (y2 - y1) / (x2 - x1);
-              map.set(slope, (map.get(slope) || 0) + 1);
-          }
+    const [x1, y1] = points[i];
+    let same = 1;
+    const map = new Map<number, number>();
+    for (let j = i + 1; j < n; ++j) {
+      const [x2, y2] = points[j];
+      if (x1 === x2 && y1 === y2) {
+        ++same;
+      } else {
+        let slope = x1 === x2 ? Infinity : (y2 - y1) / (x2 - x1);
+        map.set(slope, (map.get(slope) || 0) + 1);
       }
+    }
 
-      rslt = Math.max(rslt, same);
-      for (const cnt of map.values()) {
-          rslt = Math.max(rslt, cnt + same);
-      }
+    rslt = Math.max(rslt, same);
+    for (const cnt of map.values()) {
+      rslt = Math.max(rslt, cnt + same);
+    }
   }
 
   return rslt;
 }
-

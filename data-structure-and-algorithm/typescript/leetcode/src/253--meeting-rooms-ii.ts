@@ -14,28 +14,6 @@ Output: 1
 */
 
 function minMeetingRooms(intervals: number[][]): number {
-  const sList: number[] = [];
-  const eList: number[] = [];
-  for (const [s, e] of intervals) {
-    sList.push(s);
-    eList.push(e);
-  }
-  sList.sort((a, b) => a - b);
-  eList.sort((a, b) => a - b);
-
-  let result = 0;
-  let index = 0;
-  for (const s of sList) {
-    if (s < eList[index]) {
-      ++result;
-    } else {
-      ++index;
-    }
-  }
-  return result;
-}
-
-function minMeetingRooms(intervals: number[][]): number {
   const sl: number[] = [];
   const el: number[] = [];
 

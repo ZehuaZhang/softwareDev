@@ -37,30 +37,30 @@ function searchRange(nums: number[], target: number): number[] {
   return nums[a] === target ? [a, b - 1] : [-1, -1];
 
   function greater(tgt: number) {
-      let [l, r] = [0, n - 1];
-      while (l <= r) {
-          const m = l + Math.trunc((r - l) / 2);
-          if (nums[m] > tgt) {
-              r = m - 1;
-          } else {
-              l = m + 1;
-          }
+    let [l, r] = [0, n - 1];
+    while (l <= r) {
+      const m = l + Math.trunc((r - l) / 2);
+      if (nums[m] > tgt) {
+        r = m - 1;
+      } else {
+        l = m + 1;
       }
+    }
 
-      return l;
+    return l;
   }
 
   function greaterEq(tgt: number) {
-      let [l, r] = [0, n - 1];
-      while (l <= r) {
-          const m = l + Math.trunc((r - l) / 2);
-          if (nums[m] >= tgt) {
-              r = m - 1;
-          } else {
-              l = m + 1;
-          }
+    let [l, r] = [0, n - 1];
+    while (l <= r) {
+      const m = l + Math.trunc((r - l) / 2);
+      if (nums[m] >= tgt) {
+        r = m - 1;
+      } else {
+        l = m + 1;
       }
+    }
 
-      return l;
+    return l;
   }
-};
+}

@@ -44,23 +44,23 @@ Node.random is null or is pointing to some node in the linked list.
 
 function copyRandomList(head: _Node | null): _Node | null {
   for (let curr = head; curr; curr = curr.next.next) {
-      const node = new _Node(curr.val); 
-      node.next = curr.next;
-      curr.next = node;
+    const node = new _Node(curr.val);
+    node.next = curr.next;
+    curr.next = node;
   }
 
   for (let curr = head; curr; curr = curr.next.next) {
-      if (curr.random) {
-          curr.next.random = curr.random.next;
-      }
+    if (curr.random) {
+      curr.next.random = curr.random.next;
+    }
   }
 
   const dummy = new _Node(0);
   let copy = dummy;
   for (let curr = head; curr; curr = curr.next, copy = copy.next) {
-      copy.next = curr.next;
-      curr.next = curr.next.next;
+    copy.next = curr.next;
+    curr.next = curr.next.next;
   }
 
   return dummy.next;
-};
+}

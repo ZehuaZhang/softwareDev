@@ -38,12 +38,15 @@ The number of nodes in the tree is in the range [0, 5000].
 
 function hasPathSum(root: TreeNode | null, targetSum: number): boolean {
   if (!root) {
-      return false;
+    return false;
   }
 
   if (!root.left && !root.right) {
-      return root.val === targetSum;
+    return root.val === targetSum;
   }
 
-  return hasPathSum(root.left, targetSum - root.val) || hasPathSum(root.right, targetSum - root.val);
-};
+  return (
+    hasPathSum(root.left, targetSum - root.val) ||
+    hasPathSum(root.right, targetSum - root.val)
+  );
+}

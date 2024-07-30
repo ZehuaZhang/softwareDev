@@ -26,23 +26,22 @@ Constraints:
 
 function nthUglyNumber(n: number): number {
   const rslt: number[] = [1];
-  let [v2, v3, v5] = [2, 3, 5];
-  
-  for (let [i2, i3, i5] = [0, 0, 0]; rslt.length < n;) {
-      [v2, v3, v5] = [2 * rslt[i2], 3 * rslt[i3], 5 * rslt[i5]];
-      const min = Math.min(v2, v3, v5);
-      rslt.push(min);
 
-      if (v2 === min) {
-          ++i2;
-      }
-      if (v3 === min) {
-          ++i3;
-      }
-      if (v5 === min) {
-          ++i5;
-      }
+  for (let [i2, i3, i5] = [0, 0, 0]; rslt.length < n; ) {
+    const [v2, v3, v5] = [2 * rslt[i2], 3 * rslt[i3], 5 * rslt[i5]];
+    const min = Math.min(v2, v3, v5);
+    rslt.push(min);
+
+    if (v2 === min) {
+      ++i2;
+    }
+    if (v3 === min) {
+      ++i3;
+    }
+    if (v5 === min) {
+      ++i5;
+    }
   }
 
   return rslt[n - 1];
-};
+}

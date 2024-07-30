@@ -33,26 +33,26 @@ Follow up: This problem is similar to Search in Rotated Sorted Array, but nums m
 */
 
 function search(nums: number[], target: number): boolean {
-  for (let l = 0, r = nums.length - 1; l <= r;) {
-      const m = l + Math.trunc((r - l) / 2);
-      if (nums[m] === target) {
-          return true;
-      } else if (nums[m] === nums[r]) {
-          --r;
-      } else if (nums[m] < nums[r]) {
-          if (nums[m] < target && target <= nums[r]) {
-              l = m + 1;
-          } else {
-              r = m - 1;
-          }
+  for (let l = 0, r = nums.length - 1; l <= r; ) {
+    const m = l + Math.trunc((r - l) / 2);
+    if (nums[m] === target) {
+      return true;
+    } else if (nums[m] === nums[r]) {
+      --r;
+    } else if (nums[m] < nums[r]) {
+      if (nums[m] < target && target <= nums[r]) {
+        l = m + 1;
       } else {
-          if (nums[l] <= target && target < nums[m]) {
-              r = m - 1;
-          } else {
-              l = m + 1;
-          }
+        r = m - 1;
       }
+    } else {
+      if (nums[l] <= target && target < nums[m]) {
+        r = m - 1;
+      } else {
+        l = m + 1;
+      }
+    }
   }
 
   return false;
-};
+}

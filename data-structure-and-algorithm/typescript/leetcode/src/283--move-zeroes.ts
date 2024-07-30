@@ -29,9 +29,9 @@ Follow up: Could you minimize the total number of operations done?
 function moveZeroes(nums: number[]): void {
   let idx = 0;
   for (let i = 0; i < nums.length; ++i) {
-      if (nums[i]) {
-          [nums[idx], nums[i]] = [nums[i], nums[idx]];
-          ++idx;
-      }
+    if (nums[i]) {
+      [nums[idx], nums[i]] = [nums[i], nums[idx]];
+      ++idx;
+    }
   }
-};
+}

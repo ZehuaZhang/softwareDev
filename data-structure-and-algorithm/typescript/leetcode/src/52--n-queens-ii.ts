@@ -36,16 +36,16 @@ function totalNQueens(n: number): number {
   return rslt;
 
   function dfs(row: number) {
-      if (row === n) {
-          return ++rslt;
-      }
+    if (row === n) {
+      return ++rslt;
+    }
 
-      for (let i = 0; i < n; ++i) {
-          if (!cols[i] && !diag1[row + i] && !diag2[i - row + n - 1]) {
-              cols[i] = diag1[row + i] = diag2[i - row + n - 1] = true;
-              dfs(row + 1);
-              cols[i] = diag1[row + i] = diag2[i - row + n - 1] = false;
-          }
+    for (let i = 0; i < n; ++i) {
+      if (!cols[i] && !diag1[row + i] && !diag2[i - row + n - 1]) {
+        cols[i] = diag1[row + i] = diag2[i - row + n - 1] = true;
+        dfs(row + 1);
+        cols[i] = diag1[row + i] = diag2[i - row + n - 1] = false;
       }
+    }
   }
-};
+}

@@ -23,6 +23,6 @@ function canAttendMeetings(intervals: number[][]): boolean {
       return false;
     }
   }
-  
+
   return true;
 }

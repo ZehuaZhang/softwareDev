@@ -41,7 +41,10 @@ class ValidWordAbbreviation {
 
   isUnique(word: string): boolean {
     const a = this.abbr(word);
-    return !this.map.has(a) || (this.map.get(a).size === 1 && this.map.get(a).has(word));
+    return (
+      !this.map.has(a) ||
+      (this.map.get(a).size === 1 && this.map.get(a).has(word))
+    );
   }
 
   abbr(w: string) {

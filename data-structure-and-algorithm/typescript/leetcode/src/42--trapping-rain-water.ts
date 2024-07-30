@@ -27,11 +27,11 @@ n == height.length
 function trap(height: number[]): number {
   let rslt = 0;
   let lvl = 0;
-  for (let l = 0, r = height.length - 1; l < r;) {
-      const lwr = height[height[l] < height[r] ? l++ : r--];
-      lvl = Math.max(lvl, lwr);
-      rslt += lvl - lwr;
+  for (let l = 0, r = height.length - 1; l < r; ) {
+    const lwr = height[height[l] < height[r] ? l++ : r--];
+    lvl = Math.max(lvl, lwr);
+    rslt += lvl - lwr;
   }
-  
+
   return rslt;
-};
+}

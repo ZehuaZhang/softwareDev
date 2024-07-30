@@ -42,11 +42,11 @@ function grayCode(n: number): number[] {
   const rslt = [0, 1];
 
   for (let i = 2; i <= n; ++i) {
-      const len = rslt.length;
-      for (let j = len - 1; j >= 0; --j) {
-          rslt.push(rslt[j] + len);
-      }
+    const len = rslt.length;
+    for (let j = len - 1; j >= 0; --j) {
+      rslt.push(rslt[j] + len);
+    }
   }
 
   return rslt;
-};
+}

@@ -33,5 +33,3 @@ class TwoSum {
     return false;
   }
 }
-
-

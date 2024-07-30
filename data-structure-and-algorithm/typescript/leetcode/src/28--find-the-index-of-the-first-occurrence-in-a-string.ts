@@ -27,10 +27,10 @@ haystack and needle consist of only lowercase English characters.
 function strStr(haystack: string, needle: string): number {
   const [m, n] = [haystack.length, needle.length];
   for (let r = n; r <= m; ++r) {
-      const l = r - n;
-      if (haystack.substring(l, r) === needle) {
-          return l;
-      }
+    const l = r - n;
+    if (haystack.substring(l, r) === needle) {
+      return l;
+    }
   }
   return -1;
-};
+}

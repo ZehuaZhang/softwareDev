@@ -39,7 +39,12 @@ function wallsAndGates(rooms: number[][]) {
     }
 
     rooms[i][j] = val;
-    for (const [dx, dy] of [[0, 1], [0, -1], [1, 0], [-1, 0]]) {
+    for (const [dx, dy] of [
+      [0, 1],
+      [0, -1],
+      [1, 0],
+      [-1, 0],
+    ]) {
       dfs(i + dx, j + dy, val + 1);
     }
   }

@@ -36,14 +36,14 @@ function subsetsWithDup(nums: number[]): number[][] {
   return rslt;
 
   function dfs(i0: number) {
-      rslt.push([...path]);
+    rslt.push([...path]);
 
-      for (let i = i0; i < nums.length; ++i) {
-          if (i === i0 || nums[i] !== nums[i - 1]) {
-              path.push(nums[i]);
-              dfs(i + 1);
-              path.pop();
-          }
+    for (let i = i0; i < nums.length; ++i) {
+      if (i === i0 || nums[i] !== nums[i - 1]) {
+        path.push(nums[i]);
+        dfs(i + 1);
+        path.pop();
       }
+    }
   }
-};
+}

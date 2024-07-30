@@ -39,17 +39,17 @@ Follow up: Could you come up with a one-pass algorithm using only constant extra
 
 function sortColors(nums: number[]): void {
   const n = nums.length;
-  for (let l = 0, m = 0, r = n - 1; m <= r;) {
-      if (nums[m] === 0) {
-          swap(l++, m++);
-      } else if (nums[m] === 1) {
-          ++m;
-      } else {
-          swap(m, r--);
-      }
+  for (let l = 0, m = 0, r = n - 1; m <= r; ) {
+    if (nums[m] === 0) {
+      swap(l++, m++);
+    } else if (nums[m] === 1) {
+      ++m;
+    } else {
+      swap(m, r--);
+    }
   }
 
   function swap(i: number, j: number) {
-      [nums[i], nums[j]] = [nums[j], nums[i]];
-  } 
-};
+    [nums[i], nums[j]] = [nums[j], nums[i]];
+  }
+}

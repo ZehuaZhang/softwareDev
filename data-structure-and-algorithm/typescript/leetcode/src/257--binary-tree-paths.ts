@@ -31,17 +31,17 @@ function binaryTreePaths(root: TreeNode | null): string[] {
   return rslt;
 
   function dfs(node: TreeNode | null) {
-      if (!node) {
-          return null;
-      }
+    if (!node) {
+      return null;
+    }
 
-      path.push(node.val);
-      if (!node.left && !node.right) {
-          rslt.push(path.join('->'));
-      } else {
-          dfs(node.left);
-          dfs(node.right);
-      }
-      path.pop();
+    path.push(node.val);
+    if (!node.left && !node.right) {
+      rslt.push(path.join("->"));
+    } else {
+      dfs(node.left);
+      dfs(node.right);
+    }
+    path.pop();
   }
-};
+}

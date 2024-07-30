@@ -33,17 +33,17 @@ n == matrix[i].length
 
 function searchMatrix(matrix: number[][], target: number): boolean {
   const [m, n] = [matrix.length, matrix[0].length];
-  for (let l = 0, r = m * n - 1; l <= r;) {
-      const mid = l + Math.trunc((r - l) / 2);
-      const [x, y] = [Math.trunc(mid / n), mid % n];
-      if (matrix[x][y] === target) {
-          return true;
-      } else if (matrix[x][y] > target) {
-          r = mid - 1;
-      } else {
-          l = mid + 1;
-      }
+  for (let l = 0, r = m * n - 1; l <= r; ) {
+    const mid = l + Math.trunc((r - l) / 2);
+    const [x, y] = [Math.trunc(mid / n), mid % n];
+    if (matrix[x][y] === target) {
+      return true;
+    } else if (matrix[x][y] > target) {
+      r = mid - 1;
+    } else {
+      l = mid + 1;
+    }
   }
 
   return false;
-};
+}
