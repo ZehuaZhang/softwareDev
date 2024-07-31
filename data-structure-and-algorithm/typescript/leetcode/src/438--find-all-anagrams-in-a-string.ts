@@ -31,26 +31,26 @@ function findAnagrams(s: string, p: string): number[] {
 
   const cnts = Array(256).fill(0);
   for (const c of p) {
-      ++cnts[c.charCodeAt(0)];
+    ++cnts[c.charCodeAt(0)];
   }
 
   const rslt: number[] = [];
   let cnt = n;
   for (let l = 0, r = 0; r < s.length; ++r) {
-      if (--cnts[s.charCodeAt(r)] >= 0) {
-          --cnt;
-      }
+    if (--cnts[s.charCodeAt(r)] >= 0) {
+      --cnt;
+    }
 
-      if (!cnt) {
-          rslt.push(l);
-      }
+    if (!cnt) {
+      rslt.push(l);
+    }
 
-      if (r - l + 1 === n) {
-          if (++cnts[s.charCodeAt(l++)] >= 1) {
-              ++cnt;
-          }
+    if (r - l + 1 === n) {
+      if (++cnts[s.charCodeAt(l++)] >= 1) {
+        ++cnt;
       }
+    }
   }
 
   return rslt;
-};
+}

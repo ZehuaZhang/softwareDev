@@ -34,30 +34,30 @@ function updateMatrix(mat: number[][]): number[][] {
   const rslt = [...Array(m)].map(() => Array(n).fill(Infinity));
 
   for (let i = 0; i < m; ++i) {
-      for (let j = 0; j < n; ++j) {
-          if (!mat[i][j]) {
-              rslt[i][j] = 0;
-          } else {
-              if (i > 0) {
-                  rslt[i][j] = Math.min(rslt[i][j], 1 + rslt[i - 1][j]);
-              }
-              if (j > 0) {
-                  rslt[i][j] = Math.min(rslt[i][j], 1 + rslt[i][j - 1]);
-              }
-          }
+    for (let j = 0; j < n; ++j) {
+      if (!mat[i][j]) {
+        rslt[i][j] = 0;
+      } else {
+        if (i > 0) {
+          rslt[i][j] = Math.min(rslt[i][j], 1 + rslt[i - 1][j]);
+        }
+        if (j > 0) {
+          rslt[i][j] = Math.min(rslt[i][j], 1 + rslt[i][j - 1]);
+        }
       }
+    }
   }
 
   for (let i = m - 1; i >= 0; --i) {
-      for (let j = n - 1; j >= 0; --j) {
-          if (i < m - 1) {
-              rslt[i][j] = Math.min(rslt[i][j], 1 + rslt[i + 1][j]);
-          }
-          if (j < n - 1) {
-              rslt[i][j] = Math.min(rslt[i][j], 1 + rslt[i][j + 1]);
-          }
+    for (let j = n - 1; j >= 0; --j) {
+      if (i < m - 1) {
+        rslt[i][j] = Math.min(rslt[i][j], 1 + rslt[i + 1][j]);
       }
+      if (j < n - 1) {
+        rslt[i][j] = Math.min(rslt[i][j], 1 + rslt[i][j + 1]);
+      }
+    }
   }
 
   return rslt;
-};
+}

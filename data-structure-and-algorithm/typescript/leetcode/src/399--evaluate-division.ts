@@ -42,49 +42,53 @@ queries[i].length == 2
 Ai, Bi, Cj, Dj consist of lower case English letters and digits.
  */
 
-function calcEquation(equations: string[][], values: number[], queries: string[][]): number[] {
+function calcEquation(
+  equations: string[][],
+  values: number[],
+  queries: string[][]
+): number[] {
   const map = new Map<string, [string, number][]>();
   for (let i = 0; i < equations.length; ++i) {
-      const [s, d] = equations[i];
-      const v = values[i];
-      if (!map.has(s)) {
-          map.set(s, []);
-      }
-      if (!map.has(d)) {
-          map.set(d, []);
-      }
+    const [s, d] = equations[i];
+    const v = values[i];
+    if (!map.has(s)) {
+      map.set(s, []);
+    }
+    if (!map.has(d)) {
+      map.set(d, []);
+    }
 
-      map.get(s).push([d, v]);
-      map.get(d).push([s, 1 / v]);
+    map.get(s).push([d, v]);
+    map.get(d).push([s, 1 / v]);
   }
 
   const rslt: number[] = [];
   for (const [s, d] of queries) {
-      let val = -1;
-      if (map.has(s) && map.has(d)) {
-          const q: [string, number][] = [];
-          const seen = new Set<string>();
+    let val = -1;
+    if (map.has(s) && map.has(d)) {
+      const q: [string, number][] = [];
+      const seen = new Set<string>();
 
-          q.push([s, 1]);
-          seen.add(s);
+      q.push([s, 1]);
+      seen.add(s);
 
-          while (q.length) {
-              const [a, v] = q.shift();
-              if (a === d) {
-                  val = v;
-                  break;
-              }
+      while (q.length) {
+        const [a, v] = q.shift();
+        if (a === d) {
+          val = v;
+          break;
+        }
 
-              for (const [na, nv] of map.get(a)) {
-                  if (!seen.has(na)) {
-                      q.push([na, nv * v]);
-                      seen.add(na);
-                  }
-              }
+        for (const [na, nv] of map.get(a)) {
+          if (!seen.has(na)) {
+            q.push([na, nv * v]);
+            seen.add(na);
           }
+        }
       }
-      rslt.push(val);
+    }
+    rslt.push(val);
   }
 
   return rslt;
-};
+}

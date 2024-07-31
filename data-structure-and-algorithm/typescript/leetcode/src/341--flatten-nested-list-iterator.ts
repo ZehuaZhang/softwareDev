@@ -40,22 +40,22 @@ The values of the integers in the nested list is in the range [-106, 106].
 class NestedIterator {
   stk: NestedInteger[];
   constructor(list: NestedInteger[]) {
-      this.stk = [];
-      list.reverse().forEach(l => this.stk.push(l));
+    this.stk = [];
+    list.reverse().forEach((l) => this.stk.push(l));
   }
 
   hasNext(): boolean {
-      while (this.stk.length) {
-          const n = this.stk[this.stk.length - 1];
-          if (n.isInteger()) {
-              return true;
-          }
-
-          const list = this.stk.pop().getList();
-          list.reverse().forEach(l => this.stk.push(l));
+    while (this.stk.length) {
+      const n = this.stk[this.stk.length - 1];
+      if (n.isInteger()) {
+        return true;
       }
 
-      return false;
+      const list = this.stk.pop().getList();
+      list.reverse().forEach((l) => this.stk.push(l));
+    }
+
+    return false;
   }
 
   next(): number {

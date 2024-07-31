@@ -38,38 +38,41 @@ function accountsMerge(accounts: string[][]): string[][] {
   const set = [...Array(n)].map((_, i) => i);
   const map = new Map<string, number>();
   for (let i = 0; i < n; ++i) {
-      const [_, ...el] = accounts[i];
-      for (const e of el) {
-          if (!map.has(e)) {
-              map.set(e, i);
-          } else {
-              const o = map.get(e);
-              const [a, b] = [find(o), find(i)];
-              if (a !== b) {
-                  set[b] = a;
-              }
-          }
+    const [_, ...el] = accounts[i];
+    for (const e of el) {
+      if (!map.has(e)) {
+        map.set(e, i);
+      } else {
+        const o = map.get(e);
+        const [a, b] = [find(o), find(i)];
+        if (a !== b) {
+          set[b] = a;
+        }
       }
+    }
   }
 
   const map2 = new Map<number, Set<string>>();
   for (let i = 0; i < n; ++i) {
-      const [_, ...el] = accounts[i];
-      const o = find(i);
+    const [_, ...el] = accounts[i];
+    const o = find(i);
 
-      if (!map2.has(o)) {
-          map2.set(o, new Set<string>());
-      }
-      el.forEach(e => map2.get(o).add(e));
+    if (!map2.has(o)) {
+      map2.set(o, new Set<string>());
+    }
+    el.forEach((e) => map2.get(o).add(e));
   }
 
-  return [...map2.entries()].map(([i, es]) => [accounts[i][0], ...[...es].sort()]);
+  return [...map2.entries()].map(([i, es]) => [
+    accounts[i][0],
+    ...[...es].sort(),
+  ]);
 
   function find(x: number) {
-      while (x !== set[x]) {
-          x = set[x];
-      }
+    while (x !== set[x]) {
+      x = set[x];
+    }
 
-      return x;
+    return x;
   }
-};
+}

@@ -30,14 +30,14 @@ ransomNote and magazine consist of lowercase English letters.
 function canConstruct(ransomNote: string, magazine: string): boolean {
   const cnts = Array(256).fill(0);
   for (const c of magazine) {
-      ++cnts[c.charCodeAt(0)];
+    ++cnts[c.charCodeAt(0)];
   }
 
   for (const c of ransomNote) {
-      if (--cnts[c.charCodeAt(0)] < 0) {
-          return false;
-      }
+    if (--cnts[c.charCodeAt(0)] < 0) {
+      return false;
+    }
   }
 
   return true;
-};
+}

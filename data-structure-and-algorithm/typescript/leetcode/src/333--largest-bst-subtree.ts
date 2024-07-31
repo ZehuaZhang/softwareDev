@@ -49,7 +49,12 @@ function largestBSTSubtree(root: TreeNode | null): number {
     }
 
     let s = 0;
-    if ((!node.left || s1) && (!node.right || s2) && mx1 <= node.val && node.val <= mn2) {
+    if (
+      (!node.left || s1) &&
+      (!node.right || s2) &&
+      mx1 <= node.val &&
+      node.val <= mn2
+    ) {
       s = 1 + s1 + s2;
       rslt = Math.max(rslt, s);
     }

@@ -34,4 +34,4 @@ function middleNode(head: ListNode | null): ListNode | null {
   for (; fast && fast.next; slow = slow.next, fast = fast.next.next);
 
   return slow;
-};
+}

@@ -35,41 +35,51 @@ function longestIncreasingPath(matrix: number[][]): number {
   const [m, n] = [matrix.length, matrix[0].length];
   const iDgr = [...Array(m)].map(() => Array(n).fill(0));
 
-  for (let i = 0; i < m; ++i){
-      for (let j = 0; j < n; ++j) {
-          for (const [dx, dy] of [[0, 1], [0, -1], [1, 0], [-1, 0]]) {
-              const [x, y] = [i + dx, j + dy];
-              if (x >= 0 && x < m && y >= 0 && y < n && matrix[x][y] > matrix[i][j]) {
-                  ++iDgr[x][y];
-              }
-          }
+  for (let i = 0; i < m; ++i) {
+    for (let j = 0; j < n; ++j) {
+      for (const [dx, dy] of [
+        [0, 1],
+        [0, -1],
+        [1, 0],
+        [-1, 0],
+      ]) {
+        const [x, y] = [i + dx, j + dy];
+        if (x >= 0 && x < m && y >= 0 && y < n && matrix[x][y] > matrix[i][j]) {
+          ++iDgr[x][y];
+        }
       }
+    }
   }
 
   let rslt = 0;
 
   const q: [number, number][] = [];
-  for (let i = 0; i < m; ++i){
-      for (let j = 0; j < n; ++j) {
-          if (!iDgr[i][j]) {
-              q.push([i, j])
-          }
+  for (let i = 0; i < m; ++i) {
+    for (let j = 0; j < n; ++j) {
+      if (!iDgr[i][j]) {
+        q.push([i, j]);
       }
+    }
   }
 
   while (q.length) {
-      for (let l = q.length; l; --l) {
-          const [i, j] = q.shift();
-          for (const [dx, dy] of [[0, 1], [0, -1], [1, 0], [-1, 0]]) {
-              const [x, y] = [i + dx, j + dy];
-              if (x >= 0 && x < m && y >= 0 && y < n && matrix[x][y] > matrix[i][j]) {
-                  if (--iDgr[x][y] === 0) {
-                      q.push([x, y]);
-                  }
-              }
-          } 
+    for (let l = q.length; l; --l) {
+      const [i, j] = q.shift();
+      for (const [dx, dy] of [
+        [0, 1],
+        [0, -1],
+        [1, 0],
+        [-1, 0],
+      ]) {
+        const [x, y] = [i + dx, j + dy];
+        if (x >= 0 && x < m && y >= 0 && y < n && matrix[x][y] > matrix[i][j]) {
+          if (--iDgr[x][y] === 0) {
+            q.push([x, y]);
+          }
+        }
       }
-      ++rslt;
+    }
+    ++rslt;
   }
 
   return rslt;

@@ -29,25 +29,30 @@ n == nums4.length
 -228 <= nums1[i], nums2[i], nums3[i], nums4[i] <= 228
 */
 
-function fourSumCount(numList1: number[], numList2: number[], numList3: number[], numList4: number[]): number {
+function fourSumCount(
+  numList1: number[],
+  numList2: number[],
+  numList3: number[],
+  numList4: number[]
+): number {
   const tgt = 0;
   let rslt = 0;
   const map = new Map<number, number>();
   for (const n1 of numList1) {
-      for (const n2 of numList2) {
-          const sum = n1 + n2;
-          map.set(sum, (map.get(sum) || 0) + 1);
-      }
+    for (const n2 of numList2) {
+      const sum = n1 + n2;
+      map.set(sum, (map.get(sum) || 0) + 1);
+    }
   }
 
   for (const n3 of numList3) {
-      for (const n4 of numList4) {
-          const d = tgt - n3 - n4;
-          if (map.has(d)) {
-              rslt += map.get(d);
-          }
+    for (const n4 of numList4) {
+      const d = tgt - n3 - n4;
+      if (map.has(d)) {
+        rslt += map.get(d);
       }
-  } 
+    }
+  }
 
   return rslt;
 }

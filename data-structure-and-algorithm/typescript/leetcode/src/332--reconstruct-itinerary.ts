@@ -36,42 +36,42 @@ fromi != toi
 function findItinerary(tickets: string[][]): string[] {
   const map = new Map<string, Map<string, number>>();
   for (const [s, d] of tickets) {
-      if (!map.has(s)) {
-          map.set(s, new Map<string, number>());
-      }
-      const m = map.get(s);
-      m.set(d, (m.get(d) || 0) + 1);
+    if (!map.has(s)) {
+      map.set(s, new Map<string, number>());
+    }
+    const m = map.get(s);
+    m.set(d, (m.get(d) || 0) + 1);
   }
 
-  const rslt: string[] = ['JFK'];
-  dfs('JFK');
+  const rslt: string[] = ["JFK"];
+  dfs("JFK");
 
   return rslt;
 
   function dfs(s: string) {
-      if (rslt.length === tickets.length + 1) {
-          return true;
-      }
-      
-      if (!map.has(s)) {
-          return false;
-      }
+    if (rslt.length === tickets.length + 1) {
+      return true;
+    }
 
-      const m = map.get(s);
-      const kl = [...m.keys()].sort();
-      for (const k of kl) {
-          const cnt = m.get(k);
-          if (cnt > 0) {
-              m.set(k, cnt - 1);
-              rslt.push(k);
-              if (dfs(k)) {
-                  return true;
-              }
-              rslt.pop();
-              m.set(k, cnt);
-          }
-      }
-
+    if (!map.has(s)) {
       return false;
+    }
+
+    const m = map.get(s);
+    const kl = [...m.keys()].sort();
+    for (const k of kl) {
+      const cnt = m.get(k);
+      if (cnt > 0) {
+        m.set(k, cnt - 1);
+        rslt.push(k);
+        if (dfs(k)) {
+          return true;
+        }
+        rslt.pop();
+        m.set(k, cnt);
+      }
+    }
+
+    return false;
   }
-};
+}

@@ -33,12 +33,12 @@ function longestPalindrome(s: string): number {
   const set = new Set<string>();
 
   for (const c of s) {
-      if (set.has(c)) {
-          set.delete(c);
-      } else {
-          set.add(c);
-      }
+    if (set.has(c)) {
+      set.delete(c);
+    } else {
+      set.add(c);
+    }
   }
 
   return s.length - Math.max(0, set.size - 1);
-};
+}

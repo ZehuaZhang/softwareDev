@@ -23,27 +23,27 @@ return false.
 function increasingTriplet(nums: number[]): boolean {
   const rslt: number[] = [];
   for (const n of nums) {
-      const i = gtEq(n);
-      if (i === rslt.length) {
-          rslt.push(n);
-      } else {
-          rslt[i] = n;
-      }
+    const i = gtEq(n);
+    if (i === rslt.length) {
+      rslt.push(n);
+    } else {
+      rslt[i] = n;
+    }
   }
 
   return rslt.length >= 3;
 
   function gtEq(tgt: number) {
-      let [l, r] = [0, rslt.length - 1];
-      for (; l <= r;) {
-          const m = l + Math.trunc((r - l) / 2);
-          if (rslt[m] >= tgt) {
-              r = m - 1;
-          } else {
-              l = m + 1;
-          }
+    let [l, r] = [0, rslt.length - 1];
+    for (; l <= r; ) {
+      const m = l + Math.trunc((r - l) / 2);
+      if (rslt[m] >= tgt) {
+        r = m - 1;
+      } else {
+        l = m + 1;
       }
+    }
 
-      return l;
+    return l;
   }
-};
+}

@@ -47,7 +47,12 @@ function numIslands2(m: number, n: number, pl: number[][]): number[] {
     map.set(id, id);
     ++cnt;
 
-    for (const [dx, dy] of [[0, 1], [0, -1], [-1, 0], [1, 0]]) {
+    for (const [dx, dy] of [
+      [0, 1],
+      [0, -1],
+      [-1, 0],
+      [1, 0],
+    ]) {
       const [x, y] = [dx + i, dy + j];
       if (x >= 0 && x < m && y >= 0 && y < n) {
         const nid = getId(x, y);

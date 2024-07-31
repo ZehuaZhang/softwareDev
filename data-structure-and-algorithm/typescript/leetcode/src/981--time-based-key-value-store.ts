@@ -40,43 +40,43 @@ At most 2 * 105 calls will be made to set and get.
 class TimeMap {
   map: Map<string, [string, number][]>;
   constructor() {
-      this.map = new Map();
+    this.map = new Map();
   }
 
   set(key: string, value: string, timestamp: number): void {
-      if (!this.map.has(key)) {
-          this.map.set(key, []);
-      }
-      this.map.get(key).push([value, timestamp]);
+    if (!this.map.has(key)) {
+      this.map.set(key, []);
+    }
+    this.map.get(key).push([value, timestamp]);
   }
 
   get(key: string, timestamp: number): string {
-      if (!this.map.has(key)) {
-          return "";
+    if (!this.map.has(key)) {
+      return "";
+    }
+
+    const list = this.map.get(key);
+
+    const i = lsEq(timestamp);
+
+    if (i < 0) {
+      return "";
+    }
+
+    return list[i][0];
+
+    function lsEq(tgt: number) {
+      let [l, r] = [0, list.length - 1];
+      while (l <= r) {
+        const m = l + Math.trunc((r - l) / 2);
+        if (list[m][1] <= tgt) {
+          l = m + 1;
+        } else {
+          r = m - 1;
+        }
       }
 
-      const list = this.map.get(key);
-
-      const i = lsEq(timestamp);
-
-      if (i < 0) {
-          return "";
-      }
-
-      return list[i][0];
-
-      function lsEq(tgt: number) {
-          let [l, r] = [0, list.length - 1];
-          while (l <= r) {
-              const m = l + Math.trunc((r - l) / 2);
-              if (list[m][1] <= tgt) {
-                  l = m + 1;
-              } else {
-                  r = m - 1;
-              }
-          }
-
-          return r;
-      }
+      return r;
+    }
   }
 }

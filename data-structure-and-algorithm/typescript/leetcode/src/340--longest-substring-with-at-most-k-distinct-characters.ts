@@ -23,7 +23,7 @@ function lengthOfLongestSubstringKDistinct(s: string, k: number): number {
       ++cnt;
     }
 
-    for ( ; cnt > k; ++l) {
+    for (; cnt > k; ++l) {
       if (--cnts[s.charCodeAt(l)] === 0) {
         --cnt;
       }

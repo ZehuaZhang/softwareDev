@@ -15,10 +15,10 @@ Output:
 function generateAbbreviations(word: string) {
   const n = word.length;
   const rslt: string[] = [];
-  rslt.push(n ? String(word.length) : '');
+  rslt.push(n ? String(word.length) : "");
   for (let i = 0; i < n; ++i) {
     for (const a of generateAbbreviations(word.substring(i + 1))) {
-      const l = i ? String(i) : '';
+      const l = i ? String(i) : "";
       const w = word.substring(i, i + 1);
       rslt.push(l + w + a);
     }

@@ -40,17 +40,26 @@ At most 104 calls will be made to sumRegion.
 class NumMatrix {
   sums: number[][];
   constructor(matrix: number[][]) {
-      const [m, n] = [matrix.length, matrix[0].length];
-      this.sums = [...Array(m + 1)].map(() => Array(n + 1).fill(0));
+    const [m, n] = [matrix.length, matrix[0].length];
+    this.sums = [...Array(m + 1)].map(() => Array(n + 1).fill(0));
 
-      for (let i = 1; i <= m; ++i) {
-          for (let j = 1; j <= n; ++j) {
-              this.sums[i][j] = matrix[i - 1][j - 1] + this.sums[i - 1][j] + this.sums[i][j - 1] - this.sums[i - 1][j - 1];
-          }
+    for (let i = 1; i <= m; ++i) {
+      for (let j = 1; j <= n; ++j) {
+        this.sums[i][j] =
+          matrix[i - 1][j - 1] +
+          this.sums[i - 1][j] +
+          this.sums[i][j - 1] -
+          this.sums[i - 1][j - 1];
       }
+    }
   }
 
   sumRegion(i1: number, j1: number, i2: number, j2: number): number {
-      return this.sums[i2 + 1][j2 + 1] - this.sums[i1][j2 + 1] - this.sums[i2 + 1][j1] + this.sums[i1][j1];
+    return (
+      this.sums[i2 + 1][j2 + 1] -
+      this.sums[i1][j2 + 1] -
+      this.sums[i2 + 1][j1] +
+      this.sums[i1][j1]
+    );
   }
 }

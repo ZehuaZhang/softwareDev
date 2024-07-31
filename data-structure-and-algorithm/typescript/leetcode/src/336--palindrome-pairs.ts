@@ -18,36 +18,36 @@ function palindromePairs(words: string[]): number[][] {
   const rslt: [number, number][] = [];
   const map = new Map<string, number>();
   for (let i = 0; i < words.length; ++i) {
-      map.set(words[i], i);
+    map.set(words[i], i);
   }
   for (let i = 0; i < words.length; ++i) {
-      const w = words[i];
-      const m = w.length;
-      const rs = [...w].reverse().join('');
-      for (let l = 0, r = 0; l <= r;) {
-          const s = rs.slice(m - r, m - l);
-          if (
-              map.has(s) &&
-              i !== map.get(s) &&
-              (l ? isValid(w, 0, l - 1) : isValid(w, r, m - 1))
-          ) {
-              rslt.push(l ? [map.get(s), i] : [i, map.get(s)]);
-          }
-          if (r < m) {
-              ++r;
-          } else {
-              ++l;
-          }
+    const w = words[i];
+    const m = w.length;
+    const rs = [...w].reverse().join("");
+    for (let l = 0, r = 0; l <= r; ) {
+      const s = rs.slice(m - r, m - l);
+      if (
+        map.has(s) &&
+        i !== map.get(s) &&
+        (l ? isValid(w, 0, l - 1) : isValid(w, r, m - 1))
+      ) {
+        rslt.push(l ? [map.get(s), i] : [i, map.get(s)]);
       }
+      if (r < m) {
+        ++r;
+      } else {
+        ++l;
+      }
+    }
   }
   return rslt;
 
   function isValid(s: string, l: number, r: number) {
-      for (; l < r; ++l, --r) {
-          if (s[l] !== s[r]) {
-              return false;
-          }
+    for (; l < r; ++l, --r) {
+      if (s[l] !== s[r]) {
+        return false;
       }
-      return true;
+    }
+    return true;
   }
 }

@@ -35,15 +35,15 @@ function find132pattern(nums: number[]): boolean {
   let m = -Infinity;
   const stk: number[] = [];
   for (let i = nums.length - 1; i >= 0; --i) {
-      const n = nums[i];
-      if (n < m) {
-          return true;
-      }
+    const n = nums[i];
+    if (n < m) {
+      return true;
+    }
 
-      while (stk.length && n > stk[stk.length - 1]) {
-          m = stk.pop();
-      }
-      stk.push(n);
+    while (stk.length && n > stk[stk.length - 1]) {
+      m = stk.pop();
+    }
+    stk.push(n);
   }
 
   return false;

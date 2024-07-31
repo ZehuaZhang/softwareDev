@@ -21,23 +21,6 @@ Can you do it in O(n) time?
 */
 
 function maxSubArrayLen(nums: number[], target: number): number {
-  let rslt = 0;
-  const sumIdxMap = new Map<number, number>();
-  for (let i = 0, sum = 0; i < nums.length; ++i) {
-    sum += nums[i];
-    if (sum === target) {
-      rslt = i + 1;
-    } else if (sumIdxMap.has(sum - target)) {
-      rslt = Math.max(rslt, i - sumIdxMap.get(sum - target)!);
-    }
-    if (!sumIdxMap.has(sum)) {
-      sumIdxMap.set(sum, i);
-    }
-  }
-  return rslt;
-}
-
-function maxSubArrayLen(nums: number[], target: number): number {
   const n = nums.length;
   let rslt = 0;
   const map = new Map<number, number>();

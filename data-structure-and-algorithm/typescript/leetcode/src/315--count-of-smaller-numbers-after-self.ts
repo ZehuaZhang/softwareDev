@@ -34,7 +34,7 @@ function countSmaller(nums: number[]): number[] {
   const n = nums.length;
   const ni: [number, number][] = [];
   for (let i = 0; i < n; ++i) {
-      ni.push([nums[i], i]);
+    ni.push([nums[i], i]);
   }
 
   const rslt = Array(n).fill(0);
@@ -43,24 +43,24 @@ function countSmaller(nums: number[]): number[] {
   return rslt;
 
   function mergeSort(l: number, r: number) {
-      if (r <= l) {
-          return;
+    if (r <= l) {
+      return;
+    }
+
+    const m = l + Math.trunc((r - l) / 2);
+    mergeSort(l, m);
+    mergeSort(m + 1, r);
+
+    const t: [number, number][] = [];
+
+    for (let i = l, j = m + 1; i <= m; ++i) {
+      for (; j <= r && ni[j][0] < ni[i][0]; ++j) {
+        t.push(ni[j]);
       }
+      t.push(ni[i]);
+      rslt[ni[i][1]] += j - (m + 1);
+    }
 
-      const m = l + Math.trunc((r - l) / 2);
-      mergeSort(l, m);
-      mergeSort(m + 1, r);
-
-      const t: [number, number][] = [];
-
-      for (let i = l, j = m + 1; i <= m; ++i) {
-          for (; j <= r && ni[j][0] < ni[i][0]; ++j) {
-              t.push(ni[j]);
-          }
-          t.push(ni[i]);
-          rslt[ni[i][1]] += j - (m + 1);
-      }
-
-      ni.splice(l, t.length, ...t);
+    ni.splice(l, t.length, ...t);
   }
-};
+}

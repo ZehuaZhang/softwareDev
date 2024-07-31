@@ -54,16 +54,16 @@ function leastInterval(tasks: string[], n: number): number {
   const map = new Map<string, number>();
   let max = 0;
   for (const t of tasks) {
-      map.set(t, (map.get(t) || 0) + 1);
-      max = Math.max(max, map.get(t));
+    map.set(t, (map.get(t) || 0) + 1);
+    max = Math.max(max, map.get(t));
   }
 
   let rslt = (max - 1) * (n + 1);
   for (const cnt of map.values()) {
-      if (cnt === max) {
-          ++rslt;
-      }
+    if (cnt === max) {
+      ++rslt;
+    }
   }
 
   return Math.max(tasks.length, rslt);
-};
+}

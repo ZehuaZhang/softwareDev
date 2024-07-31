@@ -35,27 +35,37 @@ n == image[i].length
 0 <= sc < n
 */
 
-function floodFill(image: number[][], sr: number, sc: number, color: number): number[][] {
+function floodFill(
+  image: number[][],
+  sr: number,
+  sc: number,
+  color: number
+): number[][] {
   const [m, n] = [image.length, image[0].length];
 
   const sclr = image[sr][sc];
   if (sclr === color) {
-      return image;
+    return image;
   }
 
   dfs(sr, sc);
 
   return image;
 
-  function dfs (i: number, j: number) {
-      if (i < 0 || i >= m || j < 0 || j >= n || image[i][j] !== sclr) {
-          return;
-      }
+  function dfs(i: number, j: number) {
+    if (i < 0 || i >= m || j < 0 || j >= n || image[i][j] !== sclr) {
+      return;
+    }
 
-      image[i][j] = color;
+    image[i][j] = color;
 
-      for (const [dx, dy] of [[0, 1], [0, -1], [1, 0], [-1, 0]]) {
-          dfs(i + dx, j + dy);
-      }
+    for (const [dx, dy] of [
+      [0, 1],
+      [0, -1],
+      [1, 0],
+      [-1, 0],
+    ]) {
+      dfs(i + dx, j + dy);
+    }
   }
-};
+}

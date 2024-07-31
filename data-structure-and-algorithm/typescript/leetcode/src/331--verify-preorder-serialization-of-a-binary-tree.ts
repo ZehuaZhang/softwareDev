@@ -34,16 +34,16 @@ Return false
 */
 
 function isValidSerialization(preorder: string): boolean {
-  const tl = preorder.split(',');
-  const last  = tl.pop();
+  const tl = preorder.split(",");
+  const last = tl.pop();
   let cnt = 0;
   for (const t of tl) {
-      if (t !== '#') {
-          ++cnt;
-      } else if (cnt-- === 0) {
-          return false;
-      }
+    if (t !== "#") {
+      ++cnt;
+    } else if (cnt-- === 0) {
+      return false;
+    }
   }
 
-  return !cnt && last === '#';
-};
+  return !cnt && last === "#";
+}
