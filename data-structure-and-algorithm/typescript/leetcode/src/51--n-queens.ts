@@ -26,8 +26,8 @@ Constraints:
 
 function solveNQueens(n: number): string[][] {
   const cols = Array(n).fill(false);
-  const diag1 = Array(2 * n - 1);
-  const diag2 = Array(2 * n - 1);
+  const diag1 = Array(2 * n - 1).fill(false);
+  const diag2 = Array(2 * n - 1).fill(false);
 
   const path: number[] = [];
   const rslt: string[][] = [];

@@ -34,10 +34,10 @@ function longestPalindrome(s: string): string {
   for (let i = 0; i < n; ++i) {
     dp[i][i] = true;
     for (let j = 0; j < i; ++j) {
-      if (s[i] === s[j] && (i - j < 2 || dp[i - 1][j + 1])) {
-        dp[i][j] = true;
+      if (s[i] === s[j] && (i - j < 2 || dp[j + 1][i - 1])) {
+        dp[j][i] = true;
       }
-      if (dp[i][j] && r - l < i - j) {
+      if (dp[j][i] && r - l < i - j) {
         [l, r] = [j, i];
       }
     }

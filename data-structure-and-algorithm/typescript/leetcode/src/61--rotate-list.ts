@@ -26,14 +26,14 @@ The number of nodes in the list is in the range [0, 500].
 
 function rotateRight(head: ListNode | null, k: number): ListNode | null {
   if (!head) {
-      return head;
+    return head;
   }
   let len = 1;
   let curr = head;
   for (; curr.next; curr = curr.next, ++len);
 
   curr.next = head;
-  k = len - k % len;
+  k = len - (k % len);
 
   for (; k; --k, curr = curr.next);
 
@@ -42,4 +42,4 @@ function rotateRight(head: ListNode | null, k: number): ListNode | null {
   prev.next = null;
 
   return curr;
-};
+}

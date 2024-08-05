@@ -54,8 +54,8 @@ function letterCombinations(digits: string): string[] {
       rslt.push(path.join(""));
       return;
     }
-    const idx = Number(digits[i]);
-    for (const c of map[idx]) {
+    const d = Number(digits[i]);
+    for (const c of map[d]) {
       path.push(c);
       dfs(i + 1);
       path.pop();

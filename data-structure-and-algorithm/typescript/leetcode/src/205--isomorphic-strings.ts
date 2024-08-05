@@ -35,7 +35,7 @@ function isIsomorphic(s: string, t: string) {
   const m2 = Array(256).fill(undefined);
 
   for (let i = 0; i < s.length; ++i) {
-    const [a, b] = [s[i], t[i]];
+    const [a, b] = [s.charCodeAt(i), t.charCodeAt(i)];
     if (m1[a] !== m2[b]) {
       return false;
     }

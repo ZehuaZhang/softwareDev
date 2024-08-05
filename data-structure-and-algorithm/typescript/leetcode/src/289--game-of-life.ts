@@ -50,7 +50,7 @@ function gameOfLife(board: number[][]): void {
         }
       }
 
-      if ((cnt === 4 && board[i][j]) || cnt == 3) {
+      if ((cnt === 4 && board[i][j]) || cnt === 3) {
         board[i][j] |= 2;
       }
     }

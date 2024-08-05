@@ -48,7 +48,7 @@ function countAndSay(n: number): string {
 
   for (let i = 2; i <= n; ++i) {
     let cnt = 1;
-    let curr = rslt;
+    const curr = rslt;
     rslt = "";
     for (let j = 0; j < curr.length; ++j) {
       if (j < curr.length - 1 && curr[j] === curr[j + 1]) {

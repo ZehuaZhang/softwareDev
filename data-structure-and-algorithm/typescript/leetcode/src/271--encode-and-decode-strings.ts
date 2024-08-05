@@ -35,7 +35,7 @@ Do not rely on any library method such as eval or serialize methods. You should 
 
 class Codec {
   encode(strs: string[]): string {
-    let rslt: string[] = [];
+    const rslt: string[] = [];
     for (const s of strs) {
       const l = s.length;
       rslt.push(l + "/" + s);
